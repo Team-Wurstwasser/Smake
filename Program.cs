@@ -16,9 +16,13 @@ namespace SpielEinfuehrungLoesung
 
         static bool spiel = true;
 
+        static int gameover;
+
+        static bool exit = false;
+
         // Spielfeldgröße (Breite x Höhe)
 
-        static int weite = 51;
+        static int weite = 41;
 
         static int hoehe = 20;
 
@@ -32,65 +36,131 @@ namespace SpielEinfuehrungLoesung
 
         static int inputY;
 
+        static int inputX2;
+
+        static int inputY2;
+
         // Position des Spielers (Startkoordinaten)
 
-        static int playerX = 4;
+        static int[] playerX = new int[99];
 
-        static int playerY = 4;
+        static int[] playerY = new int[99];
+
+        static int[] playerX2 = new int[99];
+
+        static int[] playerY2 = new int[99];
+
+        //Länge des Spielers
+
+        static int tail;
+
+        static int tail2;
 
         static void Main()
 
         {
 
-            // Mauszeiger im Konsolenfenster ausblenden
-
-            Console.CursorVisible = false;
-
-            // Starte separaten Thread für Tastatureingaben
-
-            Thread inputThread = new Thread(ReadInput);
-
-            inputThread.Start();
-
-            // Starte Begrüßungsbildschirm
-
-            ShowStartScreen();
-
-            // Initialisiere das Spielfeld mit Rahmen und Spielerposition
-
-            InitialisiereSpiel();
-
-            Render();
-
-            Thread.Sleep(1000);
-
-
-            // Game Loop 
-
-            while (spiel)
-
+            do
             {
+                // Position des Spielers_2
 
-                Update();   // Spielerposition aktualisieren
+                playerX[0] = 4;
+                playerY[0] = 4;
 
-                Render();   // Spielfeld neu zeichnen
+                playerX2[0] = 20;
+                playerY2[0] = 4;
 
-                Thread.Sleep(50); // Spieltempo regulieren (250 ms)
+                //Länge_2
 
-                // Reguliert wie oft wird der Loop durchgeführt wird
+                tail = 10;
+                tail2 = 10;
 
-                // Spiele geschwindigkeit
+                // Mauszeiger im Konsolenfenster ausblenden
 
-            }
+                Console.CursorVisible = false;
 
-            // Spielende-Bildschirm
+                // Starte separaten Thread für Tastatureingaben
 
-            ShowGameOverScreen();
+                Thread inputThread = new Thread(ReadInput);
 
-            // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
-            inputThread.Join();
+                inputThread.Start();
 
+
+                // Starte Begrüßungsbildschirm
+
+                ShowStartScreen();
+
+                // Initialisiere das Spielfeld mit Rahmen und Spielerposition
+
+                InitialisiereSpiel();
+
+                Render();
+
+                Thread.Sleep(1000);
+
+
+                // Game Loop 
+
+
+
+                while (spiel)
+                {
+
+                    Update();   // Spielerposition aktualisieren
+
+                    Render();   // Spielfeld neu zeichnen
+
+                    Thread.Sleep(50); // Spieltempo regulieren (250 ms)
+
+                    // Reguliert wie oft wird der Loop durchgeführt wird
+
+                    // Spiele geschwindigkeit
+
+                }
+
+                // Spielende-Bildschirm
+
+                ShowGameOverScreen();
+
+                inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
+
+
+                var key2 = Console.ReadKey(true).Key;
+
+                switch (key2)
+                {
+                    case ConsoleKey.Enter:
+                        neustart();
+                        break;
+
+                    case ConsoleKey.Escape:
+                        exit = true;
+                        break;
+
+                }
+
+            } while (!exit);
+
+
+
+        }
+
+        static void neustart()
+        {
+            spiel = true;
+
+            gameover = 0;
+
+            inputX = 0;
+            inputX2 = 0;
+            inputY = 0;
+            inputY2 = 0;
+
+            Array.Clear(playerX, 0, playerX.Length);
+            Array.Clear(playerY, 0, playerY.Length);
+            Array.Clear(playerX2, 0, playerX2.Length);
+            Array.Clear(playerY2, 0, playerY2.Length);
         }
 
         // Zeigt den Startbildschirm mit Anweisungen
@@ -103,11 +173,13 @@ namespace SpielEinfuehrungLoesung
 
             Console.WriteLine("======================");
 
-            Console.WriteLine("    KONSOLEN SPIEL    ");
+            Console.WriteLine("       Snake.io       ");
 
             Console.WriteLine("======================");
 
-            Console.WriteLine("Pfeiltasten: Links/Rechts/Hoch/Runter");
+            Console.WriteLine("P1: Pfeiltasten: Links/Rechts/Hoch/Runter");
+
+            Console.WriteLine("P2: WASD: Links/Rechts/Hoch/Runter");
 
             Console.WriteLine("Taste Enter zum Starten...");
 
@@ -117,7 +189,6 @@ namespace SpielEinfuehrungLoesung
 
         }
 
-        // Zeigt den "Game Over"-Bildschirm
 
         static void ShowGameOverScreen()
 
@@ -127,14 +198,22 @@ namespace SpielEinfuehrungLoesung
 
             Console.WriteLine("======================");
 
-            Console.WriteLine("     GAME OVER 🎮     ");
+            if (gameover == 1)
+            {
+                Console.WriteLine("    Player 2 Wins!    ");   // Zeigt, dass Spieler 2 gewinnt
+            }
+            else if (gameover == 2)
+            {
+                Console.WriteLine("    Player 1 Wins!    ");   // Zeigt, dass Spieler 1 gewinnt
+            }
+            else
+            {
+                Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
+            }
 
             Console.WriteLine("======================");
 
-            Console.WriteLine("Drücke eine Taste zum Beenden...");
-
-            Console.ReadKey(true);
-
+            Console.WriteLine("Drücke ESC zum Beenden oder Enter für eine neue Runde...");
 
         }
 
@@ -146,9 +225,35 @@ namespace SpielEinfuehrungLoesung
 
             // Neue Zielkoordinaten berechnen
 
-            int newPlayerX = playerX + 2 * inputX;
+            int newPlayerX = playerX[0] + 2 * inputX;
 
-            int newPlayerY = playerY + inputY;
+            int newPlayerY = playerY[0] + inputY;
+
+            int newPlayerX2 = playerX2[0] + 2 * inputX2;
+
+            int newPlayerY2 = playerY2[0] + inputY2;
+
+            // Tailkoordinaten berechnen
+
+            for (int i = playerX.Length - 1; i > 0; i--)
+            {
+                playerX[i] = playerX[i - 1];
+            }
+
+            for (int i = playerY.Length - 1; i > 0; i--)
+            {
+                playerY[i] = playerY[i - 1];
+            }
+
+            for (int i = playerX2.Length - 1; i > 0; i--)
+            {
+                playerX2[i] = playerX2[i - 1];
+            }
+
+            for (int i = playerY2.Length - 1; i > 0; i--)
+            {
+                playerY2[i] = playerY2[i - 1];
+            }
 
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
 
@@ -158,11 +263,35 @@ namespace SpielEinfuehrungLoesung
 
                 grid[newPlayerY, newPlayerX] = '█';  // Spieler auf neues Feld setzen
 
-                grid[playerY, playerX] = '+';        // Altes Feld leeren
+                for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
+                {
+                    grid[playerY[i], playerX[i]] = '+';
+                }
 
-                playerX = newPlayerX;
+                grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
 
-                playerY = newPlayerY;
+                playerX[0] = newPlayerX;
+
+                playerY[0] = newPlayerY;
+
+            }
+
+            if (grid[newPlayerY2, newPlayerX2] == ' ')
+
+            {
+
+                grid[newPlayerY2, newPlayerX2] = 'O';  // Spieler auf neues Feld setzen
+
+                for (int i = 0; i <= tail2; i++)       // Tail des Spielers Zeichnen
+                {
+                    grid[playerY2[i], playerX2[i]] = '+';
+                }
+
+                grid[playerY2[tail2 + 1], playerX2[tail + 1]] = ' ';        // Altes Feld leeren
+
+                playerX2[0] = newPlayerX2;
+
+                playerY2[0] = newPlayerY2;
 
             }
 
@@ -171,13 +300,20 @@ namespace SpielEinfuehrungLoesung
 
                 spiel = false;
 
+                gameover = 1;
+
             }
 
+            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != 'O')
+            {
 
+                spiel = false;
+
+                gameover = 2;
+
+            }
 
             // Eingabe zurücksetzen (nur eine Bewegung pro Tick)
-
-
 
         }
 
@@ -236,6 +372,34 @@ namespace SpielEinfuehrungLoesung
 
                             break;
 
+                        case ConsoleKey.W:
+
+                            inputY2 = -1;
+                            inputX2 = 0;
+
+                            break;
+
+                        case ConsoleKey.S:
+
+                            inputY2 = 1;
+                            inputX2 = 0;
+
+                            break;
+
+                        case ConsoleKey.D:
+
+                            inputY2 = 0;
+                            inputX2 = 1;
+
+                            break;
+
+                        case ConsoleKey.A:
+
+                            inputY2 = 0;
+                            inputX2 = -1;
+
+                            break;
+
                     }
 
                 }
@@ -243,6 +407,8 @@ namespace SpielEinfuehrungLoesung
             }
 
         }
+
+
 
         // Zeichnet das gesamte Spielfeld auf der Konsole
 
@@ -312,7 +478,9 @@ namespace SpielEinfuehrungLoesung
 
             // Spielerzeichen auf Startposition setzen
 
-            grid[playerY, playerX] = '█';
+            grid[playerY[0], playerX[0]] = '█';
+
+            grid[playerY2[0], playerX2[0]] = 'O';
 
         }
 
