@@ -18,7 +18,7 @@ namespace SpielEinfuehrungLoesung
 
         // Spielfeldgröße (Breite x Höhe)
 
-        static int weite = 41;
+        static int weite = 51;
 
         static int hoehe = 20;
 
