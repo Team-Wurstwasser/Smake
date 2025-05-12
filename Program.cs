@@ -204,7 +204,7 @@ namespace SpielEinfuehrungLoesung
 
                         case ConsoleKey.UpArrow:
 
-                            inputY = 1;
+                            inputY = -1;
                             inputX = 0;
 
                             break;
