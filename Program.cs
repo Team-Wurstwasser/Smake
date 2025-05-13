@@ -256,26 +256,30 @@ namespace Snake
 
             Console.Clear();
 
-            Console.WriteLine("======================");
+            Console.WriteLine("========================");
 
             if (gameover == 1)
             {
-                Console.WriteLine("    Player 2 Wins!    ");   // Zeigt, dass Spieler 2 gewinnt
+                Console.WriteLine("     Player 2 Wins!     ");   // Zeigt, dass Spieler 2 gewinnt
 
-                Console.WriteLine($"    With {punkte2} Points!   ");
+                Console.WriteLine($"     With {punkte2} Points!    ");
+
+                Console.WriteLine($" Player 1 has {punkte} Points  ");
             }
             else if (gameover == 2)
             {
-                Console.WriteLine("    Player 1 Wins!    ");   // Zeigt, dass Spieler 1 gewinnt
+                Console.WriteLine("     Player 1 Wins!     ");   // Zeigt, dass Spieler 1 gewinnt
 
-                Console.WriteLine($"    With {punkte} Points!   ");
+                Console.WriteLine($"     With {punkte} Points!    ");
+
+                Console.WriteLine($" Player 2 has {punkte2} Points  ");
             }
             else
             {
                 Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
             }
 
-            Console.WriteLine("======================");
+            Console.WriteLine("========================");
 
             Console.WriteLine("Drücke ESC zum Beenden oder Enter für eine neue Runde...");
 
@@ -590,16 +594,21 @@ namespace Snake
 
                     if (zeichen == skin)
 
+                    {
                         Console.ForegroundColor = farbe; // Spieler 1
 
-                    else if (zeichen == skin2)
+                    }else if (zeichen == skin2)
 
+                    {
                         Console.ForegroundColor = farbe2; // Spieler 2
 
-                    else if (zeichen == food)
+                    }else if (zeichen == food)
 
+                    {
                         Console.ForegroundColor = foodfarbe; // Futter
 
+                    }
+                    
                     Console.Write(zeichen);
                 }
 
