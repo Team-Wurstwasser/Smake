@@ -209,9 +209,9 @@ namespace Snake.io
 
             // Aussehen einstellen
 
-            head = 'v';
+            head = '∨';
 
-            head2 = 'v';
+            head2 = '∨';
 
             skin = '+';
 
@@ -606,7 +606,7 @@ namespace Snake.io
                                 inputY = -1;
                                 inputX = 0;
                                 aenderung = false;
-                                head = '^';
+                                head = '∧';
                             }
                             
                             break;
@@ -618,7 +618,7 @@ namespace Snake.io
                                 inputY = 1;
                                 inputX = 0;
                                 aenderung = false;
-                                head = 'v';
+                                head = '∨';
                             }
                             
                             break;
@@ -660,7 +660,7 @@ namespace Snake.io
                                 inputY2 = -1;
                                 inputX2 = 0;
                                 aenderung2 = false;
-                                head2 = '^';
+                                head2 = '∧';
                             }
                             
                             break;
@@ -672,7 +672,7 @@ namespace Snake.io
                                 inputY2 = 1;
                                 inputX2 = 0;
                                 aenderung2 = false;
-                                head2 = 'v';
+                                head2 = '∨';
                             }
                             
                             break;
