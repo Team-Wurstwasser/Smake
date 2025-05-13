@@ -99,7 +99,11 @@ namespace Snake
 
         static ConsoleColor farbe;
 
+        static ConsoleColor headfarbe;
+
         static ConsoleColor farbe2;
+
+        static ConsoleColor headfarbe2;
 
         // Punkte der Spieler
 
@@ -219,7 +223,11 @@ namespace Snake
 
             farbe = ConsoleColor.Red;
 
+            headfarbe = ConsoleColor.DarkRed;
+
             farbe2 = ConsoleColor.Blue;
+
+            headfarbe2 = ConsoleColor.DarkBlue;
 
             // Punkte zurücksetzen
 
@@ -719,9 +727,9 @@ namespace Snake
 
                     // Farbwahl je nach Position oder Zeichen
                     if (x == playerX[0] && y == playerY[0])
-                        neueFarbe = ConsoleColor.Yellow;
+                        neueFarbe = headfarbe;
                     else if (x == playerX2[0] && y == playerY2[0])
-                        neueFarbe = ConsoleColor.Cyan;
+                        neueFarbe = headfarbe2;
                     else if (zeichen == skin)
                         neueFarbe = farbe;
                     else if (zeichen == skin2)
