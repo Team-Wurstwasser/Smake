@@ -564,6 +564,7 @@ namespace Snake.io
             {
                 tail++;
                 punkte++;
+                Thread.Sleep(10);
                 SetzeFutter();
             }
 
@@ -572,6 +573,7 @@ namespace Snake.io
             {
                 tail2++;
                 punkte2++;
+                Thread.Sleep(10);
                 SetzeFutter();
             }
 
@@ -747,7 +749,7 @@ namespace Snake.io
                     // Farbwahl je nach Position oder Zeichen
                     if (x == playerX[0] && y == playerY[0])
                         neueFarbe = headfarbe;
-                    else if (x == playerX2[0] && y == playerY2[0])
+                    else if (x == playerX2[0] && y == playerY2[0] && multiplayer)
                         neueFarbe = headfarbe2;
                     else if (zeichen == skin)
                         neueFarbe = farbe;
