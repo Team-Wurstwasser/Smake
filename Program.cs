@@ -301,10 +301,25 @@ namespace Snake.io
 
         static ConsoleColor WähleFarbe(string spielerName)
         {
-            var farben = Enum.GetValues(typeof(ConsoleColor))
-                             .Cast<ConsoleColor>()
-                             .Where(f => f != ConsoleColor.Black)
-                             .ToArray();
+            ConsoleColor[] farben = new ConsoleColor[]
+                        {
+                            ConsoleColor.DarkBlue,
+                            ConsoleColor.DarkGreen,
+                            ConsoleColor.DarkCyan,
+                            ConsoleColor.DarkRed,
+                            ConsoleColor.DarkMagenta,
+                            ConsoleColor.DarkYellow,
+                            ConsoleColor.Gray,
+                            ConsoleColor.DarkGray,
+                            ConsoleColor.Blue,
+                            ConsoleColor.Green,
+                            ConsoleColor.Cyan,
+                            ConsoleColor.Red,
+                            ConsoleColor.Magenta,
+                            ConsoleColor.Yellow,
+                            ConsoleColor.White
+                        };
+
 
             while (true)
             {
