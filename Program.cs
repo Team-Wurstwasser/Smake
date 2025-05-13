@@ -301,8 +301,8 @@ namespace Snake.io
 
         static ConsoleColor WähleFarbe(string spielerName)
         {
-            ConsoleColor[] farben = new ConsoleColor[]
-                        {
+            ConsoleColor[] farben =
+                        [
                             ConsoleColor.DarkBlue,
                             ConsoleColor.DarkGreen,
                             ConsoleColor.DarkCyan,
@@ -318,7 +318,7 @@ namespace Snake.io
                             ConsoleColor.Magenta,
                             ConsoleColor.Yellow,
                             ConsoleColor.White
-                        };
+                        ];
 
 
             while (true)
