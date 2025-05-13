@@ -79,9 +79,13 @@ namespace Snake
 
         static char skin2;
 
-        ConsoleColor farbe;
+        static char food;
 
-        ConsoleColor farbe2;
+        static ConsoleColor foodfarbe;
+
+        static ConsoleColor farbe;
+
+        static ConsoleColor farbe2;
 
         // Punkte der Spieler
 
@@ -189,6 +193,14 @@ namespace Snake
 
             skin2 = 'x';
 
+            food = '*';
+
+            foodfarbe = ConsoleColor.Green;
+
+            farbe = ConsoleColor.Red;
+
+            farbe2 = ConsoleColor.Blue;
+
             // Punkte zurücksetzen
 
             punkte = 0;
@@ -198,7 +210,7 @@ namespace Snake
 
             // Zeit einstellen
 
-            zeit = 100;
+            zeit = 50;
 
             // Alle Eingabewerte zurücksetzen
             inputX = 0;
@@ -540,7 +552,7 @@ namespace Snake
                                 inputY2 = 0;
                                 inputX2 = -1;
                                 aenderung2 = false;
-                                head = '<';
+                                head2 = '<';
                             }
                             
                             break;
@@ -558,29 +570,44 @@ namespace Snake
         // Zeichnet das gesamte Spielfeld auf der Konsole
 
         static void Render()
-
         {
-
-            // Cursor zurücksetzen "übermahlt" letztes Frame
-
             Console.SetCursorPosition(0, 0);
 
-            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+            for (int y = 0; y < grid.GetLength(0); y++)
 
             {
 
-                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                for (int x = 0; x < grid.GetLength(1); x++)
 
                 {
+                    char zeichen = grid[y, x];
 
-                    Console.Write(grid[reihe, symbol]);
+                    // Standardfarbe
 
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    // Kopfspielerfarben lassen wir weiß
+
+                    if (zeichen == skin)
+
+                        Console.ForegroundColor = farbe; // Spieler 1
+
+                    else if (zeichen == skin2)
+
+                        Console.ForegroundColor = farbe2; // Spieler 2
+
+                    else if (zeichen == food)
+
+                        Console.ForegroundColor = foodfarbe; // Futter
+
+                    Console.Write(zeichen);
                 }
 
-                Console.WriteLine(); // Neue Zeile nach jeder Reihe
-
+                Console.WriteLine();
             }
 
+            // Farbe zurücksetzen
+            Console.ResetColor();
         }
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche, Spieler
