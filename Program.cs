@@ -132,29 +132,9 @@ namespace Snake
                 inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
                                 
                 ShowGameOverScreen();// Spielende-Bildschirm
-
-                // Leere Eingabepuffer vollständig
-                while (Console.KeyAvailable) Console.ReadKey(true);
-
-                do
-                {
-                    while (Console.KeyAvailable) Console.ReadKey(true);
-                    var key2 = Console.ReadKey(true).Key;
-                    switch (key2)
-                    {
-                        case ConsoleKey.Enter:
-                            check = true;
-                            break;
-
-                        case ConsoleKey.Escape:
-                            exit = true;
-                            check = true;
-                            break;
-
-                    }
-                }
-                while (!check);
-                
+                                
+                while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
+                                
             } while (!exit);
 
         }
@@ -234,7 +214,6 @@ namespace Snake
 
         }
 
-
         static void ShowGameOverScreen()
 
         {
@@ -263,6 +242,25 @@ namespace Snake
             Console.WriteLine("======================");
 
             Console.WriteLine("Drücke ESC zum Beenden oder Enter für eine neue Runde...");
+
+            do
+            {
+                while (Console.KeyAvailable) Console.ReadKey(true);
+                var key2 = Console.ReadKey(true).Key;
+                switch (key2)
+                {
+                    case ConsoleKey.Enter:
+                        check = true;
+                        break;
+
+                    case ConsoleKey.Escape:
+                        exit = true;
+                        check = true;
+                        break;
+
+                }
+            }
+            while (!check);
 
         }
 
