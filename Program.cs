@@ -89,15 +89,10 @@ namespace Snake
             {
                 neustart();
 
-                // Mauszeiger im Konsolenfenster ausblenden
-
-                Console.CursorVisible = false;
-
                 // Starte separaten Thread für Tastatureingaben
 
                 Thread inputThread = new Thread(ReadInput);
                 inputThread.Start();
-
 
                 // Starte Begrüßungsbildschirm
 
@@ -112,7 +107,6 @@ namespace Snake
                 Render();
 
                 Thread.Sleep(1000);
-
 
                 // Game Loop 
 
@@ -135,14 +129,12 @@ namespace Snake
 
                 }
 
-
                 inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
                                 
                 ShowGameOverScreen();// Spielende-Bildschirm
 
                 // Leere Eingabepuffer vollständig
                 while (Console.KeyAvailable) Console.ReadKey(true);
-
 
                 do
                 {
@@ -164,8 +156,6 @@ namespace Snake
                 while (!check);
                 
             } while (!exit);
-
-
 
         }
 
@@ -212,6 +202,10 @@ namespace Snake
             inputY = 0;
             inputY2 = 0;
 
+            // Mauszeiger im Konsolenfenster ausblenden
+
+            Console.CursorVisible = false;
+            
         }
 
         // Zeigt den Startbildschirm mit Anweisungen
