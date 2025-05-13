@@ -142,8 +142,7 @@ namespace SpielEinfuehrungLoesung
 
                 }
 
-                inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
-
+                
             } while (!exit);
 
 
@@ -313,7 +312,7 @@ namespace SpielEinfuehrungLoesung
                     grid[playerY2[i], playerX2[i]] = '+';
                 }
 
-                grid[playerY2[tail2 + 1], playerX2[tail + 1]] = ' ';        // Altes Feld leeren
+                grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';        // Altes Feld leeren
 
                 playerX2[0] = newPlayerX2;
 
