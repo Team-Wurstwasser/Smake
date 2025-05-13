@@ -177,7 +177,7 @@ namespace Snake
             Array.Clear(playerY2, 0, playerY2.Length);
 
             // Spieler-Positionen auf Startwerte setzen
-            playerX[0] = 20;
+            playerX[0] = 36;
             playerY[0] = 4;
             playerX2[0] = 4;
             playerY2[0] = 4;
