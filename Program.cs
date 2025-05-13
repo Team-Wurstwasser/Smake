@@ -396,10 +396,6 @@ namespace Snake.io
                     Console.WriteLine($"     With {punkte} Points!    ");
                     Console.WriteLine($"     {name2} has {punkte2} Points  ");
                     break;
-
-                default:
-                    Console.WriteLine("       GAME OVER      ");
-                    break;
             }
         }
 
@@ -408,20 +404,17 @@ namespace Snake.io
             switch (gameover)
             {
                 case 1:
-                    Console.WriteLine("       GAME OVER      ");
-                    Console.WriteLine($"     {name} has {punkte} Points  ");
+                    Console.WriteLine("       Game Over!      ");
+                    Console.WriteLine($"You scored {punkte} points.");
                     break;
 
                 case 2:
-                    Console.WriteLine($"     {name} Wins!     ");
-                    Console.WriteLine($"     With {punkte} Points!    ");
-                    break;
-
-                default:
-                    Console.WriteLine("       GAME OVER      ");
+                    Console.WriteLine("     Congratulations! You Win!     ");
+                    Console.WriteLine($"You scored {punkte} points.");
                     break;
             }
         }
+
 
         static void WaitForPlayerInput()
         {
