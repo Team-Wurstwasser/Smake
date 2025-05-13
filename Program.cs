@@ -400,30 +400,42 @@ namespace SpielEinfuehrungLoesung
 
                         case ConsoleKey.UpArrow:
 
-                            inputY = -1;
-                            inputX = 0;
-
+                            if (inputY != 1)
+                            {
+                                inputY = -1;
+                                inputX = 0;
+                            }
+                            
                             break;
 
                         case ConsoleKey.DownArrow:
 
-                            inputY = 1;
-                            inputX = 0;
-
+                            if (inputY != -1)
+                            {
+                                inputY = 1;
+                                inputX = 0;
+                            }
+                            
                             break;
 
                         case ConsoleKey.RightArrow:
 
-                            inputY = 0;
-                            inputX = 1;
-
+                            if (inputX != -1)
+                            {
+                                inputY = 0;
+                                inputX = 1;
+                            }
+                            
                             break;
 
                         case ConsoleKey.LeftArrow:
 
-                            inputY = 0;
-                            inputX = -1;
-
+                            if (inputX != 1)
+                            {
+                                inputY = 0;
+                                inputX = -1;
+                            }
+                            
                             break;
 
                         case ConsoleKey.Escape:
@@ -434,30 +446,42 @@ namespace SpielEinfuehrungLoesung
 
                         case ConsoleKey.W:
 
-                            inputY2 = -1;
-                            inputX2 = 0;
-
+                            if (inputY2 != 1)
+                            {
+                                inputY2 = -1;
+                                inputX2 = 0;
+                            }
+                            
                             break;
 
                         case ConsoleKey.S:
 
-                            inputY2 = 1;
-                            inputX2 = 0;
-
+                            if (inputY2 != -1)
+                            {
+                                inputY2 = 1;
+                                inputX2 = 0;
+                            }
+                            
                             break;
 
                         case ConsoleKey.D:
 
-                            inputY2 = 0;
-                            inputX2 = 1;
-
+                            if (inputX2 != -1)
+                            {
+                                inputY2 = 0;
+                                inputX2 = 1;
+                            }
+                            
                             break;
 
                         case ConsoleKey.A:
 
-                            inputY2 = 0;
-                            inputX2 = -1;
-
+                            if (inputX2 != 1)
+                            {
+                                inputY2 = 0;
+                                inputX2 = -1;
+                            }
+                            
                             break;
 
                     }
@@ -465,7 +489,7 @@ namespace SpielEinfuehrungLoesung
                 }
 
             }
-
+            
         }
 
 
