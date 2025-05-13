@@ -223,13 +223,13 @@ namespace SpielEinfuehrungLoesung
             {
                 Console.WriteLine("    Player 2 Wins!    ");   // Zeigt, dass Spieler 2 gewinnt
 
-                Console.WriteLine("    With {0} Points!   ", punkte2);
+                Console.WriteLine($"    With {punkte2} Points!   ");
             }
             else if (gameover == 2)
             {
                 Console.WriteLine("    Player 1 Wins!    ");   // Zeigt, dass Spieler 1 gewinnt
 
-                Console.WriteLine("    With {0} Points!   ", punkte);
+                Console.WriteLine($"    With {punkte} Points!   ");
             }
             else
             {
