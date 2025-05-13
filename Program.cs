@@ -162,9 +162,9 @@ namespace SpielEinfuehrungLoesung
             Array.Clear(playerY2, 0, playerY2.Length);
 
             // Spieler-Positionen auf Startwerte setzen
-            playerX[0] = 4;
+            playerX[0] = 20;
             playerY[0] = 4;
-            playerX2[0] = 20;
+            playerX2[0] = 4;
             playerY2[0] = 4;
 
             // Taillängen zurücksetzen
