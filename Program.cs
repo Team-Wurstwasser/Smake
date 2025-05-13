@@ -180,7 +180,6 @@ namespace Snake.io
         static void Neustart()
         {
             spiel = true;
-            check = false;
 
             gameover = 0;
 
