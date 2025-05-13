@@ -1,4 +1,4 @@
-namespace Snake
+namespace Snake.io
 
 {
 
@@ -120,16 +120,16 @@ namespace Snake
         static void Main()
 
         {
-            
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Eingaben();
 
             do
             {
-                neustart();
+                Neustart();
 
                 // Starte separaten Thread für Tastatureingaben
 
-                Thread inputThread = new Thread(ReadInput);
+                Thread inputThread = new(ReadInput);
                 inputThread.Start();
 
                 // Starte Begrüßungsbildschirm
@@ -177,7 +177,7 @@ namespace Snake
 
         }
 
-        static void neustart()
+        static void Neustart()
         {
             spiel = true;
             check = false;
@@ -561,7 +561,7 @@ namespace Snake
         }
         static void SetzeFutter()
         {
-            Random rand = new Random();
+            Random rand = new();
 
             // Futter nur auf X-Positionen spawnen lassen, die durch 2 teilbar sind
             do
