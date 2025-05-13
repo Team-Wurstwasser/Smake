@@ -69,6 +69,20 @@ namespace Snake
 
         static int tail2;
 
+        // Aussehen des Spielers
+
+        static char head;
+
+        static char head2;
+
+        static char skin;
+
+        static char skin2;
+
+        ConsoleColor farbe;
+
+        ConsoleColor farbe2;
+
         // Punkte der Spieler
 
         static int punkte;
@@ -164,6 +178,16 @@ namespace Snake
             // Taillängen zurücksetzen
             tail = 3;
             tail2 = 3;
+
+            // Aussehen einstellen
+
+            head = 'v';
+
+            head2 = 'v';
+
+            skin = '+';
+
+            skin2 = 'x';
 
             // Punkte zurücksetzen
 
@@ -308,11 +332,11 @@ namespace Snake
 
             {
 
-                grid[newPlayerY, newPlayerX] = '█';  // Spieler auf neues Feld setzen
+                grid[newPlayerY, newPlayerX] = head;  // Spieler auf neues Feld setzen
 
                 for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
                 {
-                    grid[playerY[i], playerX[i]] = '+';
+                    grid[playerY[i], playerX[i]] = skin;
                 }
 
                 grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
@@ -327,11 +351,11 @@ namespace Snake
 
             {
 
-                grid[newPlayerY2, newPlayerX2] = 'O';  // Spieler auf neues Feld setzen
+                grid[newPlayerY2, newPlayerX2] = head2;  // Spieler auf neues Feld setzen
 
                 for (int i = 0; i <= tail2; i++)       // Tail des Spielers Zeichnen
                 {
-                    grid[playerY2[i], playerX2[i]] = '+';
+                    grid[playerY2[i], playerX2[i]] = skin2;
                 }
 
                 grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';        // Altes Feld leeren
@@ -342,7 +366,7 @@ namespace Snake
 
             }
 
-            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != '█' && grid[newPlayerY, newPlayerX] != '*' || punkte2 == maxpunkte)
+            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != head && grid[newPlayerY, newPlayerX] != '*' || punkte2 == maxpunkte)
             {
 
                 spiel = false;
@@ -351,7 +375,7 @@ namespace Snake
 
             }
 
-            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != 'O' && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
+            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
             {
 
                 spiel = false;
@@ -426,6 +450,7 @@ namespace Snake
                                 inputY = -1;
                                 inputX = 0;
                                 aenderung = false;
+                                head = '^';
                             }
                             
                             break;
@@ -437,6 +462,7 @@ namespace Snake
                                 inputY = 1;
                                 inputX = 0;
                                 aenderung = false;
+                                head = 'v';
                             }
                             
                             break;
@@ -448,6 +474,7 @@ namespace Snake
                                 inputY = 0;
                                 inputX = 1;
                                 aenderung = false;
+                                head = '>';
                             }
                             
                             break;
@@ -459,6 +486,7 @@ namespace Snake
                                 inputY = 0;
                                 inputX = -1;
                                 aenderung = false;
+                                head = '<';
                             }
                             
                             break;
@@ -476,6 +504,7 @@ namespace Snake
                                 inputY2 = -1;
                                 inputX2 = 0;
                                 aenderung2 = false;
+                                head2 = '^';
                             }
                             
                             break;
@@ -487,6 +516,7 @@ namespace Snake
                                 inputY2 = 1;
                                 inputX2 = 0;
                                 aenderung2 = false;
+                                head2 = 'v';
                             }
                             
                             break;
@@ -498,6 +528,7 @@ namespace Snake
                                 inputY2 = 0;
                                 inputX2 = 1;
                                 aenderung2 = false;
+                                head2 = '>';
                             }
                             
                             break;
@@ -509,6 +540,7 @@ namespace Snake
                                 inputY2 = 0;
                                 inputX2 = -1;
                                 aenderung2 = false;
+                                head = '<';
                             }
                             
                             break;
@@ -591,9 +623,9 @@ namespace Snake
 
             // Spielerzeichen auf Startposition setzen
 
-            grid[playerY[0], playerX[0]] = '█';
+            grid[playerY[0], playerX[0]] = head;
 
-            grid[playerY2[0], playerX2[0]] = 'O';
+            grid[playerY2[0], playerX2[0]] = head2;
 
         }
 
