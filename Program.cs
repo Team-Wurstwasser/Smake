@@ -204,7 +204,7 @@ namespace SpielEinfuehrungLoesung
 
             Console.WriteLine("Taste Enter zum Starten...");
 
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { } 
 
             Console.Clear();
 
