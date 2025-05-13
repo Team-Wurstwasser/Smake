@@ -302,34 +302,35 @@ namespace Snake.io
 
         static ConsoleColor WähleFarbe(string spielerName)
         {
-            ConsoleColor[] verfügbareFarben = (ConsoleColor[])Enum.GetValues(typeof(ConsoleColor));
-            int auswahl = 0;
+            var farben = Enum.GetValues(typeof(ConsoleColor))
+                             .Cast<ConsoleColor>()
+                             .Where(f => f != ConsoleColor.Black)
+                             .ToArray();
 
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine($"Wähle eine Farbe für {spielerName}:");
 
-                for (int i = 0; i < verfügbareFarben.Length; i++)
+                for (int i = 0; i < farben.Length; i++)
                 {
-                    ConsoleColor vorherigeFarbe = Console.ForegroundColor;
-                    Console.ForegroundColor = verfügbareFarben[i];
-                    Console.WriteLine($"{i + 1}. {verfügbareFarben[i]}");
-                    Console.ForegroundColor = vorherigeFarbe;
+                    Console.ForegroundColor = farben[i];
+                    Console.WriteLine($"{i + 1}. {farben[i]}");
                 }
 
-                Console.Write("Gib die Nummer der gewünschten Farbe ein: ");
-                string eingabe = Console.ReadLine();
-
-                if (int.TryParse(eingabe, out auswahl) && auswahl >= 1 && auswahl <= verfügbareFarben.Length)
+                Console.ResetColor();
+                Console.Write("Nummer der Farbe: ");
+                if (int.TryParse(Console.ReadLine(), out int eingabe) &&
+                    eingabe >= 1 && eingabe <= farben.Length)
                 {
-                    return verfügbareFarben[auswahl - 1];
+                    return farben[eingabe - 1];
                 }
 
-                Console.WriteLine("Ungültige Eingabe! Taste drücken zum Wiederholen...");
+                Console.WriteLine("Ungültige Eingabe. Beliebige Taste zum Wiederholen...");
                 Console.ReadKey();
             }
         }
+
 
         // Zeigt den Startbildschirm mit Anweisungen
 
