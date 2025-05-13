@@ -221,14 +221,6 @@ namespace Snake.io
 
             foodfarbe = ConsoleColor.Green;
 
-            farbe = ConsoleColor.Red;
-
-            headfarbe = ConsoleColor.DarkRed;
-
-            farbe2 = ConsoleColor.Blue;
-
-            headfarbe2 = ConsoleColor.DarkBlue;
-
             // Punkte zurücksetzen
 
             punkte = 0;
@@ -257,28 +249,21 @@ namespace Snake.io
             Console.Clear();
 
             Console.WriteLine("======================");
-
             Console.WriteLine("       Snake.io       ");
-
             Console.WriteLine("======================");
-
             Console.Write("Spieler 1, gib deinen Namen ein: ");
-
             name = Console.ReadLine();
 
+            farbe = WähleFarbe(name);
+            headfarbe = WähleFarbe(name + " (Kopf)");
+
             bool i = true;
-
             do
-            {               
-
+            {
                 Console.Clear();
-
                 Console.WriteLine("======================");
-
                 Console.WriteLine("       Snake.io       ");
-
                 Console.WriteLine("======================");
-
                 Console.Write("Multiplayer? (y/n): ");
 
                 switch (Console.ReadLine())
@@ -298,23 +283,51 @@ namespace Snake.io
                         Thread.Sleep(500);
                         break;
                 }
-                
             }
             while (i);
 
             if (multiplayer)
             {
                 Console.Clear();
-
                 Console.WriteLine("======================");
-
                 Console.WriteLine("       Snake.io       ");
-
                 Console.WriteLine("======================");
-
                 Console.Write("Spieler 2, gib deinen Namen ein: ");
-
                 name2 = Console.ReadLine();
+
+                farbe2 = WähleFarbe(name2);
+                headfarbe2 = WähleFarbe(name2 + " (Kopf)");
+            }
+        }
+
+        static ConsoleColor WähleFarbe(string spielerName)
+        {
+            ConsoleColor[] verfügbareFarben = (ConsoleColor[])Enum.GetValues(typeof(ConsoleColor));
+            int auswahl = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"Wähle eine Farbe für {spielerName}:");
+
+                for (int i = 0; i < verfügbareFarben.Length; i++)
+                {
+                    ConsoleColor vorherigeFarbe = Console.ForegroundColor;
+                    Console.ForegroundColor = verfügbareFarben[i];
+                    Console.WriteLine($"{i + 1}. {verfügbareFarben[i]}");
+                    Console.ForegroundColor = vorherigeFarbe;
+                }
+
+                Console.Write("Gib die Nummer der gewünschten Farbe ein: ");
+                string eingabe = Console.ReadLine();
+
+                if (int.TryParse(eingabe, out auswahl) && auswahl >= 1 && auswahl <= verfügbareFarben.Length)
+                {
+                    return verfügbareFarben[auswahl - 1];
+                }
+
+                Console.WriteLine("Ungültige Eingabe! Taste drücken zum Wiederholen...");
+                Console.ReadKey();
             }
         }
 
