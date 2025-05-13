@@ -63,6 +63,20 @@ namespace Snake
 
         static int futterY;
 
+        // Spielmodi
+
+        static bool multiplayer;
+
+        static int dificulty;
+
+        static int mode;
+
+        // Namen der Spieler
+
+        static string name;
+
+        static string name2;
+
         // Länge des Spielers
 
         static int tail;
@@ -102,6 +116,8 @@ namespace Snake
         static void Main()
 
         {
+            
+            Eingaben();
 
             do
             {
@@ -179,6 +195,10 @@ namespace Snake
             aenderung = true;
             aenderung2 = true;
 
+            dificulty = 0;
+
+            mode = 0;
+
             // Taillängen zurücksetzen
             tail = 3;
             tail2 = 3;
@@ -224,6 +244,72 @@ namespace Snake
             
         }
 
+        static void Eingaben()
+        {
+            Console.Clear();
+
+            Console.WriteLine("======================");
+
+            Console.WriteLine("       Snake.io       ");
+
+            Console.WriteLine("======================");
+
+            Console.Write("Spieler 1, gib deinen Namen ein: ");
+
+            name = Console.ReadLine();
+
+            bool i = true;
+
+            do
+            {               
+
+                Console.Clear();
+
+                Console.WriteLine("======================");
+
+                Console.WriteLine("       Snake.io       ");
+
+                Console.WriteLine("======================");
+
+                Console.Write("Multiplayer? (y/n): ");
+
+                switch (Console.ReadLine())
+                {
+                    case "y":
+                        multiplayer = true;
+                        i = false;
+                        break;
+
+                    case "n":
+                        multiplayer = false;
+                        i = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Falsche Eingabe!!!");
+                        Thread.Sleep(500);
+                        break;
+                }
+                
+            }
+            while (i);
+
+            if (multiplayer)
+            {
+                Console.Clear();
+
+                Console.WriteLine("======================");
+
+                Console.WriteLine("       Snake.io       ");
+
+                Console.WriteLine("======================");
+
+                Console.Write("Spieler 2, gib deinen Namen ein: ");
+
+                name2 = Console.ReadLine();
+            }
+        }
+
         // Zeigt den Startbildschirm mit Anweisungen
 
         static void ShowStartScreen()
@@ -238,9 +324,12 @@ namespace Snake
 
             Console.WriteLine("======================");
 
-            Console.WriteLine("P1: Pfeiltasten: Links/Rechts/Hoch/Runter");
+            Console.WriteLine($"{name}: Pfeiltasten: Links/Rechts/Hoch/Runter");
 
-            Console.WriteLine("P2: WASD: Links/Rechts/Hoch/Runter");
+            if (multiplayer)
+            {
+                Console.WriteLine($"{name2}: WASD: Links/Rechts/Hoch/Runter");
+            }
 
             Console.WriteLine("Taste Enter zum Starten...");
 
@@ -258,25 +347,47 @@ namespace Snake
 
             Console.WriteLine("========================");
 
-            if (gameover == 1)
+            if (multiplayer)
             {
-                Console.WriteLine("     Player 2 Wins!     ");   // Zeigt, dass Spieler 2 gewinnt
+                if (gameover == 1)
+                {
+                    Console.WriteLine($"     {name2} Wins!     ");   // Zeigt, dass Spieler 2 gewinnt
 
-                Console.WriteLine($"     With {punkte2} Points!    ");
+                    Console.WriteLine($"     With {punkte2} Points!    ");
 
-                Console.WriteLine($" Player 1 has {punkte} Points  ");
-            }
-            else if (gameover == 2)
-            {
-                Console.WriteLine("     Player 1 Wins!     ");   // Zeigt, dass Spieler 1 gewinnt
+                    Console.WriteLine($" {name} has {punkte} Points  ");
+                }
+                else if (gameover == 2)
+                {
+                    Console.WriteLine($"     {name} Wins!     ");   // Zeigt, dass Spieler 1 gewinnt
 
-                Console.WriteLine($"     With {punkte} Points!    ");
+                    Console.WriteLine($"     With {punkte} Points!    ");
 
-                Console.WriteLine($" Player 2 has {punkte2} Points  ");
+                    Console.WriteLine($"  {name2}  has s {punkte2} Points  ");
+                }
+                else
+                {
+                    Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
+                }
             }
             else
             {
-                Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
+                if (gameover == 1)
+                {
+                    Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
+
+                    Console.WriteLine($"  {name} has {punkte} Points  ");
+                }
+                else if (gameover == 2)
+                {
+                    Console.WriteLine($"      {name} Wins!     ");   // Zeigt, dass Spieler 1 gewinnt
+
+                    Console.WriteLine($"     With {punkte} Points!    ");
+                }
+                else
+                {
+                    Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
+                }
             }
 
             Console.WriteLine("========================");
@@ -315,11 +426,12 @@ namespace Snake
             int newPlayerX = playerX[0] + 2 * inputX;
 
             int newPlayerY = playerY[0] + inputY;
-
+           
             int newPlayerX2 = playerX2[0] + 2 * inputX2;
 
             int newPlayerY2 = playerY2[0] + inputY2;
-
+            
+            
             // Tailkoordinaten berechnen
 
             for (int i = playerX.Length - 1; i > 0; i--)
@@ -332,14 +444,17 @@ namespace Snake
                 playerY[i] = playerY[i - 1];
             }
 
-            for (int i = playerX2.Length - 1; i > 0; i--)
+            if (multiplayer)
             {
-                playerX2[i] = playerX2[i - 1];
-            }
+                for (int i = playerX2.Length - 1; i > 0; i--)
+                {
+                    playerX2[i] = playerX2[i - 1];
+                }
 
-            for (int i = playerY2.Length - 1; i > 0; i--)
-            {
-                playerY2[i] = playerY2[i - 1];
+                for (int i = playerY2.Length - 1; i > 0; i--)
+                {
+                    playerY2[i] = playerY2[i - 1];
+                }
             }
 
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
@@ -363,23 +478,26 @@ namespace Snake
 
             }
 
-            if (grid[newPlayerY2, newPlayerX2] == ' ' || grid[newPlayerY2, newPlayerX2] == '*')
-
+            if (multiplayer)
             {
+                if (grid[newPlayerY2, newPlayerX2] == ' ' || grid[newPlayerY2, newPlayerX2] == '*')
 
-                grid[newPlayerY2, newPlayerX2] = head2;  // Spieler auf neues Feld setzen
-
-                for (int i = 0; i <= tail2; i++)       // Tail des Spielers Zeichnen
                 {
-                    grid[playerY2[i], playerX2[i]] = skin2;
+
+                    grid[newPlayerY2, newPlayerX2] = head2;  // Spieler auf neues Feld setzen
+
+                    for (int i = 0; i <= tail2; i++)       // Tail des Spielers Zeichnen
+                    {
+                        grid[playerY2[i], playerX2[i]] = skin2;
+                    }
+
+                    grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
+
+                    playerX2[0] = newPlayerX2;
+
+                    playerY2[0] = newPlayerY2;
+
                 }
-
-                grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';        // Altes Feld leeren
-
-                playerX2[0] = newPlayerX2;
-
-                playerY2[0] = newPlayerY2;
-
             }
 
             if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != head && grid[newPlayerY, newPlayerX] != '*' || punkte2 == maxpunkte)
@@ -391,6 +509,8 @@ namespace Snake
 
             }
 
+            
+            
             if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
             {
 
@@ -398,7 +518,8 @@ namespace Snake
 
                 gameover = 2;
 
-            }
+             }
+            
 
             // Spieler 1 frisst Futter
             if (playerX[0] == futterX && playerY[0] == futterY)
@@ -409,7 +530,7 @@ namespace Snake
             }
 
             // Spieler 2 frisst Futter
-            if (playerX2[0] == futterX && playerY2[0] == futterY)
+            if (playerX2[0] == futterX && playerY2[0] == futterY && multiplayer)
             {
                 tail2++;
                 punkte2++;
@@ -515,7 +636,7 @@ namespace Snake
 
                         case ConsoleKey.W:
 
-                            if (inputY2 != 1 && aenderung2)
+                            if (inputY2 != 1 && aenderung2 && multiplayer)
                             {
                                 inputY2 = -1;
                                 inputX2 = 0;
@@ -527,7 +648,7 @@ namespace Snake
 
                         case ConsoleKey.S:
 
-                            if (inputY2 != -1 && aenderung2)
+                            if (inputY2 != -1 && aenderung2 && multiplayer)
                             {
                                 inputY2 = 1;
                                 inputX2 = 0;
@@ -539,7 +660,7 @@ namespace Snake
 
                         case ConsoleKey.D:
 
-                            if (inputX2 != -1 && aenderung2)
+                            if (inputX2 != -1 && aenderung2 && multiplayer)
                             {
                                 inputY2 = 0;
                                 inputX2 = 1;
@@ -551,7 +672,7 @@ namespace Snake
 
                         case ConsoleKey.A:
 
-                            if (inputX2 != 1 && aenderung2)
+                            if (inputX2 != 1 && aenderung2 && multiplayer)
                             {
                                 inputY2 = 0;
                                 inputX2 = -1;
@@ -597,7 +718,7 @@ namespace Snake
                     {
                         Console.ForegroundColor = farbe; // Spieler 1
 
-                    }else if (zeichen == skin2)
+                    }else if (zeichen == skin2 && multiplayer)
 
                     {
                         Console.ForegroundColor = farbe2; // Spieler 2
@@ -661,8 +782,11 @@ namespace Snake
 
             grid[playerY[0], playerX[0]] = head;
 
-            grid[playerY2[0], playerX2[0]] = head2;
-
+            if (multiplayer)
+            {
+                grid[playerY2[0], playerX2[0]] = head2;
+            }
+            
         }
 
     }
