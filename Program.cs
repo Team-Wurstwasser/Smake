@@ -42,13 +42,13 @@ namespace SpielEinfuehrungLoesung
 
         // Position des Spielers (Startkoordinaten)
 
-        static int[] playerX = new int[99];
+        static int[] playerX = new int[25];
 
-        static int[] playerY = new int[99];
+        static int[] playerY = new int[25];
 
-        static int[] playerX2 = new int[99];
+        static int[] playerX2 = new int[25];
 
-        static int[] playerY2 = new int[99];
+        static int[] playerY2 = new int[25];
 
         // Position des Futters
 
@@ -67,6 +67,8 @@ namespace SpielEinfuehrungLoesung
         static int punkte;
 
         static int punkte2;
+
+        static int maxpunkte;
 
         static void Main()
 
@@ -168,13 +170,15 @@ namespace SpielEinfuehrungLoesung
             playerY2[0] = 4;
 
             // Taillängen zurücksetzen
-            tail = 10;
-            tail2 = 10;
+            tail = 3;
+            tail2 = 3;
 
             // Punkte zurücksetzen
 
             punkte = 0;
             punkte2 = 0;
+
+            maxpunkte = 10;
 
             // Alle Eingabewerte zurücksetzen
             inputX = 0;
@@ -320,7 +324,7 @@ namespace SpielEinfuehrungLoesung
 
             }
 
-            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != '█' && grid[newPlayerY, newPlayerX] != '*')
+            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != '█' && grid[newPlayerY, newPlayerX] != '*' || punkte2 == maxpunkte)
             {
 
                 spiel = false;
@@ -329,7 +333,7 @@ namespace SpielEinfuehrungLoesung
 
             }
 
-            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != 'O' && grid[newPlayerY2, newPlayerX2] != '*')
+            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != 'O' && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
             {
 
                 spiel = false;
