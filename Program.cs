@@ -18,7 +18,10 @@ namespace Snake
 
         static int gameover;
 
+        static bool check;
+
         static bool exit = false;
+
 
         // Spielfeldgröße (Breite x Höhe)
 
@@ -134,20 +137,25 @@ namespace Snake
                 // Leere Eingabepuffer vollständig
                 while (Console.KeyAvailable) Console.ReadKey(true);
 
-                var key2 = Console.ReadKey(true).Key;
 
-                switch (key2)
+                do
                 {
-                    case ConsoleKey.Enter:
+                    while (Console.KeyAvailable) Console.ReadKey(true);
+                    var key2 = Console.ReadKey(true).Key;
+                    switch (key2)
+                    {
+                        case ConsoleKey.Enter:
+                            check = true;
+                            break;
 
-                        break;
+                        case ConsoleKey.Escape:
+                            exit = true;
+                            check = true;
+                            break;
 
-                    case ConsoleKey.Escape:
-                        exit = true;
-                        break;
-
+                    }
                 }
-
+                while (!check);
                 
             } while (!exit);
 
@@ -158,6 +166,7 @@ namespace Snake
         static void neustart()
         {
             spiel = true;
+            check = false;
 
             gameover = 0;
 
