@@ -509,17 +509,28 @@ namespace Snake
 
             }
 
-            
-            
-            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
+            if (multiplayer)
             {
+                if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
+                {
 
-                spiel = false;
+                    spiel = false;
 
-                gameover = 2;
+                    gameover = 2;
 
-             }
-            
+                }
+            }
+            else
+            {
+                if (punkte == maxpunkte)
+                {
+
+                    spiel = false;
+
+                    gameover = 2;
+
+                }
+            }
 
             // Spieler 1 frisst Futter
             if (playerX[0] == futterX && playerY[0] == futterY)
@@ -711,7 +722,7 @@ namespace Snake
 
                     Console.ForegroundColor = ConsoleColor.White;
 
-                    // Kopfspielerfarben lassen wir weiß
+                     //Kopfspielerfarben lassen wir weiß
 
                     if (zeichen == skin)
 
