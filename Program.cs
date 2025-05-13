@@ -1,4 +1,4 @@
-namespace Snake
+namespace Snake.io
 
 {
 
@@ -120,16 +120,16 @@ namespace Snake
         static void Main()
 
         {
-            
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Eingaben();
 
             do
             {
-                neustart();
+                Neustart();
 
                 // Starte separaten Thread für Tastatureingaben
 
-                Thread inputThread = new Thread(ReadInput);
+                Thread inputThread = new(ReadInput);
                 inputThread.Start();
 
                 // Starte Begrüßungsbildschirm
@@ -177,7 +177,7 @@ namespace Snake
 
         }
 
-        static void neustart()
+        static void Neustart()
         {
             spiel = true;
             check = false;
@@ -209,9 +209,9 @@ namespace Snake
 
             // Aussehen einstellen
 
-            head = 'v';
+            head = '∨';
 
-            head2 = 'v';
+            head2 = '∨';
 
             skin = '+';
 
@@ -563,7 +563,7 @@ namespace Snake
         }
         static void SetzeFutter()
         {
-            Random rand = new Random();
+            Random rand = new();
 
             // Futter nur auf X-Positionen spawnen lassen, die durch 2 teilbar sind
             do
@@ -608,7 +608,7 @@ namespace Snake
                                 inputY = -1;
                                 inputX = 0;
                                 aenderung = false;
-                                head = '^';
+                                head = '∧';
                             }
                             
                             break;
@@ -620,7 +620,7 @@ namespace Snake
                                 inputY = 1;
                                 inputX = 0;
                                 aenderung = false;
-                                head = 'v';
+                                head = '∨';
                             }
                             
                             break;
@@ -662,7 +662,7 @@ namespace Snake
                                 inputY2 = -1;
                                 inputX2 = 0;
                                 aenderung2 = false;
-                                head2 = '^';
+                                head2 = '∧';
                             }
                             
                             break;
@@ -674,7 +674,7 @@ namespace Snake
                                 inputY2 = 1;
                                 inputX2 = 0;
                                 aenderung2 = false;
-                                head2 = 'v';
+                                head2 = '∨';
                             }
                             
                             break;
