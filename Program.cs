@@ -43,6 +43,10 @@ namespace Snake
 
         static int inputY2;
 
+        static bool aenderung;
+
+        static bool aenderung2;
+
         // Position des Spielers (Startkoordinaten)
 
         static int[] playerX = new int[25];
@@ -121,6 +125,10 @@ namespace Snake
 
                     Thread.Sleep(zeit); // Spieltempo regulieren
 
+                    aenderung = true;
+
+                    aenderung2 = true;
+
                     // Reguliert wie oft wird der Loop durchgeführt wird
 
                     // Spiele geschwindigkeit
@@ -129,9 +137,7 @@ namespace Snake
 
 
                 inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
-
-                Thread.Sleep(500);
-
+                                
                 ShowGameOverScreen();// Spielende-Bildschirm
 
                 // Leere Eingabepuffer vollständig
@@ -182,6 +188,9 @@ namespace Snake
             playerX2[0] = 4;
             playerY2[0] = 4;
 
+            aenderung = true;
+            aenderung2 = true;
+
             // Taillängen zurücksetzen
             tail = 3;
             tail2 = 3;
@@ -195,7 +204,7 @@ namespace Snake
 
             // Zeit einstellen
 
-            zeit = 50;
+            zeit = 100;
 
             // Alle Eingabewerte zurücksetzen
             inputX = 0;
@@ -420,40 +429,44 @@ namespace Snake
 
                         case ConsoleKey.UpArrow:
 
-                            if (inputY != 1)
+                            if (inputY != 1 && aenderung)
                             {
                                 inputY = -1;
                                 inputX = 0;
+                                aenderung = false;
                             }
                             
                             break;
 
                         case ConsoleKey.DownArrow:
 
-                            if (inputY != -1)
+                            if (inputY != -1 && aenderung)
                             {
                                 inputY = 1;
                                 inputX = 0;
+                                aenderung = false;
                             }
                             
                             break;
 
                         case ConsoleKey.RightArrow:
 
-                            if (inputX != -1)
+                            if (inputX != -1 && aenderung)
                             {
                                 inputY = 0;
                                 inputX = 1;
+                                aenderung = false;
                             }
                             
                             break;
 
                         case ConsoleKey.LeftArrow:
 
-                            if (inputX != 1)
+                            if (inputX != 1 && aenderung)
                             {
                                 inputY = 0;
                                 inputX = -1;
+                                aenderung = false;
                             }
                             
                             break;
@@ -466,40 +479,44 @@ namespace Snake
 
                         case ConsoleKey.W:
 
-                            if (inputY2 != 1)
+                            if (inputY2 != 1 && aenderung2)
                             {
                                 inputY2 = -1;
                                 inputX2 = 0;
+                                aenderung2 = false;
                             }
                             
                             break;
 
                         case ConsoleKey.S:
 
-                            if (inputY2 != -1)
+                            if (inputY2 != -1 && aenderung2)
                             {
                                 inputY2 = 1;
                                 inputX2 = 0;
+                                aenderung2 = false;
                             }
                             
                             break;
 
                         case ConsoleKey.D:
 
-                            if (inputX2 != -1)
+                            if (inputX2 != -1 && aenderung2)
                             {
                                 inputY2 = 0;
                                 inputX2 = 1;
+                                aenderung2 = false;
                             }
                             
                             break;
 
                         case ConsoleKey.A:
 
-                            if (inputX2 != 1)
+                            if (inputX2 != 1 && aenderung2)
                             {
                                 inputY2 = 0;
                                 inputX2 = -1;
+                                aenderung2 = false;
                             }
                             
                             break;
