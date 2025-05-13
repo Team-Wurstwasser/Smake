@@ -362,65 +362,78 @@ namespace Snake.io
         }
 
         static void ShowGameOverScreen()
-
         {
-
             Console.Clear();
-
             Console.WriteLine("========================");
 
             if (multiplayer)
             {
-                if (gameover == 1)
-                {
-                    Console.WriteLine($"     {name2} Wins!     ");   // Zeigt, dass Spieler 2 gewinnt
-
-                    Console.WriteLine($"     With {punkte2} Points!    ");
-
-                    Console.WriteLine($" {name} has {punkte} Points  ");
-                }
-                else if (gameover == 2)
-                {
-                    Console.WriteLine($"     {name} Wins!     ");   // Zeigt, dass Spieler 1 gewinnt
-
-                    Console.WriteLine($"     With {punkte} Points!    ");
-
-                    Console.WriteLine($"  {name2}  has s {punkte2} Points  ");
-                }
-                else
-                {
-                    Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
-                }
+                ShowMultiplayerResult();
             }
             else
             {
-                if (gameover == 1)
-                {
-                    Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
-
-                    Console.WriteLine($"  {name} has {punkte} Points  ");
-                }
-                else if (gameover == 2)
-                {
-                    Console.WriteLine($"      {name} Wins!     ");   // Zeigt, dass Spieler 1 gewinnt
-
-                    Console.WriteLine($"     With {punkte} Points!    ");
-                }
-                else
-                {
-                    Console.WriteLine("       GAME OVER      ");   // Zeigt den "Game Over"-Bildschirm
-                }
+                ShowSingleplayerResult();
             }
 
             Console.WriteLine("========================");
-
             Console.WriteLine("Drücke ESC zum Beenden oder Enter für eine neue Runde...");
+
+            WaitForPlayerInput();
+        }
+
+        static void ShowMultiplayerResult()
+        {
+            switch (gameover)
+            {
+                case 1:
+                    Console.WriteLine($"     {name2} Wins!     ");
+                    Console.WriteLine($"     With {punkte2} Points!    ");
+                    Console.WriteLine($"     {name} has {punkte} Points  ");
+                    break;
+
+                case 2:
+                    Console.WriteLine($"     {name} Wins!     ");
+                    Console.WriteLine($"     With {punkte} Points!    ");
+                    Console.WriteLine($"     {name2} has {punkte2} Points  ");
+                    break;
+
+                default:
+                    Console.WriteLine("       GAME OVER      ");
+                    break;
+            }
+        }
+
+        static void ShowSingleplayerResult()
+        {
+            switch (gameover)
+            {
+                case 1:
+                    Console.WriteLine("       GAME OVER      ");
+                    Console.WriteLine($"     {name} has {punkte} Points  ");
+                    break;
+
+                case 2:
+                    Console.WriteLine($"     {name} Wins!     ");
+                    Console.WriteLine($"     With {punkte} Points!    ");
+                    break;
+
+                default:
+                    Console.WriteLine("       GAME OVER      ");
+                    break;
+            }
+        }
+
+        static void WaitForPlayerInput()
+        {
+            check = false;
 
             do
             {
-                while (Console.KeyAvailable) Console.ReadKey(true);
-                var key2 = Console.ReadKey(true).Key;
-                switch (key2)
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
+
+                var key = Console.ReadKey(true).Key;
+                switch (key)
                 {
                     case ConsoleKey.Enter:
                         check = true;
@@ -430,12 +443,11 @@ namespace Snake.io
                         exit = true;
                         check = true;
                         break;
-
                 }
             }
             while (!check);
-
         }
+
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
 
