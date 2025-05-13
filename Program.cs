@@ -1,4 +1,4 @@
-namespace SpielEinfuehrungLoesung
+namespace Snake
 
 {
 
@@ -70,6 +70,10 @@ namespace SpielEinfuehrungLoesung
 
         static int maxpunkte;
 
+        // Spielgeschwindigkeit
+
+        static int zeit;
+
         static void Main()
 
         {
@@ -112,7 +116,7 @@ namespace SpielEinfuehrungLoesung
 
                     Render();   // Spielfeld neu zeichnen
 
-                    Thread.Sleep(100); // Spieltempo regulieren
+                    Thread.Sleep(zeit); // Spieltempo regulieren
 
                     // Reguliert wie oft wird der Loop durchgeführt wird
 
@@ -179,6 +183,10 @@ namespace SpielEinfuehrungLoesung
             punkte2 = 0;
 
             maxpunkte = 10;
+
+            // Zeit einstellen
+
+            zeit = 50;
 
             // Alle Eingabewerte zurücksetzen
             inputX = 0;
