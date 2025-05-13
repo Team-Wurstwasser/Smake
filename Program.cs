@@ -50,11 +50,23 @@ namespace SpielEinfuehrungLoesung
 
         static int[] playerY2 = new int[99];
 
-        //Länge des Spielers
+        // Position des Futters
+
+        static int futterX;
+
+        static int futterY;
+
+        // Länge des Spielers
 
         static int tail;
 
         static int tail2;
+
+        // Punkte der Spieler
+
+        static int punkte;
+
+        static int punkte2;
 
         static void Main()
 
@@ -62,18 +74,7 @@ namespace SpielEinfuehrungLoesung
 
             do
             {
-                // Position des Spielers_2
-
-                playerX[0] = 4;
-                playerY[0] = 4;
-
-                playerX2[0] = 20;
-                playerY2[0] = 4;
-
-                //Länge_2
-
-                tail = 10;
-                tail2 = 10;
+                neustart();
 
                 // Mauszeiger im Konsolenfenster ausblenden
 
@@ -82,8 +83,6 @@ namespace SpielEinfuehrungLoesung
                 // Starte separaten Thread für Tastatureingaben
 
                 Thread inputThread = new Thread(ReadInput);
-
-
                 inputThread.Start();
 
 
@@ -95,14 +94,14 @@ namespace SpielEinfuehrungLoesung
 
                 InitialisiereSpiel();
 
+                SetzeFutter(); // Futter setzen
+
                 Render();
 
                 Thread.Sleep(1000);
 
 
                 // Game Loop 
-
-
 
                 while (spiel)
                 {
@@ -111,7 +110,7 @@ namespace SpielEinfuehrungLoesung
 
                     Render();   // Spielfeld neu zeichnen
 
-                    Thread.Sleep(50); // Spieltempo regulieren (250 ms)
+                    Thread.Sleep(100); // Spieltempo regulieren
 
                     // Reguliert wie oft wird der Loop durchgeführt wird
 
@@ -119,19 +118,22 @@ namespace SpielEinfuehrungLoesung
 
                 }
 
-                // Spielende-Bildschirm
-
-                ShowGameOverScreen();
 
                 inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
+                Thread.Sleep(500);
+
+                ShowGameOverScreen();// Spielende-Bildschirm
+
+                // Leere Eingabepuffer vollständig
+                while (Console.KeyAvailable) Console.ReadKey(true);
 
                 var key2 = Console.ReadKey(true).Key;
 
                 switch (key2)
                 {
                     case ConsoleKey.Enter:
-                        neustart();
+
                         break;
 
                     case ConsoleKey.Escape:
@@ -139,6 +141,8 @@ namespace SpielEinfuehrungLoesung
                         break;
 
                 }
+
+                inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
             } while (!exit);
 
@@ -152,15 +156,33 @@ namespace SpielEinfuehrungLoesung
 
             gameover = 0;
 
+            // Arrays zurücksetzen
+            Array.Clear(playerX, 0, playerX.Length);
+            Array.Clear(playerY, 0, playerY.Length);
+            Array.Clear(playerX2, 0, playerX2.Length);
+            Array.Clear(playerY2, 0, playerY2.Length);
+
+            // Spieler-Positionen auf Startwerte setzen
+            playerX[0] = 4;
+            playerY[0] = 4;
+            playerX2[0] = 20;
+            playerY2[0] = 4;
+
+            // Taillängen zurücksetzen
+            tail = 10;
+            tail2 = 10;
+
+            // Punkte zurücksetzen
+
+            punkte = 0;
+            punkte2 = 0;
+
+            // Alle Eingabewerte zurücksetzen
             inputX = 0;
             inputX2 = 0;
             inputY = 0;
             inputY2 = 0;
 
-            Array.Clear(playerX, 0, playerX.Length);
-            Array.Clear(playerY, 0, playerY.Length);
-            Array.Clear(playerX2, 0, playerX2.Length);
-            Array.Clear(playerY2, 0, playerY2.Length);
         }
 
         // Zeigt den Startbildschirm mit Anweisungen
@@ -201,10 +223,14 @@ namespace SpielEinfuehrungLoesung
             if (gameover == 1)
             {
                 Console.WriteLine("    Player 2 Wins!    ");   // Zeigt, dass Spieler 2 gewinnt
+
+                Console.WriteLine("    With {0} Points!   ", punkte2);
             }
             else if (gameover == 2)
             {
                 Console.WriteLine("    Player 1 Wins!    ");   // Zeigt, dass Spieler 1 gewinnt
+
+                Console.WriteLine("    With {0} Points!   ", punkte);
             }
             else
             {
@@ -257,7 +283,7 @@ namespace SpielEinfuehrungLoesung
 
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
 
-            if (grid[newPlayerY, newPlayerX] == ' ')
+            if (grid[newPlayerY, newPlayerX] == ' ' || grid[newPlayerY, newPlayerX] == '*')
 
             {
 
@@ -276,7 +302,7 @@ namespace SpielEinfuehrungLoesung
 
             }
 
-            if (grid[newPlayerY2, newPlayerX2] == ' ')
+            if (grid[newPlayerY2, newPlayerX2] == ' ' || grid[newPlayerY2, newPlayerX2] == '*')
 
             {
 
@@ -295,7 +321,7 @@ namespace SpielEinfuehrungLoesung
 
             }
 
-            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != '█')
+            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != '█' && grid[newPlayerY, newPlayerX] != '*')
             {
 
                 spiel = false;
@@ -304,7 +330,7 @@ namespace SpielEinfuehrungLoesung
 
             }
 
-            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != 'O')
+            if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != 'O' && grid[newPlayerY2, newPlayerX2] != '*')
             {
 
                 spiel = false;
@@ -313,8 +339,42 @@ namespace SpielEinfuehrungLoesung
 
             }
 
+            // Spieler 1 frisst Futter
+            if (playerX[0] == futterX && playerY[0] == futterY)
+            {
+                tail++;
+                punkte++;
+                SetzeFutter();
+            }
+
+            // Spieler 2 frisst Futter
+            if (playerX2[0] == futterX && playerY2[0] == futterY)
+            {
+                tail2++;
+                punkte2++;
+                SetzeFutter();
+            }
+
             // Eingabe zurücksetzen (nur eine Bewegung pro Tick)
 
+        }
+        static void SetzeFutter()
+        {
+            Random rand = new Random();
+
+            // Futter nur auf X-Positionen spawnen lassen, die durch 2 teilbar sind
+            do
+            {
+                futterX = rand.Next(1, weite - 2);
+                if (futterX % 2 != 0) futterX++; // Auf gerade X-Position korrigieren
+
+                futterY = rand.Next(1, hoehe - 2);
+            }
+            while (grid[futterY, futterX] != ' '); // Stelle muss wirklich leer sein
+
+
+
+            grid[futterY, futterX] = '*'; // Setze Futter an die berechnete Position
         }
 
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
