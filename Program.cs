@@ -708,46 +708,39 @@ namespace Snake
         static void Render()
         {
             Console.SetCursorPosition(0, 0);
+            ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
             for (int y = 0; y < grid.GetLength(0); y++)
-
             {
-
                 for (int x = 0; x < grid.GetLength(1); x++)
-
                 {
                     char zeichen = grid[y, x];
+                    ConsoleColor neueFarbe = ConsoleColor.White;
 
-                    // Standardfarbe
+                    // Farbwahl je nach Position oder Zeichen
+                    if (x == playerX[0] && y == playerY[0])
+                        neueFarbe = ConsoleColor.Yellow;
+                    else if (x == playerX2[0] && y == playerY2[0])
+                        neueFarbe = ConsoleColor.Cyan;
+                    else if (zeichen == skin)
+                        neueFarbe = farbe;
+                    else if (zeichen == skin2)
+                        neueFarbe = farbe2;
+                    else if (zeichen == food)
+                        neueFarbe = foodfarbe;
 
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                     //Kopfspielerfarben lassen wir weiß
-
-                    if (zeichen == skin)
-
+                    // Nur Farbe wechseln, wenn nötig
+                    if (neueFarbe != aktuelleFarbe)
                     {
-                        Console.ForegroundColor = farbe; // Spieler 1
-
-                    }else if (zeichen == skin2 && multiplayer)
-
-                    {
-                        Console.ForegroundColor = farbe2; // Spieler 2
-
-                    }else if (zeichen == food)
-
-                    {
-                        Console.ForegroundColor = foodfarbe; // Futter
-
+                        Console.ForegroundColor = neueFarbe;
+                        aktuelleFarbe = neueFarbe;
                     }
-                    
+
                     Console.Write(zeichen);
                 }
-
                 Console.WriteLine();
             }
 
-            // Farbe zurücksetzen
             Console.ResetColor();
         }
 
