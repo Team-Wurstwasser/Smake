@@ -150,10 +150,10 @@ namespace Snake.io
 
             // Maximale Länge einstellen
 
-            playerX = new int[maxpunkte +5];
-            playerY = new int[maxpunkte + 5];
-            playerX2 = new int[maxpunkte +5];
-            playerY2 = new int[maxpunkte + 5];
+            playerX = new int[maxpunkte + tail + 2];
+            playerY = new int[maxpunkte + tail + 2];
+            playerX2 = new int[maxpunkte + tail2 + 2];
+            playerY2 = new int[maxpunkte + tail2 + 2];
 
             // Arrays zurücksetzen
             Array.Clear(playerX, 0, playerX.Length);
