@@ -47,13 +47,13 @@ namespace Snake.io
 
         // Position des Spielers (Startkoordinaten)
 
-        static int[] playerX = new int[25];
+        static int[] playerX;
 
-        static int[] playerY = new int[25];
+        static int[] playerY;
 
-        static int[] playerX2 = new int[25];
+        static int[] playerX2;
 
-        static int[] playerY2 = new int[25];
+        static int[] playerY2;
 
         // Position des Futters
 
@@ -181,6 +181,24 @@ namespace Snake.io
 
             gameover = 0;
 
+            // Taillängen zurücksetzen
+            tail = 3;
+            tail2 = 3;
+
+            // Punkte zurücksetzen
+
+            punkte = 0;
+            punkte2 = 0;
+
+            maxpunkte = 20;
+
+            // Maximale Länge einstellen
+
+            playerX = new int[maxpunkte +5];
+            playerY = new int[maxpunkte + 5];
+            playerX2 = new int[maxpunkte +5];
+            playerY2 = new int[maxpunkte + 5];
+
             // Arrays zurücksetzen
             Array.Clear(playerX, 0, playerX.Length);
             Array.Clear(playerY, 0, playerY.Length);
@@ -200,10 +218,6 @@ namespace Snake.io
 
             mode = 0;
 
-            // Taillängen zurücksetzen
-            tail = 3;
-            tail2 = 3;
-
             // Aussehen einstellen
 
             head = '∨';
@@ -217,13 +231,6 @@ namespace Snake.io
             food = '*';
 
             foodfarbe = ConsoleColor.Green;
-
-            // Punkte zurücksetzen
-
-            punkte = 0;
-            punkte2 = 0;
-
-            maxpunkte = 10;
 
             // Zeit einstellen
 
