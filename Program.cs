@@ -126,50 +126,6 @@ namespace Snake.io
 
                 ShowMainMenue();
 
-                Eingaben();
-
-                // Starte separaten Thread für Tastatureingabe
-                Thread inputThread = new(ReadInput);
-                inputThread.Start();
-
-                
-
-                // Initialisiere das Spielfeld mit Rahmen und Spielerposition
-
-                InitialisiereSpiel();
-
-                SetzeFutter(); // Futter setzen
-
-                Render();
-
-                Thread.Sleep(1000);
-
-                // Game Loop 
-
-                while (spiel)
-                {
-
-                    Update();   // Spielerposition aktualisieren
-
-                    Render();   // Spielfeld neu zeichnen
-
-                    Thread.Sleep(zeit); // Spieltempo regulieren
-
-                    aenderung = true;
-
-                    aenderung2 = true;
-
-                    // Reguliert wie oft wird der Loop durchgeführt wird
-
-                    // Spiele geschwindigkeit
-
-                }
-
-                inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
-
-                ShowGameOverScreen();// Spielende-Bildschirm
-
-                while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
 
             } while (!exit);
 
@@ -247,7 +203,48 @@ namespace Snake.io
             Console.CursorVisible = false;
 
         }
+        static void Spiel()
+        {
+            Thread inputThread = new(ReadInput);
+            inputThread.Start();
 
+            // Initialisiere das Spielfeld mit Rahmen und Spielerposition
+
+            InitialisiereSpiel();
+
+            SetzeFutter(); // Futter setzen
+
+            Render();
+
+            Thread.Sleep(1000);
+
+            // Game Loop 
+
+            while (spiel)
+            {
+
+                Update();   // Spielerposition aktualisieren
+
+                Render();   // Spielfeld neu zeichnen
+
+                Thread.Sleep(zeit); // Spieltempo regulieren
+
+                aenderung = true;
+
+                aenderung2 = true;
+
+                // Reguliert wie oft wird der Loop durchgeführt wird
+
+                // Spiele geschwindigkeit
+
+            }
+
+            inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
+
+            ShowGameOverScreen();// Spielende-Bildschirm
+
+            while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
+        }
         static void ShowMainMenue()
         {
             Console.Clear();
@@ -309,7 +306,8 @@ namespace Snake.io
             switch (MenueOptions)
             {
                 case 1:
-                    
+                    Eingaben();
+                    Spiel();
                     break;
 
                 case 2:
@@ -317,11 +315,11 @@ namespace Snake.io
                     break;
 
                 case 3:
-                    
+                    Anleitung();
                     break;
 
                 case 4:
-                    
+                    exit = true;
                     break;
             }
         }
@@ -435,6 +433,7 @@ namespace Snake.io
                 farbe2 = WähleFarbe(name2);
                 headfarbe2 = WähleFarbe(name2 + " (Kopf)");
             }
+            Console.Clear();
         }
 
         static ConsoleColor WähleFarbe(string spielerName)
@@ -486,37 +485,29 @@ namespace Snake.io
 
         // Zeigt den Startbildschirm mit Anweisungen
 
-        static void ShowStartScreen()
-
+        static void Anleitung()
         {
-
             Console.Clear();
-
-            Console.WriteLine("======================");
-
-            Console.WriteLine("       Snake.io       ");
-
-            Console.WriteLine("======================");
-
-            Console.WriteLine($"{name}: Pfeiltasten: Links/Rechts/Hoch/Runter");
-
-            if (multiplayer)
-            {
-                Console.WriteLine($"{name2}: WASD: Links/Rechts/Hoch/Runter");
-            }
-
-            Console.WriteLine("Taste Enter zum Starten...");
-
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
-
-            Console.Clear();
-
+            Console.WriteLine("📖 ANLEITUNG");
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("Ziel: Iss so viele 🥝 wie möglich!");
+            Console.WriteLine();
+            Console.WriteLine("Steuerung:");
+            Console.WriteLine("  🅆 - Hoch");
+            Console.WriteLine("  🄰 - Links");
+            Console.WriteLine("  🅂 - Runter");
+            Console.WriteLine("  🄳 - Rechts");
+            Console.WriteLine();
+            Console.WriteLine("Vermeide Kollisionen mit dir selbst oder den Rand!");
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
+            Console.ReadKey();
         }
 
         static void ShowGameOverScreen()
         {
             Console.Clear();
-            Console.WriteLine("========================");
+            Console.WriteLine("══════════════════════════════");
 
             if (multiplayer)
             {
@@ -527,30 +518,9 @@ namespace Snake.io
                 ShowSingleplayerResult();
             }
 
-            Console.WriteLine("========================");
-            Console.WriteLine("Drücke ESC zum Beenden oder Enter für eine neue Runde...");
-
-            bool check = true;
-
-            do
-            {
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
-                {
-                    case ConsoleKey.Enter:
-                        check = false;
-                        break;
-
-                    case ConsoleKey.Escape:
-                        exit = true;
-                        check = false;
-                        break;
-                }
-            }
-            while (check);
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
+            Console.ReadKey();
         }
 
         static void ShowMultiplayerResult()
