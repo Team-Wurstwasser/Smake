@@ -18,8 +18,6 @@ namespace Snake.io
 
         static int gameover;
 
-        static bool check;
-
         static bool exit = false;
 
 
@@ -168,11 +166,11 @@ namespace Snake.io
                 }
 
                 inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
-                                
+
                 ShowGameOverScreen();// Spielende-Bildschirm
-                                
+
                 while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
-                                
+
             } while (!exit);
 
         }
@@ -240,7 +238,7 @@ namespace Snake.io
             // Mauszeiger im Konsolenfenster ausblenden
 
             Console.CursorVisible = false;
-            
+
         }
 
         static void Eingaben()
@@ -369,7 +367,7 @@ namespace Snake.io
 
             Console.WriteLine("Taste Enter zum Starten...");
 
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { } 
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
 
             Console.Clear();
 
@@ -392,7 +390,27 @@ namespace Snake.io
             Console.WriteLine("========================");
             Console.WriteLine("Drücke ESC zum Beenden oder Enter für eine neue Runde...");
 
-            WaitForPlayerInput();
+            bool check = true;
+
+            while (check);
+            {
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
+
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.Enter:
+                        check = false;
+                        break;
+
+                    case ConsoleKey.Escape:
+                        exit = false;
+                        check = false;
+                        break;
+                }
+            }
+            
         }
 
         static void ShowMultiplayerResult()
@@ -430,32 +448,6 @@ namespace Snake.io
         }
 
 
-        static void WaitForPlayerInput()
-        {
-            check = false;
-
-            do
-            {
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
-                {
-                    case ConsoleKey.Enter:
-                        check = true;
-                        break;
-
-                    case ConsoleKey.Escape:
-                        exit = true;
-                        check = true;
-                        break;
-                }
-            }
-            while (!check);
-        }
-
-
         // Aktualisiert die Position des Spielers anhand der Eingabe
 
         static void Update()
@@ -467,12 +459,12 @@ namespace Snake.io
             int newPlayerX = playerX[0] + 2 * inputX;
 
             int newPlayerY = playerY[0] + inputY;
-           
+
             int newPlayerX2 = playerX2[0] + 2 * inputX2;
 
             int newPlayerY2 = playerY2[0] + inputY2;
-            
-            
+
+
             // Tailkoordinaten berechnen
 
             for (int i = playerX.Length - 1; i > 0; i--)
@@ -643,7 +635,7 @@ namespace Snake.io
                                 aenderung = false;
                                 head = '∧';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.DownArrow:
@@ -655,7 +647,7 @@ namespace Snake.io
                                 aenderung = false;
                                 head = '∨';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.RightArrow:
@@ -667,7 +659,7 @@ namespace Snake.io
                                 aenderung = false;
                                 head = '>';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.LeftArrow:
@@ -679,7 +671,7 @@ namespace Snake.io
                                 aenderung = false;
                                 head = '<';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.Escape:
@@ -697,7 +689,7 @@ namespace Snake.io
                                 aenderung2 = false;
                                 head2 = '∧';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.S:
@@ -709,7 +701,7 @@ namespace Snake.io
                                 aenderung2 = false;
                                 head2 = '∨';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.D:
@@ -721,7 +713,7 @@ namespace Snake.io
                                 aenderung2 = false;
                                 head2 = '>';
                             }
-                            
+
                             break;
 
                         case ConsoleKey.A:
@@ -733,7 +725,7 @@ namespace Snake.io
                                 aenderung2 = false;
                                 head2 = '<';
                             }
-                            
+
                             break;
 
                     }
@@ -741,7 +733,7 @@ namespace Snake.io
                 }
 
             }
-            
+
         }
 
 
@@ -833,7 +825,7 @@ namespace Snake.io
             {
                 grid[playerY2[0], playerX2[0]] = head2;
             }
-            
+
         }
 
     }
