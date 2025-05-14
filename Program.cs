@@ -250,6 +250,7 @@ namespace Snake.io
 
         static void ShowMainMenue()
         {
+            Console.Clear();
             DrawTitle();
             DrawMenuOptions1();
             bool menu = true;
