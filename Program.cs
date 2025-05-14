@@ -345,9 +345,9 @@ namespace Snake.io
         static void DrawMenuOptions1()
         {
             Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
-            Console.WriteLine("║ 1. ▶️  Spiel starten         ║");
+            Console.WriteLine("║ 1. >>  Spiel starten         ║");
             Console.WriteLine("║ 2. Einstellungen             ║");
             Console.WriteLine("║ 3. Anleitung                 ║");
             Console.WriteLine("║ 4. Beenden                   ║");
@@ -357,10 +357,10 @@ namespace Snake.io
         static void DrawMenuOptions2()
         {
             Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
             Console.WriteLine("║ 1. Spiel starten             ║");
-            Console.WriteLine("║ 2. ▶️  Einstellungen         ║");
+            Console.WriteLine("║ 2. >>  Einstellungen         ║");
             Console.WriteLine("║ 3. Anleitung                 ║");
             Console.WriteLine("║ 4. Beenden                   ║");
             Console.WriteLine("╚══════════════════════════════╝");
@@ -369,23 +369,23 @@ namespace Snake.io
         static void DrawMenuOptions3()
         {
             Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
             Console.WriteLine("║ 1. Spiel starten             ║");
             Console.WriteLine("║ 2. Einstellungen             ║");
-            Console.WriteLine("║ 3. ▶️  Anleitung             ║");
+            Console.WriteLine("║ 3. >>  Anleitung             ║");
             Console.WriteLine("║ 4. Beenden                   ║");
             Console.WriteLine("╚══════════════════════════════╝");
         }
         static void DrawMenuOptions4()
         {
             Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
             Console.WriteLine("║ 1. Spiel starten             ║");
             Console.WriteLine("║ 2. Einstellungen             ║");
             Console.WriteLine("║ 3. Anleitung                 ║");
-            Console.WriteLine("║ 4. ▶️  Beenden               ║");
+            Console.WriteLine("║ 4. >>  Beenden               ║");
             Console.WriteLine("╚══════════════════════════════╝");
         }
 
@@ -488,9 +488,9 @@ namespace Snake.io
         static void Anleitung()
         {
             Console.Clear();
-            Console.WriteLine("📖 ANLEITUNG");
+            Console.WriteLine("ANLEITUNG");
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Ziel: Iss so viele 🥝 wie möglich!");
+            Console.WriteLine($"Ziel: Iss so viele {food} wie möglich!");
             Console.WriteLine();
             Console.WriteLine("Steuerung:");
             Console.WriteLine();
@@ -501,12 +501,12 @@ namespace Snake.io
             Console.WriteLine("  → - Rechts");
             Console.WriteLine(); 
             Console.WriteLine("Spieler 2:");
-            Console.WriteLine("  🅆 - Hoch");
-            Console.WriteLine("  🄰 - Links");
-            Console.WriteLine("  🅂 - Runter");
-            Console.WriteLine("  🄳 - Rechts");
+            Console.WriteLine("  W - Hoch");
+            Console.WriteLine("  A - Links");
+            Console.WriteLine("  S - Runter");
+            Console.WriteLine("  D - Rechts");
             Console.WriteLine();
-            Console.WriteLine("Vermeide Kollisionen mit dir selbst oder den Rand!");
+            Console.WriteLine("Vermeide Kollisionen mit dir selbst oder dem Rand!");
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
             Console.ReadKey();
@@ -528,7 +528,7 @@ namespace Snake.io
 
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
-            Console.ReadKey();
+            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
         }
 
         static void ShowMultiplayerResult()
