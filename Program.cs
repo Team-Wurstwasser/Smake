@@ -329,18 +329,32 @@ namespace Snake.io
 
             for (int i = 0; i < 5; i++)
             {
-                string option = i switch
-                {
-                    0 =>"Spiel starten",
-                    1 => "Einstellungen",
-                    2 => "Shop",
-                    3 => "Anleitung",
-                    4 => "Beenden",
-                    _ => ""
-                };
+                string option = "";
 
-                string marker = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"║  {marker} {option.PadRight(25)}║");
+                switch (i)
+                {
+                    case 0:
+                        option = "Spiel starten";
+                        break;
+                    case 1:
+                        option = "Einstellungen";
+                        break;
+                    case 2:
+                        option = "Shop";
+                        break;
+                    case 3:
+                        option = "Anleitung";
+                        break;
+                    case 4:
+                        option = "Beenden";
+                        break;
+                    default:
+                        option = "";
+                        break;
+                }
+
+                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"║  {zeiger} {option.PadRight(25)}║");
             }
 
             Console.WriteLine("╚══════════════════════════════╝");
@@ -480,17 +494,26 @@ namespace Snake.io
             // Directly writing the settings options with dynamic values
             for (int i = 0; i < 4; i++)
             {
-                string option = i switch
-                {
-                    0 => $"Schwierigkeit ändern   [Aktuell: {difficulty}]",
-                    1 => $"Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]",
-                    2 => $"Gamemode ändern        [Aktuell: {gamemode}]",
-                    3 => "Zurück zum Hauptmenü",
-                    _ => ""
-                };
+                string option = "";
 
-                string marker = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{marker} {option.PadRight(30)}");
+                switch (i)
+                {
+                    case 0:
+                        option = $"Schwierigkeit ändern   [Aktuell: {difficulty}]";
+                        break;
+                    case 1:
+                        option = $"Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]";
+                        break;
+                    case 2:
+                        option = $"Gamemode ändern        [Aktuell: {gamemode}]";
+                        break;
+                    case 3:
+                        option = "Zurück zum Hauptmenü";
+                        break;
+                }
+
+                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"{zeiger} {option.PadRight(30)}");
             }
 
             Console.WriteLine("══════════════════════════════");
