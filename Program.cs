@@ -493,6 +493,14 @@ namespace Snake.io
             Console.WriteLine("Ziel: Iss so viele 🥝 wie möglich!");
             Console.WriteLine();
             Console.WriteLine("Steuerung:");
+            Console.WriteLine();
+            Console.WriteLine("Spieler 1:");
+            Console.WriteLine("  ↑ - Hoch");
+            Console.WriteLine("  ← - Links");
+            Console.WriteLine("  ↓ - Runter");
+            Console.WriteLine("  → - Rechts");
+            Console.WriteLine(); 
+            Console.WriteLine("Spieler 2:");
             Console.WriteLine("  🅆 - Hoch");
             Console.WriteLine("  🄰 - Links");
             Console.WriteLine("  🅂 - Runter");
