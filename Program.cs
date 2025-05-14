@@ -395,10 +395,7 @@ namespace Snake.io
             bool i = true;
             do
             {
-                Console.Clear();
-                Console.WriteLine("======================");
-                Console.WriteLine("       Snake.io       ");
-                Console.WriteLine("======================");
+                Console.Clear(); 
                 Console.Write("Multiplayer? (y/n): ");
 
                 switch (Console.ReadLine())
@@ -424,9 +421,6 @@ namespace Snake.io
             if (multiplayer)
             {
                 Console.Clear();
-                Console.WriteLine("======================");
-                Console.WriteLine("       Snake.io       ");
-                Console.WriteLine("======================");
                 Console.Write("Spieler 2, gib deinen Namen ein: ");
                 name2 = Console.ReadLine();
 
