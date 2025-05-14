@@ -528,7 +528,7 @@ namespace Snake.io
 
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
-            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
         }
 
         static void ShowMultiplayerResult()
