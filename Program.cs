@@ -263,10 +263,12 @@ namespace Snake.io
                 {
                     case ConsoleKey.UpArrow:
                         MenueOptions--;
+                        if (MenueOptions < 1) MenueOptions = 5;
                         break;
 
                     case ConsoleKey.DownArrow:
                         MenueOptions++;
+                        if (MenueOptions > 5) MenueOptions = 1;
                         break;
 
                     case ConsoleKey.Spacebar:
@@ -274,9 +276,6 @@ namespace Snake.io
                         menu = false;
                         break;
                 }
-
-                if (MenueOptions < 1) MenueOptions = 5;
-                if (MenueOptions > 5) MenueOptions = 1;
 
             } while (menu);
 
