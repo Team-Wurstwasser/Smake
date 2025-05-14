@@ -67,7 +67,7 @@ namespace Snake.io
 
         static string difficulty;
 
-        static int mode;
+        static string gamemode;
 
         // Namen der Spieler
 
@@ -119,7 +119,9 @@ namespace Snake.io
 
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
+
             difficulty = "Mittig";
+            gamemode = "Normal";
             multiplayer = false;
 
             do
@@ -171,8 +173,6 @@ namespace Snake.io
 
             aenderung = true;
             aenderung2 = true;
-
-            mode = 0;
 
             // Aussehen einstellen
 
@@ -502,7 +502,7 @@ namespace Snake.io
                             break;
 
                         case 3:
-                            menu = false;
+                            ChangeGamemode();
                             change = false;
                             break;
 
@@ -544,6 +544,13 @@ namespace Snake.io
             else difficulty = "Langsam";
         }
 
+        static void ChangeGamemode()
+        {
+            if (gamemode == "Normal") gamemode = "Normal";
+            else if (gamemode == "Normal") gamemode = "Normal";
+            else gamemode = "Normal";
+        }
+
         static void EinstellungenOptions1()
         {
             Console.SetCursorPosition(0, 0);
@@ -551,6 +558,7 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine($">>  Schwierigkeit ändern   [Aktuell: {difficulty}]");
             Console.WriteLine($"Multiplayer                [Aktuell: {(multiplayer ? "An" : "Aus")}]");
+            Console.WriteLine($"Gamemode ändern            [Aktuell: {gamemode}]");
             Console.WriteLine("Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════════");
         }
@@ -562,6 +570,7 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine($"Schwierigkeit ändern       [Aktuell: {difficulty}]");
             Console.WriteLine($">>  Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]");
+            Console.WriteLine($"Gamemode ändern            [Aktuell: {gamemode}]");
             Console.WriteLine("Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════════");
         }
@@ -573,7 +582,8 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine($"Schwierigkeit ändern       [Aktuell: {difficulty}]");
             Console.WriteLine($"Multiplayer                [Aktuell: {(multiplayer ? "An" : "Aus")}]");
-            Console.WriteLine(">>  Zurück zum Hauptmenü");
+            Console.WriteLine($">>  Gamemode ändern        [Aktuell: {gamemode}]");
+            Console.WriteLine("Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════════");
         }
         static void EinstellungenOptions4()
@@ -583,6 +593,7 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine($"Schwierigkeit ändern       [Aktuell: {difficulty}]");
             Console.WriteLine($"Multiplayer                [Aktuell: {(multiplayer ? "An" : "Aus")}]");
+            Console.WriteLine($"Gamemode ändern            [Aktuell: {gamemode}]");
             Console.WriteLine(">>  Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════════");
         }
