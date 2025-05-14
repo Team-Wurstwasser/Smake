@@ -119,20 +119,20 @@ namespace Snake.io
 
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Eingaben();
 
             do
             {
                 Neustart();
 
-                // Starte separaten Thread für Tastatureingaben
+                ShowMainMenue();
 
+                Eingaben();
+
+                // Starte separaten Thread für Tastatureingabe
                 Thread inputThread = new(ReadInput);
                 inputThread.Start();
 
-                // Starte Begrüßungsbildschirm
-
-                ShowStartScreen();
+                
 
                 // Initialisiere das Spielfeld mit Rahmen und Spielerposition
 
@@ -241,13 +241,151 @@ namespace Snake.io
 
         }
 
+        static void ShowMainMenue()
+        {
+            DrawTitle();
+            DrawMenuOptions1();
+            bool menu = true;
+            int MenueOptions = 1;
+            do
+            {
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
+
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        MenueOptions--;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        MenueOptions++;
+                        break;
+                    case ConsoleKey.Enter:
+                        menu = false;
+                        break;
+                }
+
+                // Begrenzung von MenueOptions auf 1 bis 4
+                if (MenueOptions < 1) MenueOptions = 4;
+                if (MenueOptions > 4) MenueOptions = 1;
+
+                switch (MenueOptions)
+                {
+                    case 1:
+                        DrawTitle();
+                        DrawMenuOptions1();
+                        break;
+
+                    case 2:
+                        DrawTitle();
+                        DrawMenuOptions2();
+                        break;
+
+                    case 3:
+                        DrawTitle();
+                        DrawMenuOptions3();
+                        break;
+
+                    case 4:
+                        DrawTitle();
+                        DrawMenuOptions4();
+                        break;
+                }
+
+
+            }
+            while (menu);
+
+            switch (MenueOptions)
+            {
+                case 1:
+                    
+                    break;
+
+                case 2:
+                    
+                    break;
+
+                case 3:
+                    
+                    break;
+
+                case 4:
+                    
+                    break;
+            }
+        }
+
+        static void DrawTitle()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(@"
+  ██████  ███▄ ▄███▓ ▄▄▄       ██ ▄█▀▓█████ 
+▒██    ▒ ▓██▒▀█▀ ██▒▒████▄     ██▄█▒ ▓█   ▀ 
+░ ▓██▄   ▓██    ▓██░▒██  ▀█▄  ▓███▄░ ▒███   
+  ▒   ██▒▒██    ▒██ ░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄ 
+▒██████▒▒▒██▒   ░██▒ ▓█   ▓██▒▒██▒ █▄░▒████▒
+▒ ▒▓▒ ▒ ░░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░
+░ ░▒  ░ ░░  ░      ░  ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░
+░  ░  ░  ░      ░     ░   ▒   ░ ░░ ░    ░   
+      ░         ░         ░  ░░  ░      ░  ░
+");
+            Console.ResetColor();
+        }
+
+        static void DrawMenuOptions1()
+        {
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║ 1. ▶️  Spiel starten         ║");
+            Console.WriteLine("║ 2. Einstellungen             ║");
+            Console.WriteLine("║ 3. Anleitung                 ║");
+            Console.WriteLine("║ 4. Beenden                   ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+        }
+
+        static void DrawMenuOptions2()
+        {
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║ 1. Spiel starten             ║");
+            Console.WriteLine("║ 2. ▶️  Einstellungen         ║");
+            Console.WriteLine("║ 3. Anleitung                 ║");
+            Console.WriteLine("║ 4. Beenden                   ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+        }
+
+        static void DrawMenuOptions3()
+        {
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║ 1. Spiel starten             ║");
+            Console.WriteLine("║ 2. Einstellungen             ║");
+            Console.WriteLine("║ 3. ▶️  Anleitung             ║");
+            Console.WriteLine("║ 4. Beenden                   ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+        }
+        static void DrawMenuOptions4()
+        {
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║       SNAKE MAIN MENU        ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║ 1. Spiel starten             ║");
+            Console.WriteLine("║ 2. Einstellungen             ║");
+            Console.WriteLine("║ 3. Anleitung                 ║");
+            Console.WriteLine("║ 4. ▶️  Beenden               ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+        }
+
         static void Eingaben()
         {
             Console.Clear();
-
-            Console.WriteLine("======================");
-            Console.WriteLine("       Snake.io       ");
-            Console.WriteLine("======================");
             Console.Write("Spieler 1, gib deinen Namen ein: ");
             name = Console.ReadLine();
 
