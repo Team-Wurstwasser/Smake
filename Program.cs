@@ -7,6 +7,7 @@ namespace Snake.io
     using System.Threading;
 
     using System.Collections.Generic;
+    using System.Drawing;
 
     class Program
 
@@ -124,12 +125,13 @@ namespace Snake.io
             gamemode = "Normal";
             multiplayer = false;
 
+            // Mauszeiger im Konsolenfenster ausblenden
+            Console.CursorVisible = false;
+
             do
             {
-                Neustart();
 
                 ShowMainMenue();
-
 
             } while (!exit);
 
@@ -198,10 +200,6 @@ namespace Snake.io
             inputY = 0;
             inputY2 = 0;
 
-            // Mauszeiger im Konsolenfenster ausblenden
-
-            Console.CursorVisible = false;
-
         }
         static void Spiel()
         {
@@ -249,11 +247,14 @@ namespace Snake.io
         {
             Console.Clear();
             DrawTitle();
-            MenuOptions1();
             bool menu = true;
             int MenueOptions = 1;
+
             do
             {
+                Console.SetCursorPosition(0, 11); // nach dem Titel
+                ShowMenuOptions(MenueOptions);
+
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
 
@@ -267,62 +268,40 @@ namespace Snake.io
                     case ConsoleKey.DownArrow:
                         MenueOptions++;
                         break;
+
+                    case ConsoleKey.Spacebar:
                     case ConsoleKey.Enter:
                         menu = false;
                         break;
                 }
 
-                // Begrenzung von MenueOptions auf 1 bis 4
-                if (MenueOptions < 1) MenueOptions = 4;
-                if (MenueOptions > 4) MenueOptions = 1;
+                if (MenueOptions < 1) MenueOptions = 5;
+                if (MenueOptions > 5) MenueOptions = 1;
 
-                switch (MenueOptions)
-                {
-                    case 1:
-                        DrawTitle();
-                        MenuOptions1();
-                        break;
-
-                    case 2:
-                        DrawTitle();
-                        MenuOptions2();
-                        break;
-
-                    case 3:
-                        DrawTitle();
-                        MenuOptions3();
-                        break;
-
-                    case 4:
-                        DrawTitle();
-                        MenuOptions4();
-                        break;
-                }
-
-
-            }
-            while (menu);
+            } while (menu);
 
             switch (MenueOptions)
             {
                 case 1:
+                    Neustart();
                     Eingaben();
                     Spiel();
                     break;
-
                 case 2:
                     Einstellungen();
                     break;
-
                 case 3:
+                    Shop();
+                    break;
+                case 4:
                     Anleitung();
                     break;
-
-                case 4:
+                case 5:
                     exit = true;
                     break;
             }
         }
+
 
         static void DrawTitle()
         {
@@ -342,52 +321,32 @@ namespace Snake.io
             Console.ResetColor();
         }
 
-        static void MenuOptions1()
+        static void ShowMenuOptions(int selected)
         {
             Console.WriteLine("╔══════════════════════════════╗");
             Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
-            Console.WriteLine("║ 1. >>  Spiel starten         ║");
-            Console.WriteLine("║ 2. Einstellungen             ║");
-            Console.WriteLine("║ 3. Anleitung                 ║");
-            Console.WriteLine("║ 4. Beenden                   ║");
+
+            for (int i = 0; i < 5; i++)
+            {
+                string option = i switch
+                {
+                    0 =>"Spiel starten",
+                    1 => "Einstellungen",
+                    2 => "Shop",
+                    3 => "Anleitung",
+                    4 => "Beenden",
+                    _ => ""
+                };
+
+                string marker = (i + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"║  {marker} {option.PadRight(25)}║");
+            }
+
             Console.WriteLine("╚══════════════════════════════╝");
         }
 
-        static void MenuOptions2()
-        {
-            Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SMAKE MAIN MENU        ║");
-            Console.WriteLine("╠══════════════════════════════╣");
-            Console.WriteLine("║ 1. Spiel starten             ║");
-            Console.WriteLine("║ 2. >>  Einstellungen         ║");
-            Console.WriteLine("║ 3. Anleitung                 ║");
-            Console.WriteLine("║ 4. Beenden                   ║");
-            Console.WriteLine("╚══════════════════════════════╝");
-        }
 
-        static void MenuOptions3()
-        {
-            Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SMAKE MAIN MENU        ║");
-            Console.WriteLine("╠══════════════════════════════╣");
-            Console.WriteLine("║ 1. Spiel starten             ║");
-            Console.WriteLine("║ 2. Einstellungen             ║");
-            Console.WriteLine("║ 3. >>  Anleitung             ║");
-            Console.WriteLine("║ 4. Beenden                   ║");
-            Console.WriteLine("╚══════════════════════════════╝");
-        }
-        static void MenuOptions4()
-        {
-            Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SMAKE MAIN MENU        ║");
-            Console.WriteLine("╠══════════════════════════════╣");
-            Console.WriteLine("║ 1. Spiel starten             ║");
-            Console.WriteLine("║ 2. Einstellungen             ║");
-            Console.WriteLine("║ 3. Anleitung                 ║");
-            Console.WriteLine("║ 4. >>  Beenden               ║");
-            Console.WriteLine("╚══════════════════════════════╝");
-        }
 
         static void Eingaben()
         {
@@ -456,16 +415,17 @@ namespace Snake.io
             }
         }
 
-
         static void Einstellungen()
         {
             Console.Clear();
-            EinstellungenOptions1();
             bool menu = true;
-            int EinstellungenOptions = 1;
+            int einstellungsAuswahl = 1;
             bool change = false;
+
             do
             {
+                EinstellungenOptions(einstellungsAuswahl); // nur noch eine Methode!
+
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
 
@@ -473,68 +433,67 @@ namespace Snake.io
                 switch (key)
                 {
                     case ConsoleKey.UpArrow:
-                        EinstellungenOptions--;
+                        einstellungsAuswahl--;
+                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 4;
                         break;
 
                     case ConsoleKey.DownArrow:
-                        EinstellungenOptions++;
+                        einstellungsAuswahl++;
+                        if (einstellungsAuswahl > 4) einstellungsAuswahl = 1;
                         break;
+
+                    case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         change = true;
                         break;
                 }
 
-                // Begrenzung von EinstellungenOptions auf 1 bis 4
-                if (EinstellungenOptions < 1) EinstellungenOptions = 4;
-                if (EinstellungenOptions > 4) EinstellungenOptions = 1;
                 if (change)
                 {
-                    switch (EinstellungenOptions)
+                    Console.Clear();
+                    switch (einstellungsAuswahl)
                     {
                         case 1:
                             ChangeDifficulty();
-                            change = false;
                             break;
-
                         case 2:
                             multiplayer = !multiplayer;
-                            change = false;
                             break;
-
                         case 3:
                             ChangeGamemode();
-                            change = false;
                             break;
-
                         case 4:
                             menu = false;
-                            change = false;
                             break;
                     }
+                    change = false;
                 }
 
-                switch (EinstellungenOptions)
+            } while (menu);
+        }
+        static void EinstellungenOptions(int selected)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("EINSTELLUNGEN");
+            Console.WriteLine("══════════════════════════════");
+
+            // Directly writing the settings options with dynamic values
+            for (int i = 0; i < 4; i++)
+            {
+                string option = i switch
                 {
-                    case 1:
-                        EinstellungenOptions1();
-                        break;
+                    0 => $"Schwierigkeit ändern   [Aktuell: {difficulty}]",
+                    1 => $"Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]",
+                    2 => $"Gamemode ändern        [Aktuell: {gamemode}]",
+                    3 => "Zurück zum Hauptmenü",
+                    _ => ""
+                };
 
-                    case 2:
-                        EinstellungenOptions2();
-                            break;
-
-                    case 3:
-                        EinstellungenOptions3();
-                        break;
-
-                    case 4:
-                        EinstellungenOptions4();
-                        break;
-                }
-
-
+                string marker = (i + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"{marker} {option.PadRight(30)}");
             }
-            while (menu);
+
+            Console.WriteLine("══════════════════════════════");
         }
 
         static void ChangeDifficulty()
@@ -550,55 +509,12 @@ namespace Snake.io
             else if (gamemode == "Normal") gamemode = "Normal";
             else gamemode = "Normal";
         }
-
-        static void EinstellungenOptions1()
+        static void Shop()
         {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("EINSTELLUNGEN");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($">>  Schwierigkeit ändern   [Aktuell: {difficulty}]");
-            Console.WriteLine($"Multiplayer                [Aktuell: {(multiplayer ? "An" : "Aus")}]");
-            Console.WriteLine($"Gamemode ändern            [Aktuell: {gamemode}]");
-            Console.WriteLine("Zurück zum Hauptmenü");
-            Console.WriteLine("══════════════════════════════");
-        }
-
-        static void EinstellungenOptions2()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("EINSTELLUNGEN");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Schwierigkeit ändern       [Aktuell: {difficulty}]");
-            Console.WriteLine($">>  Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]");
-            Console.WriteLine($"Gamemode ändern            [Aktuell: {gamemode}]");
-            Console.WriteLine("Zurück zum Hauptmenü");
-            Console.WriteLine("══════════════════════════════");
-        }
-
-        static void EinstellungenOptions3()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("EINSTELLUNGEN");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Schwierigkeit ändern       [Aktuell: {difficulty}]");
-            Console.WriteLine($"Multiplayer                [Aktuell: {(multiplayer ? "An" : "Aus")}]");
-            Console.WriteLine($">>  Gamemode ändern        [Aktuell: {gamemode}]");
-            Console.WriteLine("Zurück zum Hauptmenü");
-            Console.WriteLine("══════════════════════════════");
-        }
-        static void EinstellungenOptions4()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("EINSTELLUNGEN");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Schwierigkeit ändern       [Aktuell: {difficulty}]");
-            Console.WriteLine($"Multiplayer                [Aktuell: {(multiplayer ? "An" : "Aus")}]");
-            Console.WriteLine($"Gamemode ändern            [Aktuell: {gamemode}]");
-            Console.WriteLine(">>  Zurück zum Hauptmenü");
-            Console.WriteLine("══════════════════════════════");
+            
         }
         static void Anleitung()
-        {
+        { 
             Console.Clear();
             Console.WriteLine("ANLEITUNG");
             Console.WriteLine("══════════════════════════════");
@@ -620,7 +536,7 @@ namespace Snake.io
             Console.WriteLine();
             Console.WriteLine("Vermeide Kollisionen mit dir selbst oder dem Rand!");
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
+            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
             Console.ReadKey();
         }
 
