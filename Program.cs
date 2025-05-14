@@ -392,7 +392,7 @@ namespace Snake.io
 
             bool check = true;
 
-            while (check);
+            do
             {
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
@@ -410,7 +410,7 @@ namespace Snake.io
                         break;
                 }
             }
-            
+            while (check);
         }
 
         static void ShowMultiplayerResult()
