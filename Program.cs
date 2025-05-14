@@ -405,7 +405,7 @@ namespace Snake.io
                         break;
 
                     case ConsoleKey.Escape:
-                        exit = false;
+                        exit = true;
                         check = false;
                         break;
                 }
@@ -428,6 +428,11 @@ namespace Snake.io
                     Console.WriteLine($"     With {punkte} Points!    ");
                     Console.WriteLine($"     {name2} has {punkte2} Points  ");
                     break;
+
+                case 3:
+                    Console.WriteLine("       Game Over!      ");
+                    break;
+
             }
         }
 
@@ -443,6 +448,10 @@ namespace Snake.io
                 case 2:
                     Console.WriteLine("     Congratulations! You Win!     ");
                     Console.WriteLine($"You scored {punkte} points.");
+                    break;
+
+                case 3:
+                    Console.WriteLine("       Game Over!      ");
                     break;
             }
         }
@@ -677,6 +686,7 @@ namespace Snake.io
                         case ConsoleKey.Escape:
 
                             spiel = false;
+                            gameover = 3;
 
                             break;
 
