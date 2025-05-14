@@ -252,7 +252,7 @@ namespace Snake.io
 
             do
             {
-                Console.SetCursorPosition(0, 11); // nach dem Titel
+                Console.SetCursorPosition(0, 11);
                 ShowMenuOptions(MenueOptions);
 
                 while (Console.KeyAvailable)
@@ -437,7 +437,7 @@ namespace Snake.io
 
             do
             {
-                EinstellungenOptions(einstellungsAuswahl); // nur noch eine Methode!
+                EinstellungenOptions(einstellungsAuswahl);
 
                 while (Console.KeyAvailable)
                     Console.ReadKey(true);
@@ -489,7 +489,7 @@ namespace Snake.io
             Console.WriteLine("EINSTELLUNGEN");
             Console.WriteLine("══════════════════════════════");
 
-            // Directly writing the settings options with dynamic values
+            
             for (int i = 0; i < 4; i++)
             {
                 string option = "";
