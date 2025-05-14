@@ -463,7 +463,6 @@ namespace Snake.io
 
                 if (change)
                 {
-                    Console.Clear();
                     switch (einstellungsAuswahl)
                     {
                         case 1:
@@ -486,7 +485,7 @@ namespace Snake.io
         }
         static void EinstellungenOptions(int selected)
         {
-            Console.SetCursorPosition(0, 0);
+            Console.Clear();
             Console.WriteLine("EINSTELLUNGEN");
             Console.WriteLine("══════════════════════════════");
 
@@ -527,8 +526,8 @@ namespace Snake.io
 
         static void ChangeGamemode()
         {
-            if (gamemode == "Normal") gamemode = "Normal";
-            else if (gamemode == "Normal") gamemode = "Normal";
+            if (gamemode == "Normal") gamemode = "Normal2";
+            else if (gamemode == "Normal2") gamemode = "Normal3";
             else gamemode = "Normal";
         }
         static void Shop()
