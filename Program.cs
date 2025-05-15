@@ -104,6 +104,10 @@ namespace Snake.io
 
         static ConsoleColor headfarbe2;
 
+        static char rand;
+
+        static ConsoleColor randfarbe;
+
         // Punkte der Spieler
 
         static int punkte;
@@ -121,16 +125,22 @@ namespace Snake.io
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-            difficulty = "Mittel";
+            difficulty = "Mittig";
             gamemode = "Normal";
             multiplayer = false;
+            rand = '█';
+            randfarbe = ConsoleColor.White;
+            food = '*';
+            foodfarbe = ConsoleColor.Green;
+            skin = '+';
+            skin2 = 'x';
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
-            Eingaben();
+
             do
             {
-                Neustart();
+
                 ShowMainMenue();
 
             } while (!exit);
@@ -180,15 +190,7 @@ namespace Snake.io
 
             head = '∨';
 
-            head2 = '∨';
-
-            skin = '+';
-
-            skin2 = 'x';
-
-            food = '*';
-
-            foodfarbe = ConsoleColor.Green;
+            head2 = '∨';   
 
             // Zeit einstellen
 
@@ -282,8 +284,8 @@ namespace Snake.io
             switch (MenueOptions)
             {
                 case 1:
-
-                    Console.Clear();
+                    Neustart();
+                    Eingaben();
                     Spiel();
                     break;
                 case 2:
@@ -293,12 +295,9 @@ namespace Snake.io
                     Shop();
                     break;
                 case 4:
-                    Skin_Farben();
-                    break;
-                case 5:
                     Anleitung();
                     break;
-                case 6:
+                case 5:
                     exit = true;
                     break;
             }
@@ -329,7 +328,7 @@ namespace Snake.io
             Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
                 string option = "";
 
@@ -345,12 +344,9 @@ namespace Snake.io
                         option = "Shop";
                         break;
                     case 3:
-                        option = "Skin/Farben";
-                        break;
-                    case 4:
                         option = "Anleitung";
                         break;
-                    case 5:
+                    case 4:
                         option = "Beenden";
                         break;
                     default:
@@ -376,15 +372,15 @@ namespace Snake.io
             farbe = WähleFarbe(name);
             headfarbe = WähleFarbe(name + " (Kopf)");
 
-            
-            
-            Console.Clear();
-            Console.Write("Spieler 2, gib deinen Namen ein: ");
-            name2 = Console.ReadLine();
+            if (multiplayer)
+            {
+                Console.Clear();
+                Console.Write("Spieler 2, gib deinen Namen ein: ");
+                name2 = Console.ReadLine();
 
-            farbe2 = WähleFarbe(name2);
-            headfarbe2 = WähleFarbe(name2 + " (Kopf)");
-           
+                farbe2 = WähleFarbe(name2);
+                headfarbe2 = WähleFarbe(name2 + " (Kopf)");
+            }
             Console.Clear();
         }
 
@@ -463,7 +459,6 @@ namespace Snake.io
 
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
-                        Console.Clear();
                         change = true;
                         break;
                 }
@@ -492,7 +487,7 @@ namespace Snake.io
         }
         static void EinstellungenOptions(int selected)
         {
-            Console.SetCursorPosition(0, 0);
+            Console.Clear();
             Console.WriteLine("EINSTELLUNGEN");
             Console.WriteLine("══════════════════════════════");
 
@@ -540,92 +535,6 @@ namespace Snake.io
         static void Shop()
         {
             
-        }
-
-        static void Skin_Farben()
-        {
-            Console.Clear();
-            bool menu = true;
-            int Skin_FarbenAuswahl = 1;
-            bool change = false;
-
-            do
-            {
-                Skin_FarbenOptions(Skin_FarbenAuswahl);
-
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        Skin_FarbenAuswahl--;
-                        if (Skin_FarbenAuswahl < 1) Skin_FarbenAuswahl = 9;
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        Skin_FarbenAuswahl++;
-                        if (Skin_FarbenAuswahl > 9) Skin_FarbenAuswahl = 1;
-                        break;
-
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                        Console.Clear();
-                        change = true;
-                        break;
-                }
-
-            } while (menu);
-        }
-
-        static void Skin_FarbenOptions(int selected)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("Skins/Farben");
-            Console.WriteLine("══════════════════════════════");
-
-
-            for (int i = 0; i < 9; i++)
-            {
-                string option = "";
-
-                switch (i)
-                {
-                    case 0:
-                        option = $"Player 1 Tailskin ändern    [Aktuell: {skin}]";
-                        break;
-                    case 1:
-                        option = $"Player 2 Tailskin ändern    [Aktuell: {skin2}]";
-                        break;
-                    case 2:
-                        option = $"Player 1 Farbe ändern       [Aktuell: {headfarbe}]";
-                        break;
-                    case 3:
-                        option = $"Player 2 Farbe ändern       [Aktuell: {headfarbe2}]";
-                        break;
-                    case 4:
-                        option = $"Player 1 Tailfarbe ändern   [Aktuell: {farbe}]";
-                        break;
-                    case 5:
-                        option = $"Player 2 Tailfarbe ändern   [Aktuell: {farbe2}]";
-                        break;
-                    case 6:
-                        option = $"Foodskin ändern             [Aktuell: {food}]";
-                        break;
-                    case 7:
-                        option = $"Foodfarbe ändern            [Aktuell: {foodfarbe}]";
-                        break;
-                    case 8:
-                        option = "Zurück zum Hauptmenü";
-                        break;
-                }
-
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {option.PadRight(30)}");
-            }
-
-            Console.WriteLine("══════════════════════════════");
         }
         static void Anleitung()
         { 
@@ -761,7 +670,7 @@ namespace Snake.io
 
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
 
-            if (grid[newPlayerY, newPlayerX] == ' ' || grid[newPlayerY, newPlayerX] == '*')
+            if (grid[newPlayerY, newPlayerX] == ' ' || grid[newPlayerY, newPlayerX] == food)
 
             {
 
@@ -782,7 +691,7 @@ namespace Snake.io
 
             if (multiplayer)
             {
-                if (grid[newPlayerY2, newPlayerX2] == ' ' || grid[newPlayerY2, newPlayerX2] == '*')
+                if (grid[newPlayerY2, newPlayerX2] == ' ' || grid[newPlayerY2, newPlayerX2] == food)
 
                 {
 
@@ -802,7 +711,7 @@ namespace Snake.io
                 }
             }
 
-            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != head && grid[newPlayerY, newPlayerX] != '*' || punkte2 == maxpunkte)
+            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != head && grid[newPlayerY, newPlayerX] != food || punkte2 == maxpunkte)
             {
 
                 spiel = false;
@@ -813,7 +722,7 @@ namespace Snake.io
 
             if (multiplayer)
             {
-                if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != '*' || punkte == maxpunkte)
+                if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != food || punkte == maxpunkte)
                 {
 
                     spiel = false;
@@ -871,7 +780,7 @@ namespace Snake.io
 
 
 
-            grid[futterY, futterX] = '*'; // Setze Futter an die berechnete Position
+            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
         }
 
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
@@ -902,7 +811,7 @@ namespace Snake.io
                                 inputY = -1;
                                 inputX = 0;
                                 aenderung = false;
-                                head = '∧';
+                                head = '^';
                             }
 
                             break;
@@ -914,7 +823,7 @@ namespace Snake.io
                                 inputY = 1;
                                 inputX = 0;
                                 aenderung = false;
-                                head = '∨';
+                                head = 'V';
                             }
 
                             break;
@@ -1033,6 +942,8 @@ namespace Snake.io
                         neueFarbe = farbe2;
                     else if (zeichen == food)
                         neueFarbe = foodfarbe;
+                    else if (zeichen == rand)
+                        neueFarbe = randfarbe;
 
                     // Nur Farbe wechseln, wenn nötig
                     if (neueFarbe != aktuelleFarbe)
@@ -1071,7 +982,7 @@ namespace Snake.io
 
                     {
 
-                        grid[reihe, symbol] = '#';
+                        grid[reihe, symbol] = rand;
 
                     }
 
