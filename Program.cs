@@ -549,12 +549,19 @@ namespace Snake.io
                         switch (Skin_FarbenAuswahl)
                         {
                             case 1:
-                                skinzahl = (skinzahl + 1) % tailskins.Length;
-                                skin = tailskins[skinzahl];
+                                do
+                                {
+                                    skinzahl = (skinzahl + 1) % tailskins.Length;
+                                    skin = tailskins[skinzahl];
+                                } while (skin == skin2);
                                 break;
+
                             case 2:
-                                skin2zahl = (skin2zahl + 1) % tailskins.Length;
-                                skin2 = tailskins[skin2zahl];
+                                do
+                                {
+                                    skin2zahl = (skin2zahl + 1) % tailskins.Length;
+                                    skin2 = tailskins[skin2zahl];
+                                } while (skin2 == skin);
                                 break;
                             case 3:
                                 foodzahl = (foodzahl + 1) % foodskins.Length;
