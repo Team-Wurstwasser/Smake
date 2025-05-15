@@ -120,6 +120,38 @@ namespace Snake.io
 
         static int zeit;
 
+        static int headfarbeIndex = 14;
+
+        static int headfarbe2Index = 14;
+
+        static int farbeIndex = 14;
+
+        static int farbe2Index = 14;
+
+        static int foodfarbeIndex = 14;
+
+        static int randfarbeIndex = 14;
+
+        static ConsoleColor[] farben =
+                        [
+                            ConsoleColor.DarkBlue,
+                            ConsoleColor.DarkGreen,
+                            ConsoleColor.DarkCyan,
+                            ConsoleColor.DarkRed,
+                            ConsoleColor.DarkMagenta,
+                            ConsoleColor.DarkYellow,
+                            ConsoleColor.Gray,
+                            ConsoleColor.DarkGray,
+                            ConsoleColor.Blue,
+                            ConsoleColor.Green,
+                            ConsoleColor.Cyan,
+                            ConsoleColor.Red,
+                            ConsoleColor.Magenta,
+                            ConsoleColor.Yellow,
+                            ConsoleColor.White
+                        ];
+
+
         static void Main()
 
         {
@@ -194,7 +226,7 @@ namespace Snake.io
 
             head = '∨';
 
-            head2 = '∨';   
+            head2 = '∨';
 
             // Zeit einstellen
 
@@ -288,6 +320,7 @@ namespace Snake.io
             switch (MenueOptions)
             {
                 case 1:
+                    Console.Clear();
                     Spiel();
                     break;
                 case 2:
@@ -377,12 +410,12 @@ namespace Snake.io
             Console.Write("Spieler 1, gib deinen Namen ein: ");
             name = Console.ReadLine();
 
-            
+
             Console.Clear();
             Console.Write("Spieler 2, gib deinen Namen ein: ");
             name2 = Console.ReadLine();
 
-            
+
             Console.Clear();
         }
 
@@ -448,7 +481,7 @@ namespace Snake.io
             Console.WriteLine("EINSTELLUNGEN");
             Console.WriteLine("══════════════════════════════");
 
-            
+
             for (int i = 0; i < 4; i++)
             {
                 string option = "";
@@ -491,7 +524,7 @@ namespace Snake.io
         }
         static void Shop()
         {
-            
+
         }
 
         static void Skin_Farben()
@@ -525,10 +558,52 @@ namespace Snake.io
                     case ConsoleKey.Spacebar:
                         Console.Clear();
                         change = true;
-                        break;
-                }
+                        Console.Clear();
+                        switch (Skin_FarbenAuswahl)
+                        {
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                headfarbeIndex = (headfarbeIndex + 1) % farben.Length;
+                                headfarbe = farben[headfarbeIndex];
+                                break;
+                            case 4:
+                                headfarbe2Index = (headfarbe2Index + 1) % farben.Length;
+                                headfarbe2 = farben[headfarbe2Index];
+                                break;
+                            case 5:
+                                farbeIndex = (farbeIndex + 1) % farben.Length;
+                                farbe = farben[farbeIndex];
+                                break;
+                            case 6:
+                                farbe2Index = (farbe2Index + 1) % farben.Length;
+                                farbe2 = farben[farbe2Index];
+                                break;
+                            case 7:
 
-            } while (menu);
+                                break;
+                            case 8:
+                                foodfarbeIndex = (foodfarbeIndex + 1) % farben.Length;
+                                foodfarbe = farben[foodfarbeIndex];
+                                break;
+                            case 9:
+
+                                break;
+                            case 10:
+                                randfarbeIndex = (randfarbeIndex + 1) % farben.Length;
+                                randfarbe = farben[randfarbeIndex];
+                                break;
+                            case 11:
+                                menu = false; // Zurück zum Hauptmenü
+                                break;
+                        }
+                    break;
+                }
+                          
+            } 
+            while (menu);
         }
 
         static void Skin_FarbenOptions(int selected)
@@ -615,64 +690,52 @@ namespace Snake.io
         static void ShowGameOverScreen()
         {
             Console.Clear();
-            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("═════════════════════════════════════");
+            Console.WriteLine("             GAME OVER              ");
+            Console.WriteLine("═════════════════════════════════════");
 
             if (multiplayer)
             {
-                ShowMultiplayerResult();
+                if (gameover == 1)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"{name2} gewinnt!");
+                    Console.WriteLine($"Punkte: {punkte2}");
+                    Console.WriteLine($"{name} hat {punkte} Punkte erreicht.");
+                    Console.WriteLine();
+                }
+                else if (gameover == 2)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"{name} gewinnt!");
+                    Console.WriteLine($"Punkte: {punkte}");
+                    Console.WriteLine($"{name2} hat {punkte2} Punkte erreicht.");
+                    Console.WriteLine();
+                }
             }
             else
             {
-                ShowSingleplayerResult();
+                if (gameover == 1)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Leider verloren – versuch's noch einmal!");
+                    Console.WriteLine($"Du hast {punkte} Punkte erreicht.");
+                    Console.WriteLine();
+                }
+                else if (gameover == 2)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Glückwunsch! Du hast gewonnen!");
+                    Console.WriteLine($"Deine Punktzahl: {punkte}");
+                    Console.WriteLine();
+                }
             }
 
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine Taste, um zum Menü zurückzukehren...");
+            Console.WriteLine("═════════════════════════════════════");
+            Console.WriteLine("Drücke [Enter], um zum Menü zurückzukehren...");
             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
         }
 
-        static void ShowMultiplayerResult()
-        {
-            switch (gameover)
-            {
-                case 1:
-                    Console.WriteLine($"     {name2} Wins!     ");
-                    Console.WriteLine($"     With {punkte2} Points!    ");
-                    Console.WriteLine($"     {name} has {punkte} Points  ");
-                    break;
-
-                case 2:
-                    Console.WriteLine($"     {name} Wins!     ");
-                    Console.WriteLine($"     With {punkte} Points!    ");
-                    Console.WriteLine($"     {name2} has {punkte2} Points  ");
-                    break;
-
-                case 3:
-                    Console.WriteLine("       Game Over!      ");
-                    break;
-
-            }
-        }
-
-        static void ShowSingleplayerResult()
-        {
-            switch (gameover)
-            {
-                case 1:
-                    Console.WriteLine("       Game Over!      ");
-                    Console.WriteLine($"You scored {punkte} points.");
-                    break;
-
-                case 2:
-                    Console.WriteLine("     Congratulations! You Win!     ");
-                    Console.WriteLine($"You scored {punkte} points.");
-                    break;
-
-                case 3:
-                    Console.WriteLine("       Game Over!      ");
-                    break;
-            }
-        }
 
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
