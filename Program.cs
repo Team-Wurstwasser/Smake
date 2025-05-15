@@ -3,9 +3,7 @@ namespace Snake.io
 {
 
     using System;
-
     using System.Threading;
-
     using System.Collections.Generic;
     using System.Drawing;
     using Microsoft.VisualBasic.FileIO;
@@ -67,15 +65,15 @@ namespace Snake.io
 
         static bool multiplayer;
 
-        static string difficulty;
+        static string? difficulty;
 
-        static string gamemode;
+        static string? gamemode;
 
         // Namen der Spieler
 
-        static string name;
+        static string? name;
 
-        static string name2;
+        static string? name2;
 
         // Länge des Spielers
 
@@ -373,35 +371,18 @@ namespace Snake.io
 
             for (int i = 0; i < 6; i++)
             {
-                string option = "";
-
-                switch (i)
+                string option = i switch
                 {
-                    case 0:
-                        option = "Spiel starten";
-                        break;
-                    case 1:
-                        option = "Einstellungen";
-                        break;
-                    case 2:
-                        option = "Shop";
-                        break;
-                    case 3:
-                        option = "Skins/Farben";
-                        break;
-                    case 4:
-                        option = "Anleitung";
-                        break;
-                    case 5:
-                        option = "Beenden";
-                        break;
-                    default:
-                        option = "";
-                        break;
-                }
-
+                    0 => "Spiel starten",
+                    1 => "Einstellungen",
+                    2 => "Shop",
+                    3 => "Skins/Farben",
+                    4 => "Anleitung",
+                    5 => "Beenden",
+                    _ => "",
+                };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"║  {zeiger} {option.PadRight(25)}║");
+                Console.WriteLine($"║  {zeiger} {option,-25}║");
             }
 
             Console.WriteLine("╚══════════════════════════════╝");
@@ -499,7 +480,7 @@ namespace Snake.io
                 }
 
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {option.PadRight(30)}");
+                Console.WriteLine($"{zeiger} {option,-30}");
             }
 
             Console.WriteLine("══════════════════════════════");
