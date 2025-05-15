@@ -121,7 +121,7 @@ namespace Snake.io
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-            difficulty = "Mittig";
+            difficulty = "Mittel";
             gamemode = "Normal";
             multiplayer = false;
 
@@ -130,7 +130,7 @@ namespace Snake.io
 
             do
             {
-
+                Neustart();
                 ShowMainMenue();
 
             } while (!exit);
@@ -282,7 +282,7 @@ namespace Snake.io
             switch (MenueOptions)
             {
                 case 1:
-                    Neustart();
+                    
                     Eingaben();
                     Spiel();
                     break;
@@ -457,6 +457,7 @@ namespace Snake.io
 
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
+                        Console.Clear();
                         change = true;
                         break;
                 }
@@ -485,7 +486,7 @@ namespace Snake.io
         }
         static void EinstellungenOptions(int selected)
         {
-            Console.Clear();
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine("EINSTELLUNGEN");
             Console.WriteLine("══════════════════════════════");
 
