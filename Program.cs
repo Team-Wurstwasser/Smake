@@ -164,11 +164,19 @@ namespace Snake.io
 
         static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▣', '▤'];
 
+        static int coins;
+
+        static bool[] freigeschaltetTail = new bool[tailskins.Length];
+        static bool[] freigeschaltetFood = new bool[foodskins.Length];
+        static bool[] freigeschaltetRand = new bool[randskins.Length];
+        static bool[] freigeschaltetFarben = new bool[farben.Length];
+
         static void Main()
 
         {
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
+            coins = 10000; // Startguthaben
             difficulty = "Mittel";
             gamemode = "Normal";
             multiplayer = false;
@@ -514,7 +522,93 @@ namespace Snake.io
         }
         static void Shop()
         {
+            Console.Clear();
+            bool menu = true;
+            int auswahl = 1;
 
+            // Zähle alle Shop-Optionen zusammen
+            int gesamtOptionen = tailskins.Length + foodskins.Length + randskins.Length + farben.Length + 1;
+
+            do
+            {
+                ShopOptions(auswahl);
+
+                while (Console.KeyAvailable)
+                    Console.ReadKey(true);
+
+                var key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        auswahl--;
+                        if (auswahl < 1) auswahl = gesamtOptionen;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        auswahl++;
+                        if (auswahl > gesamtOptionen) auswahl = 1;
+                        break;
+
+                    case ConsoleKey.Enter:
+                    case ConsoleKey.Spacebar:
+                    Console.Clear();
+                        if (auswahl == gesamtOptionen)
+                        {
+                            menu = false; // Zurück zum Hauptmenü
+                            break;
+                        }
+                        break;
+                }
+            } while (menu);
+        }
+
+
+        static void ShopOptions(int selected)
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("           Shop           ");
+            Console.WriteLine($"Coins: {coins}");
+            Console.WriteLine("══════════════════════════");
+
+            int option = 0;
+
+            Console.WriteLine("Tail Skins:");
+            for (int i = 0; i < tailskins.Length; i++, option++)
+            {
+                string shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string zeiger = (option + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"{zeiger} {tailskins[i]} {shoptext}");
+            }
+
+            Console.WriteLine("\nFood Skins:");
+            for (int i = 0; i < foodskins.Length; i++, option++)
+            {
+                string shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string zeiger = (option + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"{zeiger} {foodskins[i]} {shoptext}");
+            }
+
+            Console.WriteLine("\nRand Skins:");
+            for (int i = 0; i < randskins.Length; i++, option++)
+            {
+                string shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string zeiger = (option + 1 == selected) ? ">>" : "  ";
+                Console.WriteLine($"{zeiger} {randskins[i]} {shoptext}");
+            }
+
+            Console.WriteLine("\nFarben:");
+            for (int i = 0; i < farben.Length; i++, option++)
+            {
+                string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string zeiger = (option + 1 == selected) ? ">>" : "  ";
+                Console.ForegroundColor = farben[i];
+                Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
+                Console.ResetColor();
+            }
+
+            string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
+            Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
+            Console.WriteLine("══════════════════════════");
         }
 
         static void Skin_Farben()
