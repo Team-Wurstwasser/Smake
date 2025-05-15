@@ -127,7 +127,7 @@ namespace Snake.io
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
-
+            Eingaben();
             do
             {
                 Neustart();
@@ -283,7 +283,7 @@ namespace Snake.io
             {
                 case 1:
                     
-                    Eingaben();
+                    
                     Spiel();
                     break;
                 case 2:
