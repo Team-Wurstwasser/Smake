@@ -542,30 +542,30 @@ namespace Snake.io
 
                                 break;
                             case 3:
+
+                                break;
+                            case 4:
+
+                                break;
+                            case 5:
                                 headfarbezahl = (headfarbezahl + 1) % farben.Length;
                                 headfarbe = farben[headfarbezahl];
                                 break;
-                            case 4:
+                            case 6:
                                 headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
                                 headfarbe2 = farben[headfarbe2zahl];
                                 break;
-                            case 5:
+                            case 7:
                                 farbezahl = (farbezahl + 1) % farben.Length;
                                 farbe = farben[farbezahl];
                                 break;
-                            case 6:
+                            case 8:
                                 farbe2zahl = (farbe2zahl + 1) % farben.Length;
                                 farbe2 = farben[farbe2zahl];
                                 break;
-                            case 7:
-
-                                break;
-                            case 8:
+                            case 9:
                                 foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
                                 foodfarbe = farben[foodfarbezahl];
-                                break;
-                            case 9:
-
                                 break;
                             case 10:
                                 randfarbezahl = (randfarbezahl + 1) % farben.Length;
@@ -607,38 +607,40 @@ namespace Snake.io
                         color = false;
                         break;
                     case 2:
+                        option = $"Foodskin ändern             [Aktuell: {food}";
+                        color = false;
+                        break;
+                    case 3:
+                        option = $"Randskin ändern             [Aktuell: {rand}";
+                        color = false;
+                        break;
+                    case 4:
                         option = $"Player 1 Farbe ändern       [Aktuell: ";
                         farbemenue = headfarbe;
                         color = true;
                         break;
-                    case 3:
+                    case 5:
                         option = $"Player 2 Farbe ändern       [Aktuell: ";
                         farbemenue = headfarbe2;
                         color = true;
                         break;
-                    case 4:
+                    case 6:
                         option = $"Player 1 Tailfarbe ändern   [Aktuell: ";
                         farbemenue = farbe;
                         color = true;
                         break;
-                    case 5:
+                    case 7:
                         option = $"Player 2 Tailfarbe ändern   [Aktuell: ";
                         farbemenue = farbe2;
                         color = true;
                         break;
-                    case 6:
-                        option = $"Foodskin ändern             [Aktuell: {food}";
-                        color = false;
-                        break;
-                    case 7:
+                   
+                    case 8:
                         option = $"Foodfarbe ändern            [Aktuell: ";
                         farbemenue = foodfarbe;
                         color = true;
                         break;
-                    case 8:
-                        option = $"Randskin ändern             [Aktuell: {rand}";
-                        color = false;
-                        break;
+                    
                     case 9:
                         option = $"Randfarbe ändern            [Aktuell: ";
                         farbemenue = randfarbe;
