@@ -7,6 +7,7 @@ namespace Snake.io
     using System.Collections.Generic;
     using System.Drawing;
     using Microsoft.VisualBasic.FileIO;
+    using System.Runtime.InteropServices;
 
     class Program
 
@@ -130,9 +131,7 @@ namespace Snake.io
         static int foodfarbezahl = 14;
 
         static int randfarbezahl = 14;
-
-        static ConsoleColor[] farben =
-                        [
+        static readonly ConsoleColor[] farben = [
                             ConsoleColor.DarkBlue,
                             ConsoleColor.DarkGreen,
                             ConsoleColor.DarkCyan,
@@ -147,15 +146,23 @@ namespace Snake.io
                             ConsoleColor.Red,
                             ConsoleColor.Magenta,
                             ConsoleColor.Yellow,
-                            ConsoleColor.White
-                        ];
+                            ConsoleColor.White,
+                                ];
+        // WinAPI-Funktion, um die Bildschirmgröße zu erhalten
+        [DllImport("user32.dll")]
+        static extern int GetSystemMetrics(int nIndex);
 
-
+        const int SM_CXSCREEN = 0;
+        const int SM_CYSCREEN = 1;
         static void Main()
 
         {
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+            int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
+            Console.WriteLine($"Bildschirmgröße: {screenWidth}x{screenHeight}");
+            Thread.Sleep(1000);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             difficulty = "Mittel";
             gamemode = "Normal";
             multiplayer = false;
