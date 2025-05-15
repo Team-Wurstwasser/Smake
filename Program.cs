@@ -243,6 +243,7 @@ namespace Snake.io
         }
         static void Spiel()
         {
+            Neustart();
             Thread inputThread = new(ReadInput);
             inputThread.Start();
 
@@ -323,7 +324,6 @@ namespace Snake.io
             {
                 case 1:
                     Console.Clear();
-                    Neustart();
                     Spiel();
                     break;
                 case 2:
@@ -736,15 +736,33 @@ namespace Snake.io
             }
 
             Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("Drücke [Enter], um zum Menü zurückzukehren...");
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            Console.WriteLine("Drücke [Esc],   um zum Menü zurückzukehren\n" +
+                              "oder   [Enter], um ein neues Spiel zu starten ");
+            bool check = false;
+            do
+            {
+                while (Console.KeyAvailable) Console.ReadKey(true);
+                var key2 = Console.ReadKey(true).Key;
+                switch (key2)
+                {
+                    case ConsoleKey.Enter:
+                        check = true;
+                        Console.Clear();
+                        Spiel();
+                        continue;
+
+                    case ConsoleKey.Escape:
+                        check = true;
+                        break;
+
+                }
+            }
+            while (!check);
         }
 
+            // Aktualisiert die Position des Spielers anhand der Eingabe
 
-
-        // Aktualisiert die Position des Spielers anhand der Eingabe
-
-        static void Update()
+            static void Update()
 
         {
 
@@ -1128,3 +1146,4 @@ namespace Snake.io
     }
 
 }
+
