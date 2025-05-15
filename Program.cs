@@ -177,7 +177,7 @@ namespace Snake.io
             Eingaben();
             do
             {
-                Neustart();
+             
                 ShowMainMenue();
 
             } while (!exit);
@@ -231,7 +231,10 @@ namespace Snake.io
 
             // Zeit einstellen
 
-            zeit = 50;
+           
+            if (difficulty == "Langsam") zeit = 150;
+            else if (difficulty == "Mittel") zeit = 100;
+            else zeit = 50;
 
             // Alle Eingabewerte zurücksetzen
             inputX = 0;
@@ -322,6 +325,7 @@ namespace Snake.io
             {
                 case 1:
                     Console.Clear();
+                    Neustart();
                     Spiel();
                     break;
                 case 2:
@@ -423,7 +427,6 @@ namespace Snake.io
             Console.Clear();
             bool menu = true;
             int einstellungsAuswahl = 1;
-            bool change = false;
 
             do
             {
@@ -448,28 +451,22 @@ namespace Snake.io
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         Console.Clear();
-                        change = true;
+                        switch (einstellungsAuswahl)
+                        {
+                            case 1:
+                                ChangeDifficulty();
+                                break;
+                            case 2:
+                                multiplayer = !multiplayer;
+                                break;
+                            case 3:
+                                ChangeGamemode();
+                                break;
+                            case 4:
+                                menu = false;
+                                break;
+                        }
                         break;
-                }
-
-                if (change)
-                {
-                    switch (einstellungsAuswahl)
-                    {
-                        case 1:
-                            ChangeDifficulty();
-                            break;
-                        case 2:
-                            multiplayer = !multiplayer;
-                            break;
-                        case 3:
-                            ChangeGamemode();
-                            break;
-                        case 4:
-                            menu = false;
-                            break;
-                    }
-                    change = false;
                 }
 
             } while (menu);
@@ -531,7 +528,6 @@ namespace Snake.io
             Console.Clear();
             bool menu = true;
             int Skin_FarbenAuswahl = 1;
-            bool change = false;
 
             do
             {
@@ -556,13 +552,13 @@ namespace Snake.io
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                         Console.Clear();
-                        change = true;
-                        Console.Clear();
                         switch (Skin_FarbenAuswahl)
                         {
                             case 1:
+
                                 break;
                             case 2:
+
                                 break;
                             case 3:
                                 headfarbezahl = (headfarbezahl + 1) % farben.Length;
@@ -1005,7 +1001,7 @@ namespace Snake.io
                                 inputY2 = -1;
                                 inputX2 = 0;
                                 aenderung2 = false;
-                                head2 = '∧';
+                                head2 = '^';
                             }
 
                             break;
@@ -1017,7 +1013,7 @@ namespace Snake.io
                                 inputY2 = 1;
                                 inputX2 = 0;
                                 aenderung2 = false;
-                                head2 = '∨';
+                                head2 = 'V';
                             }
 
                             break;
