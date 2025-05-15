@@ -8,6 +8,7 @@ namespace Snake.io
 
     using System.Collections.Generic;
     using System.Drawing;
+    using Microsoft.VisualBasic.FileIO;
 
     class Program
 
@@ -120,17 +121,17 @@ namespace Snake.io
 
         static int zeit;
 
-        static int headfarbeIndex = 14;
+        static int headfarbezahl = 14;
 
-        static int headfarbe2Index = 14;
+        static int headfarbe2zahl = 14;
 
-        static int farbeIndex = 14;
+        static int farbezahl = 14;
 
-        static int farbe2Index = 14;
+        static int farbe2zahl = 14;
 
-        static int foodfarbeIndex = 14;
+        static int foodfarbezahl = 14;
 
-        static int randfarbeIndex = 14;
+        static int randfarbezahl = 14;
 
         static ConsoleColor[] farben =
                         [
@@ -163,7 +164,7 @@ namespace Snake.io
             rand = '█';
             randfarbe = ConsoleColor.White;
             food = '*';
-            foodfarbe = ConsoleColor.Green;
+            foodfarbe = ConsoleColor.White;
             skin = '+';
             skin2 = 'x';
             farbe = ConsoleColor.White;
@@ -409,13 +410,11 @@ namespace Snake.io
             Console.Clear();
             Console.Write("Spieler 1, gib deinen Namen ein: ");
             name = Console.ReadLine();
-
-
+            Console.Clear();
+        
             Console.Clear();
             Console.Write("Spieler 2, gib deinen Namen ein: ");
             name2 = Console.ReadLine();
-
-
             Console.Clear();
         }
 
@@ -566,34 +565,34 @@ namespace Snake.io
                             case 2:
                                 break;
                             case 3:
-                                headfarbeIndex = (headfarbeIndex + 1) % farben.Length;
-                                headfarbe = farben[headfarbeIndex];
+                                headfarbezahl = (headfarbezahl + 1) % farben.Length;
+                                headfarbe = farben[headfarbezahl];
                                 break;
                             case 4:
-                                headfarbe2Index = (headfarbe2Index + 1) % farben.Length;
-                                headfarbe2 = farben[headfarbe2Index];
+                                headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
+                                headfarbe2 = farben[headfarbe2zahl];
                                 break;
                             case 5:
-                                farbeIndex = (farbeIndex + 1) % farben.Length;
-                                farbe = farben[farbeIndex];
+                                farbezahl = (farbezahl + 1) % farben.Length;
+                                farbe = farben[farbezahl];
                                 break;
                             case 6:
-                                farbe2Index = (farbe2Index + 1) % farben.Length;
-                                farbe2 = farben[farbe2Index];
+                                farbe2zahl = (farbe2zahl + 1) % farben.Length;
+                                farbe2 = farben[farbe2zahl];
                                 break;
                             case 7:
 
                                 break;
                             case 8:
-                                foodfarbeIndex = (foodfarbeIndex + 1) % farben.Length;
-                                foodfarbe = farben[foodfarbeIndex];
+                                foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
+                                foodfarbe = farben[foodfarbezahl];
                                 break;
                             case 9:
 
                                 break;
                             case 10:
-                                randfarbeIndex = (randfarbeIndex + 1) % farben.Length;
-                                randfarbe = farben[randfarbeIndex];
+                                randfarbezahl = (randfarbezahl + 1) % farben.Length;
+                                randfarbe = farben[randfarbezahl];
                                 break;
                             case 11:
                                 menu = false; // Zurück zum Hauptmenü
@@ -609,57 +608,85 @@ namespace Snake.io
         static void Skin_FarbenOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
+            Console.ResetColor();
             Console.WriteLine("Skins/Farben");
             Console.WriteLine("══════════════════════════════");
 
+            bool color = false;
 
             for (int i = 0; i < 11; i++)
             {
+                ConsoleColor farbemenue = ConsoleColor.White;
                 string option = "";
 
                 switch (i)
                 {
                     case 0:
-                        option = $"Player 1 Tailskin ändern    [Aktuell: {skin}]";
+                        option = $"Player 1 Tailskin ändern    [Aktuell: {skin}";
+                        color = false;
                         break;
                     case 1:
-                        option = $"Player 2 Tailskin ändern    [Aktuell: {skin2}]";
+                        option = $"Player 2 Tailskin ändern    [Aktuell: {skin2}";
+                        color = false;
                         break;
                     case 2:
-                        option = $"Player 1 Farbe ändern       [Aktuell: {headfarbe}]";
+                        option = $"Player 1 Farbe ändern       [Aktuell: ";
+                        farbemenue = headfarbe;
+                        color = true;
                         break;
                     case 3:
-                        option = $"Player 2 Farbe ändern       [Aktuell: {headfarbe2}]";
+                        option = $"Player 2 Farbe ändern       [Aktuell: ";
+                        farbemenue = headfarbe2;
+                        color = true;
                         break;
                     case 4:
-                        option = $"Player 1 Tailfarbe ändern   [Aktuell: {farbe}]";
+                        option = $"Player 1 Tailfarbe ändern   [Aktuell: ";
+                        farbemenue = farbe;
+                        color = true;
                         break;
                     case 5:
-                        option = $"Player 2 Tailfarbe ändern   [Aktuell: {farbe2}]";
+                        option = $"Player 2 Tailfarbe ändern   [Aktuell: ";
+                        farbemenue = farbe2;
+                        color = true;
                         break;
                     case 6:
-                        option = $"Foodskin ändern             [Aktuell: {food}]";
+                        option = $"Foodskin ändern             [Aktuell: {food}";
+                        color = false;
                         break;
                     case 7:
-                        option = $"Foodfarbe ändern            [Aktuell: {foodfarbe}]";
+                        option = $"Foodfarbe ändern            [Aktuell: ";
+                        farbemenue = foodfarbe;
+                        color = true;
                         break;
                     case 8:
-                        option = $"Randskin ändern             [Aktuell: {rand}]";
+                        option = $"Randskin ändern             [Aktuell: {rand}";
+                        color = false;
                         break;
                     case 9:
-                        option = $"Randfarbe ändern            [Aktuell: {randfarbe}]";
+                        option = $"Randfarbe ändern            [Aktuell: ";
+                        farbemenue = randfarbe;
+                        color = true;
                         break;
                     case 10:
+                        color = false;
                         option = "Zurück zum Hauptmenü";
                         break;
                 }
-
+                Console.ResetColor();
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {option.PadRight(30)}");
+                Console.Write(zeiger + " " + option);
+                if (color)
+                {
+                    Console.ForegroundColor = farbemenue;
+                    Console.Write(farbemenue);
+                    Console.ResetColor();
+                }
+                Console.WriteLine("]");
             }
-
             Console.WriteLine("══════════════════════════════");
         }
+
+
         static void Anleitung()
         { 
             Console.Clear();
