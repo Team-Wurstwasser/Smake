@@ -415,6 +415,7 @@ namespace Snake.io
 
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
+                        Console.Clear();
                         change = true;
                         break;
                 }
@@ -443,7 +444,7 @@ namespace Snake.io
         }
         static void EinstellungenOptions(int selected)
         {
-            Console.Clear();
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine("EINSTELLUNGEN");
             Console.WriteLine("══════════════════════════════");
 
@@ -568,6 +569,12 @@ namespace Snake.io
                         option = $"Foodfarbe ändern            [Aktuell: {foodfarbe}]";
                         break;
                     case 8:
+                        option = $"Randskin ändern             [Aktuell: {rand}]";
+                        break;
+                    case 9:
+                        option = $"Randfarbe ändern            [Aktuell: {randfarbe}]";
+                        break;
+                    case 10:
                         option = "Zurück zum Hauptmenü";
                         break;
                 }
