@@ -120,6 +120,14 @@ namespace Snake.io
 
         static int zeit;
 
+        static int randzahl = 0;
+
+        static int foodzahl = 0;
+
+        static int skinzahl = 0;
+
+        static int skin2zahl = 1;
+
         static int headfarbezahl = 14;
 
         static int headfarbe2zahl = 14;
@@ -131,6 +139,7 @@ namespace Snake.io
         static int foodfarbezahl = 14;
 
         static int randfarbezahl = 14;
+
         static readonly ConsoleColor[] farben = [
                             ConsoleColor.DarkBlue,
                             ConsoleColor.DarkGreen,
@@ -148,6 +157,12 @@ namespace Snake.io
                             ConsoleColor.Yellow,
                             ConsoleColor.White,
                                 ];
+
+        static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
+
+        static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
+
+        static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▣', '▤'];
 
         static void Main()
 
@@ -534,16 +549,20 @@ namespace Snake.io
                         switch (Skin_FarbenAuswahl)
                         {
                             case 1:
-
+                                skinzahl = (skinzahl + 1) % tailskins.Length;
+                                skin = tailskins[skinzahl];
                                 break;
                             case 2:
-
+                                skin2zahl = (skin2zahl + 1) % tailskins.Length;
+                                skin2 = tailskins[skin2zahl];
                                 break;
                             case 3:
-
+                                foodzahl = (foodzahl + 1) % foodskins.Length;
+                                food = foodskins[foodzahl];
                                 break;
                             case 4:
-
+                                randzahl = (randzahl + 1) % randskins.Length;
+                                rand = randskins[randzahl];
                                 break;
                             case 5:
                                 headfarbezahl = (headfarbezahl + 1) % farben.Length;
