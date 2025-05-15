@@ -148,20 +148,11 @@ namespace Snake.io
                             ConsoleColor.Yellow,
                             ConsoleColor.White,
                                 ];
-        // WinAPI-Funktion, um die Bildschirmgröße zu erhalten
-        [DllImport("user32.dll")]
-        static extern int GetSystemMetrics(int nIndex);
 
-        const int SM_CXSCREEN = 0;
-        const int SM_CYSCREEN = 1;
         static void Main()
 
         {
-            int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-            int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
-            Console.WriteLine($"Bildschirmgröße: {screenWidth}x{screenHeight}");
-            Thread.Sleep(1000);
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             difficulty = "Mittel";
             gamemode = "Normal";
