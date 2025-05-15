@@ -513,12 +513,12 @@ namespace Snake.io
                 {
                     case ConsoleKey.UpArrow:
                         Skin_FarbenAuswahl--;
-                        if (Skin_FarbenAuswahl < 1) Skin_FarbenAuswahl = 9;
+                        if (Skin_FarbenAuswahl < 1) Skin_FarbenAuswahl = 11;
                         break;
 
                     case ConsoleKey.DownArrow:
                         Skin_FarbenAuswahl++;
-                        if (Skin_FarbenAuswahl > 9) Skin_FarbenAuswahl = 1;
+                        if (Skin_FarbenAuswahl > 11) Skin_FarbenAuswahl = 1;
                         break;
 
                     case ConsoleKey.Enter:
@@ -538,7 +538,7 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
 
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 11; i++)
             {
                 string option = "";
 
