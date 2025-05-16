@@ -530,8 +530,8 @@ namespace Snake.io
             int auswahl = 1;
 
             // Zähle alle Shop-Optionen zusammen
-            int gesamtOptionenSkins = tailskins.Length + foodskins.Length + randskins.Length + 1;
-            int gesamtOptionenFarben = farben.Length + 1;
+            int gesamtOptionenSkins = tailskins.Length + foodskins.Length + randskins.Length - 3 ;
+            int gesamtOptionenFarben = farben.Length;
 
             bool Shopskins = false;
             do
@@ -571,26 +571,26 @@ namespace Snake.io
                             }
 
                             // Kauflogik für Skins
-                            if (auswahl - 1 < tailskins.Length)
+                            if (auswahl + 1 < tailskins.Length)
                             {
-                                if (!freigeschaltetTail[auswahl - 1] && coins >= 10)
+                                if (!freigeschaltetTail[auswahl + 1] && coins >= 10)
                                 {
-                                    freigeschaltetTail[auswahl - 1] = true;
+                                    freigeschaltetTail[auswahl + 1] = true;
                                     coins -= 10;
                                 }
                             }
-                            else if (auswahl - 1 < tailskins.Length + foodskins.Length)
+                            else if (auswahl + 2 < tailskins.Length + foodskins.Length)
                             {
-                                int i = auswahl - 1 - tailskins.Length;
+                                int i = auswahl + 2 - tailskins.Length;
                                 if (!freigeschaltetFood[i] && coins >= 10)
                                 {
                                     freigeschaltetFood[i] = true;
                                     coins -= 10;
                                 }
                             }
-                            else if (auswahl - 1 < tailskins.Length + foodskins.Length + randskins.Length)
+                            else if (auswahl + 3 < tailskins.Length + foodskins.Length + randskins.Length)
                             {
-                                int i = auswahl - 1 - tailskins.Length - foodskins.Length;
+                                int i = auswahl + 3 - tailskins.Length - foodskins.Length;
                                 if (!freigeschaltetRand[i] && coins >= 10)
                                 {
                                     freigeschaltetRand[i] = true;
@@ -635,9 +635,9 @@ namespace Snake.io
                             }
 
                             
-                            if (!freigeschaltetFarben[auswahl - 1] && coins >= 10)
+                            if (!freigeschaltetFarben[auswahl] && coins >= 10)
                             {
-                                freigeschaltetFarben[auswahl - 1] = true;
+                                freigeschaltetFarben[auswahl] = true;
                                 coins -= 10;
                             }
                             break;
@@ -661,7 +661,7 @@ namespace Snake.io
             int option = 0;
 
             Console.WriteLine("\nFarben:");
-            for (int i = 0; i < farben.Length; i++, option++)
+            for (int i = 1; i < farben.Length; i++, option++)
             {
                 string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[10 Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
@@ -685,7 +685,7 @@ namespace Snake.io
             int option = 0;
 
             Console.WriteLine("\nTail Skins:");
-            for (int i = 0; i < tailskins.Length; i++, option++)
+            for (int i = 2; i < tailskins.Length; i++, option++)
             {
                 string shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[10 Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
@@ -693,7 +693,7 @@ namespace Snake.io
             }
 
             Console.WriteLine("\nFood Skins:");
-            for (int i = 0; i < foodskins.Length; i++, option++)
+            for (int i = 1; i < foodskins.Length; i++, option++)
             {
                 string shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[10 Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
@@ -701,7 +701,7 @@ namespace Snake.io
             }
 
             Console.WriteLine("\nRand Skins:");
-            for (int i = 0; i < randskins.Length; i++, option++)
+            for (int i = 1; i < randskins.Length; i++, option++)
             {
                 string shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[10 Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
@@ -748,7 +748,7 @@ namespace Snake.io
                                 do
                                 {
                                     skinzahl = (skinzahl + 1) % tailskins.Length;
-                                } while ((!freigeschaltetTail[skinzahl] && skin == skin2));
+                                } while (!freigeschaltetTail[skinzahl] || skinzahl == skin2zahl);
 
                                 if (freigeschaltetTail[skinzahl])
                                     skin = tailskins[skinzahl];
@@ -758,16 +758,16 @@ namespace Snake.io
                                 do
                                 {
                                     skin2zahl = (skin2zahl + 1) % tailskins.Length;
-                                } while ((!freigeschaltetTail[skinzahl] && skin2 == skin));
+                                } while (!freigeschaltetTail[skin2zahl] || skin2zahl == skinzahl);
 
-                                if (freigeschaltetTail[skinzahl])
-                                    skin = tailskins[skinzahl];
+                                if (freigeschaltetTail[skin2zahl])
+                                    skin2 = tailskins[skin2zahl];
                                 break;
                             case 3:
                                 do
                                 {
                                     foodzahl = (foodzahl + 1) % foodskins.Length;
-                                } while ((!freigeschaltetTail[foodzahl]));
+                                } while (!freigeschaltetTail[foodzahl]);
 
                                 if (freigeschaltetFood[foodzahl])
                                     food = foodskins[foodzahl];
