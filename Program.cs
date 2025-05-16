@@ -157,7 +157,7 @@ namespace Snake.io
                             ConsoleColor.Yellow,
                             ConsoleColor.White,
                                 ];
-
+    
         static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
 
         static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
@@ -166,10 +166,10 @@ namespace Snake.io
 
         static int coins;
 
-        static bool[] freigeschaltetTail = new bool[tailskins.Length];
-        static bool[] freigeschaltetFood = new bool[foodskins.Length];
-        static bool[] freigeschaltetRand = new bool[randskins.Length];
-        static bool[] freigeschaltetFarben = new bool[farben.Length];
+        static bool[] freigeschaltetTail = new bool[tailskins.Length - 2];
+        static bool[] freigeschaltetFood = new bool[foodskins.Length - 1];
+        static bool[] freigeschaltetRand = new bool[randskins.Length-1];
+        static bool[] freigeschaltetFarben = new bool[farben.Length-1];
 
         static void Main()
 
@@ -615,8 +615,9 @@ namespace Snake.io
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
             Console.WriteLine($"Coins: {coins}");
-            Console.WriteLine("══════════════════════════");
-
+            Console.WriteLine("═══════════════════════════");
+            Console.WriteLine("←  Wechsle die Shopseite  →");
+           
             int option = 0;
 
             Console.WriteLine("\nFarben:");
@@ -639,8 +640,8 @@ namespace Snake.io
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
             Console.WriteLine($"Coins: {coins}");
-            Console.WriteLine("══════════════════════════");
-
+            Console.WriteLine("═══════════════════════════");
+            Console.WriteLine("←  Wechsle die Shopseite  →");
             int option = 0;
 
             Console.WriteLine("Tail Skins:");
