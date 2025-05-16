@@ -748,7 +748,7 @@ namespace Snake.io
                                 do
                                 {
                                     skinzahl = (skinzahl + 1) % tailskins.Length;
-                                } while ((!freigeschaltetTail[skinzahl] || skin == skin2));
+                                } while ((!freigeschaltetTail[skinzahl] && skin == skin2));
 
                                 if (freigeschaltetTail[skinzahl])
                                     skin = tailskins[skinzahl];
@@ -758,7 +758,7 @@ namespace Snake.io
                                 do
                                 {
                                     skin2zahl = (skin2zahl + 1) % tailskins.Length;
-                                } while ((!freigeschaltetTail[skinzahl] || skin2 == skin));
+                                } while ((!freigeschaltetTail[skinzahl] && skin2 == skin));
 
                                 if (freigeschaltetTail[skinzahl])
                                     skin = tailskins[skinzahl];
