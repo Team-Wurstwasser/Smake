@@ -166,10 +166,16 @@ namespace Snake.io
 
         static int coins;
 
+        static int xp;
+
         static bool[] freigeschaltetTail = new bool[tailskins.Length];
         static bool[] freigeschaltetFood = new bool[foodskins.Length];
         static bool[] freigeschaltetRand = new bool[randskins.Length];
         static bool[] freigeschaltetFarben = new bool[farben.Length];
+
+        static int spieleGesamt;
+        static int highscore;
+        static int gesamtcoins;
 
         static void Main()
 
@@ -181,6 +187,7 @@ namespace Snake.io
             freigeschaltetFarben[0] = true; 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             coins = 10000; // Startguthaben
+            xp = 100;
             difficulty = "Mittel";
             gamemode = "Normal";
             multiplayer = false;
@@ -329,12 +336,12 @@ namespace Snake.io
                 {
                     case ConsoleKey.UpArrow:
                         MenueOptions--;
-                        if (MenueOptions < 1) MenueOptions = 6;
+                        if (MenueOptions < 1) MenueOptions = 7;
                         break;
 
                     case ConsoleKey.DownArrow:
                         MenueOptions++;
-                        if (MenueOptions > 6) MenueOptions = 1;
+                        if (MenueOptions > 7) MenueOptions = 1;
                         break;
 
                     case ConsoleKey.Spacebar:
@@ -360,10 +367,13 @@ namespace Snake.io
                 case 4:
                     Skin_Farben();
                     break;
-                case 5:
+                case 6:
                     Anleitung();
                     break;
-                case 6:
+                case 5:
+                    Statisticken();
+                    break;
+                case 7:
                     exit = true;
                     break;
             }
@@ -394,7 +404,7 @@ namespace Snake.io
             Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
                 string option = i switch
                 {
@@ -402,8 +412,9 @@ namespace Snake.io
                     1 => "Einstellungen",
                     2 => "Shop",
                     3 => "Skins/Farben",
-                    4 => "Anleitung",
-                    5 => "Beenden",
+                    5 => "Anleitung",
+                    4 => "Statistiken",
+                    6 => "Beenden",
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"║  {zeiger} {option,-25}║");
@@ -957,6 +968,39 @@ namespace Snake.io
             Console.ReadKey();
         }
 
+        static void Statisticken()
+        {
+            Console.Clear();
+            Console.WriteLine("Statistiken");
+            Console.WriteLine(" ");
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine(" ");
+            // Level-Berechnung (1 Level pro 100 XP)
+            int level = xp / 100 + 1;
+            int punktefürLevel = xp % 100;
+
+            // Fortschrittsbalken
+            int balkenLänge = 20; // Balken 20 Zeichen lang
+            int gefüllteBlöcke = (punktefürLevel * balkenLänge) / 100;
+            string Fortschrittsbalken = new string('█', gefüllteBlöcke).PadRight(balkenLänge, '-');
+
+            Console.WriteLine($"Level:                    {level}");
+            Console.WriteLine($"Fortschritt:              [{Fortschrittsbalken}] {punktefürLevel}/100");
+
+            Console.WriteLine(" ");
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine($"Gesamte Spiele:           {spieleGesamt}");
+            Console.WriteLine($"Höchste Punktzahl:        {highscore}");
+            Console.WriteLine($"Durchschnittliche XP:     {(spieleGesamt > 0 ? xp / spieleGesamt : 0)}");
+            Console.WriteLine($"Gesamte Coins:            {gesamtcoins}");
+            Console.WriteLine($"Aktuelle Coins:           {coins}");
+
+            Console.WriteLine("══════════════════════════════");
+            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
+            Console.ReadKey();
+        }
+
+
         static void ShowGameOverScreen()
         {
             Console.Clear();
@@ -1028,8 +1072,7 @@ namespace Snake.io
 
             // Aktualisiert die Position des Spielers anhand der Eingabe
 
-            static void Update()
-
+        static void Update()
         {
 
             // Neue Zielkoordinaten berechnen
@@ -1164,6 +1207,7 @@ namespace Snake.io
             // Eingabe zurücksetzen (nur eine Bewegung pro Tick)
 
         }
+
         static void SetzeFutter()
         {
             Random rand = new();
@@ -1184,6 +1228,7 @@ namespace Snake.io
         }
 
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
+
 
         static void ReadInput()
 
