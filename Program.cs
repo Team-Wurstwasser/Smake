@@ -565,6 +565,34 @@ namespace Snake.io
                                 menu = false; // Zurück zum Hauptmenü
                                 break;
                             }
+
+                            // Kauflogik für Skins
+                            if (auswahl - 1 < tailskins.Length)
+                            {
+                                if (!freigeschaltetTail[auswahl - 1] && coins >= 10)
+                                {
+                                    freigeschaltetTail[auswahl - 1] = true;
+                                    coins -= 10;
+                                }
+                            }
+                            else if (auswahl - 1 < tailskins.Length + foodskins.Length)
+                            {
+                                int i = auswahl - 1 - tailskins.Length;
+                                if (!freigeschaltetFood[i] && coins >= 10)
+                                {
+                                    freigeschaltetFood[i] = true;
+                                    coins -= 10;
+                                }
+                            }
+                            else if (auswahl - 1 < tailskins.Length + foodskins.Length + randskins.Length)
+                            {
+                                int i = auswahl - 1 - tailskins.Length - foodskins.Length;
+                                if (!freigeschaltetRand[i] && coins >= 10)
+                                {
+                                    freigeschaltetRand[i] = true;
+                                    coins -= 10;
+                                }
+                            }
                             break;
                     }
                 }
@@ -598,10 +626,18 @@ namespace Snake.io
                             Console.Clear();
                             if (auswahl == gesamtOptionenFarben)
                             {
-                                menu = false; // Zurück zum Hauptmenü
+                                menu = false;
                                 break;
                             }
+
+                            
+                            if (!freigeschaltetFarben[auswahl - 1] && coins >= 10)
+                            {
+                                freigeschaltetFarben[auswahl - 1] = true;
+                                coins -= 10;
+                            }
                             break;
+
                     }
                 }
                 
