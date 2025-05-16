@@ -162,7 +162,7 @@ namespace Snake.io
 
         static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
 
-        static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▣', '▤'];
+        static readonly char[] randskins = ['█', '#', '▓', '░', '■'];
 
         static int coins;
 
