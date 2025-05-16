@@ -515,8 +515,8 @@ namespace Snake.io
 
         static void ChangeGamemode()
         {
-            if (gamemode == "Normal") gamemode = "Normal2";
-            else if (gamemode == "Normal2") gamemode = "Normal3";
+            if (gamemode == "Normal") gamemode = "Unendlich";
+            else if (gamemode == "Unendlich") gamemode = "Babymode";
             else gamemode = "Normal";
         }
         static void Shop()
