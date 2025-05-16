@@ -400,7 +400,6 @@ namespace Snake.io
                     3 => "Skins/Farben",
                     4 => "Anleitung",
                     5 => "Beenden",
-                    _ => "",
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"║  {zeiger} {option,-25}║");
@@ -527,43 +526,115 @@ namespace Snake.io
             int auswahl = 1;
 
             // Zähle alle Shop-Optionen zusammen
-            int gesamtOptionen = tailskins.Length + foodskins.Length + randskins.Length + farben.Length + 1;
+            int gesamtOptionenSkins = tailskins.Length + foodskins.Length + randskins.Length + 1;
+            int gesamtOptionenFarben = farben.Length + 1;
 
+            bool Shopskins = false;
             do
             {
-                ShopOptions(auswahl);
-
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
+                if (Shopskins)
                 {
-                    case ConsoleKey.UpArrow:
-                        auswahl--;
-                        if (auswahl < 1) auswahl = gesamtOptionen;
-                        break;
+                    if (auswahl < 1) auswahl = gesamtOptionenSkins;
+                    if (auswahl > gesamtOptionenSkins) auswahl = 1;
 
-                    case ConsoleKey.DownArrow:
-                        auswahl++;
-                        if (auswahl > gesamtOptionen) auswahl = 1;
-                        break;
+                    ShopSkinsOptions(auswahl);
 
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                    Console.Clear();
-                        if (auswahl == gesamtOptionen)
-                        {
-                            menu = false; // Zurück zum Hauptmenü
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+
+                    var key = Console.ReadKey(true).Key;
+                    switch (key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            auswahl--;
                             break;
-                        }
-                        break;
+
+                        case ConsoleKey.DownArrow:
+                            auswahl++;
+                            break;
+                        case ConsoleKey.RightArrow:
+                        case ConsoleKey.LeftArrow:
+                            Console.Clear();
+                            Shopskins = false;
+                            break;
+                        case ConsoleKey.Enter:
+                        case ConsoleKey.Spacebar:
+                            Console.Clear();
+                            if (auswahl == gesamtOptionenSkins)
+                            {
+                                menu = false; // Zurück zum Hauptmenü
+                                break;
+                            }
+                            break;
+                    }
                 }
+                else
+                {
+                    if (auswahl < 1) auswahl = gesamtOptionenFarben;
+                    if (auswahl > gesamtOptionenFarben) auswahl = 1;
+
+                    ShopFarbenOptions(auswahl);
+
+                    while (Console.KeyAvailable)
+                        Console.ReadKey(true);
+
+                    var key = Console.ReadKey(true).Key;
+                    switch (key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            auswahl--;
+                            break;
+
+                        case ConsoleKey.DownArrow:
+                            auswahl++;
+                            break;
+                        case ConsoleKey.RightArrow:
+                        case ConsoleKey.LeftArrow:
+                            Console.Clear();
+                            Shopskins = true;
+                            break;
+                        case ConsoleKey.Enter:
+                        case ConsoleKey.Spacebar:
+                            Console.Clear();
+                            if (auswahl == gesamtOptionenFarben)
+                            {
+                                menu = false; // Zurück zum Hauptmenü
+                                break;
+                            }
+                            break;
+                    }
+                }
+                
+                
             } while (menu);
         }
 
+        static void ShopFarbenOptions(int selected)
+        {
 
-        static void ShopOptions(int selected)
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("           Shop           ");
+            Console.WriteLine($"Coins: {coins}");
+            Console.WriteLine("══════════════════════════");
+
+            int option = 0;
+
+            Console.WriteLine("\nFarben:");
+            for (int i = 0; i < farben.Length; i++, option++)
+            {
+                string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string zeiger = (option + 1 == selected) ? ">>" : "  ";
+                Console.ForegroundColor = farben[i];
+                Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
+                Console.ResetColor();
+            }
+
+            string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
+            Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
+            Console.WriteLine("══════════════════════════");
+        }
+
+        static void ShopSkinsOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
@@ -594,16 +665,6 @@ namespace Snake.io
                 string shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[10 Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {randskins[i]} {shoptext}");
-            }
-
-            Console.WriteLine("\nFarben:");
-            for (int i = 0; i < farben.Length; i++, option++)
-            {
-                string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[10 Coins]";
-                string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.ForegroundColor = farben[i];
-                Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
-                Console.ResetColor();
             }
 
             string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
