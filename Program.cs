@@ -644,7 +644,7 @@ namespace Snake.io
             Console.WriteLine("←  Wechsle die Shopseite  →");
             int option = 0;
 
-            Console.WriteLine("Tail Skins:");
+            Console.WriteLine("\nTail Skins:");
             for (int i = 0; i < tailskins.Length; i++, option++)
             {
                 string shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[10 Coins]";
