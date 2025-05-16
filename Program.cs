@@ -244,9 +244,9 @@ namespace Snake.io
 
             // Aussehen einstellen
 
-            head = '∨';
+            head = skin;
 
-            head2 = '∨';
+            head2 = skin2;
 
             // Zeit einstellen
 
