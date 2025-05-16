@@ -128,19 +128,20 @@ namespace Snake.io
 
         static int skin2zahl = 1;
 
-        static int headfarbezahl = 14;
+        static int headfarbezahl = 0;
 
-        static int headfarbe2zahl = 14;
+        static int headfarbe2zahl = 0;
 
-        static int farbezahl = 14;
+        static int farbezahl = 0;
 
-        static int farbe2zahl = 14;
+        static int farbe2zahl = 0;
 
-        static int foodfarbezahl = 14;
+        static int foodfarbezahl = 0;
 
-        static int randfarbezahl = 14;
+        static int randfarbezahl = 0;
 
         static readonly ConsoleColor[] farben = [
+                            ConsoleColor.White,
                             ConsoleColor.DarkBlue,
                             ConsoleColor.DarkGreen,
                             ConsoleColor.DarkCyan,
@@ -154,8 +155,7 @@ namespace Snake.io
                             ConsoleColor.Cyan,
                             ConsoleColor.Red,
                             ConsoleColor.Magenta,
-                            ConsoleColor.Yellow,
-                            ConsoleColor.White,
+                            ConsoleColor.Yellow
                                 ];
     
         static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
@@ -174,7 +174,11 @@ namespace Snake.io
         static void Main()
 
         {
-
+            freigeschaltetTail[0] = true;
+            freigeschaltetTail[1] = true;
+            freigeschaltetFood[0] = true;
+            freigeschaltetRand[0] = true;
+            freigeschaltetFarben[0] = true; 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             coins = 10000; // Startguthaben
             difficulty = "Mittel";
@@ -744,48 +748,92 @@ namespace Snake.io
                                 do
                                 {
                                     skinzahl = (skinzahl + 1) % tailskins.Length;
+                                } while ((!freigeschaltetTail[skinzahl] || skin == skin2));
+
+                                if (freigeschaltetTail[skinzahl])
                                     skin = tailskins[skinzahl];
-                                } while (skin == skin2);
                                 break;
 
                             case 2:
                                 do
                                 {
                                     skin2zahl = (skin2zahl + 1) % tailskins.Length;
-                                    skin2 = tailskins[skin2zahl];
-                                } while (skin2 == skin);
+                                } while ((!freigeschaltetTail[skinzahl] || skin2 == skin));
+
+                                if (freigeschaltetTail[skinzahl])
+                                    skin = tailskins[skinzahl];
                                 break;
                             case 3:
-                                foodzahl = (foodzahl + 1) % foodskins.Length;
-                                food = foodskins[foodzahl];
+                                do
+                                {
+                                    foodzahl = (foodzahl + 1) % foodskins.Length;
+                                } while ((!freigeschaltetTail[foodzahl]));
+
+                                if (freigeschaltetFood[foodzahl])
+                                    food = foodskins[foodzahl];
                                 break;
                             case 4:
-                                randzahl = (randzahl + 1) % randskins.Length;
-                                rand = randskins[randzahl];
+                                do
+                                {
+                                    randzahl = (randzahl + 1) % randskins.Length;
+                                } while ((!freigeschaltetRand[randzahl]));
+
+                                if (freigeschaltetRand[randzahl])
+                                    rand = randskins[randzahl];
                                 break;
                             case 5:
-                                headfarbezahl = (headfarbezahl + 1) % farben.Length;
-                                headfarbe = farben[headfarbezahl];
+                                do
+                                {
+                                    headfarbezahl = (headfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[headfarbezahl]);
+
+                                if (freigeschaltetFarben[headfarbezahl])
+                                    headfarbe = farben[headfarbezahl];
                                 break;
                             case 6:
-                                headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
-                                headfarbe2 = farben[headfarbe2zahl];
+                                do
+                                {
+                                    headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[headfarbe2zahl]);
+
+                                if (freigeschaltetFarben[headfarbe2zahl])
+                                    headfarbe2 = farben[headfarbe2zahl];
                                 break;
                             case 7:
-                                farbezahl = (farbezahl + 1) % farben.Length;
-                                farbe = farben[farbezahl];
+                                do
+                                {
+                                    farbezahl = (farbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[farbezahl]);
+
+                                if (freigeschaltetFarben[farbezahl])
+                                    farbe = farben[farbezahl];
                                 break;
                             case 8:
-                                farbe2zahl = (farbe2zahl + 1) % farben.Length;
-                                farbe2 = farben[farbe2zahl];
+                                do
+                                {
+                                    farbe2zahl = (farbe2zahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[farbe2zahl]);
+
+                                if (freigeschaltetFarben[farbe2zahl])
+                                    farbe2 = farben[farbe2zahl];
                                 break;
                             case 9:
-                                foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
-                                foodfarbe = farben[foodfarbezahl];
+                                do
+                                {
+                                    foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[foodfarbezahl]);
+
+                                if (freigeschaltetFarben[foodfarbezahl])
+                                    foodfarbe = farben[foodfarbezahl];
                                 break;
                             case 10:
-                                randfarbezahl = (randfarbezahl + 1) % farben.Length;
-                                randfarbe = farben[randfarbezahl];
+                                do
+                                {
+                                    randfarbezahl = (randfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[randfarbezahl]);
+
+                                if (freigeschaltetFarben[randfarbezahl])
+                                    randfarbe = farben[randfarbezahl];
                                 break;
                             case 11:
                                 menu = false; // Zurück zum Hauptmenü
