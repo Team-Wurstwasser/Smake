@@ -166,10 +166,10 @@ namespace Snake.io
 
         static int coins;
 
-        static bool[] freigeschaltetTail = new bool[tailskins.Length - 2];
-        static bool[] freigeschaltetFood = new bool[foodskins.Length - 1];
-        static bool[] freigeschaltetRand = new bool[randskins.Length-1];
-        static bool[] freigeschaltetFarben = new bool[farben.Length-1];
+        static bool[] freigeschaltetTail = new bool[tailskins.Length];
+        static bool[] freigeschaltetFood = new bool[foodskins.Length];
+        static bool[] freigeschaltetRand = new bool[randskins.Length];
+        static bool[] freigeschaltetFarben = new bool[farben.Length];
 
         static void Main()
 
