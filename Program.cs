@@ -122,25 +122,25 @@ namespace Snake.io
 
         // Shop variablen
 
-        static int randzahl = 0;
+        static int randzahl;
 
-        static int foodzahl = 0;
+        static int foodzahl;
 
-        static int skinzahl = 0;
+        static int skinzahl;
 
-        static int skin2zahl = 1;
+        static int skin2zahl;
 
-        static int headfarbezahl = 0;
+        static int headfarbezahl;
 
-        static int headfarbe2zahl = 0;
+        static int headfarbe2zahl;
 
-        static int farbezahl = 0;
+        static int farbezahl;
 
-        static int farbe2zahl = 0;
+        static int farbe2zahl;
 
-        static int foodfarbezahl = 0;
+        static int foodfarbezahl;
 
-        static int randfarbezahl = 0;
+        static int randfarbezahl;
 
         static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
@@ -182,11 +182,26 @@ namespace Snake.io
         static int highscore;
         static int gesamtcoins;
 
+        static bool performancemode;
+
 
         // Main
         static void Main()
 
         {
+            randzahl = 0;
+            foodzahl = 0;
+            skinzahl = 0;
+            skin2zahl = 1;
+            headfarbezahl = 0;
+            headfarbe2zahl = 0;
+            farbezahl = 0;
+            farbe2zahl = 0;
+            foodfarbezahl = 0;
+            randfarbezahl = 0;
+
+            performancemode = false;
+
             freigeschaltetTail[0] = true;
             freigeschaltetTail[1] = true;
             freigeschaltetFood[0] = true;
@@ -340,6 +355,23 @@ namespace Snake.io
         // Hauptmenü
         static void ShowMainMenue()
         {
+
+            if (performancemode)
+            {
+                foodfarbe = ConsoleColor.White;
+                randfarbe = ConsoleColor.White;
+                farbe = ConsoleColor.White;
+                headfarbe = ConsoleColor.White;
+                farbe2 = ConsoleColor.White; ;
+                headfarbe2 = ConsoleColor.White;
+                headfarbezahl = 0;
+                headfarbe2zahl = 0;
+                farbezahl = 0;
+                farbe2zahl = 0;
+                foodfarbezahl = 0;
+                randfarbezahl = 0;
+            }
+
             Console.Clear();
             DrawTitle();
             bool menu = true;
@@ -483,12 +515,12 @@ namespace Snake.io
                 {
                     case ConsoleKey.UpArrow:
                         einstellungsAuswahl--;
-                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 4;
+                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 5;
                         break;
 
                     case ConsoleKey.DownArrow:
                         einstellungsAuswahl++;
-                        if (einstellungsAuswahl > 4) einstellungsAuswahl = 1;
+                        if (einstellungsAuswahl > 5) einstellungsAuswahl = 1;
                         break;
 
                     case ConsoleKey.Enter:
@@ -506,6 +538,9 @@ namespace Snake.io
                                 ChangeGamemode();
                                 break;
                             case 4:
+                                performancemode = !performancemode;
+                                break;
+                            case 5:
                                 menu = false;
                                 break;
                         }
@@ -524,7 +559,7 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
 
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 string option = "";
 
@@ -540,6 +575,9 @@ namespace Snake.io
                         option = $"Gamemode ändern        [Aktuell: {gamemode}]";
                         break;
                     case 3:
+                        option = $"Performance mode       [Aktuell: {(performancemode ? "An" : "Aus")}]";
+                        break;
+                    case 4:
                         option = "Zurück zum Hauptmenü";
                         break;
                 }
@@ -976,9 +1014,18 @@ namespace Snake.io
                 Console.Write(zeiger + " " + option);
                 if (color)
                 {
-                    Console.ForegroundColor = farbemenue;
-                    Console.Write(farbemenue);
-                    Console.ResetColor();
+                    if (performancemode)
+                    {
+                        
+                        Console.Write("Performance Mode AN");
+                        
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = farbemenue;
+                        Console.Write(farbemenue);
+                        Console.ResetColor();
+                    }
                 }
                 Console.WriteLine("]");
             }
