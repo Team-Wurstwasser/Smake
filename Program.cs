@@ -19,6 +19,8 @@ namespace Snake.io
 
         static int gameover;
 
+        static int unentschieden;
+
         static bool exit = false;
 
 
@@ -69,6 +71,16 @@ namespace Snake.io
         static string? difficulty;
 
         static string? gamemode;
+
+        // Kollisionsvariablen
+
+        static bool kollisionRand;
+
+        static bool kollisionRand2;
+
+        static bool kollisionPlayer;
+
+        static bool kollisionPlayer2;
 
         // Namen der Spieler
 
@@ -197,8 +209,8 @@ namespace Snake.io
 
             // Startguthaben
 
-            coins = 10000;
-            xp = 100;
+            coins = 0;
+            xp = 0;
 
             // Standard Modi
 
@@ -240,6 +252,11 @@ namespace Snake.io
 
             gameover = 0;
 
+            kollisionPlayer = false;
+            kollisionPlayer2 = false;
+            kollisionRand = false;
+            kollisionRand2 = false;
+
             // Taillängen zurücksetzen
             tail = 3;
             tail2 = 3;
@@ -252,11 +269,21 @@ namespace Snake.io
             maxpunkte = 20;
 
             // Maximale Länge einstellen
+            if (gamemode == "Normal" || gamemode == "Babymode")
+            {
+                playerX = new int[maxpunkte + tail + 2];
+                playerY = new int[maxpunkte + tail + 2];
+                playerX2 = new int[maxpunkte + tail2 + 2];
+                playerY2 = new int[maxpunkte + tail2 + 2];
+            }
+            else if (gamemode == "Unendlich")
+            {
+                playerX = new int[weite * hoehe];
+                playerY = new int[weite * hoehe];
+                playerX2 = new int[weite * hoehe];
+                playerY2 = new int[weite * hoehe];
+            }
 
-            playerX = new int[maxpunkte + tail + 2];
-            playerY = new int[maxpunkte + tail + 2];
-            playerX2 = new int[maxpunkte + tail2 + 2];
-            playerY2 = new int[maxpunkte + tail2 + 2];
 
             // Arrays zurücksetzen
             Array.Clear(playerX, 0, playerX.Length);
@@ -329,11 +356,34 @@ namespace Snake.io
 
             }
 
+            Coins();
+
             inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
             ShowGameOverScreen(); // Spielende-Bildschirm
 
             while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
+        }
+
+
+        // Coins und xp hinzufügen
+        static void Coins()
+        {
+            switch (difficulty)
+            {
+                case "Langsam":
+                    coins = punkte + punkte2 + coins;
+                    break;
+
+                case "Mittel":
+                    coins = 2 * (punkte + punkte2) + coins;
+                    break;
+
+                case "Schnell":
+                    coins = 3 * (punkte + punkte2) + coins;
+                    break;
+            }
+                   
         }
 
 
@@ -1134,9 +1184,58 @@ namespace Snake.io
 
             int newPlayerY2 = playerY2[0] + inputY2;
 
+            Kollision(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
+            TailShift();
+            Bewegung(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
+            Gameover();
+            EsseFutter();
+        }
 
-            // Tailkoordinaten berechnen
+        // Prüft die Kollision mit dem Rand
+        static void Kollision(int x, int y, int x2, int y2)
+        {
+            if (grid[y, x] == ' ' || grid[y, x] == food || grid[y, x] == head)
+            {
+                kollisionPlayer = false;
+                kollisionRand = false;
+            }
+            else if (grid[y, x] == rand)
+            {
+                kollisionPlayer = false;
+                kollisionRand = true;
+            }
+            else if (grid[y, x] == skin2 || grid[y, x] == head2 || grid[y, x] == skin)
+            {
+                kollisionPlayer = true;
+                kollisionRand = false;
+            }
 
+            if (multiplayer)
+            {
+                if (grid[y2, x2] == ' ' || grid[y2, x2] == food || grid[y2, x2] == head2)
+
+                {
+                    kollisionPlayer2 = false;
+                    kollisionRand2 = false;
+                }
+            }
+            else if (grid[y2, x2] == rand)
+            {
+                kollisionPlayer2 = false;
+                kollisionRand2 = true;
+            }
+            else if (grid[y2, x2] == skin || grid[y2, x2] == head || grid[y2, x2] == skin2)
+            {
+                kollisionPlayer2 = true;
+                kollisionRand2 = false;
+            }
+            
+        }
+
+
+        // Tailkoordinaten berechnen
+        static void TailShift()
+        {
             for (int i = playerX.Length - 1; i > 0; i--)
             {
                 playerX[i] = playerX[i - 1];
@@ -1159,102 +1258,160 @@ namespace Snake.io
                     playerY2[i] = playerY2[i - 1];
                 }
             }
+        }
 
+
+        // Bewegt die Spieler
+        static void Bewegung(int x, int y, int x2, int y2)
+        {
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
-
-            if (grid[newPlayerY, newPlayerX] == ' ' || grid[newPlayerY, newPlayerX] == food)
-
+            if (gamemode != "Babymode")
             {
-
-                grid[newPlayerY, newPlayerX] = head;  // Spieler auf neues Feld setzen
-
-                for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
+                if (!kollisionPlayer && !kollisionRand)
                 {
-                    grid[playerY[i], playerX[i]] = skin;
-                }
+                    grid[y, x] = head;  // Spieler auf neues Feld setzen
 
-                grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
-
-                playerX[0] = newPlayerX;
-
-                playerY[0] = newPlayerY;
-
-            }
-
-            if (multiplayer)
-            {
-                if (grid[newPlayerY2, newPlayerX2] == ' ' || grid[newPlayerY2, newPlayerX2] == food)
-
-                {
-
-                    grid[newPlayerY2, newPlayerX2] = head2;  // Spieler auf neues Feld setzen
-
-                    for (int i = 0; i <= tail2; i++)       // Tail des Spielers Zeichnen
+                    for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
                     {
-                        grid[playerY2[i], playerX2[i]] = skin2;
+                        grid[playerY[i], playerX[i]] = skin;
                     }
 
-                    grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
+                    grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
 
-                    playerX2[0] = newPlayerX2;
+                    playerX[0] = x;
 
-                    playerY2[0] = newPlayerY2;
-
+                    playerY[0] = y;
                 }
-            }
 
-            if (grid[newPlayerY, newPlayerX] != ' ' && grid[newPlayerY, newPlayerX] != head && grid[newPlayerY, newPlayerX] != food || punkte2 == maxpunkte)
-            {
-
-                spiel = false;
-
-                gameover = 1;
-
-            }
-
-            if (multiplayer)
-            {
-                if (grid[newPlayerY2, newPlayerX2] != ' ' && grid[newPlayerY2, newPlayerX2] != head2 && grid[newPlayerY2, newPlayerX2] != food || punkte == maxpunkte)
+                if (multiplayer)
                 {
+                    if (!kollisionPlayer2 && !kollisionRand2)
+                    {
+                        grid[y2, x2] = head2;  // Spieler2 auf neues Feld setzen
 
-                    spiel = false;
+                        for (int i = 0; i <= tail2; i++)       // Tail des Spielers2 Zeichnen
+                        {
+                            grid[playerY2[i], playerX2[i]] = skin2;
+                        }
 
-                    gameover = 2;
+                        grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
 
+                        playerX2[0] = x2;
+
+                        playerY2[0] = y2;
+                    }
                 }
             }
             else
             {
-                if (punkte == maxpunkte)
+                if (!kollisionRand)
                 {
+                    grid[y, x] = head;  // Spieler auf neues Feld setzen
 
-                    spiel = false;
+                    for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
+                    {
+                        grid[playerY[i], playerX[i]] = skin;
+                    }
 
-                    gameover = 2;
+                    grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
 
+                    playerX[0] = x;
+
+                    playerY[0] = y;
+                }
+
+                if (multiplayer)
+                {
+                    if (!kollisionRand2)
+                    {
+                        grid[y2, x2] = head2;  // Spieler2 auf neues Feld setzen
+
+                        for (int i = 0; i <= tail2; i++)       // Tail des Spielers2 Zeichnen
+                        {
+                            grid[playerY2[i], playerX2[i]] = skin2;
+                        }
+
+                        grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
+
+                        playerX2[0] = x2;
+
+                        playerY2[0] = y2;
+                    }
                 }
             }
+        }
 
-            // Spieler 1 frisst Futter
-            if (playerX[0] == futterX && playerY[0] == futterY)
+
+        // Prüft, ob das Spiel vorbei ist
+        static void Gameover()
+        {
+            if (gamemode == "Unendlich")
             {
-                tail++;
-                punkte++;
-                Thread.Sleep(10);
-                SetzeFutter();
-            }
+                if (kollisionPlayer || kollisionRand)
+                {
+                    spiel = false;
+                    gameover = 1;
+                }
 
-            // Spieler 2 frisst Futter
-            if (playerX2[0] == futterX && playerY2[0] == futterY && multiplayer)
+                if (multiplayer)
+                {
+                    if (kollisionPlayer2 || kollisionRand2)
+                    {
+                        spiel = false;
+                        gameover = 2;
+                    }
+                }
+            }
+            else if (gamemode == "Normal")
             {
-                tail2++;
-                punkte2++;
-                Thread.Sleep(10);
-                SetzeFutter();
+                if (kollisionPlayer || kollisionRand || punkte2 == maxpunkte)
+                {
+                    spiel = false;
+                    gameover = 1;
+                }
+
+                if (multiplayer)
+                {
+                    if (kollisionPlayer2 || kollisionRand2 || punkte == maxpunkte)
+                    {
+                        spiel = false;
+                        gameover = 2;
+                    }
+                }
+                else
+                {
+                    if (punkte == maxpunkte)
+                    {
+                        spiel = false;
+                        gameover = 2;
+                    }
+                }
             }
+            else if (gamemode =="Babymode")
+            {
+                if (kollisionRand || punkte2 == maxpunkte)
+                {
+                    spiel = false;
+                    gameover = 1;
+                }
 
-            // Eingabe zurücksetzen (nur eine Bewegung pro Tick)
-
+                if (multiplayer)
+                {
+                    if (kollisionRand2 || punkte == maxpunkte)
+                    {
+                        spiel = false;
+                        gameover = 2;
+                    }
+                }
+                else
+                {
+                    if (punkte == maxpunkte)
+                    {
+                        spiel = false;
+                        gameover = 2;
+                    }
+                }
+            }
         }
 
 
@@ -1276,6 +1433,29 @@ namespace Snake.io
 
 
             grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
+        }
+
+
+        // Die Spieler Essen das Futter
+        static void EsseFutter()
+        {
+            // Spieler 1 frisst Futter
+            if (playerX[0] == futterX && playerY[0] == futterY)
+            {
+                tail++;
+                punkte++;
+                Thread.Sleep(10);
+                SetzeFutter();
+            }
+
+            // Spieler 2 frisst Futter
+            if (playerX2[0] == futterX && playerY2[0] == futterY && multiplayer)
+            {
+                tail2++;
+                punkte2++;
+                Thread.Sleep(10);
+                SetzeFutter();
+            }
         }
 
 
