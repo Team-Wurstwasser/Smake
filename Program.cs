@@ -268,6 +268,10 @@ namespace Snake.io
                 headfarbe = ConsoleColor.White;
                 headfarbe2 = ConsoleColor.White;
 
+                gesamtcoins = 0;
+                highscore = 0;
+                spieleGesamt = 0;
+
                 Speichern(pfad);
             }
 
@@ -338,6 +342,9 @@ namespace Snake.io
                 $"performancemode={performancemode}",
                 $"coins={coins}",
                 $"xp={xp}",
+                $"spieleGesamt={spieleGesamt}",
+                $"highscore={highscore}",
+                $"gesamtcoins={gesamtcoins}",
                 $"difficulty={difficulty}",
                 $"gamemode={gamemode}",
                 $"multiplayer={multiplayer}",
@@ -423,6 +430,9 @@ namespace Snake.io
                     case "performancemode": performancemode = bool.Parse(Wert); break;
                     case "coins": coins = int.Parse(Wert); break;
                     case "xp": xp = int.Parse(Wert); break;
+                    case "gesamtcoins": gesamtcoins = int.Parse(Wert); break;
+                    case "highscore": highscore = int.Parse(Wert); break;
+                    case "spieleGesamt": spieleGesamt = int.Parse(Wert); break;
 
                     case "difficulty": difficulty = Wert; break;
                     case "gamemode": gamemode = Wert; break;
