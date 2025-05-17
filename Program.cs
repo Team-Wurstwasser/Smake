@@ -1712,6 +1712,45 @@ namespace Snake.io
 
                     Console.Write(zeichen);
                 }
+                // → Legende auf bestimmten Zeilen ausgeben
+                Console.ForegroundColor = ConsoleColor.White;
+                if (y == 1)
+                {
+                    Console.Write("  ══════════════════════════════");
+                }
+                else if (y == 2)
+                {
+                    Console.Write("  Punkte:");
+                }
+                else if (y == 3)
+                {
+                    Console.Write("  ══════════════════════════════");
+                }
+                else if (y == 4)
+                {
+                    Console.ForegroundColor = headfarbe;
+                    Console.Write($"  {name}: {punkte}/{maxpunkte}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else if (y == 5)
+                {
+                        Console.Write("  ══════════════════════════════");                    
+                }
+                else if (y == 6)
+                {
+                    if (multiplayer)
+                    {
+                        Console.ForegroundColor = headfarbe2;
+                        Console.Write($"  {name2}: {punkte2}/{maxpunkte}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+                else if (y == 7)
+                {
+                    if (multiplayer)
+                        Console.Write("  ══════════════════════════════");
+                }
+
                 Console.WriteLine();
             }
 
