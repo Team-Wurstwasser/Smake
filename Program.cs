@@ -736,7 +736,7 @@ namespace Snake.io
         }
 
 
-        // ?
+        // Zeigt die Farbenseite vom Shop
         static void ShopFarbenOptions(int selected)
         {
 
@@ -764,7 +764,7 @@ namespace Snake.io
         }
 
 
-        // ?
+        // Zeigt die Skinseite vom Shop
         static void ShopSkinsOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
@@ -804,7 +804,7 @@ namespace Snake.io
         }
 
 
-        // ?
+        // Logig für Skin und Farben menü
         static void Skin_Farben()
         {
             Console.Clear();
