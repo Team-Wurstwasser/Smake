@@ -348,16 +348,16 @@ namespace Snake.io
                 $"difficulty={difficulty}",
                 $"gamemode={gamemode}",
                 $"multiplayer={multiplayer}",
-                $"rand={(int)rand}",
-                $"food={(int)food}",
-                $"skin={(int)skin}",
-                $"skin2={(int)skin2}",
-                $"randfarbe={(int)randfarbe}",
-                $"foodfarbe={(int)foodfarbe}",
-                $"farbe={(int)farbe}",
-                $"farbe2={(int)farbe2}",
-                $"headfarbe={(int)headfarbe}",
-                $"headfarbe2={(int)headfarbe2}"
+                $"rand={rand}",
+                $"food={food}",
+                $"skin={skin}",
+                $"skin2={skin2}",
+                $"randfarbe={randfarbe}",
+                $"foodfarbe={foodfarbe}",
+                $"farbe={farbe}",
+                $"farbe2={farbe2}",
+                $"headfarbe={headfarbe}",
+                $"headfarbe2={headfarbe2}"
             };
 
             File.WriteAllLines(pfad, Zeilen);
@@ -436,17 +436,17 @@ namespace Snake.io
                     case "gamemode": gamemode = Wert; break;
                     case "multiplayer": multiplayer = bool.Parse(Wert); break;
 
-                    case "rand": rand = (char)int.Parse(Wert); break;
-                    case "food": food = (char)int.Parse(Wert); break;
-                    case "skin": skin = (char)int.Parse(Wert); break;
-                    case "skin2": skin2 = (char)int.Parse(Wert); break;
+                    case "rand": rand = char.Parse(Wert); break;
+                    case "food": food = char.Parse(Wert); break;
+                    case "skin": skin = char.Parse(Wert); break;
+                    case "skin2": skin2 = char.Parse(Wert); break;
 
-                    case "randfarbe": randfarbe = (ConsoleColor)int.Parse(Wert); break;
-                    case "foodfarbe": foodfarbe = (ConsoleColor)int.Parse(Wert); break;
-                    case "farbe": farbe = (ConsoleColor)int.Parse(Wert); break;
-                    case "farbe2": farbe2 = (ConsoleColor)int.Parse(Wert); break;
-                    case "headfarbe": headfarbe = (ConsoleColor)int.Parse(Wert); break;
-                    case "headfarbe2": headfarbe2 = (ConsoleColor)int.Parse(Wert); break;
+                    case "randfarbe": randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "foodfarbe": foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "farbe": farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "farbe2": farbe2 = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "headfarbe": headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "headfarbe2": headfarbe2 = Enum.Parse<ConsoleColor>(Wert); break;
                 }
             }
         }
