@@ -120,6 +120,8 @@ namespace Snake.io
 
         static int zeit;
 
+        // Shop variablen
+
         static int randzahl = 0;
 
         static int foodzahl = 0;
@@ -164,8 +166,9 @@ namespace Snake.io
 
         static readonly char[] randskins = ['█', '#', '▓', '░', '■'];
 
-        static int coins;
+        // Level und Experience
 
+        static int coins;
         static int xp;
 
         static bool[] freigeschaltetTail = new bool[tailskins.Length];
@@ -173,10 +176,14 @@ namespace Snake.io
         static bool[] freigeschaltetRand = new bool[randskins.Length];
         static bool[] freigeschaltetFarben = new bool[farben.Length];
 
+        // Statistik
+
         static int spieleGesamt;
         static int highscore;
         static int gesamtcoins;
 
+
+        // Main
         static void Main()
 
         {
@@ -184,26 +191,37 @@ namespace Snake.io
             freigeschaltetTail[1] = true;
             freigeschaltetFood[0] = true;
             freigeschaltetRand[0] = true;
-            freigeschaltetFarben[0] = true; 
+            freigeschaltetFarben[0] = true;
+
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            coins = 10000; // Startguthaben
+
+            // Startguthaben
+
+            coins = 10000;
             xp = 100;
+
+            // Standard Modi
+
             difficulty = "Mittel";
             gamemode = "Normal";
             multiplayer = false;
+
+            // Standard Skins
+
             rand = '█';
             randfarbe = ConsoleColor.White;
             food = '*';
             foodfarbe = ConsoleColor.White;
             skin = '+';
-            skin2 = 'x';
             farbe = ConsoleColor.White;
-            headfarbe = ConsoleColor.White; ;
-            farbe2 = ConsoleColor.White; ;
+            skin2 = 'x';            
+            farbe2 = ConsoleColor.White;
+            headfarbe = ConsoleColor.White;
             headfarbe2 = ConsoleColor.White;
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
+
             Eingaben();
             do
             {
@@ -214,6 +232,8 @@ namespace Snake.io
 
         }
 
+
+        // Allen Variablen den Startwert geben
         static void Neustart()
         {
             spiel = true;
@@ -273,6 +293,9 @@ namespace Snake.io
             inputY2 = 0;
 
         }
+
+
+        // Spielablauf
         static void Spiel()
         {
             Neustart();
@@ -300,22 +323,21 @@ namespace Snake.io
 
                 Thread.Sleep(zeit); // Spieltempo regulieren
 
-                aenderung = true;
+                aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
                 aenderung2 = true;
-
-                // Reguliert wie oft wird der Loop durchgeführt wird
-
-                // Spiele geschwindigkeit
 
             }
 
             inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
-            ShowGameOverScreen();// Spielende-Bildschirm
+            ShowGameOverScreen(); // Spielende-Bildschirm
 
             while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
         }
+
+
+        // Hauptmenü
         static void ShowMainMenue()
         {
             Console.Clear();
@@ -371,7 +393,7 @@ namespace Snake.io
                     Anleitung();
                     break;
                 case 5:
-                    Statisticken();
+                    Statistiken();
                     break;
                 case 7:
                     exit = true;
@@ -380,6 +402,7 @@ namespace Snake.io
         }
 
 
+        // Titelbild
         static void DrawTitle()
         {
             Console.SetCursorPosition(0, 0);
@@ -398,6 +421,8 @@ namespace Snake.io
             Console.ResetColor();
         }
 
+
+        // Auswahlmöglichkeiten im Hauptmenü
         static void ShowMenuOptions(int selected)
         {
             Console.WriteLine("╔══════════════════════════════╗");
@@ -424,7 +449,7 @@ namespace Snake.io
         }
 
 
-
+        // Eingaben für Spielernamen
         static void Eingaben()
         {
             Console.Clear();
@@ -438,6 +463,8 @@ namespace Snake.io
             Console.Clear();
         }
 
+
+        // Einstellungsmenü im Hauptmenü
         static void Einstellungen()
         {
             Console.Clear();
@@ -487,6 +514,9 @@ namespace Snake.io
 
             } while (menu);
         }
+
+
+        // Einstellmöglichkeiten im Einstellungsmenü
         static void EinstellungenOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
@@ -521,6 +551,8 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════════");
         }
 
+
+        // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
         {
             if (difficulty == "Langsam") difficulty = "Mittel";
@@ -528,12 +560,17 @@ namespace Snake.io
             else difficulty = "Langsam";
         }
 
+
+        // Auswahl der Verschiedenen Modi
         static void ChangeGamemode()
         {
             if (gamemode == "Normal") gamemode = "Unendlich";
             else if (gamemode == "Unendlich") gamemode = "Babymode";
             else gamemode = "Normal";
         }
+
+
+        // Shop - Menü im Hauptmenü
         static void Shop()
         {
             Console.Clear();
@@ -660,6 +697,8 @@ namespace Snake.io
             } while (menu);
         }
 
+
+        // ?
         static void ShopFarbenOptions(int selected)
         {
 
@@ -686,6 +725,8 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════");
         }
 
+
+        // ?
         static void ShopSkinsOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
@@ -724,6 +765,8 @@ namespace Snake.io
             Console.WriteLine("══════════════════════════");
         }
 
+
+        // ?
         static void Skin_Farben()
         {
             Console.Clear();
@@ -857,6 +900,8 @@ namespace Snake.io
             while (menu);
         }
 
+
+        // Auswahlmenü für Skins und Farben im Hauptmenü
         static void Skin_FarbenOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
@@ -941,6 +986,7 @@ namespace Snake.io
         }
 
 
+        // Anleitung im Hauptmenü
         static void Anleitung()
         { 
             Console.Clear();
@@ -968,7 +1014,9 @@ namespace Snake.io
             Console.ReadKey();
         }
 
-        static void Statisticken()
+
+        // Statistik - Untermenü im Hauptmenü
+        static void Statistiken()
         {
             Console.Clear();
             Console.WriteLine("Statistiken");
@@ -1001,6 +1049,7 @@ namespace Snake.io
         }
 
 
+        // Zeigt den Game-Over-Screen an
         static void ShowGameOverScreen()
         {
             Console.Clear();
@@ -1070,8 +1119,8 @@ namespace Snake.io
             while (!check);
         }
 
-            // Aktualisiert die Position des Spielers anhand der Eingabe
 
+        // Aktualisiert die Position des Spielers anhand der Eingabe
         static void Update()
         {
 
@@ -1208,6 +1257,8 @@ namespace Snake.io
 
         }
 
+
+        // Setzt das Futter an eine Zufällige Position
         static void SetzeFutter()
         {
             Random rand = new();
@@ -1227,9 +1278,8 @@ namespace Snake.io
             grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
         }
 
+
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
-
-
         static void ReadInput()
 
         {
@@ -1361,9 +1411,7 @@ namespace Snake.io
         }
 
 
-
         // Zeichnet das gesamte Spielfeld auf der Konsole
-
         static void Render()
         {
             Console.SetCursorPosition(0, 0);
@@ -1405,8 +1453,8 @@ namespace Snake.io
             Console.ResetColor();
         }
 
-        // Initialisiert das Spielfeld: Rahmen, leere Fläche, Spieler
 
+        // Initialisiert das Spielfeld: Rahmen, leere Fläche, Spieler
         static void InitialisiereSpiel()
 
         {
