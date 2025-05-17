@@ -957,19 +957,19 @@ namespace Snake.io
                 switch (i)
                 {
                     case 0:
-                        option = $"Player 1 Tailskin ändern    [Aktuell: {skin}";
+                        option = $"Player 1 Tailskin ändern    [Aktuell: {skin}]";
                         color = false;
                         break;
                     case 1:
-                        option = $"Player 2 Tailskin ändern    [Aktuell: {skin2}";
+                        option = $"Player 2 Tailskin ändern    [Aktuell: {skin2}]";
                         color = false;
                         break;
                     case 2:
-                        option = $"Foodskin ändern             [Aktuell: {food}";
+                        option = $"Foodskin ändern             [Aktuell: {food}]";
                         color = false;
                         break;
                     case 3:
-                        option = $"Randskin ändern             [Aktuell: {rand}";
+                        option = $"Randskin ändern             [Aktuell: {rand}]";
                         color = false;
                         break;
                     case 4:
@@ -1011,23 +1011,28 @@ namespace Snake.io
                 }
                 Console.ResetColor();
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.Write(zeiger + " " + option);
                 if (color)
                 {
+                    Console.Write(zeiger + " " + option);
                     if (performancemode)
                     {
                         
                         Console.Write("Performance Mode AN");
-                        
+                        Console.WriteLine("]");
+
                     }
                     else
                     {
                         Console.ForegroundColor = farbemenue;
                         Console.Write(farbemenue);
                         Console.ResetColor();
+                        Console.WriteLine("]");
                     }
                 }
-                Console.WriteLine("]");
+                else
+                {
+                    Console.WriteLine(zeiger + " " + option);
+                }
             }
             Console.WriteLine("══════════════════════════════");
         }
