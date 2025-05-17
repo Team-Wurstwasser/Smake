@@ -384,21 +384,27 @@ namespace Snake.io
         // Coins und xp hinzufügen
         static void Coins()
         {
-            switch (difficulty)
+            if (gamemode != "babymode")
             {
-                case "Langsam":
-                    coins = punkte + punkte2 + coins;
-                    break;
+                switch (difficulty)
+                {
+                    case "Langsam":
+                        coins = punkte + punkte2 + coins;
+                        xp = punkte + punkte2 + xp;
+                        break;
 
-                case "Mittel":
-                    coins = 2 * (punkte + punkte2) + coins;
-                    break;
+                    case "Mittel":
+                        coins = 2 * (punkte + punkte2) + coins;
+                        xp = 2 * (punkte + punkte2) + xp;
+                        break;
 
-                case "Schnell":
-                    coins = 3 * (punkte + punkte2) + coins;
-                    break;
+                    case "Schnell":
+                        coins = 3 * (punkte + punkte2) + coins;
+                        xp = 3 * (punkte + punkte2) + xp;
+                        break;
+                }
             }
-                   
+
         }
 
 
@@ -1242,6 +1248,7 @@ namespace Snake.io
             Gameover();
             EsseFutter();
         }
+
 
         // Prüft die Kollision mit dem Rand
         static void Kollision(int x, int y, int x2, int y2)
