@@ -28,9 +28,9 @@ namespace Snake.io
 
         // Spielfeldgröße (Breite x Höhe)
 
-        static int weite = 41;
+        static readonly int weite = 41;
 
-        static int hoehe = 20;
+        static readonly int hoehe = 20;
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
 
@@ -225,6 +225,7 @@ namespace Snake.io
         static void Speichern_Laden(string speicher_laden)
         {
             string pfad = "spielstand.txt";
+            //Nur wenn File nicht gefunden wird
             if (!File.Exists(pfad))
             {
                 randzahl = 0;
@@ -275,6 +276,7 @@ namespace Snake.io
                 Speichern(pfad);
             }
 
+            // Entscheidet ob geladen oder gespeichert wird
             switch(speicher_laden)
             {
                 case "Speichern":
@@ -290,9 +292,10 @@ namespace Snake.io
         }
 
 
-
+        // Speicher Logik
         static void Speichern(string pfad)
         {
+            //Liste was gespeichert wird
             var Zeilen = new List<string>
             {
                 $"randzahl={randzahl}",
@@ -363,17 +366,21 @@ namespace Snake.io
             File.WriteAllLines(pfad, Zeilen);
         }
 
-
+        // Speicher Logik 
         static void Laden(string pfad)
         {
+            
             var Zeilen = File.ReadAllLines(pfad);
+
             foreach (var Zeile in Zeilen)
             {
+                //Teilt was vor und nach dem = steht
                 var Teil = Zeile.Split('=');
 
                 string Variablenname = Teil[0];
                 string Wert = Teil[1];
 
+                //Entscheidet was in die Variablen eingespeichert wird
                 switch (Variablenname)
                 {
                     case "randzahl": randzahl = int.Parse(Wert); break;
@@ -715,6 +722,7 @@ namespace Snake.io
 
             for (int i = 0; i < 7; i++)
             {
+
                 string option = i switch
                 {
                     0 => "Spiel starten",
@@ -724,6 +732,7 @@ namespace Snake.io
                     5 => "Anleitung",
                     4 => "Statistiken",
                     6 => "Beenden",
+                    _ => ""
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"║  {zeiger} {option,-25}║");
