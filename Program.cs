@@ -366,8 +366,6 @@ namespace Snake.io
 
         static void Laden(string pfad)
         {
-            if (!File.Exists(pfad)) return;
-
             var Zeilen = File.ReadAllLines(pfad);
             foreach (var Zeile in Zeilen)
             {
