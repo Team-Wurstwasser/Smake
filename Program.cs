@@ -289,7 +289,7 @@ namespace Snake.io
 
         static void Speichern(string pfad)
         {
-            var lines = new List<string>
+            var Zeilen = new List<string>
             {
                 $"randzahl={randzahl}",
                 $"foodzahl={foodzahl}",
@@ -353,7 +353,7 @@ namespace Snake.io
                 $"headfarbe2={(int)headfarbe2}"
             };
 
-            File.WriteAllLines(pfad, lines);
+            File.WriteAllLines(pfad, Zeilen);
         }
 
 
