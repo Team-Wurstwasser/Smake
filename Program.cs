@@ -8,6 +8,8 @@ namespace Snake.io
     using System.Drawing;
     using Microsoft.VisualBasic.FileIO;
     using System.Runtime.InteropServices;
+    using System.IO;
+
 
     class Program
 
@@ -201,53 +203,13 @@ namespace Snake.io
         static void Main()
 
         {
-            randzahl = 0;
-            foodzahl = 0;
-            skinzahl = 0;
-            skin2zahl = 1;
-            headfarbezahl = 0;
-            headfarbe2zahl = 0;
-            farbezahl = 0;
-            farbe2zahl = 0;
-            foodfarbezahl = 0;
-            randfarbezahl = 0;
-
-            performancemode = false;
-
-            freigeschaltetTail[0] = true;
-            freigeschaltetTail[1] = true;
-            freigeschaltetFood[0] = true;
-            freigeschaltetRand[0] = true;
-            freigeschaltetFarben[0] = true;
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
-            // Startguthaben
-
-            coins = 0;
-            xp = 0;
-
-            // Standard Modi
-
-            difficulty = "Mittel";
-            gamemode = "Normal";
-            multiplayer = false;
-
-            // Standard Skins
-
-            rand = '█';
-            randfarbe = ConsoleColor.White;
-            food = '*';
-            foodfarbe = ConsoleColor.White;
-            skin = '+';
-            farbe = ConsoleColor.White;
-            skin2 = 'x';            
-            farbe2 = ConsoleColor.White;
-            headfarbe = ConsoleColor.White;
-            headfarbe2 = ConsoleColor.White;
-
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
+
+            Speichern_Laden("Laden");
 
             Eingaben();
             do
@@ -259,10 +221,233 @@ namespace Snake.io
 
         }
 
+        // Speicher und Ladesystem
+        static void Speichern_Laden(string speicher_laden)
+        {
+            string pfad = "spielstand.txt";
+            if (!File.Exists(pfad))
+            {
+                randzahl = 0;
+                foodzahl = 0;
+                skinzahl = 0;
+                skin2zahl = 1;
+                headfarbezahl = 0;
+                headfarbe2zahl = 0;
+                farbezahl = 0;
+                farbe2zahl = 0;
+                foodfarbezahl = 0;
+                randfarbezahl = 0;
+
+                freigeschaltetTail[0] = true;
+                freigeschaltetTail[1] = true;
+                freigeschaltetFood[0] = true;
+                freigeschaltetRand[0] = true;
+                freigeschaltetFarben[0] = true;
+
+                performancemode = false;
+
+                // Startguthaben
+                coins = 0;
+                xp = 0;
+
+                // Standard Modi
+                difficulty = "Mittel";
+                gamemode = "Normal";
+                multiplayer = false;
+
+                // Standard Skins/Farben
+                rand = '█';
+                food = '*';
+                skin = '+';
+                skin2 = 'x';
+                randfarbe = ConsoleColor.White;
+                foodfarbe = ConsoleColor.White;
+                farbe = ConsoleColor.White;
+                farbe = ConsoleColor.White;
+                farbe2 = ConsoleColor.White;
+                headfarbe = ConsoleColor.White;
+                headfarbe2 = ConsoleColor.White;
+
+                Speichern(pfad);
+            }
+
+            switch(speicher_laden)
+            {
+                case "Speichern":
+                    Speichern(pfad);
+                    break;
+                case "Laden":
+                    Laden(pfad);
+                    break;
+
+            }
+                
+
+        }
+
+
+
+        static void Speichern(string pfad)
+        {
+            var lines = new List<string>
+            {
+                $"randzahl={randzahl}",
+                $"foodzahl={foodzahl}",
+                $"skinzahl={skinzahl}",
+                $"skin2zahl={skin2zahl}",
+                $"headfarbezahl={headfarbezahl}",
+                $"headfarbe2zahl={headfarbe2zahl}",
+                $"farbezahl={farbezahl}",
+                $"farbe2zahl={farbe2zahl}",
+                $"foodfarbezahl={foodfarbezahl}",
+                $"randfarbezahl={randfarbezahl}",
+                $"freigeschaltetTail0={freigeschaltetTail[0]}",
+                $"freigeschaltetTail1={freigeschaltetTail[1]}",
+                $"freigeschaltetTail2={freigeschaltetTail[2]}",
+                $"freigeschaltetTail3={freigeschaltetTail[3]}",
+                $"freigeschaltetTail4={freigeschaltetTail[4]}",
+                $"freigeschaltetTail5={freigeschaltetTail[5]}",
+                $"freigeschaltetTail6={freigeschaltetTail[6]}",
+                $"freigeschaltetFood0={freigeschaltetFood[0]}",
+                $"freigeschaltetFood1={freigeschaltetFood[1]}",
+                $"freigeschaltetFood2={freigeschaltetFood[2]}",
+                $"freigeschaltetFood3={freigeschaltetFood[3]}",
+                $"freigeschaltetFood4={freigeschaltetFood[4]}",
+                $"freigeschaltetFood5={freigeschaltetFood[5]}",
+                $"freigeschaltetFood6={freigeschaltetFood[6]}",
+                $"freigeschaltetRand0={freigeschaltetRand[0]}",
+                $"freigeschaltetRand1={freigeschaltetRand[1]}",
+                $"freigeschaltetRand2={freigeschaltetRand[2]}",
+                $"freigeschaltetRand3={freigeschaltetRand[3]}",
+                $"freigeschaltetRand4={freigeschaltetRand[4]}",
+                $"freigeschaltetFarben0={freigeschaltetFarben[0]}",
+                $"freigeschaltetFarben1={freigeschaltetFarben[1]}",
+                $"freigeschaltetFarben2={freigeschaltetFarben[2]}",
+                $"freigeschaltetFarben3={freigeschaltetFarben[3]}",
+                $"freigeschaltetFarben4={freigeschaltetFarben[4]}",
+                $"freigeschaltetFarben5={freigeschaltetFarben[5]}",
+                $"freigeschaltetFarben6={freigeschaltetFarben[6]}",
+                $"freigeschaltetFarben7={freigeschaltetFarben[7]}",
+                $"freigeschaltetFarben8={freigeschaltetFarben[8]}",
+                $"freigeschaltetFarben9={freigeschaltetFarben[9]}",
+                $"freigeschaltetFarben10={freigeschaltetFarben[10]}",
+                $"freigeschaltetFarben11={freigeschaltetFarben[11]}",
+                $"freigeschaltetFarben12={freigeschaltetFarben[12]}",
+                $"freigeschaltetFarben13={freigeschaltetFarben[13]}",
+                $"freigeschaltetFarben14={freigeschaltetFarben[14]}",
+                $"performancemode={performancemode}",
+                $"coins={coins}",
+                $"xp={xp}",
+                $"difficulty={difficulty}",
+                $"gamemode={gamemode}",
+                $"multiplayer={multiplayer}",
+                $"rand={(int)rand}",
+                $"food={(int)food}",
+                $"skin={(int)skin}",
+                $"skin2={(int)skin2}",
+                $"randfarbe={(int)randfarbe}",
+                $"foodfarbe={(int)foodfarbe}",
+                $"farbe={(int)farbe}",
+                $"farbe2={(int)farbe2}",
+                $"headfarbe={(int)headfarbe}",
+                $"headfarbe2={(int)headfarbe2}"
+            };
+
+            File.WriteAllLines(pfad, lines);
+        }
+
+
+        static void Laden(string pfad)
+        {
+            if (!File.Exists(pfad)) return;
+
+            var Zeilen = File.ReadAllLines(pfad);
+            foreach (var Zeile in Zeilen)
+            {
+                var Teil = Zeile.Split('=');
+
+                string Variablenname = Teil[0];
+                string Wert = Teil[1];
+
+                switch (Variablenname)
+                {
+                    case "randzahl": randzahl = int.Parse(Wert); break;
+                    case "foodzahl": foodzahl = int.Parse(Wert); break;
+                    case "skinzahl": skinzahl = int.Parse(Wert); break;
+                    case "skin2zahl": skin2zahl = int.Parse(Wert); break;
+                    case "headfarbezahl": headfarbezahl = int.Parse(Wert); break;
+                    case "headfarbe2zahl": headfarbe2zahl = int.Parse(Wert); break;
+                    case "farbezahl": farbezahl = int.Parse(Wert); break;
+                    case "farbe2zahl": farbe2zahl = int.Parse(Wert); break;
+                    case "foodfarbezahl": foodfarbezahl = int.Parse(Wert); break;
+                    case "randfarbezahl": randfarbezahl = int.Parse(Wert); break;
+
+                    case "freigeschaltetTail0": freigeschaltetTail[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail1": freigeschaltetTail[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail2": freigeschaltetTail[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail3": freigeschaltetTail[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail4": freigeschaltetTail[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail5": freigeschaltetTail[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail6": freigeschaltetTail[6] = bool.Parse(Wert); break;
+
+                    case "freigeschaltetFood0": freigeschaltetFood[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood1": freigeschaltetFood[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood2": freigeschaltetFood[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood3": freigeschaltetFood[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood4": freigeschaltetFood[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood5": freigeschaltetFood[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood6": freigeschaltetFood[6] = bool.Parse(Wert); break;
+
+                    case "freigeschaltetRand0": freigeschaltetRand[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand1": freigeschaltetRand[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand2": freigeschaltetRand[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand3": freigeschaltetRand[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand4": freigeschaltetRand[4] = bool.Parse(Wert); break;
+
+                    case "freigeschaltetFarben0": freigeschaltetFarben[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben1": freigeschaltetFarben[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben2": freigeschaltetFarben[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben3": freigeschaltetFarben[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben4": freigeschaltetFarben[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben5": freigeschaltetFarben[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben6": freigeschaltetFarben[6] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben7": freigeschaltetFarben[7] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben8": freigeschaltetFarben[8] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben9": freigeschaltetFarben[9] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben10": freigeschaltetFarben[10] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben11": freigeschaltetFarben[11] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben12": freigeschaltetFarben[12] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben13": freigeschaltetFarben[13] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben14": freigeschaltetFarben[14] = bool.Parse(Wert); break;
+
+                    case "performancemode": performancemode = bool.Parse(Wert); break;
+                    case "coins": coins = int.Parse(Wert); break;
+                    case "xp": xp = int.Parse(Wert); break;
+
+                    case "difficulty": difficulty = Wert; break;
+                    case "gamemode": gamemode = Wert; break;
+                    case "multiplayer": multiplayer = bool.Parse(Wert); break;
+
+                    case "rand": rand = (char)int.Parse(Wert); break;
+                    case "food": food = (char)int.Parse(Wert); break;
+                    case "skin": skin = (char)int.Parse(Wert); break;
+                    case "skin2": skin2 = (char)int.Parse(Wert); break;
+
+                    case "randfarbe": randfarbe = (ConsoleColor)int.Parse(Wert); break;
+                    case "foodfarbe": foodfarbe = (ConsoleColor)int.Parse(Wert); break;
+                    case "farbe": farbe = (ConsoleColor)int.Parse(Wert); break;
+                    case "farbe2": farbe2 = (ConsoleColor)int.Parse(Wert); break;
+                    case "headfarbe": headfarbe = (ConsoleColor)int.Parse(Wert); break;
+                    case "headfarbe2": headfarbe2 = (ConsoleColor)int.Parse(Wert); break;
+                }
+            }
+        }
 
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
+            Speichern_Laden("Speichern");
+
             spiel = true;
             
             gameover = 0;
@@ -413,6 +598,7 @@ namespace Snake.io
         // Hauptmenü
         static void ShowMainMenue()
         {
+            Speichern_Laden("Speichern");
 
             if (performancemode)
             {
