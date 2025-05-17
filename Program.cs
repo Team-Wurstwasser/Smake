@@ -804,7 +804,7 @@ namespace Snake.io
         }
 
 
-        // Logig für Skin und Farben menü
+        // Logik für Skin und Farben menü
         static void Skin_Farben()
         {
             Console.Clear();
@@ -859,7 +859,7 @@ namespace Snake.io
                                 do
                                 {
                                     foodzahl = (foodzahl + 1) % foodskins.Length;
-                                } while (!freigeschaltetTail[foodzahl]);
+                                } while (!freigeschaltetFood[foodzahl]);
 
                                 if (freigeschaltetFood[foodzahl])
                                     food = foodskins[foodzahl];
