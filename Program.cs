@@ -19,7 +19,7 @@ namespace Snake.io
 
         static int gameover;
 
-        static int unentschieden;
+        static bool unentschieden;
 
         static bool exit = false;
 
@@ -264,8 +264,10 @@ namespace Snake.io
         static void Neustart()
         {
             spiel = true;
-
+            
             gameover = 0;
+
+            unentschieden = false;
 
             kollisionPlayer = false;
             kollisionPlayer2 = false;
@@ -1167,7 +1169,15 @@ namespace Snake.io
 
             if (multiplayer)
             {
-                if (gameover == 1)
+                if (unentschieden)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Unentschieden!");
+                    Console.WriteLine($"{name} hat {punkte} Punkte erreicht.");
+                    Console.WriteLine($"{name2} hat {punkte2} Punkte erreicht.");
+                    Console.WriteLine();
+                }
+                else if (gameover == 1)
                 {
                     Console.WriteLine();
                     Console.WriteLine($"{name2} gewinnt!");
@@ -1243,14 +1253,15 @@ namespace Snake.io
             int newPlayerY2 = playerY2[0] + inputY2;
 
             Kollision(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
+            Gameover();
+            if (!spiel) return;
             TailShift();
             Bewegung(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
-            Gameover();
             EsseFutter();
         }
 
 
-        // Prüft die Kollision mit dem Rand
+        // Prüft die Kollision
         static void Kollision(int x, int y, int x2, int y2)
         {
             if (grid[y, x] == ' ' || grid[y, x] == food || grid[y, x] == head)
@@ -1277,18 +1288,17 @@ namespace Snake.io
                     kollisionPlayer2 = false;
                     kollisionRand2 = false;
                 }
+                else if (grid[y2, x2] == rand)
+                {
+                    kollisionPlayer2 = false;
+                    kollisionRand2 = true;
+                }
+                else if (grid[y2, x2] == skin || grid[y2, x2] == head || grid[y2, x2] == skin2)
+                {
+                    kollisionPlayer2 = true;
+                    kollisionRand2 = false;
+                }
             }
-            else if (grid[y2, x2] == rand)
-            {
-                kollisionPlayer2 = false;
-                kollisionRand2 = true;
-            }
-            else if (grid[y2, x2] == skin || grid[y2, x2] == head || grid[y2, x2] == skin2)
-            {
-                kollisionPlayer2 = true;
-                kollisionRand2 = false;
-            }
-            
         }
 
 
@@ -1327,15 +1337,15 @@ namespace Snake.io
             if (gamemode != "Babymode")
             {
                 if (!kollisionPlayer && !kollisionRand)
-                {
-                    grid[y, x] = head;  // Spieler auf neues Feld setzen
-
+                {                    
                     for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
                     {
                         grid[playerY[i], playerX[i]] = skin;
                     }
 
                     grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
+
+                    grid[y, x] = head;  // Spieler auf neues Feld setzen
 
                     playerX[0] = x;
 
@@ -1346,14 +1356,14 @@ namespace Snake.io
                 {
                     if (!kollisionPlayer2 && !kollisionRand2)
                     {
-                        grid[y2, x2] = head2;  // Spieler2 auf neues Feld setzen
-
                         for (int i = 0; i <= tail2; i++)       // Tail des Spielers2 Zeichnen
                         {
                             grid[playerY2[i], playerX2[i]] = skin2;
                         }
 
                         grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
+
+                        grid[y2, x2] = head2;  // Spieler2 auf neues Feld setzen
 
                         playerX2[0] = x2;
 
@@ -1404,20 +1414,21 @@ namespace Snake.io
         // Prüft, ob das Spiel vorbei ist
         static void Gameover()
         {
+            bool spieler1Tot = false;
+            bool spieler2Tot = false;
+
             if (gamemode == "Unendlich")
             {
                 if (kollisionPlayer || kollisionRand)
                 {
-                    spiel = false;
-                    gameover = 1;
+                    spieler1Tot = true;
                 }
 
                 if (multiplayer)
                 {
                     if (kollisionPlayer2 || kollisionRand2)
                     {
-                        spiel = false;
-                        gameover = 2;
+                        spieler2Tot = true;
                     }
                 }
             }
@@ -1425,24 +1436,21 @@ namespace Snake.io
             {
                 if (kollisionPlayer || kollisionRand || punkte2 == maxpunkte)
                 {
-                    spiel = false;
-                    gameover = 1;
+                    spieler1Tot = true;
                 }
 
                 if (multiplayer)
                 {
                     if (kollisionPlayer2 || kollisionRand2 || punkte == maxpunkte)
                     {
-                        spiel = false;
-                        gameover = 2;
+                        spieler2Tot = true;
                     }
                 }
                 else
                 {
                     if (punkte == maxpunkte)
                     {
-                        spiel = false;
-                        gameover = 2;
+                        spieler2Tot = true;
                     }
                 }
             }
@@ -1450,27 +1458,42 @@ namespace Snake.io
             {
                 if (kollisionRand || punkte2 == maxpunkte)
                 {
-                    spiel = false;
-                    gameover = 1;
+                    spieler1Tot = true;
                 }
 
                 if (multiplayer)
                 {
                     if (kollisionRand2 || punkte == maxpunkte)
                     {
-                        spiel = false;
-                        gameover = 2;
+                        spieler2Tot = true;
                     }
                 }
                 else
                 {
                     if (punkte == maxpunkte)
                     {
-                        spiel = false;
-                        gameover = 2;
+                        spieler2Tot = true;
                     }
                 }
             }
+
+            if (spieler1Tot && spieler2Tot)
+            {
+                unentschieden = true;
+                gameover = 0;
+                spiel = false;
+            }
+            else if (spieler1Tot)
+            {
+                gameover = 1;
+                spiel = false;
+            }
+            else if (spieler2Tot)
+            {
+                gameover = 2;
+                spiel = false;
+            }
+
         }
 
 
