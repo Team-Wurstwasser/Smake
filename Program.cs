@@ -1663,19 +1663,22 @@ namespace Snake.io
                     char zeichen = grid[y, x];
                     ConsoleColor neueFarbe = ConsoleColor.White;
 
-                    // Farbwahl je nach Position oder Zeichen
-                    if (x == playerX[0] && y == playerY[0])
-                        neueFarbe = headfarbe;
-                    else if (x == playerX2[0] && y == playerY2[0] && multiplayer)
-                        neueFarbe = headfarbe2;
-                    else if (zeichen == skin)
-                        neueFarbe = farbe;
-                    else if (zeichen == skin2)
-                        neueFarbe = farbe2;
-                    else if (zeichen == food)
-                        neueFarbe = foodfarbe;
-                    else if (zeichen == rand)
-                        neueFarbe = randfarbe;
+                    if (!performancemode)
+                    {
+                        // Farbwahl je nach Position oder Zeichen
+                        if (x == playerX[0] && y == playerY[0])
+                            neueFarbe = headfarbe;
+                        else if (x == playerX2[0] && y == playerY2[0] && multiplayer)
+                            neueFarbe = headfarbe2;
+                        else if (zeichen == skin)
+                            neueFarbe = farbe;
+                        else if (zeichen == skin2)
+                            neueFarbe = farbe2;
+                        else if (zeichen == food)
+                            neueFarbe = foodfarbe;
+                        else if (zeichen == rand)
+                            neueFarbe = randfarbe;
+                    }
 
                     // Nur Farbe wechseln, wenn nötig
                     if (neueFarbe != aktuelleFarbe)
