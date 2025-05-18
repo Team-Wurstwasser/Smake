@@ -588,19 +588,29 @@ namespace Snake.io
         {
             if (gamemode != "babymode")
             {
+                if(highscore<punkte)
+                {highscore = punkte;}
+                else if (highscore < punkte2)
+                {highscore = punkte2;}
+
+                spieleGesamt++;
+
                 switch (difficulty)
                 {
                     case "Langsam":
+                        gesamtcoins = (punkte + punkte2) + gesamtcoins;
                         coins = punkte + punkte2 + coins;
                         xp = punkte + punkte2 + xp;
                         break;
 
                     case "Mittel":
+                        gesamtcoins = 2 * (punkte + punkte2) + gesamtcoins;
                         coins = 2 * (punkte + punkte2) + coins;
                         xp = 2 * (punkte + punkte2) + xp;
                         break;
 
                     case "Schnell":
+                        gesamtcoins = 3 * (punkte + punkte2) + gesamtcoins;
                         coins = 3 * (punkte + punkte2) + coins;
                         xp = 3 * (punkte + punkte2) + xp;
                         break;
