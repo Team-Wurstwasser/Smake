@@ -158,27 +158,28 @@ namespace Snake.io
 
         static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
+                            ConsoleColor.Blue,
                             ConsoleColor.DarkBlue,
+                            ConsoleColor.Green,
                             ConsoleColor.DarkGreen,
+                            ConsoleColor.Cyan,
                             ConsoleColor.DarkCyan,
+                            ConsoleColor.Red,
                             ConsoleColor.DarkRed,
+                            ConsoleColor.Magenta,
                             ConsoleColor.DarkMagenta,
+                            ConsoleColor.Yellow,
                             ConsoleColor.DarkYellow,
                             ConsoleColor.Gray,
                             ConsoleColor.DarkGray,
-                            ConsoleColor.Blue,
-                            ConsoleColor.Green,
-                            ConsoleColor.Cyan,
-                            ConsoleColor.Red,
-                            ConsoleColor.Magenta,
-                            ConsoleColor.Yellow
                                 ];
     
         static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
 
         static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
 
-        static readonly char[] randskins = ['█', '#', '▓', '░', '■'];
+        static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
+
 
         // Level und Experience
 
@@ -327,6 +328,8 @@ namespace Snake.io
                 $"freigeschaltetRand2={freigeschaltetRand[2]}",
                 $"freigeschaltetRand3={freigeschaltetRand[3]}",
                 $"freigeschaltetRand4={freigeschaltetRand[4]}",
+                $"freigeschaltetRand5={freigeschaltetRand[5]}",
+                $"freigeschaltetRand6={freigeschaltetRand[6]}",
                 $"freigeschaltetFarben0={freigeschaltetFarben[0]}",
                 $"freigeschaltetFarben1={freigeschaltetFarben[1]}",
                 $"freigeschaltetFarben2={freigeschaltetFarben[2]}",
@@ -415,6 +418,8 @@ namespace Snake.io
                     case "freigeschaltetRand2": freigeschaltetRand[2] = bool.Parse(Wert); break;
                     case "freigeschaltetRand3": freigeschaltetRand[3] = bool.Parse(Wert); break;
                     case "freigeschaltetRand4": freigeschaltetRand[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand5": freigeschaltetRand[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand6": freigeschaltetRand[6] = bool.Parse(Wert); break;
 
                     case "freigeschaltetFarben0": freigeschaltetFarben[0] = bool.Parse(Wert); break;
                     case "freigeschaltetFarben1": freigeschaltetFarben[1] = bool.Parse(Wert); break;
