@@ -70,9 +70,9 @@ namespace Snake.io
 
         static bool multiplayer;
 
-        static string? difficulty;
+        static string difficulty;
 
-        static string? gamemode;
+        static string gamemode;
 
         // Kollisionsvariablen
 
@@ -201,10 +201,10 @@ namespace Snake.io
         static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
 
         // Level für Skin/Farben
-        static readonly int[] TailLevel = [0, 0, 0, 0, 0];
-        static readonly int[] FoodLevel = [0, 0, 0, 0, 0, 0 ,0];
-        static readonly int[] RandLevel = [0, 0, 0, 0, 0, 0 ,0];
-        static readonly int[] FarbenLevel = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        static readonly int[] TailLevel = [0, 1, 4, 6, 20];
+        static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7 ,15];
+        static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6 ,8];
+        static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
 
         // Statistik
 
@@ -1043,6 +1043,7 @@ namespace Snake.io
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
             Console.WriteLine($"Coins: {coins}");
+            Console.WriteLine($"Level: {level}");
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine("←  Wechsle die Shopseite  →");
            
@@ -1051,7 +1052,16 @@ namespace Snake.io
             Console.WriteLine("\nFarben:");
             for (int i = 1; i < farben.Length; i++, option++)
             {
-                string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[" + FarbenPreis[i - 1] + " Coins]";
+                string shoptext;
+
+                if(level < FarbenLevel[i - 1])
+                {
+                    shoptext = $"[Benötigtes Level: {FarbenLevel[i - 1]}]";
+                }
+                else
+                {
+                    shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[" + FarbenPreis[i - 1] + " Coins]";
+                }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.ForegroundColor = farben[i];
                 Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
@@ -1070,6 +1080,7 @@ namespace Snake.io
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
             Console.WriteLine($"Coins: {coins}");
+            Console.WriteLine($"Level: {level}");
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine("←  Wechsle die Shopseite  →");
             int option = 0;
@@ -1077,7 +1088,16 @@ namespace Snake.io
             Console.WriteLine("\nTail Skins:");
             for (int i = 2; i < tailskins.Length; i++, option++)
             {
-                string shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[" + TailPreis[i - 2] + " Coins]";
+                string shoptext;
+
+                if (level < TailLevel[i - 2])
+                {
+                    shoptext = $"[Benötigtes Level: {TailLevel[i - 2]}]";
+                }
+                else
+                {
+                    shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[" + TailPreis[i - 2] + " Coins]";
+                }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {tailskins[i]} {shoptext}");
             }
@@ -1085,7 +1105,16 @@ namespace Snake.io
             Console.WriteLine("\nFood Skins:");
             for (int i = 1; i < foodskins.Length; i++, option++)
             {
-                string shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[" + FoodPreis[i - 1] + " Coins]";
+                string shoptext;
+
+                if (level < FoodLevel[i - 1])
+                {
+                    shoptext = $"[Benötigtes Level: {FoodLevel[i - 1]}]";
+                }
+                else
+                {
+                    shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[" + FoodPreis[i - 1] + " Coins]";
+                }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {foodskins[i]} {shoptext}");
             }
@@ -1093,7 +1122,16 @@ namespace Snake.io
             Console.WriteLine("\nRand Skins:");
             for (int i = 1; i < randskins.Length; i++, option++)
             {
-                string shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[" + RandPreis[i - 1] + " Coins]";
+                string shoptext;
+
+                if (level < RandLevel[i - 1])
+                {
+                    shoptext = $"[Benötigtes Level: {RandLevel[i - 1]}";
+                }
+                else
+                {
+                    shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[" + RandPreis[i - 1] + " Coins]";
+                }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {randskins[i]} {shoptext}");
             }
