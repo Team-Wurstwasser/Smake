@@ -185,11 +185,26 @@ namespace Snake.io
 
         static int coins;
         static int xp;
+        static int level;
+
 
         static bool[] freigeschaltetTail = new bool[tailskins.Length];
         static bool[] freigeschaltetFood = new bool[foodskins.Length];
         static bool[] freigeschaltetRand = new bool[randskins.Length];
         static bool[] freigeschaltetFarben = new bool[farben.Length];
+
+        //Preise Skin/Farben
+
+        static readonly int[] TailPreis = [30, 40, 50, 60, 70];
+        static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
+        static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
+        static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+
+        // Level für Skin/Farben
+        static readonly int[] TailLevel = [0, 0, 0, 0, 0];
+        static readonly int[] FoodLevel = [0, 0, 0, 0, 0, 0 ,0];
+        static readonly int[] RandLevel = [0, 0, 0, 0, 0, 0 ,0];
+        static readonly int[] FarbenLevel = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         // Statistik
 
@@ -630,6 +645,9 @@ namespace Snake.io
         {
             Speichern_Laden("Speichern");
 
+            // Level-Berechnung (1 Level pro 100 XP)
+            level = xp / 100 + 1;
+
             if (performancemode)
             {
                 foodfarbe = ConsoleColor.White;
@@ -939,30 +957,30 @@ namespace Snake.io
                             }
 
                             // Kauflogik für Skins
-                            if (auswahl + 1 < tailskins.Length)
+                            else if (auswahl + 1 < tailskins.Length)
                             {
-                                if (!freigeschaltetTail[auswahl + 1] && coins >= 10)
+                                if (!freigeschaltetTail[auswahl + 1] && coins >= TailPreis[auswahl - 1] && level >= TailLevel[auswahl - 1])
                                 {
                                     freigeschaltetTail[auswahl + 1] = true;
-                                    coins -= 10;
+                                    coins -= TailPreis[auswahl-1];
                                 }
                             }
                             else if (auswahl + 2 < tailskins.Length + foodskins.Length)
                             {
                                 int i = auswahl + 2 - tailskins.Length;
-                                if (!freigeschaltetFood[i] && coins >= 10)
+                                if (!freigeschaltetFood[i] && coins >= FoodPreis[auswahl - 6] && level >= FoodLevel[auswahl - 6])
                                 {
                                     freigeschaltetFood[i] = true;
-                                    coins -= 10;
+                                    coins -= FoodPreis[auswahl - 6];
                                 }
                             }
                             else if (auswahl + 3 < tailskins.Length + foodskins.Length + randskins.Length)
                             {
                                 int i = auswahl + 3 - tailskins.Length - foodskins.Length;
-                                if (!freigeschaltetRand[i] && coins >= 10)
+                                if (!freigeschaltetRand[i] && coins >= RandPreis[auswahl - 12] && level >= RandLevel[auswahl - 12])
                                 {
                                     freigeschaltetRand[i] = true;
-                                    coins -= 10;
+                                    coins -= RandPreis[auswahl - 12];
                                 }
                             }
                             break;
@@ -1002,14 +1020,11 @@ namespace Snake.io
                             if (auswahl == gesamtOptionenFarben)
                             {
                                 menu = false;
-                                break;
                             }
-
-                            
-                            if (!freigeschaltetFarben[auswahl] && coins >= 10)
+                            else if (!freigeschaltetFarben[auswahl] && coins >= FarbenPreis[auswahl - 1] && level >= FarbenLevel[auswahl - 1])
                             {
                                 freigeschaltetFarben[auswahl] = true;
-                                coins -= 10;
+                                coins -= FarbenPreis[auswahl - 1];
                             }
                             break;
 
@@ -1036,7 +1051,7 @@ namespace Snake.io
             Console.WriteLine("\nFarben:");
             for (int i = 1; i < farben.Length; i++, option++)
             {
-                string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[" + FarbenPreis[i - 1] + " Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.ForegroundColor = farben[i];
                 Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
@@ -1062,7 +1077,7 @@ namespace Snake.io
             Console.WriteLine("\nTail Skins:");
             for (int i = 2; i < tailskins.Length; i++, option++)
             {
-                string shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[" + TailPreis[i - 2] + " Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {tailskins[i]} {shoptext}");
             }
@@ -1070,7 +1085,7 @@ namespace Snake.io
             Console.WriteLine("\nFood Skins:");
             for (int i = 1; i < foodskins.Length; i++, option++)
             {
-                string shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[" + FoodPreis[i - 1] + " Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {foodskins[i]} {shoptext}");
             }
@@ -1078,7 +1093,7 @@ namespace Snake.io
             Console.WriteLine("\nRand Skins:");
             for (int i = 1; i < randskins.Length; i++, option++)
             {
-                string shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[10 Coins]";
+                string shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[" + RandPreis[i - 1] + " Coins]";
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {randskins[i]} {shoptext}");
             }
@@ -1364,8 +1379,7 @@ namespace Snake.io
             Console.WriteLine(" ");
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine(" ");
-            // Level-Berechnung (1 Level pro 100 XP)
-            int level = xp / 100 + 1;
+            
             int punktefürLevel = xp % 100;
 
             // Fortschrittsbalken
