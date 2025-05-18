@@ -366,7 +366,7 @@ namespace Snake.io
             File.WriteAllLines(pfad, Zeilen);
         }
 
-        // Speicher Logik 
+        // Speicher laden Logik 
         static void Laden(string pfad)
         {
             
@@ -793,6 +793,9 @@ namespace Snake.io
                         einstellungsAuswahl++;
                         if (einstellungsAuswahl > 5) einstellungsAuswahl = 1;
                         break;
+                    case ConsoleKey.Escape:
+                        menu = false;
+                        break;
 
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
@@ -918,6 +921,9 @@ namespace Snake.io
                             Console.Clear();
                             Shopskins = false;
                             break;
+                        case ConsoleKey.Escape:
+                            menu = false;
+                            break;
                         case ConsoleKey.Enter:
                         case ConsoleKey.Spacebar:
                             Console.Clear();
@@ -981,6 +987,9 @@ namespace Snake.io
                         case ConsoleKey.LeftArrow:
                             Console.Clear();
                             Shopskins = true;
+                            break;
+                        case ConsoleKey.Escape:
+                            menu = false;
                             break;
                         case ConsoleKey.Enter:
                         case ConsoleKey.Spacebar:
@@ -1100,6 +1109,10 @@ namespace Snake.io
                     case ConsoleKey.DownArrow:
                         Skin_FarbenAuswahl++;
                         if (Skin_FarbenAuswahl > 11) Skin_FarbenAuswahl = 1;
+                        break;
+
+                    case ConsoleKey.Escape:
+                        menu = false;
                         break;
 
                     case ConsoleKey.Enter:
