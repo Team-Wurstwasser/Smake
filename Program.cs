@@ -1,16 +1,5 @@
 namespace Snake.io
-
 {
-
-    using System;
-    using System.Threading;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using Microsoft.VisualBasic.FileIO;
-    using System.Runtime.InteropServices;
-    using System.IO;
-    using System.Numerics;
-
     public class Spieler
     {
         // Eingabe-Richtung (durch Pfeiltasten)
