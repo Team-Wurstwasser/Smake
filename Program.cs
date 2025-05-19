@@ -52,69 +52,48 @@ namespace Snake.io
     {
 
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
-
         static bool spiel = true;
-
         public static int gameover;
-
         public static bool unentschieden;
-
         public static bool exit = false;
-
         public static bool performancemode;
 
 
         // Spielfeldgröße (Breite x Höhe)
-
         static readonly int weite = 41;
-
         static readonly int hoehe = 20;
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
-
         static char[,] grid = new char[hoehe, weite];
 
         // Position des Futters
-
         static int futterX;
-
         static int futterY;
 
         // Spielmodi
-
         public static bool multiplayer;
-
         public static string difficulty;
-
         public static string gamemode;
 
         //Weitere Skins
-
         public static char food;
-
         public static ConsoleColor foodfarbe;
-
         public static char rand;
-
         public static ConsoleColor randfarbe;
 
         // Maximale Punkte
-
         static int maxpunkte;
 
         // Spielgeschwindigkeit
-
         static int zeit;
 
         // Level und Experience
-
         public static int coins;
         public static int xp;
         public static int level;
 
 
         // Statistik
-
         public static int spieleGesamt;
         public static int highscore;
         public static int gesamtcoins;
