@@ -25,6 +25,8 @@ namespace Snake.io
 
         static bool exit = false;
 
+        static bool performancemode;
+
 
         // Spielfeldgröße (Breite x Höhe)
 
@@ -212,9 +214,7 @@ namespace Snake.io
         static int highscore;
         static int gesamtcoins;
 
-        static bool performancemode;
-
-
+        
         // Main
         static void Main()
 
@@ -236,6 +236,7 @@ namespace Snake.io
             } while (!exit);
 
         }
+
 
         // Speicher und Ladesystem
         static void Speichern_Laden(string speicher_laden)
@@ -385,6 +386,7 @@ namespace Snake.io
             File.WriteAllLines(pfad, Zeilen);
         }
 
+
         // Speicher laden Logik 
         static void Laden(string pfad)
         {
@@ -478,6 +480,7 @@ namespace Snake.io
                 }
             }
         }
+
 
         // Allen Variablen den Startwert geben
         static void Neustart()
