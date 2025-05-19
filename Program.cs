@@ -45,7 +45,13 @@ namespace Snake.io
         public char Head { get; set; }
 
         public char Skin { get; set; }
+
+        public  ConsoleColor farbe { get; set; }
+
+        public  ConsoleColor headfarbe { get; set; }
+
     }
+
 
     public class Program
     {
@@ -93,14 +99,6 @@ namespace Snake.io
 
         public static ConsoleColor foodfarbe;
 
-        public static ConsoleColor farbe;
-
-        public static ConsoleColor headfarbe;
-
-        public static ConsoleColor farbe2;
-
-        public static ConsoleColor headfarbe2;
-
         public static char rand;
 
         public static ConsoleColor randfarbe;
@@ -113,77 +111,12 @@ namespace Snake.io
 
         static int zeit;
 
-        // Shop variablen
-
-        public static int foodzahl;
-
-        public static int skinzahl;
-
-        public static int skin2zahl;
-
-        public static int headfarbezahl;
-
-        public static int headfarbe2zahl;
-
-        public static int farbezahl;
-
-        public static int farbe2zahl;
-
-        public static int foodfarbezahl;
-
-        public static int randfarbezahl;
-
-        public static int randzahl;
-
-        public static readonly ConsoleColor[] farben = [
-                            ConsoleColor.White,
-                            ConsoleColor.Blue,
-                            ConsoleColor.DarkBlue,
-                            ConsoleColor.Green,
-                            ConsoleColor.DarkGreen,
-                            ConsoleColor.Cyan,
-                            ConsoleColor.DarkCyan,
-                            ConsoleColor.Red,
-                            ConsoleColor.DarkRed,
-                            ConsoleColor.Magenta,
-                            ConsoleColor.DarkMagenta,
-                            ConsoleColor.Yellow,
-                            ConsoleColor.DarkYellow,
-                            ConsoleColor.Gray,
-                            ConsoleColor.DarkGray,
-                                ];
-
-        public static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
-
-        public static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
-
-        public static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
-
-
         // Level und Experience
 
         public static int coins;
         public static int xp;
         public static int level;
 
-
-        public static bool[] freigeschaltetTail = new bool[tailskins.Length];
-        public static bool[] freigeschaltetFood = new bool[foodskins.Length];
-        public static bool[] freigeschaltetRand = new bool[randskins.Length];
-        public static bool[] freigeschaltetFarben = new bool[farben.Length];
-
-        //Preise Skin/Farben
-
-        public static readonly int[] TailPreis = [30, 40, 50, 60, 70];
-        public static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
-        public static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
-        public static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
-
-        // Level für Skin/Farben
-        public static readonly int[] TailLevel = [0, 1, 4, 6, 20];
-        public static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7 ,15];
-        public static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6 ,8];
-        public static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
 
         // Statistik
 
@@ -849,13 +782,13 @@ namespace Snake.io
                     {
                         // Farbwahl je nach Position oder Zeichen
                         if (x == player.PlayerX[0] && y == player.PlayerY[0])
-                            neueFarbe = headfarbe;
+                            neueFarbe = player.headfarbe;
                         else if (x == player2.PlayerX[0] && y == player2.PlayerY[0] && multiplayer)
-                            neueFarbe = headfarbe2;
+                            neueFarbe = player2.headfarbe;
                         else if (zeichen == player.Skin)
-                            neueFarbe = farbe;
+                            neueFarbe = player.farbe;
                         else if (zeichen == player2.Skin)
-                            neueFarbe = farbe2;
+                            neueFarbe = player2.farbe;
                         else if (zeichen == food)
                             neueFarbe = foodfarbe;
                         else if (zeichen == rand)
@@ -890,7 +823,7 @@ namespace Snake.io
                 }
                 else if (y == 4)
                 {
-                    Console.ForegroundColor = headfarbe;
+                    Console.ForegroundColor = player.headfarbe;
                     if (gamemode != "Unendlich")
                     {
                         Console.Write($"  {player.Name}: {player.Punkte}/{maxpunkte}");
@@ -909,7 +842,7 @@ namespace Snake.io
                 {
                     if (multiplayer)
                     {
-                        Console.ForegroundColor = headfarbe2;
+                        Console.ForegroundColor = player2.headfarbe;
                         if (gamemode != "Unendlich")
                         {
                             Console.Write($"  {player2.Name}: {player2.Punkte}/{maxpunkte}");
