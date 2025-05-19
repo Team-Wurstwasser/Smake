@@ -568,8 +568,9 @@ namespace Snake.io
         {
             Neustart();
             Thread inputThread = new(ReadInput);
+            Thread melodieThread = new(Melodie);
             inputThread.Start();
-
+            melodieThread.Start();
             // Initialisiere das Spielfeld mit Rahmen und Spielerposition
 
             InitialisiereSpiel();
@@ -600,6 +601,8 @@ namespace Snake.io
             Coins();
 
             inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
+
+            melodieThread.Join();
 
             ShowGameOverScreen(); // Spielende-Bildschirm
 
@@ -643,6 +646,21 @@ namespace Snake.io
 
         }
 
+
+        static void Melodie()
+        {
+            while (spiel)
+            {
+                Console.Beep(261, 300);
+                Console.Beep(293, 300);
+                Console.Beep(329, 300);
+                Console.Beep(349, 300);
+                Console.Beep(392, 300);
+                Console.Beep(440, 300);
+                Console.Beep(493, 300);
+                Console.Beep(523, 300);
+            }
+        }
 
         // Hauptmenü
         static void ShowMainMenue()
