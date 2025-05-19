@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 using System.Numerics;
 
 namespace Snake.io
@@ -12,22 +12,22 @@ namespace Snake.io
             //Nur wenn File nicht gefunden wird
             if (!File.Exists(pfad))
             {
-                Program.randzahl = 0;
-                Program.foodzahl = 0;
-                Program.skinzahl = 0;
-                Program.skin2zahl = 1;
-                Program.headfarbezahl = 0;
-                Program.headfarbe2zahl = 0;
-                Program.farbezahl = 0;
-                Program.farbe2zahl = 0;
-                Program.foodfarbezahl = 0;
-                Program.randfarbezahl = 0;
+                Menüs.randzahl = 0;
+                Menüs.foodzahl = 0;
+                Menüs.skinzahl = 0;
+                Menüs.skin2zahl = 1;
+                Menüs.headfarbezahl = 0;
+                Menüs.headfarbe2zahl = 0;
+                Menüs.farbezahl = 0;
+                Menüs.farbe2zahl = 0;
+                Menüs.foodfarbezahl = 0;
+                Menüs.randfarbezahl = 0;
 
-                Program.freigeschaltetTail[0] = true;
-                Program.freigeschaltetTail[1] = true;
-                Program.freigeschaltetFood[0] = true;
-                Program.freigeschaltetRand[0] = true;
-                Program.freigeschaltetFarben[0] = true;
+                Menüs.freigeschaltetTail[0] = true;
+                Menüs.freigeschaltetTail[1] = true;
+                Menüs.freigeschaltetFood[0] = true;
+                Menüs.freigeschaltetRand[0] = true;
+                Menüs.freigeschaltetFarben[0] = true;
 
                 Program.performancemode = false;
 
@@ -41,17 +41,16 @@ namespace Snake.io
                 Program.multiplayer = false;
 
                 // Standard Skins/Farben
-                Program.rand = '?';
+                Program.rand = '█';
                 Program.food = '*';
                 Program.player.Skin = '+';
                 Program.player2.Skin = 'x';
                 Program.randfarbe = ConsoleColor.White;
                 Program.foodfarbe = ConsoleColor.White;
-                Program.farbe = ConsoleColor.White;
-                Program.farbe = ConsoleColor.White;
-                Program.farbe2 = ConsoleColor.White;
-                Program.headfarbe = ConsoleColor.White;
-                Program.headfarbe2 = ConsoleColor.White;
+                Program.player.farbe = ConsoleColor.White;
+                Program.player2.farbe = ConsoleColor.White;
+                Program.player.headfarbe = ConsoleColor.White;
+                Program.player2.headfarbe = ConsoleColor.White;
 
 
                 Program.gesamtcoins = 0;
@@ -83,52 +82,52 @@ namespace Snake.io
             //Liste was gespeichert wird
             var Zeilen = new List<string>
             {
-                $"randzahl={Program.randzahl}",
-                $"foodzahl={Program.foodzahl}",
-                $"skinzahl={Program.skinzahl}",
-                $"skin2zahl={Program.skin2zahl}",
-                $"headfarbezahl={Program.headfarbezahl}",
-                $"headfarbe2zahl={Program.headfarbe2zahl}",
-                $"farbezahl={Program.farbezahl}",
-                $"farbe2zahl={Program.farbe2zahl}",
-                $"foodfarbezahl={Program.foodfarbezahl}",
-                $"randfarbezahl={Program.randfarbezahl}",
-                $"freigeschaltetTail0={Program.freigeschaltetTail[0]}",
-                $"freigeschaltetTail1={Program.freigeschaltetTail[1]}",
-                $"freigeschaltetTail2={Program.freigeschaltetTail[2]}",
-                $"freigeschaltetTail3={Program.freigeschaltetTail[3]}",
-                $"freigeschaltetTail4={Program.freigeschaltetTail[4]}",
-                $"freigeschaltetTail5={Program.freigeschaltetTail[5]}",
-                $"freigeschaltetTail6={Program.freigeschaltetTail[6]}",
-                $"freigeschaltetFood0={Program.freigeschaltetFood[0]}",
-                $"freigeschaltetFood1={Program.freigeschaltetFood[1]}",
-                $"freigeschaltetFood2={Program.freigeschaltetFood[2]}",
-                $"freigeschaltetFood3={Program.freigeschaltetFood[3]}",
-                $"freigeschaltetFood4={Program.freigeschaltetFood[4]}",
-                $"freigeschaltetFood5={Program.freigeschaltetFood[5]}",
-                $"freigeschaltetFood6={Program.freigeschaltetFood[6]}",
-                $"freigeschaltetRand0={Program.freigeschaltetRand[0]}",
-                $"freigeschaltetRand1={Program.freigeschaltetRand[1]}",
-                $"freigeschaltetRand2={Program.freigeschaltetRand[2]}",
-                $"freigeschaltetRand3={Program.freigeschaltetRand[3]}",
-                $"freigeschaltetRand4={Program.freigeschaltetRand[4]}",
-                $"freigeschaltetRand5={Program.freigeschaltetRand[5]}",
-                $"freigeschaltetRand6={Program.freigeschaltetRand[6]}",
-                $"freigeschaltetFarben0={Program.freigeschaltetFarben[0]}",
-                $"freigeschaltetFarben1={Program.freigeschaltetFarben[1]}",
-                $"freigeschaltetFarben2={Program.freigeschaltetFarben[2]}",
-                $"freigeschaltetFarben3={Program.freigeschaltetFarben[3]}",
-                $"freigeschaltetFarben4={Program.freigeschaltetFarben[4]}",
-                $"freigeschaltetFarben5={Program.freigeschaltetFarben[5]}",
-                $"freigeschaltetFarben6={Program.freigeschaltetFarben[6]}",
-                $"freigeschaltetFarben7={Program.freigeschaltetFarben[7]}",
-                $"freigeschaltetFarben8={Program.freigeschaltetFarben[8]}",
-                $"freigeschaltetFarben9={Program.freigeschaltetFarben[9]}",
-                $"freigeschaltetFarben10={Program.freigeschaltetFarben[10]}",
-                $"freigeschaltetFarben11={Program.freigeschaltetFarben[11]}",
-                $"freigeschaltetFarben12={Program.freigeschaltetFarben[12]}",
-                $"freigeschaltetFarben13={Program.freigeschaltetFarben[13]}",
-                $"freigeschaltetFarben14={Program.freigeschaltetFarben[14]}",
+                $"randzahl={Menüs.randzahl}",
+                $"foodzahl={Menüs.foodzahl}",
+                $"skinzahl={Menüs.skinzahl}",
+                $"skin2zahl={Menüs.skin2zahl}",
+                $"headfarbezahl={Menüs.headfarbezahl}",
+                $"headfarbe2zahl={Menüs.headfarbe2zahl}",
+                $"farbezahl={Menüs.farbezahl}",
+                $"farbe2zahl={Menüs.farbe2zahl}",
+                $"foodfarbezahl={Menüs.foodfarbezahl}",
+                $"randfarbezahl={Menüs.randfarbezahl}",
+                $"freigeschaltetTail0={Menüs.freigeschaltetTail[0]}",
+                $"freigeschaltetTail1={Menüs.freigeschaltetTail[1]}",
+                $"freigeschaltetTail2={Menüs.freigeschaltetTail[2]}",
+                $"freigeschaltetTail3={Menüs.freigeschaltetTail[3]}",
+                $"freigeschaltetTail4={Menüs.freigeschaltetTail[4]}",
+                $"freigeschaltetTail5={Menüs.freigeschaltetTail[5]}",
+                $"freigeschaltetTail6={Menüs.freigeschaltetTail[6]}",
+                $"freigeschaltetFood0={Menüs.freigeschaltetFood[0]}",
+                $"freigeschaltetFood1={Menüs.freigeschaltetFood[1]}",
+                $"freigeschaltetFood2={Menüs.freigeschaltetFood[2]}",
+                $"freigeschaltetFood3={Menüs.freigeschaltetFood[3]}",
+                $"freigeschaltetFood4={Menüs.freigeschaltetFood[4]}",
+                $"freigeschaltetFood5={Menüs.freigeschaltetFood[5]}",
+                $"freigeschaltetFood6={Menüs.freigeschaltetFood[6]}",
+                $"freigeschaltetRand0={Menüs.freigeschaltetRand[0]}",
+                $"freigeschaltetRand1={Menüs.freigeschaltetRand[1]}",
+                $"freigeschaltetRand2={Menüs.freigeschaltetRand[2]}",
+                $"freigeschaltetRand3={Menüs.freigeschaltetRand[3]}",
+                $"freigeschaltetRand4={Menüs.freigeschaltetRand[4]}",
+                $"freigeschaltetRand5={Menüs.freigeschaltetRand[5]}",
+                $"freigeschaltetRand6={Menüs.freigeschaltetRand[6]}",
+                $"freigeschaltetFarben0={Menüs.freigeschaltetFarben[0]}",
+                $"freigeschaltetFarben1={Menüs.freigeschaltetFarben[1]}",
+                $"freigeschaltetFarben2={Menüs.freigeschaltetFarben[2]}",
+                $"freigeschaltetFarben3={Menüs.freigeschaltetFarben[3]}",
+                $"freigeschaltetFarben4={Menüs.freigeschaltetFarben[4]}",
+                $"freigeschaltetFarben5={Menüs.freigeschaltetFarben[5]}",
+                $"freigeschaltetFarben6={Menüs.freigeschaltetFarben[6]}",
+                $"freigeschaltetFarben7={Menüs.freigeschaltetFarben[7]}",
+                $"freigeschaltetFarben8={Menüs.freigeschaltetFarben[8]}",
+                $"freigeschaltetFarben9={Menüs.freigeschaltetFarben[9]}",
+                $"freigeschaltetFarben10={Menüs.freigeschaltetFarben[10]}",
+                $"freigeschaltetFarben11={Menüs.freigeschaltetFarben[11]}",
+                $"freigeschaltetFarben12={Menüs.freigeschaltetFarben[12]}",
+                $"freigeschaltetFarben13={Menüs.freigeschaltetFarben[13]}",
+                $"freigeschaltetFarben14={Menüs.freigeschaltetFarben[14]}",
                 $"performancemode={Program.performancemode}",
                 $"coins={Program.coins}",
                 $"xp={Program.xp}",
@@ -144,10 +143,10 @@ namespace Snake.io
                 $"player2.Skin={Program.player2.Skin}",
                 $"randfarbe={Program.randfarbe}",
                 $"foodfarbe={Program.foodfarbe}",
-                $"farbe={Program.farbe}",
-                $"farbe2={Program.farbe2}",
-                $"headfarbe={Program.headfarbe}",
-                $"headfarbe2={Program.headfarbe2}"
+                $"farbe={Program.player.farbe}",
+                $"player2.farbe={Program.player2.farbe}",
+                $"headfarbe={Program.player2.farbe}",
+                $"player2.headfarbe={Program.player2.farbe}"
             };
 
             File.WriteAllLines(pfad, Zeilen);
@@ -171,56 +170,56 @@ namespace Snake.io
                 //Entscheidet was in die Variablen eingespeichert wird
                 switch (Variablenname)
                 {
-                    case "randzahl": Program.randzahl = int.Parse(Wert); break;
-                    case "foodzahl": Program.foodzahl = int.Parse(Wert); break;
-                    case "skinzahl": Program.skinzahl = int.Parse(Wert); break;
-                    case "skin2zahl": Program.skin2zahl = int.Parse(Wert); break;
-                    case "headfarbezahl": Program.headfarbezahl = int.Parse(Wert); break;
-                    case "headfarbe2zahl": Program.headfarbe2zahl = int.Parse(Wert); break;
-                    case "farbezahl": Program.farbezahl = int.Parse(Wert); break;
-                    case "farbe2zahl": Program.farbe2zahl = int.Parse(Wert); break;
-                    case "foodfarbezahl": Program.foodfarbezahl = int.Parse(Wert); break;
-                    case "randfarbezahl": Program.randfarbezahl = int.Parse(Wert); break;
+                    case "randzahl": Menüs.randzahl = int.Parse(Wert); break;
+                    case "foodzahl": Menüs.foodzahl = int.Parse(Wert); break;
+                    case "skinzahl": Menüs.skinzahl = int.Parse(Wert); break;
+                    case "skin2zahl": Menüs.skin2zahl = int.Parse(Wert); break;
+                    case "headfarbezahl": Menüs.headfarbezahl = int.Parse(Wert); break;
+                    case "headfarbe2zahl": Menüs.headfarbe2zahl = int.Parse(Wert); break;
+                    case "farbezahl": Menüs.farbezahl = int.Parse(Wert); break;
+                    case "farbe2zahl": Menüs.farbe2zahl = int.Parse(Wert); break;
+                    case "foodfarbezahl": Menüs.foodfarbezahl = int.Parse(Wert); break;
+                    case "randfarbezahl": Menüs.randfarbezahl = int.Parse(Wert); break;
 
-                    case "freigeschaltetTail0": Program.freigeschaltetTail[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail1": Program.freigeschaltetTail[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail2": Program.freigeschaltetTail[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail3": Program.freigeschaltetTail[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail4": Program.freigeschaltetTail[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail5": Program.freigeschaltetTail[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail6": Program.freigeschaltetTail[6] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail0": Menüs.freigeschaltetTail[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail1": Menüs.freigeschaltetTail[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail2": Menüs.freigeschaltetTail[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail3": Menüs.freigeschaltetTail[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail4": Menüs.freigeschaltetTail[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail5": Menüs.freigeschaltetTail[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetTail6": Menüs.freigeschaltetTail[6] = bool.Parse(Wert); break;
 
-                    case "freigeschaltetFood0": Program.freigeschaltetFood[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood1": Program.freigeschaltetFood[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood2": Program.freigeschaltetFood[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood3": Program.freigeschaltetFood[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood4": Program.freigeschaltetFood[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood5": Program.freigeschaltetFood[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood6": Program.freigeschaltetFood[6] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood0": Menüs.freigeschaltetFood[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood1": Menüs.freigeschaltetFood[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood2": Menüs.freigeschaltetFood[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood3": Menüs.freigeschaltetFood[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood4": Menüs.freigeschaltetFood[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood5": Menüs.freigeschaltetFood[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetFood6": Menüs.freigeschaltetFood[6] = bool.Parse(Wert); break;
 
-                    case "freigeschaltetRand0": Program.freigeschaltetRand[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand1": Program.freigeschaltetRand[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand2": Program.freigeschaltetRand[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand3": Program.freigeschaltetRand[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand4": Program.freigeschaltetRand[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand5": Program.freigeschaltetRand[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand6": Program.freigeschaltetRand[6] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand0": Menüs.freigeschaltetRand[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand1": Menüs.freigeschaltetRand[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand2": Menüs.freigeschaltetRand[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand3": Menüs.freigeschaltetRand[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand4": Menüs.freigeschaltetRand[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand5": Menüs.freigeschaltetRand[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand6": Menüs.freigeschaltetRand[6] = bool.Parse(Wert); break;
 
-                    case "freigeschaltetFarben0": Program.freigeschaltetFarben[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben1": Program.freigeschaltetFarben[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben2": Program.freigeschaltetFarben[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben3": Program.freigeschaltetFarben[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben4": Program.freigeschaltetFarben[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben5": Program.freigeschaltetFarben[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben6": Program.freigeschaltetFarben[6] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben7": Program.freigeschaltetFarben[7] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben8": Program.freigeschaltetFarben[8] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben9": Program.freigeschaltetFarben[9] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben10": Program.freigeschaltetFarben[10] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben11": Program.freigeschaltetFarben[11] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben12": Program.freigeschaltetFarben[12] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben13": Program.freigeschaltetFarben[13] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben14": Program.freigeschaltetFarben[14] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben0": Menüs.freigeschaltetFarben[0] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben1": Menüs.freigeschaltetFarben[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben2": Menüs.freigeschaltetFarben[2] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben3": Menüs.freigeschaltetFarben[3] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben4": Menüs.freigeschaltetFarben[4] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben5": Menüs.freigeschaltetFarben[5] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben6": Menüs.freigeschaltetFarben[6] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben7": Menüs.freigeschaltetFarben[7] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben8": Menüs.freigeschaltetFarben[8] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben9": Menüs.freigeschaltetFarben[9] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben10": Menüs.freigeschaltetFarben[10] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben11": Menüs.freigeschaltetFarben[11] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben12": Menüs.freigeschaltetFarben[12] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben13": Menüs.freigeschaltetFarben[13] = bool.Parse(Wert); break;
+                    case "freigeschaltetFarben14": Menüs.freigeschaltetFarben[14] = bool.Parse(Wert); break;
 
                     case "performancemode": Program.performancemode = bool.Parse(Wert); break;
                     case "coins": Program.coins = int.Parse(Wert); break;
@@ -240,10 +239,10 @@ namespace Snake.io
 
                     case "randfarbe": Program.randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
                     case "foodfarbe": Program.foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "farbe": Program.farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "farbe2": Program.farbe2 = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "headfarbe": Program.headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "headfarbe2": Program.headfarbe2 = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.farbe": Program.player.farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.farbe": Program.player2.farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.headfarbe": Program.player.farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.headfarbe": Program.player2.farbe = Enum.Parse<ConsoleColor>(Wert); break;
                 }
             }
         }
