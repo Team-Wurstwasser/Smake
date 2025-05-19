@@ -104,7 +104,6 @@ namespace Snake.io
 
         // Main
         static void Main()
-
         {
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
@@ -127,7 +126,6 @@ namespace Snake.io
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
-
 
             SpeicherSytem.Speichern_Laden("Speichern");
 
@@ -205,7 +203,6 @@ namespace Snake.io
             player2.InputY = 0;
 
         }
-
 
         // Spielablauf
         public static void Spiel()
@@ -326,7 +323,6 @@ namespace Snake.io
             EsseFutter();
         }
 
-
         // Prüft die Kollision
         static void Kollision(int x, int y, int x2, int y2)
         {
@@ -367,7 +363,6 @@ namespace Snake.io
             }
         }
 
-
         // Tailkoordinaten berechnen
         static void TailShift()
         {
@@ -394,7 +389,6 @@ namespace Snake.io
                 }
             }
         }
-
 
         // Bewegt die Spieler
         static void Bewegung(int x, int y, int x2, int y2)
@@ -475,7 +469,6 @@ namespace Snake.io
                 }
             }
         }
-
 
         // Prüft, ob das Spiel vorbei ist
         static void Gameover()
@@ -562,7 +555,6 @@ namespace Snake.io
 
         }
 
-
         // Setzt das Futter an eine Zufällige Position
         static void SetzeFutter()
         {
@@ -582,7 +574,6 @@ namespace Snake.io
 
             grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
         }
-
 
         // Die Spieler Essen das Futter
         static void EsseFutter()
@@ -605,7 +596,6 @@ namespace Snake.io
                 SetzeFutter();
             }
         }
-
 
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
         static void ReadInput()
@@ -738,7 +728,6 @@ namespace Snake.io
 
         }
 
-
         // Zeichnet das gesamte Spielfeld auf der Konsole
         static void Render()
         {
@@ -839,7 +828,6 @@ namespace Snake.io
 
             Console.ResetColor();
         }
-
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche, Spieler
         static void InitialisiereSpiel()
