@@ -12,7 +12,6 @@ namespace Snake.io
 
 
     class Program
-
     {
 
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
@@ -138,8 +137,6 @@ namespace Snake.io
 
         // Shop variablen
 
-        static int randzahl;
-
         static int foodzahl;
 
         static int skinzahl;
@@ -157,6 +154,8 @@ namespace Snake.io
         static int foodfarbezahl;
 
         static int randfarbezahl;
+
+        static int randzahl;
 
         static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
@@ -646,7 +645,6 @@ namespace Snake.io
 
         }
 
-
         static void Melodie()
         {
             while (spiel)
@@ -784,8 +782,8 @@ namespace Snake.io
                     1 => "Einstellungen",
                     2 => "Shop",
                     3 => "Skins/Farben",
-                    5 => "Anleitung",
                     4 => "Statistiken",
+                    5 => "Anleitung",
                     6 => "Beenden",
                     _ => ""
                 };
@@ -880,29 +878,17 @@ namespace Snake.io
 
             for (int i = 0; i < 5; i++)
             {
-                string option = "";
-
-                switch (i)
+                string option = i switch
                 {
-                    case 0:
-                        option = $"Schwierigkeit ändern   [Aktuell: {difficulty}]";
-                        break;
-                    case 1:
-                        option = $"Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]";
-                        break;
-                    case 2:
-                        option = $"Gamemode ändern        [Aktuell: {gamemode}]";
-                        break;
-                    case 3:
-                        option = $"Performance mode       [Aktuell: {(performancemode ? "An" : "Aus")}]";
-                        break;
-                    case 4:
-                        option = "Zurück zum Hauptmenü";
-                        break;
-                }
-
+                    0 => $"Schwierigkeit ändern   [Aktuell: {difficulty}]",
+                    1 => $"Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]",
+                    2 => $"Gamemode ändern        [Aktuell: {gamemode}]",
+                    3 => $"Performance mode       [Aktuell: {(performancemode ? "An" : "Aus")}]",
+                    4 => "Zurück zum Hauptmenü",
+                    _ => ""
+                };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {option,-30}");
+                Console.WriteLine($"{zeiger} {option,-25}");
             }
 
             Console.WriteLine("══════════════════════════════");
