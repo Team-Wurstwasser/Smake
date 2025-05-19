@@ -6,6 +6,70 @@ namespace Snake.io
 {
     public class Menüs
     {
+        // Shop variablen
+
+        public static int foodzahl;
+
+        public static int skinzahl;
+
+        public static int skin2zahl;
+
+        public static int headfarbezahl;
+
+        public static int headfarbe2zahl;
+
+        public static int farbezahl;
+
+        public static int farbe2zahl;
+
+        public static int foodfarbezahl;
+
+        public static int randfarbezahl;
+
+        public static int randzahl;
+
+        public static readonly ConsoleColor[] farben = [
+                            ConsoleColor.White,
+                            ConsoleColor.Blue,
+                            ConsoleColor.DarkBlue,
+                            ConsoleColor.Green,
+                            ConsoleColor.DarkGreen,
+                            ConsoleColor.Cyan,
+                            ConsoleColor.DarkCyan,
+                            ConsoleColor.Red,
+                            ConsoleColor.DarkRed,
+                            ConsoleColor.Magenta,
+                            ConsoleColor.DarkMagenta,
+                            ConsoleColor.Yellow,
+                            ConsoleColor.DarkYellow,
+                            ConsoleColor.Gray,
+                            ConsoleColor.DarkGray,
+                                ];
+
+        public static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
+
+        public static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
+
+        public static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
+
+        public static bool[] freigeschaltetTail = new bool[tailskins.Length];
+        public static bool[] freigeschaltetFood = new bool[foodskins.Length];
+        public static bool[] freigeschaltetRand = new bool[randskins.Length];
+        public static bool[] freigeschaltetFarben = new bool[farben.Length];
+
+        //Preise Skin/Farben
+
+        public static readonly int[] TailPreis = [30, 40, 50, 60, 70];
+        public static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
+        public static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
+        public static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+
+        // Level für Skin/Farben
+        public static readonly int[] TailLevel = [0, 1, 4, 6, 20];
+        public static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7, 15];
+        public static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6, 8];
+        public static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
+
         // Eingaben für Spielernamen
         public static void Eingaben()
         {
@@ -30,16 +94,16 @@ namespace Snake.io
             {
                 Program.foodfarbe = ConsoleColor.White;
                 Program.randfarbe = ConsoleColor.White;
-                Program.farbe = ConsoleColor.White;
-                Program.headfarbe = ConsoleColor.White;
-                Program.farbe2 = ConsoleColor.White; ;
-                Program.headfarbe2 = ConsoleColor.White;
-                Program.headfarbezahl = 0;
-                Program.headfarbe2zahl = 0;
-                Program.farbezahl = 0;
-                Program.farbe2zahl = 0;
-                Program.foodfarbezahl = 0;
-                Program.randfarbezahl = 0;
+                Program.player.farbe = ConsoleColor.White;
+                Program.player.headfarbe = ConsoleColor.White;
+                Program.player2.farbe = ConsoleColor.White; ;
+                Program.player2.headfarbe = ConsoleColor.White;
+                headfarbezahl = 0;
+                headfarbe2zahl = 0;
+                farbezahl = 0;
+                farbe2zahl = 0;
+                foodfarbezahl = 0;
+                randfarbezahl = 0;
             }
 
             Console.Clear();
@@ -262,8 +326,8 @@ namespace Snake.io
             int auswahl = 1;
 
             // Zähle alle Shop-Optionen zusammen
-            int gesamtOptionenSkins = Program.tailskins.Length + Program.foodskins.Length + Program.randskins.Length - 3;
-            int gesamtOptionenFarben = Program.farben.Length;
+            int gesamtOptionenSkins = tailskins.Length + foodskins.Length + randskins.Length - 3;
+            int gesamtOptionenFarben = farben.Length;
 
             bool Shopskins = false;
             do
@@ -306,30 +370,30 @@ namespace Snake.io
                             }
 
                             // Kauflogik für Skins
-                            else if (auswahl + 1 < Program.tailskins.Length)
+                            else if (auswahl + 1 < tailskins.Length)
                             {
-                                if (!Program.freigeschaltetTail[auswahl + 1] && Program.coins >= Program.TailPreis[auswahl - 1] && Program.level >= Program.TailLevel[auswahl - 1])
+                                if (!freigeschaltetTail[auswahl + 1] && Program.coins >= TailPreis[auswahl - 1] && Program.level >= TailLevel[auswahl - 1])
                                 {
-                                    Program.freigeschaltetTail[auswahl + 1] = true;
-                                    Program.coins -= Program.TailPreis[auswahl - 1];
+                                    freigeschaltetTail[auswahl + 1] = true;
+                                    Program.coins -= TailPreis[auswahl - 1];
                                 }
                             }
-                            else if (auswahl + 2 < Program.tailskins.Length + Program.foodskins.Length)
+                            else if (auswahl + 2 < tailskins.Length + foodskins.Length)
                             {
-                                int i = auswahl + 2 - Program.tailskins.Length;
-                                if (!Program.freigeschaltetFood[i] && Program.coins >= Program.FoodPreis[auswahl - 6] && Program.level >= Program.FoodLevel[auswahl - 6])
+                                int i = auswahl + 2 - tailskins.Length;
+                                if (!freigeschaltetFood[i] && Program.coins >= FoodPreis[auswahl - 6] && Program.level >= FoodLevel[auswahl - 6])
                                 {
-                                    Program.freigeschaltetFood[i] = true;
-                                    Program.coins -= Program.FoodPreis[auswahl - 6];
+                                    freigeschaltetFood[i] = true;
+                                    Program.coins -= FoodPreis[auswahl - 6];
                                 }
                             }
-                            else if (auswahl + 3 < Program.tailskins.Length + Program.foodskins.Length + Program.randskins.Length)
+                            else if (auswahl + 3 < tailskins.Length + foodskins.Length + randskins.Length)
                             {
-                                int i = auswahl + 3 - Program.tailskins.Length - Program.foodskins.Length;
-                                if (!Program.freigeschaltetRand[i] && Program.coins >= Program.RandPreis[auswahl - 12] && Program.level >= Program.RandLevel[auswahl - 12])
+                                int i = auswahl + 3 - tailskins.Length - foodskins.Length;
+                                if (!freigeschaltetRand[i] && Program.coins >= RandPreis[auswahl - 12] && Program.level >= RandLevel[auswahl - 12])
                                 {
-                                    Program.freigeschaltetRand[i] = true;
-                                    Program.coins -= Program.RandPreis[auswahl - 12];
+                                    freigeschaltetRand[i] = true;
+                                    Program.coins -= RandPreis[auswahl - 12];
                                 }
                             }
                             break;
@@ -370,10 +434,10 @@ namespace Snake.io
                             {
                                 menu = false;
                             }
-                            else if (!Program.freigeschaltetFarben[auswahl] && Program.coins >= Program.FarbenPreis[auswahl - 1] && Program.level >= Program.FarbenLevel[auswahl - 1])
+                            else if (!freigeschaltetFarben[auswahl] && Program.coins >= FarbenPreis[auswahl - 1] && Program.level >= FarbenLevel[auswahl - 1])
                             {
-                                Program.freigeschaltetFarben[auswahl] = true;
-                                Program.coins -= Program.FarbenPreis[auswahl - 1];
+                                freigeschaltetFarben[auswahl] = true;
+                                Program.coins -= FarbenPreis[auswahl - 1];
                             }
                             break;
 
@@ -399,21 +463,21 @@ namespace Snake.io
             int option = 0;
 
             Console.WriteLine("\nFarben:");
-            for (int i = 1; i < Program.farben.Length; i++, option++)
+            for (int i = 1; i < farben.Length; i++, option++)
             {
                 string shoptext;
 
-                if (Program.level < Program.FarbenLevel[i - 1])
+                if (Program.level < FarbenLevel[i - 1])
                 {
-                    shoptext = $"[Benötigtes Level: {Program.FarbenLevel[i - 1]}]";
+                    shoptext = $"[Benötigtes Level: {FarbenLevel[i - 1]}]";
                 }
                 else
                 {
-                    shoptext = Program.freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[" + Program.FarbenPreis[i - 1] + " Coins]";
+                    shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[" + FarbenPreis[i - 1] + " Coins]";
                 }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.ForegroundColor = Program.farben[i];
-                Console.WriteLine($"{zeiger} {Program.farben[i],-12} {shoptext}");
+                Console.ForegroundColor = farben[i];
+                Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
                 Console.ResetColor();
             }
 
@@ -435,54 +499,54 @@ namespace Snake.io
             int option = 0;
 
             Console.WriteLine("\nTail Skins:");
-            for (int i = 2; i < Program.tailskins.Length; i++, option++)
+            for (int i = 2; i < tailskins.Length; i++, option++)
             {
                 string shoptext;
 
-                if (Program.level < Program.TailLevel[i - 2])
+                if (Program.level < TailLevel[i - 2])
                 {
-                    shoptext = $"[Benötigtes Level: {Program.TailLevel[i - 2]}]";
+                    shoptext = $"[Benötigtes Level: {TailLevel[i - 2]}]";
                 }
                 else
                 {
-                    shoptext = Program.freigeschaltetTail[i] ? "[Freigeschaltet]" : "[" + Program.TailPreis[i - 2] + " Coins]";
+                    shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[" + TailPreis[i - 2] + " Coins]";
                 }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {Program.tailskins[i]} {shoptext}");
+                Console.WriteLine($"{zeiger} {tailskins[i]} {shoptext}");
             }
 
             Console.WriteLine("\nFood Skins:");
-            for (int i = 1; i < Program.foodskins.Length; i++, option++)
+            for (int i = 1; i < foodskins.Length; i++, option++)
             {
                 string shoptext;
 
-                if (Program.level < Program.FoodLevel[i - 1])
+                if (Program.level < FoodLevel[i - 1])
                 {
-                    shoptext = $"[Benötigtes Level: {Program.FoodLevel[i - 1]}]";
+                    shoptext = $"[Benötigtes Level: {FoodLevel[i - 1]}]";
                 }
                 else
                 {
-                    shoptext = Program.freigeschaltetFood[i] ? "[Freigeschaltet]" : "[" + Program.FoodPreis[i - 1] + " Coins]";
+                    shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[" + FoodPreis[i - 1] + " Coins]";
                 }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {Program.foodskins[i]} {shoptext}");
+                Console.WriteLine($"{zeiger} {foodskins[i]} {shoptext}");
             }
 
             Console.WriteLine("\nRand Skins:");
-            for (int i = 1; i < Program.randskins.Length; i++, option++)
+            for (int i = 1; i < randskins.Length; i++, option++)
             {
                 string shoptext;
 
-                if (Program.level < Program.RandLevel[i - 1])
+                if (Program.level < RandLevel[i - 1])
                 {
-                    shoptext = $"[Benötigtes Level: {Program.RandLevel[i - 1]}";
+                    shoptext = $"[Benötigtes Level: {RandLevel[i - 1]}";
                 }
                 else
                 {
-                    shoptext = Program.freigeschaltetRand[i] ? "[Freigeschaltet]" : "[" + Program.RandPreis[i - 1] + " Coins]";
+                    shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[" + RandPreis[i - 1] + " Coins]";
                 }
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {Program.randskins[i]} {shoptext}");
+                Console.WriteLine($"{zeiger} {randskins[i]} {shoptext}");
             }
 
             string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
@@ -530,93 +594,93 @@ namespace Snake.io
                             case 1:
                                 do
                                 {
-                                    Program.skinzahl = (Program.skinzahl + 1) % Program.tailskins.Length;
-                                } while (!Program.freigeschaltetTail[Program.skinzahl] || Program.skinzahl == Program.skin2zahl);
+                                    skinzahl = (skinzahl + 1) % tailskins.Length;
+                                } while (!freigeschaltetTail[skinzahl] || skinzahl == skin2zahl);
 
-                                if (Program.freigeschaltetTail[Program.skinzahl])
-                                    Program.player.Skin = Program.tailskins[Program.skinzahl];
+                                if (freigeschaltetTail[skinzahl])
+                                    Program.player.Skin = tailskins[skinzahl];
                                 break;
 
                             case 2:
                                 do
                                 {
-                                    Program.skin2zahl = (Program.skin2zahl + 1) % Program.tailskins.Length;
-                                } while (!Program.freigeschaltetTail[Program.skin2zahl] || Program.skin2zahl == Program.skinzahl);
+                                    skin2zahl = (skin2zahl + 1) % tailskins.Length;
+                                } while (!freigeschaltetTail[skin2zahl] || skin2zahl == skinzahl);
 
-                                if (Program.freigeschaltetTail[Program.skin2zahl])
-                                    Program.player2.Skin = Program.tailskins[Program.skin2zahl];
+                                if (freigeschaltetTail[skin2zahl])
+                                    Program.player2.Skin = tailskins[skin2zahl];
                                 break;
                             case 3:
                                 do
                                 {
-                                    Program.foodzahl = (Program.foodzahl + 1) % Program.foodskins.Length;
-                                } while (!Program.freigeschaltetFood[Program.foodzahl]);
+                                    foodzahl = (foodzahl + 1) % foodskins.Length;
+                                } while (!freigeschaltetFood[foodzahl]);
 
-                                if (Program.freigeschaltetFood[Program.foodzahl])
-                                    Program.food = Program.foodskins[Program.foodzahl];
+                                if (freigeschaltetFood[foodzahl])
+                                    Program.food = foodskins[foodzahl];
                                 break;
                             case 4:
                                 do
                                 {
-                                    Program.randzahl = (Program.randzahl + 1) % Program.randskins.Length;
-                                } while ((!Program.freigeschaltetRand[Program.randzahl]));
+                                    randzahl = (randzahl + 1) % randskins.Length;
+                                } while ((!freigeschaltetRand[randzahl]));
 
-                                if (Program.freigeschaltetRand[Program.randzahl])
-                                    Program.rand = Program.randskins[Program.randzahl];
+                                if (freigeschaltetRand[randzahl])
+                                    Program.rand = randskins[randzahl];
                                 break;
                             case 5:
                                 do
                                 {
-                                    Program.headfarbezahl = (Program.headfarbezahl + 1) % Program.farben.Length;
-                                } while (!Program.freigeschaltetFarben[Program.headfarbezahl]);
+                                    headfarbezahl = (headfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[headfarbezahl]);
 
-                                if (Program.freigeschaltetFarben[Program.headfarbezahl])
-                                    Program.headfarbe = Program.farben[Program.headfarbezahl];
+                                if (freigeschaltetFarben[headfarbezahl])
+                                    Program.player.headfarbe = farben[headfarbezahl];
                                 break;
                             case 6:
                                 do
                                 {
-                                    Program.headfarbe2zahl = (Program.headfarbe2zahl + 1) % Program.farben.Length;
-                                } while (!Program.freigeschaltetFarben[Program.headfarbe2zahl]);
+                                    headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[headfarbe2zahl]);
 
-                                if (Program.freigeschaltetFarben[Program.headfarbe2zahl])
-                                    Program.headfarbe2 = Program.farben[Program.headfarbe2zahl];
+                                if (freigeschaltetFarben[headfarbe2zahl])
+                                    Program.player2.headfarbe = farben[headfarbe2zahl];
                                 break;
                             case 7:
                                 do
                                 {
-                                    Program.farbezahl = (Program.farbezahl + 1) % Program.farben.Length;
-                                } while (!Program.freigeschaltetFarben[Program.farbezahl]);
+                                    farbezahl = (farbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[farbezahl]);
 
-                                if (Program.freigeschaltetFarben[Program.farbezahl])
-                                    Program.farbe = Program.farben[Program.farbezahl];
+                                if (freigeschaltetFarben[farbezahl])
+                                    Program.player.farbe = farben[farbezahl];
                                 break;
                             case 8:
                                 do
                                 {
-                                    Program.farbe2zahl = (Program.farbe2zahl + 1) % Program.farben.Length;
-                                } while (!Program.freigeschaltetFarben[Program.farbe2zahl]);
+                                    farbe2zahl = (farbe2zahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[farbe2zahl]);
 
-                                if (Program.freigeschaltetFarben[Program.farbe2zahl])
-                                    Program.farbe2 = Program.farben[Program.farbe2zahl];
+                                if (freigeschaltetFarben[farbe2zahl])
+                                    Program.player2.farbe = farben[farbe2zahl];
                                 break;
                             case 9:
                                 do
                                 {
-                                    Program.foodfarbezahl = (Program.foodfarbezahl + 1) % Program.farben.Length;
-                                } while (!Program.freigeschaltetFarben[Program.foodfarbezahl]);
+                                    foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[foodfarbezahl]);
 
-                                if (Program.freigeschaltetFarben[Program.foodfarbezahl])
-                                    Program.foodfarbe = Program.farben[Program.foodfarbezahl];
+                                if (freigeschaltetFarben[foodfarbezahl])
+                                    Program.foodfarbe = farben[foodfarbezahl];
                                 break;
                             case 10:
                                 do
                                 {
-                                    Program.randfarbezahl = (Program.randfarbezahl + 1) % Program.farben.Length;
-                                } while (!Program.freigeschaltetFarben[Program.randfarbezahl]);
+                                    randfarbezahl = (randfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[randfarbezahl]);
 
-                                if (Program.freigeschaltetFarben[Program.randfarbezahl])
-                                    Program.randfarbe = Program.farben[Program.randfarbezahl];
+                                if (freigeschaltetFarben[randfarbezahl])
+                                    Program.randfarbe = farben[randfarbezahl];
                                 break;
                             case 11:
                                 menu = false; // Zurück zum Hauptmenü
@@ -665,22 +729,22 @@ namespace Snake.io
                         break;
                     case 4:
                         option = $"Player 1 Farbe ändern       [Aktuell: ";
-                        farbemenue = Program.headfarbe;
+                        farbemenue = Program.player.headfarbe;
                         color = true;
                         break;
                     case 5:
                         option = $"Player 2 Farbe ändern       [Aktuell: ";
-                        farbemenue = Program.headfarbe2;
+                        farbemenue = Program.player2.headfarbe;
                         color = true;
                         break;
                     case 6:
                         option = $"Player 1 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = Program.farbe;
+                        farbemenue = Program.player.farbe;
                         color = true;
                         break;
                     case 7:
                         option = $"Player 2 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = Program.farbe2;
+                        farbemenue = Program.player2.farbe;
                         color = true;
                         break;
 
