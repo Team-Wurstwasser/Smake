@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Numerics;
-
-namespace Snake.io
+﻿namespace Snake.io
 {
     public class SpeicherSytem
     {
