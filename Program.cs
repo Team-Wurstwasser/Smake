@@ -9,22 +9,58 @@ namespace Snake.io
     using Microsoft.VisualBasic.FileIO;
     using System.Runtime.InteropServices;
     using System.IO;
+    using System.Numerics;
 
+    public class Spieler
+    {
+        // Eingabe-Richtung (durch Pfeiltasten)
+        public int InputX { get; set; }
 
-    class Program
+        public int InputY { get; set; }
+
+        public bool Aenderung { get; set; }
+
+        // Position des Spielers (Startkoordinaten)
+        public int[] PlayerX { get; set; }
+
+        public int[] PlayerY { get; set; }
+
+        // Kollisionsvariablen
+        public bool KollisionRand { get; set; }
+
+        public bool KollisionPlayer { get; set; }
+
+        // Länge des Spielers
+
+        public int Tail { get; set; }
+
+        //Punkte des Spielers
+        public int Punkte { get; set; }
+
+        // Namen der Spieler
+        public string? Name { get; set; }
+
+        // Aussehen des Spielers
+
+        public char Head { get; set; }
+
+        public char Skin { get; set; }
+    }
+
+    public class Program
     {
 
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
 
         static bool spiel = true;
 
-        static int gameover;
+        public static int gameover;
 
-        static bool unentschieden;
+        public static bool unentschieden;
 
-        static bool exit = false;
+        public static bool exit = false;
 
-        static bool performancemode;
+        public static bool performancemode;
 
 
         // Spielfeldgröße (Breite x Höhe)
@@ -37,30 +73,6 @@ namespace Snake.io
 
         static char[,] grid = new char[hoehe, weite];
 
-        // Eingabe-Richtung (durch Pfeiltasten)
-
-        static int inputX;
-
-        static int inputY;
-
-        static int inputX2;
-
-        static int inputY2;
-
-        static bool aenderung;
-
-        static bool aenderung2;
-
-        // Position des Spielers (Startkoordinaten)
-
-        static int[] playerX;
-
-        static int[] playerY;
-
-        static int[] playerX2;
-
-        static int[] playerY2;
-
         // Position des Futters
 
         static int futterX;
@@ -69,65 +81,31 @@ namespace Snake.io
 
         // Spielmodi
 
-        static bool multiplayer;
+        public static bool multiplayer;
 
-        static string difficulty;
+        public static string difficulty;
 
-        static string gamemode;
+        public static string gamemode;
 
-        // Kollisionsvariablen
+        //Weitere Skins
 
-        static bool kollisionRand;
+        public static char food;
 
-        static bool kollisionRand2;
+        public static ConsoleColor foodfarbe;
 
-        static bool kollisionPlayer;
+        public static ConsoleColor farbe;
 
-        static bool kollisionPlayer2;
+        public static ConsoleColor headfarbe;
 
-        // Namen der Spieler
+        public static ConsoleColor farbe2;
 
-        static string? name;
+        public static ConsoleColor headfarbe2;
 
-        static string? name2;
+        public static char rand;
 
-        // Länge des Spielers
+        public static ConsoleColor randfarbe;
 
-        static int tail;
-
-        static int tail2;
-
-        // Aussehen des Spielers
-
-        static char head;
-
-        static char head2;
-
-        static char skin;
-
-        static char skin2;
-
-        static char food;
-
-        static ConsoleColor foodfarbe;
-
-        static ConsoleColor farbe;
-
-        static ConsoleColor headfarbe;
-
-        static ConsoleColor farbe2;
-
-        static ConsoleColor headfarbe2;
-
-        static char rand;
-
-        static ConsoleColor randfarbe;
-
-        // Punkte der Spieler
-
-        static int punkte;
-
-        static int punkte2;
+        // Maximale Punkte
 
         static int maxpunkte;
 
@@ -137,27 +115,27 @@ namespace Snake.io
 
         // Shop variablen
 
-        static int foodzahl;
+        public static int foodzahl;
 
-        static int skinzahl;
+        public static int skinzahl;
 
-        static int skin2zahl;
+        public static int skin2zahl;
 
-        static int headfarbezahl;
+        public static int headfarbezahl;
 
-        static int headfarbe2zahl;
+        public static int headfarbe2zahl;
 
-        static int farbezahl;
+        public static int farbezahl;
 
-        static int farbe2zahl;
+        public static int farbe2zahl;
 
-        static int foodfarbezahl;
+        public static int foodfarbezahl;
 
-        static int randfarbezahl;
+        public static int randfarbezahl;
 
-        static int randzahl;
+        public static int randzahl;
 
-        static readonly ConsoleColor[] farben = [
+        public static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
                             ConsoleColor.Blue,
                             ConsoleColor.DarkBlue,
@@ -175,316 +153,76 @@ namespace Snake.io
                             ConsoleColor.DarkGray,
                                 ];
 
-        static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
+        public static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
 
-        static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
+        public static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
 
-        static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
+        public static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
 
 
         // Level und Experience
 
-        static int coins;
-        static int xp;
-        static int level;
+        public static int coins;
+        public static int xp;
+        public static int level;
 
 
-        static bool[] freigeschaltetTail = new bool[tailskins.Length];
-        static bool[] freigeschaltetFood = new bool[foodskins.Length];
-        static bool[] freigeschaltetRand = new bool[randskins.Length];
-        static bool[] freigeschaltetFarben = new bool[farben.Length];
+        public static bool[] freigeschaltetTail = new bool[tailskins.Length];
+        public static bool[] freigeschaltetFood = new bool[foodskins.Length];
+        public static bool[] freigeschaltetRand = new bool[randskins.Length];
+        public static bool[] freigeschaltetFarben = new bool[farben.Length];
 
         //Preise Skin/Farben
 
-        static readonly int[] TailPreis = [30, 40, 50, 60, 70];
-        static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
-        static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
-        static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+        public static readonly int[] TailPreis = [30, 40, 50, 60, 70];
+        public static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
+        public static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
+        public static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
 
         // Level für Skin/Farben
-        static readonly int[] TailLevel = [0, 1, 4, 6, 20];
-        static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7 ,15];
-        static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6 ,8];
-        static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
+        public static readonly int[] TailLevel = [0, 1, 4, 6, 20];
+        public static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7 ,15];
+        public static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6 ,8];
+        public static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
 
         // Statistik
 
-        static int spieleGesamt;
-        static int highscore;
-        static int gesamtcoins;
+        public static int spieleGesamt;
+        public static int highscore;
+        public static int gesamtcoins;
 
-        
+        public static Spieler player = new();
+
+        public static Spieler player2 = new();
+
         // Main
         static void Main()
 
         {
-            
+
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
 
-            Speichern_Laden("Laden");
+            SpeicherSytem.Speichern_Laden("Laden");
 
-            Eingaben();
+            Menüs.Eingaben();
             do
             {
-             
-                ShowMainMenue();
+
+                Menüs.ShowMainMenue();
 
             } while (!exit);
 
         }
 
-
-        // Speicher und Ladesystem
-        static void Speichern_Laden(string speicher_laden)
-        {
-            string pfad = "spielstand.txt";
-            //Nur wenn File nicht gefunden wird
-            if (!File.Exists(pfad))
-            {
-                randzahl = 0;
-                foodzahl = 0;
-                skinzahl = 0;
-                skin2zahl = 1;
-                headfarbezahl = 0;
-                headfarbe2zahl = 0;
-                farbezahl = 0;
-                farbe2zahl = 0;
-                foodfarbezahl = 0;
-                randfarbezahl = 0;
-
-                freigeschaltetTail[0] = true;
-                freigeschaltetTail[1] = true;
-                freigeschaltetFood[0] = true;
-                freigeschaltetRand[0] = true;
-                freigeschaltetFarben[0] = true;
-
-                performancemode = false;
-
-                // Startguthaben
-                coins = 0;
-                xp = 0;
-
-                // Standard Modi
-                difficulty = "Mittel";
-                gamemode = "Normal";
-                multiplayer = false;
-
-                // Standard Skins/Farben
-                rand = '█';
-                food = '*';
-                skin = '+';
-                skin2 = 'x';
-                randfarbe = ConsoleColor.White;
-                foodfarbe = ConsoleColor.White;
-                farbe = ConsoleColor.White;
-                farbe = ConsoleColor.White;
-                farbe2 = ConsoleColor.White;
-                headfarbe = ConsoleColor.White;
-                headfarbe2 = ConsoleColor.White;
-
-
-                gesamtcoins = 0;
-                highscore = 0;
-                spieleGesamt = 0;
-
-                Speichern(pfad);
-            }
-
-            // Entscheidet ob geladen oder gespeichert wird
-            switch(speicher_laden)
-            {
-                case "Speichern":
-                    Speichern(pfad);
-                    break;
-                case "Laden":
-                    Laden(pfad);
-                    break;
-
-            }
-                
-
-        }
-
-
-        // Speicher Logik
-        static void Speichern(string pfad)
-        {
-            //Liste was gespeichert wird
-            var Zeilen = new List<string>
-            {
-                $"randzahl={randzahl}",
-                $"foodzahl={foodzahl}",
-                $"skinzahl={skinzahl}",
-                $"skin2zahl={skin2zahl}",
-                $"headfarbezahl={headfarbezahl}",
-                $"headfarbe2zahl={headfarbe2zahl}",
-                $"farbezahl={farbezahl}",
-                $"farbe2zahl={farbe2zahl}",
-                $"foodfarbezahl={foodfarbezahl}",
-                $"randfarbezahl={randfarbezahl}",
-                $"freigeschaltetTail0={freigeschaltetTail[0]}",
-                $"freigeschaltetTail1={freigeschaltetTail[1]}",
-                $"freigeschaltetTail2={freigeschaltetTail[2]}",
-                $"freigeschaltetTail3={freigeschaltetTail[3]}",
-                $"freigeschaltetTail4={freigeschaltetTail[4]}",
-                $"freigeschaltetTail5={freigeschaltetTail[5]}",
-                $"freigeschaltetTail6={freigeschaltetTail[6]}",
-                $"freigeschaltetFood0={freigeschaltetFood[0]}",
-                $"freigeschaltetFood1={freigeschaltetFood[1]}",
-                $"freigeschaltetFood2={freigeschaltetFood[2]}",
-                $"freigeschaltetFood3={freigeschaltetFood[3]}",
-                $"freigeschaltetFood4={freigeschaltetFood[4]}",
-                $"freigeschaltetFood5={freigeschaltetFood[5]}",
-                $"freigeschaltetFood6={freigeschaltetFood[6]}",
-                $"freigeschaltetRand0={freigeschaltetRand[0]}",
-                $"freigeschaltetRand1={freigeschaltetRand[1]}",
-                $"freigeschaltetRand2={freigeschaltetRand[2]}",
-                $"freigeschaltetRand3={freigeschaltetRand[3]}",
-                $"freigeschaltetRand4={freigeschaltetRand[4]}",
-                $"freigeschaltetRand5={freigeschaltetRand[5]}",
-                $"freigeschaltetRand6={freigeschaltetRand[6]}",
-                $"freigeschaltetFarben0={freigeschaltetFarben[0]}",
-                $"freigeschaltetFarben1={freigeschaltetFarben[1]}",
-                $"freigeschaltetFarben2={freigeschaltetFarben[2]}",
-                $"freigeschaltetFarben3={freigeschaltetFarben[3]}",
-                $"freigeschaltetFarben4={freigeschaltetFarben[4]}",
-                $"freigeschaltetFarben5={freigeschaltetFarben[5]}",
-                $"freigeschaltetFarben6={freigeschaltetFarben[6]}",
-                $"freigeschaltetFarben7={freigeschaltetFarben[7]}",
-                $"freigeschaltetFarben8={freigeschaltetFarben[8]}",
-                $"freigeschaltetFarben9={freigeschaltetFarben[9]}",
-                $"freigeschaltetFarben10={freigeschaltetFarben[10]}",
-                $"freigeschaltetFarben11={freigeschaltetFarben[11]}",
-                $"freigeschaltetFarben12={freigeschaltetFarben[12]}",
-                $"freigeschaltetFarben13={freigeschaltetFarben[13]}",
-                $"freigeschaltetFarben14={freigeschaltetFarben[14]}",
-                $"performancemode={performancemode}",
-                $"coins={coins}",
-                $"xp={xp}",
-                $"spieleGesamt={spieleGesamt}",
-                $"highscore={highscore}",
-                $"gesamtcoins={gesamtcoins}",
-                $"difficulty={difficulty}",
-                $"gamemode={gamemode}",
-                $"multiplayer={multiplayer}",
-                $"rand={rand}",
-                $"food={food}",
-                $"skin={skin}",
-                $"skin2={skin2}",
-                $"randfarbe={randfarbe}",
-                $"foodfarbe={foodfarbe}",
-                $"farbe={farbe}",
-                $"farbe2={farbe2}",
-                $"headfarbe={headfarbe}",
-                $"headfarbe2={headfarbe2}"
-            };
-
-            File.WriteAllLines(pfad, Zeilen);
-        }
-
-
-        // Speicher laden Logik 
-        static void Laden(string pfad)
-        {
-            
-            var Zeilen = File.ReadAllLines(pfad);
-
-            foreach (var Zeile in Zeilen)
-            {
-                //Teilt was vor und nach dem = steht
-                var Teil = Zeile.Split('=');
-
-                string Variablenname = Teil[0];
-                string Wert = Teil[1];
-
-                //Entscheidet was in die Variablen eingespeichert wird
-                switch (Variablenname)
-                {
-                    case "randzahl": randzahl = int.Parse(Wert); break;
-                    case "foodzahl": foodzahl = int.Parse(Wert); break;
-                    case "skinzahl": skinzahl = int.Parse(Wert); break;
-                    case "skin2zahl": skin2zahl = int.Parse(Wert); break;
-                    case "headfarbezahl": headfarbezahl = int.Parse(Wert); break;
-                    case "headfarbe2zahl": headfarbe2zahl = int.Parse(Wert); break;
-                    case "farbezahl": farbezahl = int.Parse(Wert); break;
-                    case "farbe2zahl": farbe2zahl = int.Parse(Wert); break;
-                    case "foodfarbezahl": foodfarbezahl = int.Parse(Wert); break;
-                    case "randfarbezahl": randfarbezahl = int.Parse(Wert); break;
-
-                    case "freigeschaltetTail0": freigeschaltetTail[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail1": freigeschaltetTail[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail2": freigeschaltetTail[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail3": freigeschaltetTail[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail4": freigeschaltetTail[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail5": freigeschaltetTail[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail6": freigeschaltetTail[6] = bool.Parse(Wert); break;
-
-                    case "freigeschaltetFood0": freigeschaltetFood[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood1": freigeschaltetFood[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood2": freigeschaltetFood[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood3": freigeschaltetFood[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood4": freigeschaltetFood[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood5": freigeschaltetFood[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood6": freigeschaltetFood[6] = bool.Parse(Wert); break;
-
-                    case "freigeschaltetRand0": freigeschaltetRand[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand1": freigeschaltetRand[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand2": freigeschaltetRand[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand3": freigeschaltetRand[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand4": freigeschaltetRand[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand5": freigeschaltetRand[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand6": freigeschaltetRand[6] = bool.Parse(Wert); break;
-
-                    case "freigeschaltetFarben0": freigeschaltetFarben[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben1": freigeschaltetFarben[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben2": freigeschaltetFarben[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben3": freigeschaltetFarben[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben4": freigeschaltetFarben[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben5": freigeschaltetFarben[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben6": freigeschaltetFarben[6] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben7": freigeschaltetFarben[7] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben8": freigeschaltetFarben[8] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben9": freigeschaltetFarben[9] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben10": freigeschaltetFarben[10] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben11": freigeschaltetFarben[11] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben12": freigeschaltetFarben[12] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben13": freigeschaltetFarben[13] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben14": freigeschaltetFarben[14] = bool.Parse(Wert); break;
-
-                    case "performancemode": performancemode = bool.Parse(Wert); break;
-                    case "coins": coins = int.Parse(Wert); break;
-                    case "xp": xp = int.Parse(Wert); break;
-                    case "gesamtcoins": gesamtcoins = int.Parse(Wert); break;
-                    case "highscore": highscore = int.Parse(Wert); break;
-                    case "spieleGesamt": spieleGesamt = int.Parse(Wert); break;
-
-                    case "difficulty": difficulty = Wert; break;
-                    case "gamemode": gamemode = Wert; break;
-                    case "multiplayer": multiplayer = bool.Parse(Wert); break;
-
-                    case "rand": rand = char.Parse(Wert); break;
-                    case "food": food = char.Parse(Wert); break;
-                    case "skin": skin = char.Parse(Wert); break;
-                    case "skin2": skin2 = char.Parse(Wert); break;
-
-                    case "randfarbe": randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "foodfarbe": foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "farbe": farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "farbe2": farbe2 = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "headfarbe": headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "headfarbe2": headfarbe2 = Enum.Parse<ConsoleColor>(Wert); break;
-                }
-            }
-        }
-
-
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
-            Speichern_Laden("Speichern");
+
+
+            SpeicherSytem.Speichern_Laden("Speichern");
 
             spiel = true;
             
@@ -492,59 +230,59 @@ namespace Snake.io
 
             unentschieden = false;
 
-            kollisionPlayer = false;
-            kollisionPlayer2 = false;
-            kollisionRand = false;
-            kollisionRand2 = false;
+            player.KollisionPlayer = false;
+            player2.KollisionPlayer = false;
+            player.KollisionRand = false;
+            player.KollisionRand = false;
 
             // Taillängen zurücksetzen
-            tail = 3;
-            tail2 = 3;
+            player.Tail = 3;
+            player.Tail = 3;
 
             // Punkte zurücksetzen
 
-            punkte = 0;
-            punkte2 = 0;
+            player.Punkte = 0;
+            player2.Punkte = 0;
 
             maxpunkte = 20;
 
             // Maximale Länge einstellen
             if (gamemode == "Normal" || gamemode == "Babymode")
             {
-                playerX = new int[maxpunkte + tail + 2];
-                playerY = new int[maxpunkte + tail + 2];
-                playerX2 = new int[maxpunkte + tail2 + 2];
-                playerY2 = new int[maxpunkte + tail2 + 2];
+                player.PlayerX = new int[maxpunkte + player.Tail + 2];
+                player.PlayerY = new int[maxpunkte + player.Tail + 2];
+                player2.PlayerX = new int[maxpunkte + player2.Tail + 2];
+                player2.PlayerY = new int[maxpunkte + player2.Tail + 2];
             }
             else if (gamemode == "Unendlich")
             {
-                playerX = new int[weite * hoehe];
-                playerY = new int[weite * hoehe];
-                playerX2 = new int[weite * hoehe];
-                playerY2 = new int[weite * hoehe];
+                player.PlayerX = new int[weite * hoehe];
+                player.PlayerY = new int[weite * hoehe];
+                player2.PlayerX = new int[weite * hoehe];
+                player2.PlayerY = new int[weite * hoehe];
             }
 
 
             // Arrays zurücksetzen
-            Array.Clear(playerX, 0, playerX.Length);
-            Array.Clear(playerY, 0, playerY.Length);
-            Array.Clear(playerX2, 0, playerX2.Length);
-            Array.Clear(playerY2, 0, playerY2.Length);
+            Array.Clear(player.PlayerX, 0, player.PlayerX.Length);
+            Array.Clear(player.PlayerY, 0, player.PlayerY.Length);
+            Array.Clear(player2.PlayerX, 0, player2.PlayerX.Length);
+            Array.Clear(player2.PlayerY, 0, player2.PlayerY.Length);
 
             // Spieler-Positionen auf Startwerte setzen
-            playerX[0] = 36;
-            playerY[0] = 4;
-            playerX2[0] = 4;
-            playerY2[0] = 4;
+            player.PlayerX[0] = 36;
+            player.PlayerY[0] = 4;
+            player2.PlayerX[0] = 4;
+            player2.PlayerY[0] = 4;
 
-            aenderung = true;
-            aenderung2 = true;
+            player.Aenderung = true;
+            player2.Aenderung = true;
 
             // Aussehen einstellen
 
-            head = skin;
+            player.Head = player.Skin;
 
-            head2 = skin2;
+            player2.Head = player2.Skin;
 
             // Zeit einstellen
 
@@ -554,16 +292,16 @@ namespace Snake.io
             else zeit = 50;
 
             // Alle Eingabewerte zurücksetzen
-            inputX = 0;
-            inputX2 = 0;
-            inputY = 0;
-            inputY2 = 0;
+            player.InputX = 0;
+            player.InputX = 0;
+            player2.InputY = 0;
+            player2.InputY = 0;
 
         }
 
 
         // Spielablauf
-        static void Spiel()
+        public static void Spiel()
         {
             Neustart();
             Thread inputThread = new(ReadInput);
@@ -591,9 +329,9 @@ namespace Snake.io
 
                 Thread.Sleep(zeit); // Spieltempo regulieren
 
-                aenderung = true; // Eingaben auf 1 pro Tick Beschränken
+                player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
-                aenderung2 = true;
+                player.Aenderung = true;
 
             }
 
@@ -603,42 +341,41 @@ namespace Snake.io
 
             melodieThread.Join();
 
-            ShowGameOverScreen(); // Spielende-Bildschirm
+            Menüs.ShowGameOverScreen(); // Spielende-Bildschirm
 
             while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
         }
-
 
         // Coins und xp hinzufügen
         static void Coins()
         {
             if (gamemode != "babymode")
             {
-                if(highscore<punkte)
-                {highscore = punkte;}
-                else if (highscore < punkte2)
-                {highscore = punkte2;}
+                if(highscore< player.Punkte)
+                {highscore = player.Punkte;}
+                else if (highscore < player2.Punkte)
+                {highscore = player2.Punkte;}
 
                 spieleGesamt++;
 
                 switch (difficulty)
                 {
                     case "Langsam":
-                        gesamtcoins = (punkte + punkte2) + gesamtcoins;
-                        coins = punkte + punkte2 + coins;
-                        xp = punkte + punkte2 + xp;
+                        gesamtcoins = player.Punkte + player2.Punkte + gesamtcoins;
+                        coins = player.Punkte + player2.Punkte + coins;
+                        xp = player.Punkte + player2.Punkte + xp;
                         break;
 
                     case "Mittel":
-                        gesamtcoins = 2 * (punkte + punkte2) + gesamtcoins;
-                        coins = 2 * (punkte + punkte2) + coins;
-                        xp = 2 * (punkte + punkte2) + xp;
+                        gesamtcoins = 2 * (player.Punkte + player2.Punkte) + gesamtcoins;
+                        coins = 2 * (player.Punkte + player2.Punkte) + coins;
+                        xp = 2 * (player.Punkte + player2.Punkte) + xp;
                         break;
 
                     case "Schnell":
-                        gesamtcoins = 3 * (punkte + punkte2) + gesamtcoins;
-                        coins = 3 * (punkte + punkte2) + coins;
-                        xp = 3 * (punkte + punkte2) + xp;
+                        gesamtcoins = 3 * (player.Punkte + player2.Punkte) + gesamtcoins;
+                        coins = 3 * (player.Punkte + player2.Punkte) + coins;
+                        xp = 3 * (player.Punkte + player2.Punkte) + xp;
                         break;
                 }
             }
@@ -660,888 +397,19 @@ namespace Snake.io
             }
         }
 
-        // Hauptmenü
-        static void ShowMainMenue()
-        {
-            Speichern_Laden("Speichern");
-
-            // Level-Berechnung (1 Level pro 100 XP)
-            level = xp / 100 + 1;
-
-            if (performancemode)
-            {
-                foodfarbe = ConsoleColor.White;
-                randfarbe = ConsoleColor.White;
-                farbe = ConsoleColor.White;
-                headfarbe = ConsoleColor.White;
-                farbe2 = ConsoleColor.White; ;
-                headfarbe2 = ConsoleColor.White;
-                headfarbezahl = 0;
-                headfarbe2zahl = 0;
-                farbezahl = 0;
-                farbe2zahl = 0;
-                foodfarbezahl = 0;
-                randfarbezahl = 0;
-            }
-
-            Console.Clear();
-            DrawTitle();
-            bool menu = true;
-            int MenueOptions = 1;
-
-            do
-            {
-                Console.SetCursorPosition(0, 11);
-                ShowMenuOptions(MenueOptions);
-
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        MenueOptions--;
-                        if (MenueOptions < 1) MenueOptions = 7;
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        MenueOptions++;
-                        if (MenueOptions > 7) MenueOptions = 1;
-                        break;
-
-                    case ConsoleKey.Spacebar:
-                    case ConsoleKey.Enter:
-                        menu = false;
-                        break;
-                }
-
-            } while (menu);
-
-            switch (MenueOptions)
-            {
-                case 1:
-                    Console.Clear();
-                    Spiel();
-                    break;
-                case 2:
-                    Einstellungen();
-                    break;
-                case 3:
-                    Shop();
-                    break;
-                case 4:
-                    Skin_Farben();
-                    break;
-                case 6:
-                    Anleitung();
-                    break;
-                case 5:
-                    Statistiken();
-                    break;
-                case 7:
-                    exit = true;
-                    break;
-            }
-        }
-
-
-        // Titelbild
-        static void DrawTitle()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(@"
-  ██████  ███▄ ▄███▓ ▄▄▄       ██ ▄█▀▓█████ 
-▒██    ▒ ▓██▒▀█▀ ██▒▒████▄     ██▄█▒ ▓█   ▀ 
-░ ▓██▄   ▓██    ▓██░▒██  ▀█▄  ▓███▄░ ▒███   
-  ▒   ██▒▒██    ▒██ ░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄ 
-▒██████▒▒▒██▒   ░██▒ ▓█   ▓██▒▒██▒ █▄░▒████▒
-▒ ▒▓▒ ▒ ░░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░
-░ ░▒  ░ ░░  ░      ░  ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░
-░  ░  ░  ░      ░     ░   ▒   ░ ░░ ░    ░   
-      ░         ░         ░  ░░  ░      ░  ░
-");
-            Console.ResetColor();
-        }
-
-
-        // Auswahlmöglichkeiten im Hauptmenü
-        static void ShowMenuOptions(int selected)
-        {
-            Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SMAKE MAIN MENU        ║");
-            Console.WriteLine("╠══════════════════════════════╣");
-
-            for (int i = 0; i < 7; i++)
-            {
-
-                string option = i switch
-                {
-                    0 => "Spiel starten",
-                    1 => "Einstellungen",
-                    2 => "Shop",
-                    3 => "Skins/Farben",
-                    4 => "Statistiken",
-                    5 => "Anleitung",
-                    6 => "Beenden",
-                    _ => ""
-                };
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"║  {zeiger} {option,-25}║");
-            }
-
-            Console.WriteLine("╚══════════════════════════════╝");
-        }
-
-
-        // Eingaben für Spielernamen
-        static void Eingaben()
-        {
-            Console.Clear();
-            Console.Write("Spieler 1, gib deinen Namen ein: ");
-            name = Console.ReadLine();
-            Console.Clear();
-        
-            Console.Clear();
-            Console.Write("Spieler 2, gib deinen Namen ein: ");
-            name2 = Console.ReadLine();
-            Console.Clear();
-        }
-
-
-        // Einstellungsmenü im Hauptmenü
-        static void Einstellungen()
-        {
-            Console.Clear();
-            bool menu = true;
-            int einstellungsAuswahl = 1;
-
-            do
-            {
-                EinstellungenOptions(einstellungsAuswahl);
-
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        einstellungsAuswahl--;
-                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 5;
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        einstellungsAuswahl++;
-                        if (einstellungsAuswahl > 5) einstellungsAuswahl = 1;
-                        break;
-                    case ConsoleKey.Escape:
-                        menu = false;
-                        break;
-
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                        Console.Clear();
-                        switch (einstellungsAuswahl)
-                        {
-                            case 1:
-                                ChangeDifficulty();
-                                break;
-                            case 2:
-                                multiplayer = !multiplayer;
-                                break;
-                            case 3:
-                                ChangeGamemode();
-                                break;
-                            case 4:
-                                performancemode = !performancemode;
-                                break;
-                            case 5:
-                                menu = false;
-                                break;
-                        }
-                        break;
-                }
-
-            } while (menu);
-        }
-
-
-        // Einstellmöglichkeiten im Einstellungsmenü
-        static void EinstellungenOptions(int selected)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("EINSTELLUNGEN");
-            Console.WriteLine("══════════════════════════════");
-
-
-            for (int i = 0; i < 5; i++)
-            {
-                string option = i switch
-                {
-                    0 => $"Schwierigkeit ändern   [Aktuell: {difficulty}]",
-                    1 => $"Multiplayer            [Aktuell: {(multiplayer ? "An" : "Aus")}]",
-                    2 => $"Gamemode ändern        [Aktuell: {gamemode}]",
-                    3 => $"Performance mode       [Aktuell: {(performancemode ? "An" : "Aus")}]",
-                    4 => "Zurück zum Hauptmenü",
-                    _ => ""
-                };
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {option,-25}");
-            }
-
-            Console.WriteLine("══════════════════════════════");
-        }
-
-
-        // Auswahl der Spielgeschwindigkeit
-        static void ChangeDifficulty()
-        {
-            if (difficulty == "Langsam") difficulty = "Mittel";
-            else if (difficulty == "Mittel") difficulty = "Schnell";
-            else difficulty = "Langsam";
-        }
-
-
-        // Auswahl der Verschiedenen Modi
-        static void ChangeGamemode()
-        {
-            if (gamemode == "Normal") gamemode = "Unendlich";
-            else if (gamemode == "Unendlich") gamemode = "Babymode";
-            else gamemode = "Normal";
-        }
-
-
-        // Shop - Menü im Hauptmenü
-        static void Shop()
-        {
-            Console.Clear();
-            bool menu = true;
-            int auswahl = 1;
-
-            // Zähle alle Shop-Optionen zusammen
-            int gesamtOptionenSkins = tailskins.Length + foodskins.Length + randskins.Length - 3 ;
-            int gesamtOptionenFarben = farben.Length;
-
-            bool Shopskins = false;
-            do
-            {
-                if (Shopskins)
-                {
-                    if (auswahl < 1) auswahl = gesamtOptionenSkins;
-                    if (auswahl > gesamtOptionenSkins) auswahl = 1;
-
-                    ShopSkinsOptions(auswahl);
-
-                    while (Console.KeyAvailable)
-                        Console.ReadKey(true);
-
-                    var key = Console.ReadKey(true).Key;
-                    switch (key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            auswahl--;
-                            break;
-
-                        case ConsoleKey.DownArrow:
-                            auswahl++;
-                            break;
-                        case ConsoleKey.RightArrow:
-                        case ConsoleKey.LeftArrow:
-                            Console.Clear();
-                            Shopskins = false;
-                            break;
-                        case ConsoleKey.Escape:
-                            menu = false;
-                            break;
-                        case ConsoleKey.Enter:
-                        case ConsoleKey.Spacebar:
-                            Console.Clear();
-                            if (auswahl == gesamtOptionenSkins)
-                            {
-                                menu = false; // Zurück zum Hauptmenü
-                                break;
-                            }
-
-                            // Kauflogik für Skins
-                            else if (auswahl + 1 < tailskins.Length)
-                            {
-                                if (!freigeschaltetTail[auswahl + 1] && coins >= TailPreis[auswahl - 1] && level >= TailLevel[auswahl - 1])
-                                {
-                                    freigeschaltetTail[auswahl + 1] = true;
-                                    coins -= TailPreis[auswahl-1];
-                                }
-                            }
-                            else if (auswahl + 2 < tailskins.Length + foodskins.Length)
-                            {
-                                int i = auswahl + 2 - tailskins.Length;
-                                if (!freigeschaltetFood[i] && coins >= FoodPreis[auswahl - 6] && level >= FoodLevel[auswahl - 6])
-                                {
-                                    freigeschaltetFood[i] = true;
-                                    coins -= FoodPreis[auswahl - 6];
-                                }
-                            }
-                            else if (auswahl + 3 < tailskins.Length + foodskins.Length + randskins.Length)
-                            {
-                                int i = auswahl + 3 - tailskins.Length - foodskins.Length;
-                                if (!freigeschaltetRand[i] && coins >= RandPreis[auswahl - 12] && level >= RandLevel[auswahl - 12])
-                                {
-                                    freigeschaltetRand[i] = true;
-                                    coins -= RandPreis[auswahl - 12];
-                                }
-                            }
-                            break;
-                    }
-                }
-                else
-                {
-                    if (auswahl < 1) auswahl = gesamtOptionenFarben;
-                    if (auswahl > gesamtOptionenFarben) auswahl = 1;
-
-                    ShopFarbenOptions(auswahl);
-
-                    while (Console.KeyAvailable)
-                        Console.ReadKey(true);
-
-                    var key = Console.ReadKey(true).Key;
-                    switch (key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            auswahl--;
-                            break;
-
-                        case ConsoleKey.DownArrow:
-                            auswahl++;
-                            break;
-                        case ConsoleKey.RightArrow:
-                        case ConsoleKey.LeftArrow:
-                            Console.Clear();
-                            Shopskins = true;
-                            break;
-                        case ConsoleKey.Escape:
-                            menu = false;
-                            break;
-                        case ConsoleKey.Enter:
-                        case ConsoleKey.Spacebar:
-                            Console.Clear();
-                            if (auswahl == gesamtOptionenFarben)
-                            {
-                                menu = false;
-                            }
-                            else if (!freigeschaltetFarben[auswahl] && coins >= FarbenPreis[auswahl - 1] && level >= FarbenLevel[auswahl - 1])
-                            {
-                                freigeschaltetFarben[auswahl] = true;
-                                coins -= FarbenPreis[auswahl - 1];
-                            }
-                            break;
-
-                    }
-                }
-                
-                
-            } while (menu);
-        }
-
-
-        // Zeigt die Farbenseite vom Shop
-        static void ShopFarbenOptions(int selected)
-        {
-
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {coins}");
-            Console.WriteLine($"Level: {level}");
-            Console.WriteLine("═══════════════════════════");
-            Console.WriteLine("←  Wechsle die Shopseite  →");
-           
-            int option = 0;
-
-            Console.WriteLine("\nFarben:");
-            for (int i = 1; i < farben.Length; i++, option++)
-            {
-                string shoptext;
-
-                if(level < FarbenLevel[i - 1])
-                {
-                    shoptext = $"[Benötigtes Level: {FarbenLevel[i - 1]}]";
-                }
-                else
-                {
-                    shoptext = freigeschaltetFarben[i] ? "[Freigeschaltet]" : "[" + FarbenPreis[i - 1] + " Coins]";
-                }
-                string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.ForegroundColor = farben[i];
-                Console.WriteLine($"{zeiger} {farben[i],-12} {shoptext}");
-                Console.ResetColor();
-            }
-
-            string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
-            Console.WriteLine("══════════════════════════");
-        }
-
-
-        // Zeigt die Skinseite vom Shop
-        static void ShopSkinsOptions(int selected)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {coins}");
-            Console.WriteLine($"Level: {level}");
-            Console.WriteLine("═══════════════════════════");
-            Console.WriteLine("←  Wechsle die Shopseite  →");
-            int option = 0;
-
-            Console.WriteLine("\nTail Skins:");
-            for (int i = 2; i < tailskins.Length; i++, option++)
-            {
-                string shoptext;
-
-                if (level < TailLevel[i - 2])
-                {
-                    shoptext = $"[Benötigtes Level: {TailLevel[i - 2]}]";
-                }
-                else
-                {
-                    shoptext = freigeschaltetTail[i] ? "[Freigeschaltet]" : "[" + TailPreis[i - 2] + " Coins]";
-                }
-                string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {tailskins[i]} {shoptext}");
-            }
-
-            Console.WriteLine("\nFood Skins:");
-            for (int i = 1; i < foodskins.Length; i++, option++)
-            {
-                string shoptext;
-
-                if (level < FoodLevel[i - 1])
-                {
-                    shoptext = $"[Benötigtes Level: {FoodLevel[i - 1]}]";
-                }
-                else
-                {
-                    shoptext = freigeschaltetFood[i] ? "[Freigeschaltet]" : "[" + FoodPreis[i - 1] + " Coins]";
-                }
-                string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {foodskins[i]} {shoptext}");
-            }
-
-            Console.WriteLine("\nRand Skins:");
-            for (int i = 1; i < randskins.Length; i++, option++)
-            {
-                string shoptext;
-
-                if (level < RandLevel[i - 1])
-                {
-                    shoptext = $"[Benötigtes Level: {RandLevel[i - 1]}";
-                }
-                else
-                {
-                    shoptext = freigeschaltetRand[i] ? "[Freigeschaltet]" : "[" + RandPreis[i - 1] + " Coins]";
-                }
-                string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {randskins[i]} {shoptext}");
-            }
-
-            string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
-            Console.WriteLine("══════════════════════════");
-        }
-
-
-        // Logik für Skin und Farben menü
-        static void Skin_Farben()
-        {
-            Console.Clear();
-            bool menu = true;
-            int Skin_FarbenAuswahl = 1;
-
-            do
-            {
-                Skin_FarbenOptions(Skin_FarbenAuswahl);
-
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        Skin_FarbenAuswahl--;
-                        if (Skin_FarbenAuswahl < 1) Skin_FarbenAuswahl = 11;
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        Skin_FarbenAuswahl++;
-                        if (Skin_FarbenAuswahl > 11) Skin_FarbenAuswahl = 1;
-                        break;
-
-                    case ConsoleKey.Escape:
-                        menu = false;
-                        break;
-
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                        Console.Clear();
-                        switch (Skin_FarbenAuswahl)
-                        {
-                            case 1:
-                                do
-                                {
-                                    skinzahl = (skinzahl + 1) % tailskins.Length;
-                                } while (!freigeschaltetTail[skinzahl] || skinzahl == skin2zahl);
-
-                                if (freigeschaltetTail[skinzahl])
-                                    skin = tailskins[skinzahl];
-                                break;
-
-                            case 2:
-                                do
-                                {
-                                    skin2zahl = (skin2zahl + 1) % tailskins.Length;
-                                } while (!freigeschaltetTail[skin2zahl] || skin2zahl == skinzahl);
-
-                                if (freigeschaltetTail[skin2zahl])
-                                    skin2 = tailskins[skin2zahl];
-                                break;
-                            case 3:
-                                do
-                                {
-                                    foodzahl = (foodzahl + 1) % foodskins.Length;
-                                } while (!freigeschaltetFood[foodzahl]);
-
-                                if (freigeschaltetFood[foodzahl])
-                                    food = foodskins[foodzahl];
-                                break;
-                            case 4:
-                                do
-                                {
-                                    randzahl = (randzahl + 1) % randskins.Length;
-                                } while ((!freigeschaltetRand[randzahl]));
-
-                                if (freigeschaltetRand[randzahl])
-                                    rand = randskins[randzahl];
-                                break;
-                            case 5:
-                                do
-                                {
-                                    headfarbezahl = (headfarbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[headfarbezahl]);
-
-                                if (freigeschaltetFarben[headfarbezahl])
-                                    headfarbe = farben[headfarbezahl];
-                                break;
-                            case 6:
-                                do
-                                {
-                                    headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[headfarbe2zahl]);
-
-                                if (freigeschaltetFarben[headfarbe2zahl])
-                                    headfarbe2 = farben[headfarbe2zahl];
-                                break;
-                            case 7:
-                                do
-                                {
-                                    farbezahl = (farbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[farbezahl]);
-
-                                if (freigeschaltetFarben[farbezahl])
-                                    farbe = farben[farbezahl];
-                                break;
-                            case 8:
-                                do
-                                {
-                                    farbe2zahl = (farbe2zahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[farbe2zahl]);
-
-                                if (freigeschaltetFarben[farbe2zahl])
-                                    farbe2 = farben[farbe2zahl];
-                                break;
-                            case 9:
-                                do
-                                {
-                                    foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[foodfarbezahl]);
-
-                                if (freigeschaltetFarben[foodfarbezahl])
-                                    foodfarbe = farben[foodfarbezahl];
-                                break;
-                            case 10:
-                                do
-                                {
-                                    randfarbezahl = (randfarbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[randfarbezahl]);
-
-                                if (freigeschaltetFarben[randfarbezahl])
-                                    randfarbe = farben[randfarbezahl];
-                                break;
-                            case 11:
-                                menu = false; // Zurück zum Hauptmenü
-                                break;
-                        }
-                    break;
-                }
-                          
-            } 
-            while (menu);
-        }
-
-
-        // Auswahlmenü für Skins und Farben im Hauptmenü
-        static void Skin_FarbenOptions(int selected)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.ResetColor();
-            Console.WriteLine("Skins/Farben");
-            Console.WriteLine("══════════════════════════════");
-
-            bool color = false;
-
-            for (int i = 0; i < 11; i++)
-            {
-                ConsoleColor farbemenue = ConsoleColor.White;
-                string option = "";
-
-                switch (i)
-                {
-                    case 0:
-                        option = $"Player 1 Tailskin ändern    [Aktuell: {skin}]";
-                        color = false;
-                        break;
-                    case 1:
-                        option = $"Player 2 Tailskin ändern    [Aktuell: {skin2}]";
-                        color = false;
-                        break;
-                    case 2:
-                        option = $"Foodskin ändern             [Aktuell: {food}]";
-                        color = false;
-                        break;
-                    case 3:
-                        option = $"Randskin ändern             [Aktuell: {rand}]";
-                        color = false;
-                        break;
-                    case 4:
-                        option = $"Player 1 Farbe ändern       [Aktuell: ";
-                        farbemenue = headfarbe;
-                        color = true;
-                        break;
-                    case 5:
-                        option = $"Player 2 Farbe ändern       [Aktuell: ";
-                        farbemenue = headfarbe2;
-                        color = true;
-                        break;
-                    case 6:
-                        option = $"Player 1 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = farbe;
-                        color = true;
-                        break;
-                    case 7:
-                        option = $"Player 2 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = farbe2;
-                        color = true;
-                        break;
-                   
-                    case 8:
-                        option = $"Foodfarbe ändern            [Aktuell: ";
-                        farbemenue = foodfarbe;
-                        color = true;
-                        break;
-                    
-                    case 9:
-                        option = $"Randfarbe ändern            [Aktuell: ";
-                        farbemenue = randfarbe;
-                        color = true;
-                        break;
-                    case 10:
-                        color = false;
-                        option = "Zurück zum Hauptmenü";
-                        break;
-                }
-                Console.ResetColor();
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                if (color)
-                {
-                    Console.Write(zeiger + " " + option);
-                    if (performancemode)
-                    {
-                        
-                        Console.Write("Performance Mode AN");
-                        Console.WriteLine("]");
-
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = farbemenue;
-                        Console.Write(farbemenue);
-                        Console.ResetColor();
-                        Console.WriteLine("]");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(zeiger + " " + option);
-                }
-            }
-            Console.WriteLine("══════════════════════════════");
-        }
-
-
-        // Anleitung im Hauptmenü
-        static void Anleitung()
-        { 
-            Console.Clear();
-            Console.WriteLine("ANLEITUNG");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Ziel: Iss so viele {food} wie möglich!");
-            Console.WriteLine();
-            Console.WriteLine("Steuerung:");
-            Console.WriteLine();
-            Console.WriteLine("Spieler 1:");
-            Console.WriteLine("  ↑ - Hoch");
-            Console.WriteLine("  ← - Links");
-            Console.WriteLine("  ↓ - Runter");
-            Console.WriteLine("  → - Rechts");
-            Console.WriteLine(); 
-            Console.WriteLine("Spieler 2:");
-            Console.WriteLine("  W - Hoch");
-            Console.WriteLine("  A - Links");
-            Console.WriteLine("  S - Runter");
-            Console.WriteLine("  D - Rechts");
-            Console.WriteLine();
-            Console.WriteLine("Vermeide Kollisionen mit dir selbst oder dem Rand!");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
-            Console.ReadKey();
-        }
-
-
-        // Statistik - Untermenü im Hauptmenü
-        static void Statistiken()
-        {
-            Console.Clear();
-            Console.WriteLine("Statistiken");
-            Console.WriteLine(" ");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine(" ");
-            
-            int punktefürLevel = xp % 100;
-
-            // Fortschrittsbalken
-            int balkenLänge = 20; // Balken 20 Zeichen lang
-            int gefüllteBlöcke = (punktefürLevel * balkenLänge) / 100;
-            string Fortschrittsbalken = new string('█', gefüllteBlöcke).PadRight(balkenLänge, '-');
-
-            Console.WriteLine($"Level:                    {level}");
-            Console.WriteLine($"Fortschritt:              [{Fortschrittsbalken}] {punktefürLevel}/100");
-
-            Console.WriteLine(" ");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Gesamte Spiele:           {spieleGesamt}");
-            Console.WriteLine($"Höchste Punktzahl:        {highscore}");
-            Console.WriteLine($"Durchschnittliche XP:     {(spieleGesamt > 0 ? xp / spieleGesamt : 0)}");
-            Console.WriteLine($"Gesamte Coins:            {gesamtcoins}");
-            Console.WriteLine($"Aktuelle Coins:           {coins}");
-
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
-            Console.ReadKey();
-        }
-
-
-        // Zeigt den Game-Over-Screen an
-        static void ShowGameOverScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("             GAME OVER              ");
-            Console.WriteLine("═════════════════════════════════════");
-
-            if (multiplayer)
-            {
-                if (unentschieden)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Unentschieden!");
-                    Console.WriteLine($"{name} hat {punkte} Punkte erreicht.");
-                    Console.WriteLine($"{name2} hat {punkte2} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-                else if (gameover == 1)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"{name2} gewinnt!");
-                    Console.WriteLine($"Punkte: {punkte2}");
-                    Console.WriteLine($"{name} hat {punkte} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-                else if (gameover == 2)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"{name} gewinnt!");
-                    Console.WriteLine($"Punkte: {punkte}");
-                    Console.WriteLine($"{name2} hat {punkte2} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                if (gameover == 1)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Leider verloren – versuch's noch einmal!");
-                    Console.WriteLine($"Du hast {punkte} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-                else if (gameover == 2)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Glückwunsch! Du hast gewonnen!");
-                    Console.WriteLine($"Deine Punktzahl: {punkte}");
-                    Console.WriteLine();
-                }
-            }
-
-            Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("Drücke [Esc],   um zum Menü zurückzukehren\n" +
-                              "oder   [Enter], um ein neues Spiel zu starten ");
-            bool check = false;
-            do
-            {
-                while (Console.KeyAvailable) Console.ReadKey(true);
-                var key2 = Console.ReadKey(true).Key;
-                switch (key2)
-                {
-                    case ConsoleKey.Enter:
-                        check = true;
-                        Console.Clear();
-                        Spiel();
-                        continue;
-
-                    case ConsoleKey.Escape:
-                        check = true;
-                        break;
-
-                }
-            }
-            while (!check);
-        }
-
-
         // Aktualisiert die Position des Spielers anhand der Eingabe
         static void Update()
         {
 
             // Neue Zielkoordinaten berechnen
 
-            int newPlayerX = playerX[0] + 2 * inputX;
+            int newPlayerX = player.PlayerX[0] + 2 * player.InputX;
 
-            int newPlayerY = playerY[0] + inputY;
+            int newPlayerY = player.PlayerY[0] + player.InputY;
 
-            int newPlayerX2 = playerX2[0] + 2 * inputX2;
+            int newPlayerX2 = player2.PlayerX[0] + 2 * player2.InputX;
 
-            int newPlayerY2 = playerY2[0] + inputY2;
+            int newPlayerY2 = player2.PlayerY[0] + player2.InputY;
 
             Kollision(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
             Gameover();
@@ -1555,39 +423,39 @@ namespace Snake.io
         // Prüft die Kollision
         static void Kollision(int x, int y, int x2, int y2)
         {
-            if (grid[y, x] == ' ' || grid[y, x] == food || grid[y, x] == head)
+            if (grid[y, x] == ' ' || grid[y, x] == food || grid[y, x] == player.Head)
             {
-                kollisionPlayer = false;
-                kollisionRand = false;
+                player.KollisionPlayer = false;
+                player.KollisionRand = false;
             }
             else if (grid[y, x] == rand)
             {
-                kollisionPlayer = false;
-                kollisionRand = true;
+                player.KollisionPlayer = false;
+                player.KollisionRand = true;
             }
-            else if (grid[y, x] == skin2 || grid[y, x] == head2 || grid[y, x] == skin)
+            else if (grid[y, x] == player2.Skin || grid[y, x] == player2.Head || grid[y, x] == player.Skin)
             {
-                kollisionPlayer = true;
-                kollisionRand = false;
+                player.KollisionPlayer = true;
+                player.KollisionRand = false;
             }
 
             if (multiplayer)
             {
-                if (grid[y2, x2] == ' ' || grid[y2, x2] == food || grid[y2, x2] == head2)
+                if (grid[y2, x2] == ' ' || grid[y2, x2] == food || grid[y2, x2] == player2.Head)
 
                 {
-                    kollisionPlayer2 = false;
-                    kollisionRand2 = false;
+                    player2.KollisionPlayer = false;
+                    player2.KollisionRand = false;
                 }
                 else if (grid[y2, x2] == rand)
                 {
-                    kollisionPlayer2 = false;
-                    kollisionRand2 = true;
+                    player2.KollisionPlayer = false;
+                    player2.KollisionRand = true;
                 }
-                else if (grid[y2, x2] == skin || grid[y2, x2] == head || grid[y2, x2] == skin2)
+                else if (grid[y2, x2] == player.Skin || grid[y2, x2] == player.Head || grid[y2, x2] == player2.Skin)
                 {
-                    kollisionPlayer2 = true;
-                    kollisionRand2 = false;
+                    player2.KollisionPlayer = true;
+                    player2.KollisionRand = false;
                 }
             }
         }
@@ -1596,26 +464,26 @@ namespace Snake.io
         // Tailkoordinaten berechnen
         static void TailShift()
         {
-            for (int i = playerX.Length - 1; i > 0; i--)
+            for (int i = player.PlayerX.Length - 1; i > 0; i--)
             {
-                playerX[i] = playerX[i - 1];
+                player.PlayerX[i] = player.PlayerX[i - 1];
             }
 
-            for (int i = playerY.Length - 1; i > 0; i--)
+            for (int i = player.PlayerY.Length - 1; i > 0; i--)
             {
-                playerY[i] = playerY[i - 1];
+                player.PlayerY[i] = player.PlayerY[i - 1];
             }
 
             if (multiplayer)
             {
-                for (int i = playerX2.Length - 1; i > 0; i--)
+                for (int i = player2.PlayerX.Length - 1; i > 0; i--)
                 {
-                    playerX2[i] = playerX2[i - 1];
+                    player2.PlayerX[i] = player2.PlayerX[i - 1];
                 }
 
-                for (int i = playerY2.Length - 1; i > 0; i--)
+                for (int i = player2.PlayerY.Length - 1; i > 0; i--)
                 {
-                    playerY2[i] = playerY2[i - 1];
+                    player2.PlayerY[i] = player2.PlayerY[i - 1];
                 }
             }
         }
@@ -1627,75 +495,75 @@ namespace Snake.io
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
             if (gamemode != "Babymode")
             {
-                if (!kollisionPlayer && !kollisionRand)
+                if (!player.KollisionPlayer && !player.KollisionRand)
                 {                    
-                    for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
+                    for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers Zeichnen
                     {
-                        grid[playerY[i], playerX[i]] = skin;
+                        grid[player.PlayerY[i], player.PlayerX[i]] = player.Skin;
                     }
 
-                    grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
+                    grid[player.PlayerY[player.Tail + 1], player.PlayerX[player.Tail + 1]] = ' ';        // Altes Feld leeren
 
-                    grid[y, x] = head;  // Spieler auf neues Feld setzen
+                    grid[y, x] = player.Head;  // Spieler auf neues Feld setzen
 
-                    playerX[0] = x;
+                    player.PlayerX[0] = x;
 
-                    playerY[0] = y;
+                    player.PlayerY[0] = y;
                 }
 
                 if (multiplayer)
                 {
-                    if (!kollisionPlayer2 && !kollisionRand2)
+                    if (!player2.KollisionPlayer && !player2.KollisionRand)
                     {
-                        for (int i = 0; i <= tail2; i++)       // Tail des Spielers2 Zeichnen
+                        for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers2 Zeichnen
                         {
-                            grid[playerY2[i], playerX2[i]] = skin2;
+                            grid[player2.PlayerY[i], player2.PlayerX[i]] = player2.Skin;
                         }
 
-                        grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
+                        grid[player2.PlayerY[player.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
 
-                        grid[y2, x2] = head2;  // Spieler2 auf neues Feld setzen
+                        grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
 
-                        playerX2[0] = x2;
+                        player2.PlayerX[0] = x2;
 
-                        playerY2[0] = y2;
+                        player2.PlayerY[0] = y2;
                     }
                 }
             }
             else
             {
-                if (!kollisionRand)
+                if (!player.KollisionRand)
                 {
-                    grid[y, x] = head;  // Spieler auf neues Feld setzen
+                    grid[y, x] = player.Head;  // Spieler auf neues Feld setzen
 
-                    for (int i = 0; i <= tail; i++)       // Tail des Spielers Zeichnen
+                    for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers Zeichnen
                     {
-                        grid[playerY[i], playerX[i]] = skin;
+                        grid[player.PlayerY[i], player.PlayerX[i]] = player.Skin;
                     }
 
-                    grid[playerY[tail + 1], playerX[tail + 1]] = ' ';        // Altes Feld leeren
+                    grid[player.PlayerY[player.Tail + 1], player.PlayerX[player.Tail + 1]] = ' ';        // Altes Feld leeren
 
-                    playerX[0] = x;
+                    player.PlayerX[0] = x;
 
-                    playerY[0] = y;
+                    player.PlayerY[0] = y;
                 }
 
                 if (multiplayer)
                 {
-                    if (!kollisionRand2)
+                    if (!player2.KollisionRand)
                     {
-                        grid[y2, x2] = head2;  // Spieler2 auf neues Feld setzen
+                        grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
 
-                        for (int i = 0; i <= tail2; i++)       // Tail des Spielers2 Zeichnen
+                        for (int i = 0; i <= player2.Tail; i++)       // Tail des Spielers2 Zeichnen
                         {
-                            grid[playerY2[i], playerX2[i]] = skin2;
+                            grid[player2.PlayerY[i], player2.PlayerX[i]] = player2.Skin;
                         }
 
-                        grid[playerY2[tail2 + 1], playerX2[tail2 + 1]] = ' ';     // Altes Feld leeren
+                        grid[player.PlayerY[player.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
 
-                        playerX2[0] = x2;
+                        player2.PlayerX[0] = x2;
 
-                        playerY2[0] = y2;
+                        player2.PlayerY[0] = y2;
                     }
                 }
             }
@@ -1710,14 +578,14 @@ namespace Snake.io
 
             if (gamemode == "Unendlich")
             {
-                if (kollisionPlayer || kollisionRand)
+                if (player.KollisionPlayer || player.KollisionRand)
                 {
                     spieler1Tot = true;
                 }
 
                 if (multiplayer)
                 {
-                    if (kollisionPlayer2 || kollisionRand2)
+                    if (player2.KollisionPlayer || player2.KollisionRand)
                     {
                         spieler2Tot = true;
                     }
@@ -1725,21 +593,21 @@ namespace Snake.io
             }
             else if (gamemode == "Normal")
             {
-                if (kollisionPlayer || kollisionRand || punkte2 == maxpunkte)
+                if (player.KollisionPlayer || player.KollisionRand || player2.Punkte == maxpunkte)
                 {
                     spieler1Tot = true;
                 }
 
                 if (multiplayer)
                 {
-                    if (kollisionPlayer2 || kollisionRand2 || punkte == maxpunkte)
+                    if (player2.KollisionPlayer || player2.KollisionRand || player.Punkte == maxpunkte)
                     {
                         spieler2Tot = true;
                     }
                 }
                 else
                 {
-                    if (punkte == maxpunkte)
+                    if (player.Punkte == maxpunkte)
                     {
                         spieler2Tot = true;
                     }
@@ -1747,21 +615,21 @@ namespace Snake.io
             }
             else if (gamemode =="Babymode")
             {
-                if (kollisionRand || punkte2 == maxpunkte)
+                if (player.KollisionRand || player2.Punkte == maxpunkte)
                 {
                     spieler1Tot = true;
                 }
 
                 if (multiplayer)
                 {
-                    if (kollisionRand2 || punkte == maxpunkte)
+                    if (player2.KollisionRand || player.Punkte == maxpunkte)
                     {
                         spieler2Tot = true;
                     }
                 }
                 else
                 {
-                    if (punkte == maxpunkte)
+                    if (player.Punkte == maxpunkte)
                     {
                         spieler2Tot = true;
                     }
@@ -1813,19 +681,19 @@ namespace Snake.io
         static void EsseFutter()
         {
             // Spieler 1 frisst Futter
-            if (playerX[0] == futterX && playerY[0] == futterY)
+            if (player.PlayerX[0] == futterX && player.PlayerY[0] == futterY)
             {
-                tail++;
-                punkte++;
+                player.Tail++;
+                player.Punkte++;
                 Thread.Sleep(10);
                 SetzeFutter();
             }
 
             // Spieler 2 frisst Futter
-            if (playerX2[0] == futterX && playerY2[0] == futterY && multiplayer)
+            if (player2.PlayerX[0] == futterX && player2.PlayerY[0] == futterY && multiplayer)
             {
-                tail2++;
-                punkte2++;
+                player2.Tail++;
+                player2.Punkte++;
                 Thread.Sleep(10);
                 SetzeFutter();
             }
@@ -1854,48 +722,48 @@ namespace Snake.io
 
                         case ConsoleKey.UpArrow:
 
-                            if (inputY != 1 && aenderung)
+                            if (player.InputY != 1 && player.Aenderung)
                             {
-                                inputY = -1;
-                                inputX = 0;
-                                aenderung = false;
-                                head = '^';
+                                player.InputY = -1;
+                                player.InputX = 0;
+                                player.Aenderung = false;
+                                player.Head = '^';
                             }
 
                             break;
 
                         case ConsoleKey.DownArrow:
 
-                            if (inputY != -1 && aenderung)
+                            if (player.InputY != -1 && player.Aenderung)
                             {
-                                inputY = 1;
-                                inputX = 0;
-                                aenderung = false;
-                                head = 'V';
+                                player.InputY = 1;
+                                player.InputX = 0;
+                                player.Aenderung = false;
+                                player.Head = 'V';
                             }
 
                             break;
 
                         case ConsoleKey.RightArrow:
 
-                            if (inputX != -1 && aenderung)
+                            if (player.InputX != -1 && player.Aenderung)
                             {
-                                inputY = 0;
-                                inputX = 1;
-                                aenderung = false;
-                                head = '>';
+                                player.InputY = 0;
+                                player.InputX = 1;
+                                player.Aenderung = false;
+                                player.Head = '>';
                             }
 
                             break;
 
                         case ConsoleKey.LeftArrow:
 
-                            if (inputX != 1 && aenderung)
+                            if (player.InputX != 1 && player.Aenderung)
                             {
-                                inputY = 0;
-                                inputX = -1;
-                                aenderung = false;
-                                head = '<';
+                                player.InputY = 0;
+                                player.InputX = -1;
+                                player.Aenderung = false;
+                                player.Head = '<';
                             }
 
                             break;
@@ -1909,48 +777,48 @@ namespace Snake.io
 
                         case ConsoleKey.W:
 
-                            if (inputY2 != 1 && aenderung2 && multiplayer)
+                            if (player2.InputY != 1 && player2.Aenderung && multiplayer)
                             {
-                                inputY2 = -1;
-                                inputX2 = 0;
-                                aenderung2 = false;
-                                head2 = '^';
+                                player2.InputY = -1;
+                                player2.InputX = 0;
+                                player2.Aenderung = false;
+                                player2.Head = '^';
                             }
 
                             break;
 
                         case ConsoleKey.S:
 
-                            if (inputY2 != -1 && aenderung2 && multiplayer)
+                            if (player2.InputY != -1 && player2.Aenderung && multiplayer)
                             {
-                                inputY2 = 1;
-                                inputX2 = 0;
-                                aenderung2 = false;
-                                head2 = 'V';
+                                player2.InputY = 1;
+                                player2.InputX = 0;
+                                player2.Aenderung = false;
+                                player2.Head = 'V';
                             }
 
                             break;
 
                         case ConsoleKey.D:
 
-                            if (inputX2 != -1 && aenderung2 && multiplayer)
+                            if (player2.InputX != -1 && player2.Aenderung && multiplayer)
                             {
-                                inputY2 = 0;
-                                inputX2 = 1;
-                                aenderung2 = false;
-                                head2 = '>';
+                                player2.InputY = 0;
+                                player2.InputX = 1;
+                                player2.Aenderung = false;
+                                player2.Head = '>';
                             }
 
                             break;
 
                         case ConsoleKey.A:
 
-                            if (inputX2 != 1 && aenderung2 && multiplayer)
+                            if (player2.InputX != 1 && player2.Aenderung && multiplayer)
                             {
-                                inputY2 = 0;
-                                inputX2 = -1;
-                                aenderung2 = false;
-                                head2 = '<';
+                                player2.InputY = 0;
+                                player2.InputX = -1;
+                                player2.Aenderung = false;
+                                player2.Head = '<';
                             }
 
                             break;
@@ -1980,13 +848,13 @@ namespace Snake.io
                     if (!performancemode)
                     {
                         // Farbwahl je nach Position oder Zeichen
-                        if (x == playerX[0] && y == playerY[0])
+                        if (x == player.PlayerX[0] && y == player.PlayerY[0])
                             neueFarbe = headfarbe;
-                        else if (x == playerX2[0] && y == playerY2[0] && multiplayer)
+                        else if (x == player2.PlayerX[0] && y == player2.PlayerY[0] && multiplayer)
                             neueFarbe = headfarbe2;
-                        else if (zeichen == skin)
+                        else if (zeichen == player.Skin)
                             neueFarbe = farbe;
-                        else if (zeichen == skin2)
+                        else if (zeichen == player2.Skin)
                             neueFarbe = farbe2;
                         else if (zeichen == food)
                             neueFarbe = foodfarbe;
@@ -2025,11 +893,11 @@ namespace Snake.io
                     Console.ForegroundColor = headfarbe;
                     if (gamemode != "Unendlich")
                     {
-                        Console.Write($"  {name}: {punkte}/{maxpunkte}");
+                        Console.Write($"  {player.Name}: {player.Punkte}/{maxpunkte}");
                     }
                     else
                     {
-                        Console.Write($"  {name}: {punkte}/∞");
+                        Console.Write($"  {player.Name}: {player.Punkte}/∞");
                     }
                     Console.ForegroundColor = randfarbe;
                 }
@@ -2044,11 +912,11 @@ namespace Snake.io
                         Console.ForegroundColor = headfarbe2;
                         if (gamemode != "Unendlich")
                         {
-                            Console.Write($"  {name2}: {punkte2}/{maxpunkte}");
+                            Console.Write($"  {player2.Name}: {player2.Punkte}/{maxpunkte}");
                         }
                         else
                         {
-                            Console.Write($"  {name2}: {punkte2}/∞");
+                            Console.Write($"  {player2.Name}: {player.Punkte}/∞");
                         }
                         Console.ForegroundColor = randfarbe;
                     }
@@ -2105,11 +973,11 @@ namespace Snake.io
 
             // Spielerzeichen auf Startposition setzen
 
-            grid[playerY[0], playerX[0]] = head;
+            grid[player.PlayerY[0], player.PlayerX[0]] = player.Head;
 
             if (multiplayer)
             {
-                grid[playerY2[0], playerX2[0]] = head2;
+                grid[player2.PlayerY[0], player2.PlayerX[0]] = player2.Head;
             }
 
         }
