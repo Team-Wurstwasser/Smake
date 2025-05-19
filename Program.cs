@@ -41,14 +41,20 @@ namespace Snake.io
         public string? Name { get; set; }
 
         // Aussehen des Spielers
-
         public char Head { get; set; }
 
         public char Skin { get; set; }
 
-        public  ConsoleColor farbe { get; set; }
+        public  ConsoleColor Farbe { get; set; }
 
-        public  ConsoleColor headfarbe { get; set; }
+        public  ConsoleColor Headfarbe { get; set; }
+
+        // Shop variablen
+        public int Skinzahl { get; set; }
+
+        public int Farbezahl { get; set; }
+
+        public int Headfarbezahl { get; set; }
 
     }
 
@@ -782,13 +788,13 @@ namespace Snake.io
                     {
                         // Farbwahl je nach Position oder Zeichen
                         if (x == player.PlayerX[0] && y == player.PlayerY[0])
-                            neueFarbe = player.headfarbe;
+                            neueFarbe = player.Headfarbe;
                         else if (x == player2.PlayerX[0] && y == player2.PlayerY[0] && multiplayer)
-                            neueFarbe = player2.headfarbe;
+                            neueFarbe = player2.Headfarbe;
                         else if (zeichen == player.Skin)
-                            neueFarbe = player.farbe;
+                            neueFarbe = player.Farbe;
                         else if (zeichen == player2.Skin)
-                            neueFarbe = player2.farbe;
+                            neueFarbe = player2.Farbe;
                         else if (zeichen == food)
                             neueFarbe = foodfarbe;
                         else if (zeichen == rand)
@@ -823,7 +829,7 @@ namespace Snake.io
                 }
                 else if (y == 4)
                 {
-                    Console.ForegroundColor = player.headfarbe;
+                    Console.ForegroundColor = player.Headfarbe;
                     if (gamemode != "Unendlich")
                     {
                         Console.Write($"  {player.Name}: {player.Punkte}/{maxpunkte}");
@@ -842,7 +848,7 @@ namespace Snake.io
                 {
                     if (multiplayer)
                     {
-                        Console.ForegroundColor = player2.headfarbe;
+                        Console.ForegroundColor = player2.Headfarbe;
                         if (gamemode != "Unendlich")
                         {
                             Console.Write($"  {player2.Name}: {player2.Punkte}/{maxpunkte}");

@@ -14,12 +14,12 @@ namespace Snake.io
             {
                 Menüs.randzahl = 0;
                 Menüs.foodzahl = 0;
-                Menüs.skinzahl = 0;
-                Menüs.skin2zahl = 1;
-                Menüs.headfarbezahl = 0;
-                Menüs.headfarbe2zahl = 0;
-                Menüs.farbezahl = 0;
-                Menüs.farbe2zahl = 0;
+                Program.player.Skinzahl = 0;
+                Program.player2.Skinzahl = 1;
+                Program.player.Headfarbezahl = 0;
+                Program.player2.Headfarbezahl = 0;
+                Program.player.Farbezahl = 0;
+                Program.player2.Farbezahl = 0;
                 Menüs.foodfarbezahl = 0;
                 Menüs.randfarbezahl = 0;
 
@@ -47,10 +47,10 @@ namespace Snake.io
                 Program.player2.Skin = 'x';
                 Program.randfarbe = ConsoleColor.White;
                 Program.foodfarbe = ConsoleColor.White;
-                Program.player.farbe = ConsoleColor.White;
-                Program.player2.farbe = ConsoleColor.White;
-                Program.player.headfarbe = ConsoleColor.White;
-                Program.player2.headfarbe = ConsoleColor.White;
+                Program.player.Farbe = ConsoleColor.White;
+                Program.player2.Farbe = ConsoleColor.White;
+                Program.player.Headfarbe = ConsoleColor.White;
+                Program.player2.Headfarbe = ConsoleColor.White;
 
 
                 Program.gesamtcoins = 0;
@@ -84,12 +84,12 @@ namespace Snake.io
             {
                 $"randzahl={Menüs.randzahl}",
                 $"foodzahl={Menüs.foodzahl}",
-                $"skinzahl={Menüs.skinzahl}",
-                $"skin2zahl={Menüs.skin2zahl}",
-                $"headfarbezahl={Menüs.headfarbezahl}",
-                $"headfarbe2zahl={Menüs.headfarbe2zahl}",
-                $"farbezahl={Menüs.farbezahl}",
-                $"farbe2zahl={Menüs.farbe2zahl}",
+                $"Program.player.Skinzahl={Program.player.Skinzahl}",
+                $"Program.player2.Skinzahl={Program.player2.Skinzahl}",
+                $"Program.player.headfarbezahl={Program.player.Headfarbezahl}",
+                $"Program.player2.headfarbezahl={Program.player.Headfarbezahl}",
+                $"Program.player.Farbezahl={Program.player.Farbezahl}",
+                $"Program.player2.Farbezahl={Program.player2.Farbezahl}",
                 $"foodfarbezahl={Menüs.foodfarbezahl}",
                 $"randfarbezahl={Menüs.randfarbezahl}",
                 $"freigeschaltetTail0={Menüs.freigeschaltetTail[0]}",
@@ -143,10 +143,10 @@ namespace Snake.io
                 $"player2.Skin={Program.player2.Skin}",
                 $"randfarbe={Program.randfarbe}",
                 $"foodfarbe={Program.foodfarbe}",
-                $"farbe={Program.player.farbe}",
-                $"player2.farbe={Program.player2.farbe}",
-                $"headfarbe={Program.player2.farbe}",
-                $"player2.headfarbe={Program.player2.farbe}"
+                $"Farbe={Program.player.Farbe}",
+                $"player2.Farbe={Program.player2.Farbe}",
+                $"Headfarbe={Program.player2.Farbe}",
+                $"player2.Headfarbe={Program.player2.Farbe}"
             };
 
             File.WriteAllLines(pfad, Zeilen);
@@ -172,12 +172,12 @@ namespace Snake.io
                 {
                     case "randzahl": Menüs.randzahl = int.Parse(Wert); break;
                     case "foodzahl": Menüs.foodzahl = int.Parse(Wert); break;
-                    case "skinzahl": Menüs.skinzahl = int.Parse(Wert); break;
-                    case "skin2zahl": Menüs.skin2zahl = int.Parse(Wert); break;
-                    case "headfarbezahl": Menüs.headfarbezahl = int.Parse(Wert); break;
-                    case "headfarbe2zahl": Menüs.headfarbe2zahl = int.Parse(Wert); break;
-                    case "farbezahl": Menüs.farbezahl = int.Parse(Wert); break;
-                    case "farbe2zahl": Menüs.farbe2zahl = int.Parse(Wert); break;
+                    case "Program.player.Skinzahl": Program.player.Skinzahl = int.Parse(Wert); break;
+                    case "Program.player2.Skinzahl": Program.player2.Skinzahl = int.Parse(Wert); break;
+                    case "Program.player.headfarbezahl": Program.player.Headfarbezahl = int.Parse(Wert); break;
+                    case "Program.player2.headfarbezahl": Program.player2.Headfarbezahl = int.Parse(Wert); break;
+                    case "Program.player.Farbezahl": Program.player.Farbezahl = int.Parse(Wert); break;
+                    case "Program.player2.farbe2zahl": Program.player2.Farbezahl = int.Parse(Wert); break;
                     case "foodfarbezahl": Menüs.foodfarbezahl = int.Parse(Wert); break;
                     case "randfarbezahl": Menüs.randfarbezahl = int.Parse(Wert); break;
 
@@ -239,10 +239,10 @@ namespace Snake.io
 
                     case "randfarbe": Program.randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
                     case "foodfarbe": Program.foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.farbe": Program.player.farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.farbe": Program.player2.farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.headfarbe": Program.player.farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.headfarbe": Program.player2.farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.Farbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.Farbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.Headfarbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.Headfarbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
                 }
             }
         }
