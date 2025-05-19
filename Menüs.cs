@@ -10,18 +10,6 @@ namespace Snake.io
 
         public static int foodzahl;
 
-        public static int skinzahl;
-
-        public static int skin2zahl;
-
-        public static int headfarbezahl;
-
-        public static int headfarbe2zahl;
-
-        public static int farbezahl;
-
-        public static int farbe2zahl;
-
         public static int foodfarbezahl;
 
         public static int randfarbezahl;
@@ -94,14 +82,14 @@ namespace Snake.io
             {
                 Program.foodfarbe = ConsoleColor.White;
                 Program.randfarbe = ConsoleColor.White;
-                Program.player.farbe = ConsoleColor.White;
-                Program.player.headfarbe = ConsoleColor.White;
-                Program.player2.farbe = ConsoleColor.White; ;
-                Program.player2.headfarbe = ConsoleColor.White;
-                headfarbezahl = 0;
-                headfarbe2zahl = 0;
-                farbezahl = 0;
-                farbe2zahl = 0;
+                Program.player.Farbe = ConsoleColor.White;
+                Program.player.Headfarbe = ConsoleColor.White;
+                Program.player2.Farbe = ConsoleColor.White; ;
+                Program.player2.Headfarbe = ConsoleColor.White;
+                Program.player.Headfarbezahl = 0;
+                Program.player2.Headfarbezahl = 0;
+                Program.player.Farbezahl = 0;
+                Program.player2.Farbezahl = 0;
                 foodfarbezahl = 0;
                 randfarbezahl = 0;
             }
@@ -594,21 +582,21 @@ namespace Snake.io
                             case 1:
                                 do
                                 {
-                                    skinzahl = (skinzahl + 1) % tailskins.Length;
-                                } while (!freigeschaltetTail[skinzahl] || skinzahl == skin2zahl);
+                                    Program.player.Skinzahl = (Program.player.Skinzahl + 1) % tailskins.Length;
+                                } while (!freigeschaltetTail[Program.player.Skinzahl] || Program.player.Skinzahl == Program.player2.Skinzahl);
 
-                                if (freigeschaltetTail[skinzahl])
-                                    Program.player.Skin = tailskins[skinzahl];
+                                if (freigeschaltetTail[Program.player.Skinzahl])
+                                    Program.player.Skin = tailskins[Program.player.Skinzahl];
                                 break;
 
                             case 2:
                                 do
                                 {
-                                    skin2zahl = (skin2zahl + 1) % tailskins.Length;
-                                } while (!freigeschaltetTail[skin2zahl] || skin2zahl == skinzahl);
+                                    Program.player2.Skinzahl = (Program.player2.Skinzahl + 1) % tailskins.Length;
+                                } while (!freigeschaltetTail[Program.player2.Skinzahl] || Program.player2.Skinzahl == Program.player.Skinzahl);
 
-                                if (freigeschaltetTail[skin2zahl])
-                                    Program.player2.Skin = tailskins[skin2zahl];
+                                if (freigeschaltetTail[Program.player2.Skinzahl])
+                                    Program.player2.Skin = tailskins[Program.player2.Skinzahl];
                                 break;
                             case 3:
                                 do
@@ -631,38 +619,38 @@ namespace Snake.io
                             case 5:
                                 do
                                 {
-                                    headfarbezahl = (headfarbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[headfarbezahl]);
+                                    Program.player.Headfarbezahl = (Program.player.Headfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Program.player.Headfarbezahl]);
 
-                                if (freigeschaltetFarben[headfarbezahl])
-                                    Program.player.headfarbe = farben[headfarbezahl];
+                                if (freigeschaltetFarben[Program.player.Headfarbezahl])
+                                    Program.player.Headfarbe = farben[Program.player.Headfarbezahl];
                                 break;
                             case 6:
                                 do
                                 {
-                                    headfarbe2zahl = (headfarbe2zahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[headfarbe2zahl]);
+                                    Program.player2.Headfarbezahl = (Program.player2.Headfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Program.player2.Headfarbezahl]);
 
-                                if (freigeschaltetFarben[headfarbe2zahl])
-                                    Program.player2.headfarbe = farben[headfarbe2zahl];
+                                if (freigeschaltetFarben[Program.player2.Headfarbezahl])
+                                    Program.player2.Headfarbe = farben[Program.player2.Headfarbezahl];
                                 break;
                             case 7:
                                 do
                                 {
-                                    farbezahl = (farbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[farbezahl]);
+                                    Program.player.Farbezahl = (Program.player.Farbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Program.player.Farbezahl]);
 
-                                if (freigeschaltetFarben[farbezahl])
-                                    Program.player.farbe = farben[farbezahl];
+                                if (freigeschaltetFarben[Program.player.Farbezahl])
+                                    Program.player.Farbe = farben[Program.player.Farbezahl];
                                 break;
                             case 8:
                                 do
                                 {
-                                    farbe2zahl = (farbe2zahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[farbe2zahl]);
+                                    Program.player2.Farbezahl = (Program.player2.Farbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Program.player2.Farbezahl]);
 
-                                if (freigeschaltetFarben[farbe2zahl])
-                                    Program.player2.farbe = farben[farbe2zahl];
+                                if (freigeschaltetFarben[Program.player2.Farbezahl])
+                                    Program.player2.Farbe = farben[Program.player2.Farbezahl];
                                 break;
                             case 9:
                                 do
@@ -729,22 +717,22 @@ namespace Snake.io
                         break;
                     case 4:
                         option = $"Player 1 Farbe ändern       [Aktuell: ";
-                        farbemenue = Program.player.headfarbe;
+                        farbemenue = Program.player.Headfarbe;
                         color = true;
                         break;
                     case 5:
                         option = $"Player 2 Farbe ändern       [Aktuell: ";
-                        farbemenue = Program.player2.headfarbe;
+                        farbemenue = Program.player2.Headfarbe;
                         color = true;
                         break;
                     case 6:
                         option = $"Player 1 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = Program.player.farbe;
+                        farbemenue = Program.player.Farbe;
                         color = true;
                         break;
                     case 7:
                         option = $"Player 2 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = Program.player2.farbe;
+                        farbemenue = Program.player2.Farbe;
                         color = true;
                         break;
 
