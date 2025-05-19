@@ -1,8 +1,4 @@
-﻿using System.Drawing;
-using System.Numerics;
-using System.Reflection.Emit;
-
-namespace Snake.io
+﻿namespace Snake.io
 {
     public class Menüs
     {
