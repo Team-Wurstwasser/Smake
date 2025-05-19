@@ -164,6 +164,14 @@ namespace Snake.io
 
         static int randfarbezahl;
 
+        static int hintergrundheadfarbezahl;
+
+        static int hintergrundhead2farbezahl;
+
+        static int hintergrundtailfarbezahl;
+
+        static int hintergrundtail2farbezahl;
+
         static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
                             ConsoleColor.Blue,
@@ -180,8 +188,9 @@ namespace Snake.io
                             ConsoleColor.DarkYellow,
                             ConsoleColor.Gray,
                             ConsoleColor.DarkGray,
+                            ConsoleColor.Black,
                                 ];
-    
+
         static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
 
         static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
@@ -200,6 +209,7 @@ namespace Snake.io
         static bool[] freigeschaltetFood = new bool[foodskins.Length];
         static bool[] freigeschaltetRand = new bool[randskins.Length];
         static bool[] freigeschaltetFarben = new bool[farben.Length];
+        static bool[] freigeschaltethintergrundFarben = new bool[farben.Length];
 
         //Preise Skin/Farben
 
@@ -207,12 +217,14 @@ namespace Snake.io
         static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
         static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
         static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+        static readonly int[] hintergrundFarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
 
         // Level für Skin/Farben
         static readonly int[] TailLevel = [0, 1, 4, 6, 20];
         static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7 ,15];
         static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6 ,8];
         static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
+        static readonly int[] hintergrundFarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
 
         // Statistik
 
@@ -262,12 +274,17 @@ namespace Snake.io
                 farbe2zahl = 0;
                 foodfarbezahl = 0;
                 randfarbezahl = 0;
+                hintergrundheadfarbezahl = 15;
+                hintergrundhead2farbezahl = 15;
+                hintergrundtailfarbezahl = 15;
+                hintergrundtail2farbezahl = 15;
 
                 freigeschaltetTail[0] = true;
                 freigeschaltetTail[1] = true;
                 freigeschaltetFood[0] = true;
                 freigeschaltetRand[0] = true;
                 freigeschaltetFarben[0] = true;
+                freigeschaltethintergrundFarben[15] = true;
 
                 performancemode = false;
 
@@ -292,6 +309,7 @@ namespace Snake.io
                 farbe2 = ConsoleColor.White;
                 headfarbe = ConsoleColor.White;
                 headfarbe2 = ConsoleColor.White;
+
 
                 gesamtcoins = 0;
                 highscore = 0;
