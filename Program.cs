@@ -118,6 +118,14 @@ namespace Snake.io
 
         static ConsoleColor headfarbe2;
 
+        static ConsoleColor hintergrund;
+
+        static ConsoleColor hintergrund2;
+
+        static ConsoleColor hintergrundHead;
+
+        static ConsoleColor hintergrundHead2;
+
         static char rand;
 
         static ConsoleColor randfarbe;
@@ -219,7 +227,7 @@ namespace Snake.io
         static void Main()
 
         {
-
+            
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             // Mauszeiger im Konsolenfenster ausblenden
@@ -1961,6 +1969,27 @@ namespace Snake.io
         {
             Console.SetCursorPosition(0, 0);
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
+            ConsoleColor aktuellerHintergrund = Console.BackgroundColor;
+
+            if (farbe == ConsoleColor.Black)
+            {
+                hintergrund = ConsoleColor.White;
+            }
+
+            if (headfarbe == ConsoleColor.Black)
+            {
+                hintergrundHead = ConsoleColor.White;
+            }            
+
+            if (farbe2 == ConsoleColor.Black)
+            {
+                hintergrund2 = ConsoleColor.White;
+            }            
+
+            if (headfarbe2 == ConsoleColor.Black)
+            {
+                hintergrundHead2 = ConsoleColor.White;
+            }            
 
             for (int y = 0; y < grid.GetLength(0); y++)
             {
@@ -1993,8 +2022,31 @@ namespace Snake.io
                         aktuelleFarbe = neueFarbe;
                     }
 
+                    ConsoleColor neuerHintergrund = ConsoleColor.Black;
+
+                    if (!performancemode)
+                    {
+                        // Farbwahl je nach Position oder Zeichen
+                        if (x == playerX[0] && y == playerY[0])
+                            neuerHintergrund = hintergrundHead;
+                        else if (x == playerX2[0] && y == playerY2[0] && multiplayer)
+                            neuerHintergrund = hintergrundHead2;
+                        else if (zeichen == skin)
+                            neuerHintergrund = hintergrund;
+                        else if (zeichen == skin2)
+                            neuerHintergrund = hintergrund2;
+                    }
+
+                    // Nur Farbe wechseln, wenn nötig
+                    if (neuerHintergrund != aktuellerHintergrund)
+                    {
+                        Console.BackgroundColor = neuerHintergrund;
+                        aktuellerHintergrund = neuerHintergrund;
+                    }
+
                     Console.Write(zeichen);
                 }
+
                 // → Legende auf bestimmten Zeilen ausgeben
                 Console.ForegroundColor = randfarbe;
                 if (y == 1)
@@ -2014,7 +2066,14 @@ namespace Snake.io
                 else if (y == 4)
                 {
                     Console.ForegroundColor = headfarbe;
-                    Console.Write($"  {name}: {punkte}/{maxpunkte}");
+                    if (gamemode != "Unendlich")
+                    {
+                        Console.Write($"  {name}: {punkte}/{maxpunkte}");
+                    }
+                    else
+                    {
+                        Console.Write($"  {name}: {punkte}/∞");
+                    }
                     Console.ForegroundColor = randfarbe;
                 }
                 else if (y == 5)
@@ -2026,7 +2085,14 @@ namespace Snake.io
                     if (multiplayer)
                     {
                         Console.ForegroundColor = headfarbe2;
-                        Console.Write($"  {name2}: {punkte2}/{maxpunkte}");
+                        if (gamemode != "Unendlich")
+                        {
+                            Console.Write($"  {name2}: {punkte2}/{maxpunkte}");
+                        }
+                        else
+                        {
+                            Console.Write($"  {name2}: {punkte2}/∞");
+                        }
                         Console.ForegroundColor = randfarbe;
                     }
                 }
