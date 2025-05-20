@@ -51,7 +51,7 @@ namespace Snake.io
     public class Musik
     {
         // Hintergrundmusik
-        static SoundPlayer musik = new SoundPlayer("Smake.wav");
+        static SoundPlayer musik = new("Smake.wav");
 
         public static bool musikplay = true;
         public static void Melodie()
