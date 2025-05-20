@@ -4,20 +4,20 @@ namespace Snake.io
 {
     public class Speicheraufbau
     {
-        public bool[] freigeschaltetTail { get; set; } = new bool[7];
-        public bool[] freigeschaltetRand { get; set; } = new bool[7];
-        public bool[] freigeschaltetFood { get; set; } = new bool[7];
-        public bool[] freigeschaltetFarben { get; set; } = new bool[15];
+        public bool[] FreigeschaltetTail { get; set; } = new bool[7];
+        public bool[] FreigeschaltetRand { get; set; } = new bool[7];
+        public bool[] FreigeschaltetFood { get; set; } = new bool[7];
+        public bool[] FreigeschaltetFarben { get; set; } = new bool[15];
         public int[] Skin_Farbenzahl { get; set; } = new int[10];
-        public bool performancemode { get; set; }
-        public int coins { get; set; }
-        public int xp { get; set; }
-        public string difficulty { get; set; }
-        public string gamemode { get; set; }
-        public bool multiplayer { get; set; }
-        public int gesamtcoins { get; set; }
-        public int highscore { get; set; }
-        public int spieleGesamt { get; set; }
+        public bool Performancemode { get; set; }
+        public int Coins { get; set; }
+        public int Xp { get; set; }
+        public string Difficulty { get; set; }
+        public string Gamemode { get; set; }
+        public bool Multiplayer { get; set; }
+        public int Gesamtcoins { get; set; }
+        public int Highscore { get; set; }
+        public int SpieleGesamt { get; set; }
 
 
     }
@@ -114,18 +114,19 @@ namespace Snake.io
 
             var speicheraufbau = new Speicheraufbau
             {
-                performancemode = Program.performancemode,
-                coins = Program.coins,
-                difficulty = Program.difficulty,
-                gamemode = Program.gamemode,
-                multiplayer = Program.multiplayer,
-                gesamtcoins = Program.gesamtcoins,
-                highscore = Program.highscore,
-                spieleGesamt = Program.spieleGesamt,
-                freigeschaltetTail = Menüs.freigeschaltetTail,
-                freigeschaltetRand = Menüs.freigeschaltetRand,
-                freigeschaltetFood = Menüs.freigeschaltetFood,
-                freigeschaltetFarben = Menüs.freigeschaltetFarben,
+                Performancemode = Program.performancemode,
+                Coins = Program.coins,
+                Difficulty = Program.difficulty,
+                Gamemode = Program.gamemode,
+                Multiplayer = Program.multiplayer,
+                Gesamtcoins = Program.gesamtcoins,
+                Highscore = Program.highscore,
+                SpieleGesamt = Program.spieleGesamt,
+                FreigeschaltetTail = Menüs.freigeschaltetTail,
+                FreigeschaltetRand = Menüs.freigeschaltetRand,
+                FreigeschaltetFood = Menüs.freigeschaltetFood,
+                FreigeschaltetFarben = Menüs.freigeschaltetFarben,
+                Xp = Program.xp,
                 Skin_Farbenzahl = Skin_Farbenzahlhaupt
 
             };
@@ -144,20 +145,20 @@ namespace Snake.io
             string jsonString = File.ReadAllText(pfad);
             var speicheraufbau = JsonSerializer.Deserialize<Speicheraufbau>(jsonString);
 
-            Program.performancemode = speicheraufbau.performancemode;
-            Program.coins = speicheraufbau.coins;
-            Program.xp = speicheraufbau.xp;
-            Program.difficulty = speicheraufbau.difficulty;
-            Program.gamemode = speicheraufbau.gamemode;
-            Program.multiplayer = speicheraufbau.multiplayer;
-            Program.gesamtcoins = speicheraufbau.gesamtcoins;
-            Program.highscore = speicheraufbau.highscore;
-            Program.spieleGesamt = speicheraufbau.spieleGesamt;
+            Program.performancemode = speicheraufbau.Performancemode;
+            Program.coins = speicheraufbau.Coins;
+            Program.xp = speicheraufbau.Xp;
+            Program.difficulty = speicheraufbau.Difficulty;
+            Program.gamemode = speicheraufbau.Gamemode;
+            Program.multiplayer = speicheraufbau.Multiplayer;
+            Program.gesamtcoins = speicheraufbau.Gesamtcoins;
+            Program.highscore = speicheraufbau.Highscore;
+            Program.spieleGesamt = speicheraufbau.SpieleGesamt;
 
-            Menüs.freigeschaltetTail = speicheraufbau.freigeschaltetTail;
-            Menüs.freigeschaltetRand = speicheraufbau.freigeschaltetRand;
-            Menüs.freigeschaltetFood = speicheraufbau.freigeschaltetFood;
-            Menüs.freigeschaltetFarben = speicheraufbau.freigeschaltetFarben;
+            Menüs.freigeschaltetTail = speicheraufbau.FreigeschaltetTail;
+            Menüs.freigeschaltetRand = speicheraufbau.FreigeschaltetRand;
+            Menüs.freigeschaltetFood = speicheraufbau.FreigeschaltetFood;
+            Menüs.freigeschaltetFarben = speicheraufbau.FreigeschaltetFarben;
 
             int[] Skin_Farbenzahlhaupt = speicheraufbau.Skin_Farbenzahl;
 
