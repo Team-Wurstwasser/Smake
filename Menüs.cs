@@ -9,7 +9,7 @@
         public static int randzahl;
 
         //Freischaltbare Skins/Farben
-        static readonly ConsoleColor[] farben = [
+        public static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
                             ConsoleColor.Blue,
                             ConsoleColor.DarkBlue,
@@ -26,9 +26,9 @@
                             ConsoleColor.Gray,
                             ConsoleColor.DarkGray,
                                 ];
-        static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
-        static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
-        static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
+        public static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
+        public static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
+        public static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
 
         //Freigeschalteneskins/farben
         public static bool[] freigeschaltetTail = new bool[tailskins.Length];
