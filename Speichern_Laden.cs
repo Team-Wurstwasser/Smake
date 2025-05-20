@@ -1,11 +1,36 @@
-﻿namespace Snake.io
+﻿using System.Text.Json;
+
+namespace Snake.io
 {
+    public class Speicheraufbau
+    {
+        public bool[] freigeschaltetTail { get; set; } = new bool[7];
+        public bool[] freigeschaltetRand { get; set; } = new bool[7];
+        public bool[] freigeschaltetFood { get; set; } = new bool[7];
+        public bool[] freigeschaltetFarben { get; set; } = new bool[15];
+        public int[] Skin_Farbenzahl { get; set; } = new int[10];
+        public bool performancemode { get; set; }
+        public int coins { get; set; }
+        public int xp { get; set; }
+        public string difficulty { get; set; }
+        public string gamemode { get; set; }
+        public bool multiplayer { get; set; }
+        public int gesamtcoins { get; set; }
+        public int highscore { get; set; }
+        public int spieleGesamt { get; set; }
+
+
+    }
+
     public class SpeicherSytem
     {
+        static int[] Skin_Farbenzahlhaupt = new int[10];
+
         // Speicher und Ladesystem
         public static void Speichern_Laden(string speicher_laden)
         {
             string pfad = "spielstand.txt";
+
             //Nur wenn File nicht gefunden wird
             if (!File.Exists(pfad))
             {
@@ -68,85 +93,48 @@
                     break;
 
             }
-
-
         }
 
 
         // Speicher Logik
         public static void Speichern(string pfad)
         {
-            //Liste was gespeichert wird
-            var Zeilen = new List<string>
+            
+            int[] Skin_Farbenzahlhaupt = [
+                Menüs.randzahl,
+                Menüs.foodzahl, 
+                Program.player.Skinzahl,
+                Program.player2.Skinzahl,
+                Program.player.Headfarbezahl,
+                Program.player2.Headfarbezahl,
+                Program.player.Farbezahl,
+                Program.player2.Farbezahl,
+                Menüs.foodfarbezahl,
+                Menüs.randfarbezahl
+                ];
+
+            var speicheraufbau = new Speicheraufbau
             {
-                $"randzahl={Menüs.randzahl}",
-                $"foodzahl={Menüs.foodzahl}",
-                $"Program.player.Skinzahl={Program.player.Skinzahl}",
-                $"Program.player2.Skinzahl={Program.player2.Skinzahl}",
-                $"Program.player.headfarbezahl={Program.player.Headfarbezahl}",
-                $"Program.player2.headfarbezahl={Program.player.Headfarbezahl}",
-                $"Program.player.Farbezahl={Program.player.Farbezahl}",
-                $"Program.player2.Farbezahl={Program.player2.Farbezahl}",
-                $"foodfarbezahl={Menüs.foodfarbezahl}",
-                $"randfarbezahl={Menüs.randfarbezahl}",
-                $"freigeschaltetTail0={Menüs.freigeschaltetTail[0]}",
-                $"freigeschaltetTail1={Menüs.freigeschaltetTail[1]}",
-                $"freigeschaltetTail2={Menüs.freigeschaltetTail[2]}",
-                $"freigeschaltetTail3={Menüs.freigeschaltetTail[3]}",
-                $"freigeschaltetTail4={Menüs.freigeschaltetTail[4]}",
-                $"freigeschaltetTail5={Menüs.freigeschaltetTail[5]}",
-                $"freigeschaltetTail6={Menüs.freigeschaltetTail[6]}",
-                $"freigeschaltetFood0={Menüs.freigeschaltetFood[0]}",
-                $"freigeschaltetFood1={Menüs.freigeschaltetFood[1]}",
-                $"freigeschaltetFood2={Menüs.freigeschaltetFood[2]}",
-                $"freigeschaltetFood3={Menüs.freigeschaltetFood[3]}",
-                $"freigeschaltetFood4={Menüs.freigeschaltetFood[4]}",
-                $"freigeschaltetFood5={Menüs.freigeschaltetFood[5]}",
-                $"freigeschaltetFood6={Menüs.freigeschaltetFood[6]}",
-                $"freigeschaltetRand0={Menüs.freigeschaltetRand[0]}",
-                $"freigeschaltetRand1={Menüs.freigeschaltetRand[1]}",
-                $"freigeschaltetRand2={Menüs.freigeschaltetRand[2]}",
-                $"freigeschaltetRand3={Menüs.freigeschaltetRand[3]}",
-                $"freigeschaltetRand4={Menüs.freigeschaltetRand[4]}",
-                $"freigeschaltetRand5={Menüs.freigeschaltetRand[5]}",
-                $"freigeschaltetRand6={Menüs.freigeschaltetRand[6]}",
-                $"freigeschaltetFarben0={Menüs.freigeschaltetFarben[0]}",
-                $"freigeschaltetFarben1={Menüs.freigeschaltetFarben[1]}",
-                $"freigeschaltetFarben2={Menüs.freigeschaltetFarben[2]}",
-                $"freigeschaltetFarben3={Menüs.freigeschaltetFarben[3]}",
-                $"freigeschaltetFarben4={Menüs.freigeschaltetFarben[4]}",
-                $"freigeschaltetFarben5={Menüs.freigeschaltetFarben[5]}",
-                $"freigeschaltetFarben6={Menüs.freigeschaltetFarben[6]}",
-                $"freigeschaltetFarben7={Menüs.freigeschaltetFarben[7]}",
-                $"freigeschaltetFarben8={Menüs.freigeschaltetFarben[8]}",
-                $"freigeschaltetFarben9={Menüs.freigeschaltetFarben[9]}",
-                $"freigeschaltetFarben10={Menüs.freigeschaltetFarben[10]}",
-                $"freigeschaltetFarben11={Menüs.freigeschaltetFarben[11]}",
-                $"freigeschaltetFarben12={Menüs.freigeschaltetFarben[12]}",
-                $"freigeschaltetFarben13={Menüs.freigeschaltetFarben[13]}",
-                $"freigeschaltetFarben14={Menüs.freigeschaltetFarben[14]}",
-                $"performancemode={Program.performancemode}",
-                $"coins={Program.coins}",
-                $"xp={Program.xp}",
-                $"spieleGesamt={Program.spieleGesamt}",
-                $"highscore={Program.highscore}",
-                $"gesamtcoins={Program.gesamtcoins}",
-                $"difficulty={Program.difficulty}",
-                $"gamemode={Program.gamemode}",
-                $"multiplayer={Program.multiplayer}",
-                $"rand={Program.rand}",
-                $"food={Program.food}",
-                $"player.Skin={Program.player.Skin}",
-                $"player2.Skin={Program.player2.Skin}",
-                $"randfarbe={Program.randfarbe}",
-                $"foodfarbe={Program.foodfarbe}",
-                $"Farbe={Program.player.Farbe}",
-                $"player2.Farbe={Program.player2.Farbe}",
-                $"Headfarbe={Program.player2.Farbe}",
-                $"player2.Headfarbe={Program.player2.Farbe}"
+                performancemode = Program.performancemode,
+                coins = Program.coins,
+                difficulty = Program.difficulty,
+                gamemode = Program.gamemode,
+                multiplayer = Program.multiplayer,
+                gesamtcoins = Program.gesamtcoins,
+                highscore = Program.highscore,
+                spieleGesamt = Program.spieleGesamt,
+                freigeschaltetTail = Menüs.freigeschaltetTail,
+                freigeschaltetRand = Menüs.freigeschaltetRand,
+                freigeschaltetFood = Menüs.freigeschaltetFood,
+                freigeschaltetFarben = Menüs.freigeschaltetFarben,
+                Skin_Farbenzahl = Skin_Farbenzahlhaupt
+
             };
 
-            File.WriteAllLines(pfad, Zeilen);
+
+            string jsonString = JsonSerializer.Serialize(speicheraufbau);
+
+            File.WriteAllText(pfad, jsonString);
         }
 
 
@@ -154,94 +142,36 @@
         public static void Laden(string pfad)
         {
 
-            var Zeilen = File.ReadAllLines(pfad);
+            string jsonString = File.ReadAllText(pfad);
+            var speicheraufbau = JsonSerializer.Deserialize<Speicheraufbau>(jsonString);
 
-            foreach (var Zeile in Zeilen)
-            {
-                //Teilt was vor und nach dem = steht
-                var Teil = Zeile.Split('=');
+            Program.performancemode = speicheraufbau.performancemode;
+            Program.coins = speicheraufbau.coins;
+            Program.xp = speicheraufbau.xp;
+            Program.difficulty = speicheraufbau.difficulty;
+            Program.gamemode = speicheraufbau.gamemode;
+            Program.multiplayer = speicheraufbau.multiplayer;
+            Program.gesamtcoins = speicheraufbau.gesamtcoins;
+            Program.highscore = speicheraufbau.highscore;
+            Program.spieleGesamt = speicheraufbau.spieleGesamt;
 
-                string Variablenname = Teil[0];
-                string Wert = Teil[1];
+            Menüs.freigeschaltetTail = speicheraufbau.freigeschaltetTail;
+            Menüs.freigeschaltetRand = speicheraufbau.freigeschaltetRand;
+            Menüs.freigeschaltetFood = speicheraufbau.freigeschaltetFood;
+            Menüs.freigeschaltetFarben = speicheraufbau.freigeschaltetFarben;
 
-                //Entscheidet was in die Variablen eingespeichert wird
-                switch (Variablenname)
-                {
-                    case "randzahl": Menüs.randzahl = int.Parse(Wert); break;
-                    case "foodzahl": Menüs.foodzahl = int.Parse(Wert); break;
-                    case "Program.player.Skinzahl": Program.player.Skinzahl = int.Parse(Wert); break;
-                    case "Program.player2.Skinzahl": Program.player2.Skinzahl = int.Parse(Wert); break;
-                    case "Program.player.headfarbezahl": Program.player.Headfarbezahl = int.Parse(Wert); break;
-                    case "Program.player2.headfarbezahl": Program.player2.Headfarbezahl = int.Parse(Wert); break;
-                    case "Program.player.Farbezahl": Program.player.Farbezahl = int.Parse(Wert); break;
-                    case "Program.player2.farbe2zahl": Program.player2.Farbezahl = int.Parse(Wert); break;
-                    case "foodfarbezahl": Menüs.foodfarbezahl = int.Parse(Wert); break;
-                    case "randfarbezahl": Menüs.randfarbezahl = int.Parse(Wert); break;
+            int[] Skin_Farbenzahlhaupt = speicheraufbau.Skin_Farbenzahl;
 
-                    case "freigeschaltetTail0": Menüs.freigeschaltetTail[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail1": Menüs.freigeschaltetTail[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail2": Menüs.freigeschaltetTail[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail3": Menüs.freigeschaltetTail[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail4": Menüs.freigeschaltetTail[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail5": Menüs.freigeschaltetTail[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetTail6": Menüs.freigeschaltetTail[6] = bool.Parse(Wert); break;
-
-                    case "freigeschaltetFood0": Menüs.freigeschaltetFood[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood1": Menüs.freigeschaltetFood[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood2": Menüs.freigeschaltetFood[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood3": Menüs.freigeschaltetFood[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood4": Menüs.freigeschaltetFood[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood5": Menüs.freigeschaltetFood[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetFood6": Menüs.freigeschaltetFood[6] = bool.Parse(Wert); break;
-
-                    case "freigeschaltetRand0": Menüs.freigeschaltetRand[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand1": Menüs.freigeschaltetRand[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand2": Menüs.freigeschaltetRand[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand3": Menüs.freigeschaltetRand[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand4": Menüs.freigeschaltetRand[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand5": Menüs.freigeschaltetRand[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand6": Menüs.freigeschaltetRand[6] = bool.Parse(Wert); break;
-
-                    case "freigeschaltetFarben0": Menüs.freigeschaltetFarben[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben1": Menüs.freigeschaltetFarben[1] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben2": Menüs.freigeschaltetFarben[2] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben3": Menüs.freigeschaltetFarben[3] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben4": Menüs.freigeschaltetFarben[4] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben5": Menüs.freigeschaltetFarben[5] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben6": Menüs.freigeschaltetFarben[6] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben7": Menüs.freigeschaltetFarben[7] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben8": Menüs.freigeschaltetFarben[8] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben9": Menüs.freigeschaltetFarben[9] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben10": Menüs.freigeschaltetFarben[10] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben11": Menüs.freigeschaltetFarben[11] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben12": Menüs.freigeschaltetFarben[12] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben13": Menüs.freigeschaltetFarben[13] = bool.Parse(Wert); break;
-                    case "freigeschaltetFarben14": Menüs.freigeschaltetFarben[14] = bool.Parse(Wert); break;
-
-                    case "performancemode": Program.performancemode = bool.Parse(Wert); break;
-                    case "coins": Program.coins = int.Parse(Wert); break;
-                    case "xp": Program.xp = int.Parse(Wert); break;
-                    case "gesamtcoins": Program.gesamtcoins = int.Parse(Wert); break;
-                    case "highscore": Program.highscore = int.Parse(Wert); break;
-                    case "spieleGesamt": Program.spieleGesamt = int.Parse(Wert); break;
-
-                    case "difficulty": Program.difficulty = Wert; break;
-                    case "gamemode": Program.gamemode = Wert; break;
-                    case "multiplayer": Program.multiplayer = bool.Parse(Wert); break;
-
-                    case "rand": Program.rand = char.Parse(Wert); break;
-                    case "food": Program.food = char.Parse(Wert); break;
-                    case "player.Skin": Program.player.Skin = char.Parse(Wert); break;
-                    case "player2.Skin": Program.player2.Skin = char.Parse(Wert); break;
-
-                    case "randfarbe": Program.randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "foodfarbe": Program.foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.Farbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.Farbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.Headfarbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.Headfarbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                }
-            }
+            Menüs.randzahl = Skin_Farbenzahlhaupt[0];
+            Menüs.foodzahl = Skin_Farbenzahlhaupt[1];
+            Program.player.Skinzahl = Skin_Farbenzahlhaupt[2];
+            Program.player2.Skinzahl = Skin_Farbenzahlhaupt[3];
+            Program.player.Headfarbezahl = Skin_Farbenzahlhaupt[4];
+            Program.player2.Headfarbezahl = Skin_Farbenzahlhaupt[5];
+            Program.player.Farbezahl = Skin_Farbenzahlhaupt[6];
+            Program.player2.Farbezahl = Skin_Farbenzahlhaupt[7];
+            Menüs.foodfarbezahl = Skin_Farbenzahlhaupt[8];
+            Menüs.randfarbezahl = Skin_Farbenzahlhaupt[9];
         }
     }
 }
