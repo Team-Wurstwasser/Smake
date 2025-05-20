@@ -3,16 +3,13 @@
     public class Menüs
     {
         // Shop variablen
-
         public static int foodzahl;
-
         public static int foodfarbezahl;
-
         public static int randfarbezahl;
-
         public static int randzahl;
 
-        public static readonly ConsoleColor[] farben = [
+        //Freischaltbare Skins/Farben
+        static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
                             ConsoleColor.Blue,
                             ConsoleColor.DarkBlue,
@@ -29,13 +26,11 @@
                             ConsoleColor.Gray,
                             ConsoleColor.DarkGray,
                                 ];
+        static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
+        static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
+        static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
 
-        public static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
-
-        public static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
-
-        public static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
-
+        //Freigeschalteneskins/farben
         public static bool[] freigeschaltetTail = new bool[tailskins.Length];
         public static bool[] freigeschaltetFood = new bool[foodskins.Length];
         public static bool[] freigeschaltetRand = new bool[randskins.Length];
@@ -43,16 +38,16 @@
 
         //Preise Skin/Farben
 
-        public static readonly int[] TailPreis = [30, 40, 50, 60, 70];
-        public static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
-        public static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
-        public static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+        static readonly int[] TailPreis = [30, 40, 50, 60, 70];
+        static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
+        static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
+        static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
 
         // Level für Skin/Farben
-        public static readonly int[] TailLevel = [0, 1, 4, 6, 20];
-        public static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7, 15];
-        public static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6, 8];
-        public static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
+        static readonly int[] TailLevel = [0, 1, 4, 6, 20];
+        static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7, 15];
+        static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6, 8];
+        static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
 
         // Eingaben für Spielernamen
         public static void Eingaben()
@@ -67,6 +62,8 @@
             Program.player2.Name = Console.ReadLine();
             Console.Clear();
         }
+
+        //Logik des Mainmenüs
         public static void ShowMainMenue()
         {
             SpeicherSytem.Speichern_Laden("Speichern");
