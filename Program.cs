@@ -59,19 +59,20 @@ namespace Snake.io
         public static void Melodie()
         {
             bool musikda = false;
-            SoundPlayer musik = null;
+
 
             while (!Program.exit)
             {
+                SoundPlayer musik = new(filenames[currentmusik]);
+
                 if (musikplay)
                 {
                     // Wenn Musik nicht läuft oder ein anderes Lied gewählt wurde
                     if (!musikda || currentmusik != lastmusik)
                     {
                         //stop alte musik
-                        musik?.Stop();
+                        musik.Stop();
                         //Neues Musikstück
-                        musik = new SoundPlayer(filenames[currentmusik]);
                         musik.PlayLooping();
 
                         musikda = true;
@@ -82,7 +83,7 @@ namespace Snake.io
                 {
                     if (musikda)
                     {
-                        musik?.Stop();
+                        musik.Stop();
                         musikda = false;
                         lastmusik = -1;
                     }
@@ -90,8 +91,6 @@ namespace Snake.io
 
                 Thread.Sleep(100);
             }
-
-            musik?.Stop();
         }
     }
 
