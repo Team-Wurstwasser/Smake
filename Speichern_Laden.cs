@@ -24,7 +24,6 @@ namespace Snake.io
 
     public class SpeicherSytem
     {
-        static int[] Skin_Farbenzahlhaupt = new int[10];
 
         // Speicher und Ladesystem
         public static void Speichern_Laden(string speicher_laden)
