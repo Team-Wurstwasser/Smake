@@ -28,7 +28,7 @@ namespace Snake.io
         // Speicher und Ladesystem
         public static void Speichern_Laden(string speicher_laden)
         {
-            string pfad = "spielstand.txt";
+            string pfad = "spielstand.json";
 
             //Nur wenn File nicht gefunden wird
             if (!File.Exists(pfad))
