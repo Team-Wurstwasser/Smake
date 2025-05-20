@@ -148,7 +148,6 @@
             }
         }
 
-
         // Titelbild
         static void DrawTitle()
         {
@@ -167,7 +166,6 @@
 ");
             Console.ResetColor();
         }
-
 
         // Auswahlmöglichkeiten im Hauptmenü
         static void ShowMenuOptions(int selected)
@@ -253,7 +251,6 @@
             } while (menu);
         }
 
-
         // Einstellmöglichkeiten im Einstellungsmenü
         static void EinstellungenOptions(int selected)
         {
@@ -280,7 +277,6 @@
             Console.WriteLine("══════════════════════════════");
         }
 
-
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
         {
@@ -289,7 +285,6 @@
             else Program.difficulty = "Langsam";
         }
 
-
         // Auswahl der Verschiedenen Modi
         static void ChangeGamemode()
         {
@@ -297,7 +292,6 @@
             else if (Program.gamemode == "Unendlich") Program.gamemode = "Babymode";
             else Program.gamemode = "Normal";
         }
-
 
         // Shop - Menü im Hauptmenü
         static void Shop()
@@ -429,7 +423,6 @@
             } while (menu);
         }
 
-
         // Zeigt die Farbenseite vom Shop
         static void ShopFarbenOptions(int selected)
         {
@@ -466,7 +459,6 @@
             Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════");
         }
-
 
         // Zeigt die Skinseite vom Shop
         static void ShopSkinsOptions(int selected)
@@ -534,7 +526,6 @@
             Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════");
         }
-
 
         // Logik für Skin und Farben menü
         static void Skin_Farben()
@@ -674,7 +665,6 @@
             while (menu);
         }
 
-
         // Auswahlmenü für Skins und Farben im Hauptmenü
         static void Skin_FarbenOptions(int selected)
         {
@@ -773,7 +763,6 @@
             Console.WriteLine("══════════════════════════════");
         }
 
-
         // Anleitung im Hauptmenü
         static void Anleitung()
         {
@@ -801,7 +790,6 @@
             Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
             Console.ReadKey();
         }
-
 
         // Statistik - Untermenü im Hauptmenü
         static void Statistiken()
@@ -834,7 +822,6 @@
             Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
             Console.ReadKey();
         }
-
 
         // Zeigt den Game-Over-Screen an
         public static void ShowGameOverScreen()
