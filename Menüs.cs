@@ -213,12 +213,12 @@
                 {
                     case ConsoleKey.UpArrow:
                         einstellungsAuswahl--;
-                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 5;
+                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 6;
                         break;
 
                     case ConsoleKey.DownArrow:
                         einstellungsAuswahl++;
-                        if (einstellungsAuswahl > 5) einstellungsAuswahl = 1;
+                        if (einstellungsAuswahl > 6) einstellungsAuswahl = 1;
                         break;
                     case ConsoleKey.Escape:
                         menu = false;
@@ -242,6 +242,9 @@
                                 Program.performancemode = !Program.performancemode;
                                 break;
                             case 5:
+                                Musik.musikplay = !Musik.musikplay;
+                                break;
+                            case 6:
                                 menu = false;
                                 break;
                         }
@@ -259,7 +262,7 @@
             Console.WriteLine("══════════════════════════════");
 
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 string option = i switch
                 {
@@ -267,7 +270,8 @@
                     1 => $"Multiplayer            [Aktuell: {(Program.multiplayer ? "An" : "Aus")}]",
                     2 => $"Gamemode ändern        [Aktuell: {Program.gamemode}]",
                     3 => $"Performance mode       [Aktuell: {(Program.performancemode ? "An" : "Aus")}]",
-                    4 => "Zurück zum Hauptmenü",
+                    4 => $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
+                    5 => "Zurück zum Hauptmenü",
                     _ => ""
                 };
                 string zeiger = (i + 1 == selected) ? ">>" : "  ";
