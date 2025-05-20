@@ -81,12 +81,10 @@ namespace Snake.io
                 }
                 else
                 {
-                    if (musikda)
-                    {
-                        musik.Stop();
-                        musikda = false;
-                        lastmusik = -1;
-                    }
+                   musik.Stop();
+                   musikda = false;
+                   lastmusik = -1;
+   
                 }
 
                 Thread.Sleep(100);
