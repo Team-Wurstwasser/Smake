@@ -50,30 +50,49 @@ namespace Snake.io
     }
     public class Musik
     {
-        // Hintergrundmusik
-        static SoundPlayer musik = new("Smake.wav");
-
         public static bool musikplay = true;
+        public static string[] filenames = ["Smake2.wav", "Smake.wav"];
+        public static int currentmusik = 0;
+
+        private static int lastmusik = 1;
+
         public static void Melodie()
         {
             bool musikda = false;
+            SoundPlayer musik = null;
 
             while (!Program.exit)
             {
-                if(!musikda && musikplay)
+                if (musikplay)
                 {
-                  musik.PlayLooping();
-                  musikda = true;
-                }
-                else if(musikda && !musikplay)
-                {
-                  musik.Stop();
-                  musikda = false;
-                }
-            }
-            
-        }
+                    // Wenn Musik nicht läuft oder ein anderes Lied gewählt wurde
+                    if (!musikda || currentmusik != lastmusik)
+                    {
+                        //stop alte musik
+                        musik?.Stop();
+                        //Neues Musikstück
+                        musik = new SoundPlayer(filenames[currentmusik]);
+                        musik.PlayLooping();
 
+                        musikda = true;
+                        lastmusik = currentmusik;
+                    }
+                }
+                else
+                {
+                    if (musikda)
+                    {
+                        musik?.Stop();
+                        musikda = false;
+                        lastmusik = -1;
+                    }
+                }
+
+                Thread.Sleep(100);
+            }
+
+            musik?.Stop();
+        }
     }
 
     public class Program
@@ -157,7 +176,7 @@ namespace Snake.io
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
-
+            Musik.currentmusik = 1;
             SpeicherSytem.Speichern_Laden("Speichern");
 
             spiel = true;

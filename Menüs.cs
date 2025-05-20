@@ -66,6 +66,7 @@
         //Logik des Mainmenüs
         public static void ShowMainMenue()
         {
+            Musik.currentmusik = 0;
             SpeicherSytem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
