@@ -880,4 +880,3 @@ namespace Snake.io
     }
 
 }
-
