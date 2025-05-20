@@ -48,13 +48,39 @@ namespace Snake.io
         public int Headfarbezahl { get; set; }
 
     }
+    public class Musik
+    {
+        // Hintergrundmusik
+        static SoundPlayer musik = new SoundPlayer("Smake.wav");
 
+        public static bool musikplay = true;
+        public static void Melodie()
+        {
+            bool musikda = false;
+
+            while (!Program.exit)
+            {
+                if(!musikda && musikplay)
+                {
+                  musik.PlayLooping();
+                  musikda = true;
+                }
+                else if(musikda && !musikplay)
+                {
+                  musik.Stop();
+                  musikda = false;
+                }
+            }
+            
+        }
+
+    }
 
     public class Program
     {
 
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
-        static bool spiel = true;
+        public static bool spiel = true;
         public static int gameover;
         public static bool unentschieden;
         public static bool exit = false;
@@ -89,10 +115,6 @@ namespace Snake.io
         // Spielgeschwindigkeit
         static int zeit;
 
-        // Hintergrundmusik
-
-        static SoundPlayer musik = new SoundPlayer("Smake.wav");
-
         // Level und Experience
         public static int coins;
         public static int xp;
@@ -112,14 +134,15 @@ namespace Snake.io
         static void Main()
         {
             
-            Thread melodieThread = new(Melodie);
-            melodieThread.Start();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
 
             SpeicherSytem.Speichern_Laden("Laden");
+    
+            Thread melodieThread = new(Musik.Melodie);
+            melodieThread.Start();
 
             Menüs.Eingaben();
             do
@@ -290,16 +313,6 @@ namespace Snake.io
                 }
             }
 
-        }
-
-        static void Melodie()
-        {
-            musik.PlayLooping();
-            while (!exit)
-            {
-                
-            }
-            musik.Stop();
         }
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
