@@ -18,6 +18,7 @@ namespace Snake.io
         public int Gesamtcoins { get; set; }
         public int Highscore { get; set; }
         public int SpieleGesamt { get; set; }
+        public bool Musik { get; set; }
 
 
     }
@@ -127,7 +128,8 @@ namespace Snake.io
                 FreigeschaltetFood = Menüs.freigeschaltetFood,
                 FreigeschaltetFarben = Menüs.freigeschaltetFarben,
                 Xp = Program.xp,
-                Skin_Farbenzahl = Skin_Farbenzahlhaupt
+                Skin_Farbenzahl = Skin_Farbenzahlhaupt,
+                Musik = Musik.musikplay
 
             };
 
@@ -172,6 +174,20 @@ namespace Snake.io
             Program.player2.Farbezahl = Skin_Farbenzahlhaupt[7];
             Menüs.foodfarbezahl = Skin_Farbenzahlhaupt[8];
             Menüs.randfarbezahl = Skin_Farbenzahlhaupt[9];
+
+            Musik.musikplay = speicheraufbau.Musik;
+
+            Program.rand = Menüs.randskins[Menüs.randzahl];
+            Program.food = Menüs.foodskins[Menüs.foodzahl];
+            Program.player.Skin = Menüs.tailskins[Program.player.Skinzahl];
+            Program.player2.Skin = Menüs.tailskins[Program.player2.Skinzahl];
+            Program.player.Headfarbe = Menüs.farben[Program.player.Headfarbezahl];
+            Program.player2.Headfarbe = Menüs.farben[Program.player2.Headfarbezahl];
+            Program.player.Farbe = Menüs.farben[Program.player.Farbezahl];
+            Program.player2.Farbe = Menüs.farben[Program.player2.Farbezahl];
+            Program.foodfarbe = Menüs.farben[Menüs.foodfarbezahl];
+            Program.randfarbe = Menüs.farben[Menüs.randfarbezahl];
+
         }
     }
 }
