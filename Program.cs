@@ -169,11 +169,11 @@ namespace Snake.io
             player.KollisionPlayer = false;
             player2.KollisionPlayer = false;
             player.KollisionRand = false;
-            player.KollisionRand = false;
+            player2.KollisionRand = false;
 
             // Taillängen zurücksetzen
             player.Tail = 3;
-            player.Tail = 3;
+            player2.Tail = 3;
 
             // Punkte zurücksetzen
 
@@ -229,8 +229,8 @@ namespace Snake.io
 
             // Alle Eingabewerte zurücksetzen
             player.InputX = 0;
-            player.InputX = 0;
-            player2.InputY = 0;
+            player.InputY = 0;
+            player2.InputX = 0;
             player2.InputY = 0;
 
         }
@@ -266,7 +266,7 @@ namespace Snake.io
 
                 player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
-                player.Aenderung = true;
+                player2.Aenderung = true;
 
             }
 
@@ -430,12 +430,12 @@ namespace Snake.io
                 {
                     if (!player2.KollisionPlayer && !player2.KollisionRand)
                     {
-                        for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers2 Zeichnen
+                        for (int i = 0; i <= player2.Tail; i++)       // Tail des Spielers2 Zeichnen
                         {
                             grid[player2.PlayerY[i], player2.PlayerX[i]] = player2.Skin;
                         }
 
-                        grid[player2.PlayerY[player.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
+                        grid[player2.PlayerY[player2.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
 
                         grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
 
@@ -826,7 +826,7 @@ namespace Snake.io
                         }
                         else
                         {
-                            Console.Write($"  {player2.Name}: {player.Punkte}/∞");
+                            Console.Write($"  {player2.Name}: {player2.Punkte}/∞");
                         }
                         Console.ForegroundColor = randfarbe;
                     }
