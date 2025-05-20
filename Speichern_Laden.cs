@@ -53,6 +53,8 @@ namespace Snake.io
 
                 Program.performancemode = false;
 
+                Musik.musikplay = true;
+
                 // Startguthaben
                 Program.coins = 0;
                 Program.xp = 0;
@@ -134,7 +136,8 @@ namespace Snake.io
             };
 
 
-            string jsonString = JsonSerializer.Serialize(speicheraufbau);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonString = JsonSerializer.Serialize(speicheraufbau, options);
 
             File.WriteAllText(pfad, jsonString);
         }
