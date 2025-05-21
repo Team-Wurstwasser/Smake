@@ -614,7 +614,7 @@ namespace Snake.io
                 Thread.Sleep(10);
                 if (soundplay)
                 {
-                    Console.Beep(600, 50);
+                    Console.Beep(700, 100);
                 }
                 SetzeFutter();
             }
@@ -627,7 +627,7 @@ namespace Snake.io
                 Thread.Sleep(10);
                 if (soundplay)
                 {
-                    Console.Beep(600, 50);
+                    Console.Beep(700, 100);
                 }
                 SetzeFutter();
             }
