@@ -595,11 +595,15 @@ namespace Snake.io
                 if (player2.Punkte == maxpunkte)
                 {
                     spieler1Tot = true;
+                    coins += 10;
+                    xp += 10;
                 }
                 
                 if (player.Punkte == maxpunkte)
                 {
                     spieler2Tot = true;
+                    coins += 10;
+                    xp += 10;
                 }                
             }
 
