@@ -51,7 +51,7 @@ namespace Snake.io
     public class Musik
     {
         public static bool musikplay = true;
-        public static string[] filenames = ["Smake2.wav", "Smake.wav"];
+        public static string[] filenames = ["Smake.wav", "Smake2.wav"];
         public static int currentmusik = 0;
 
         static int lastmusik = -1;
