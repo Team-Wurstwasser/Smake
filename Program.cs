@@ -98,6 +98,7 @@ namespace Snake.io
         public static bool unentschieden;
         public static bool exit = false;
         public static bool performancemode;
+        public static bool soundplay;
 
 
         // Spielfeldgröße (Breite x Höhe)
@@ -611,7 +612,7 @@ namespace Snake.io
                 player.Tail++;
                 player.Punkte++;
                 Thread.Sleep(10);
-                if (Musik.musikplay)
+                if (soundplay)
                 {
                     Console.Beep(600, 50);
                 }
@@ -624,7 +625,7 @@ namespace Snake.io
                 player2.Tail++;
                 player2.Punkte++;
                 Thread.Sleep(10);
-                if (Musik.musikplay)
+                if (soundplay)
                 {
                     Console.Beep(600, 50);
                 }
