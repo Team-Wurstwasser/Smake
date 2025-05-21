@@ -70,9 +70,6 @@ namespace Snake.io
 
                     if (!musikda || currentmusik != lastmusik)
                     {
-                        //stop alte musik
-                        musik.Stop();
-             
                         musik.PlayLooping();
 
                         musikda = true;
