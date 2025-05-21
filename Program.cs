@@ -614,6 +614,10 @@ namespace Snake.io
                 player.Tail++;
                 player.Punkte++;
                 Thread.Sleep(10);
+                if (Musik.musikplay)
+                {
+                    Console.Beep(600, 50);
+                }
                 SetzeFutter();
             }
 
@@ -623,6 +627,10 @@ namespace Snake.io
                 player2.Tail++;
                 player2.Punkte++;
                 Thread.Sleep(10);
+                if (Musik.musikplay)
+                {
+                    Console.Beep(600, 50);
+                }
                 SetzeFutter();
             }
         }
