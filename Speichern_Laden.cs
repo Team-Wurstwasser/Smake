@@ -20,6 +20,8 @@ namespace Snake.io
         public int SpieleGesamt { get; set; }
         public bool Musik { get; set; }
 
+        public bool Sound { get; set; }
+
 
     }
 
@@ -54,6 +56,7 @@ namespace Snake.io
                 Program.performancemode = false;
 
                 Musik.musikplay = true;
+                Program.soundplay = true;
 
                 // Startguthaben
                 Program.coins = 0;
@@ -131,7 +134,8 @@ namespace Snake.io
                 FreigeschaltetFarben = Menüs.freigeschaltetFarben,
                 Xp = Program.xp,
                 Skin_Farbenzahl = Skin_Farbenzahlhaupt,
-                Musik = Musik.musikplay
+                Musik = Musik.musikplay,
+                Sound = Program.soundplay,
 
             };
 
@@ -179,6 +183,7 @@ namespace Snake.io
             Menüs.randfarbezahl = Skin_Farbenzahlhaupt[9];
 
             Musik.musikplay = speicheraufbau.Musik;
+            Program.soundplay = speicheraufbau.Sound;
 
             Program.rand = Menüs.randskins[Menüs.randzahl];
             Program.food = Menüs.foodskins[Menüs.foodzahl];
