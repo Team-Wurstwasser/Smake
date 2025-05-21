@@ -67,7 +67,7 @@ namespace Snake.io
 
                 if (musikplay)
                 {
-                    // Wenn Musik nicht läuft oder ein anderes Lied gewählt wurde
+
                     if (!musikda || currentmusik != lastmusik)
                     {
                         //stop alte musik
