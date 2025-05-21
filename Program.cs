@@ -72,7 +72,7 @@ namespace Snake.io
                     {
                         //stop alte musik
                         musik.Stop();
-                        //Neues Musikstück
+             
                         musik.PlayLooping();
 
                         musikda = true;
