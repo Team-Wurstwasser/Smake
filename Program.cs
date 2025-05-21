@@ -463,38 +463,87 @@ namespace Snake.io
             {
                 if (!player.KollisionRand)
                 {
-                    grid[y, x] = player.Head;  // Spieler auf neues Feld setzen
-
-                    for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers Zeichnen
-                    {
-                        grid[player.PlayerY[i], player.PlayerX[i]] = player.Skin;
-                    }
-
-                    grid[player.PlayerY[player.Tail + 1], player.PlayerX[player.Tail + 1]] = ' ';        // Altes Feld leeren
-
-                    player.PlayerX[0] = x;
-
-                    player.PlayerY[0] = y;
+                    
                 }
+                else if (player.KollisionRand)
+                {
+                    if (player.KollisionRand)
+                    {
+                        if (player.InputX == 1)
+                        {
+                            x = 2;
+                        }
+                        else if (player.InputX == -1)
+                        {
+                            x = weite - 3;
+                        }
+                        else if (player.InputY == -1)
+                        {
+                            y = hoehe - 2;
+                        }
+                        else if (player.InputY == 1)
+                        {
+                            y = 1;
+                        }
+                    }
+                }
+
+                grid[y, x] = player.Head;  // Spieler auf neues Feld setzen
+
+                for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers Zeichnen
+                {
+                    grid[player.PlayerY[i], player.PlayerX[i]] = player.Skin;
+                }
+
+                grid[player.PlayerY[player.Tail + 1], player.PlayerX[player.Tail + 1]] = ' ';        // Altes Feld leeren
+
+                player.PlayerX[0] = x;
+
+                player.PlayerY[0] = y;
 
                 if (multiplayer)
                 {
                     if (!player2.KollisionRand)
                     {
-                        grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
-
-                        for (int i = 0; i <= player2.Tail; i++)       // Tail des Spielers2 Zeichnen
-                        {
-                            grid[player2.PlayerY[i], player2.PlayerX[i]] = player2.Skin;
-                        }
-
-                        grid[player.PlayerY[player.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
-
-                        player2.PlayerX[0] = x2;
-
-                        player2.PlayerY[0] = y2;
+                        
                     }
-                }
+                    else if (player2.KollisionRand)
+                    {
+                        if (player.KollisionRand)
+                        {
+                            if (player2.InputX == 1)
+                            {
+                                x2 = 2;
+                            }
+                            else if (player2.InputX == -1)
+                            {
+                                x2 = weite - 3;
+                            }
+                            else if (player2.InputY == -1)
+                            {
+                                y2 = hoehe - 2;
+                            }
+                            else if (player2.InputY == 1)
+                            {
+                                y2 = 1;
+                            }
+                        }
+                    }
+
+                    grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
+
+                    for (int i = 0; i <= player2.Tail; i++)       // Tail des Spielers2 Zeichnen
+                    {
+                        grid[player2.PlayerY[i], player2.PlayerX[i]] = player2.Skin;
+                    }
+
+                    grid[player.PlayerY[player.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
+
+                    player2.PlayerX[0] = x2;
+
+                    player2.PlayerY[0] = y2;
+
+                }                               
             }
         }
 
@@ -543,25 +592,15 @@ namespace Snake.io
             }
             else if (gamemode =="Babymode")
             {
-                if (player.KollisionRand || player2.Punkte == maxpunkte)
+                if (player2.Punkte == maxpunkte)
                 {
                     spieler1Tot = true;
                 }
-
-                if (multiplayer)
+                
+                if (player.Punkte == maxpunkte)
                 {
-                    if (player2.KollisionRand || player.Punkte == maxpunkte)
-                    {
-                        spieler2Tot = true;
-                    }
-                }
-                else
-                {
-                    if (player.Punkte == maxpunkte)
-                    {
-                        spieler2Tot = true;
-                    }
-                }
+                    spieler2Tot = true;
+                }                
             }
 
             if (spieler1Tot && spieler2Tot)
