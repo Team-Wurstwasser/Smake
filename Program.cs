@@ -711,7 +711,7 @@ namespace Snake.io
                                 player.InputY = 1;
                                 player.InputX = 0;
                                 player.Aenderung = false;
-                                player.Head = 'V';
+                                player.Head = 'v';
                             }
 
                             break;
@@ -756,6 +756,13 @@ namespace Snake.io
                                 player2.Aenderung = false;
                                 player2.Head = '^';
                             }
+                            else if (player.InputY != 1 && player.Aenderung)
+                            {
+                                player.InputY = -1;
+                                player.InputX = 0;
+                                player.Aenderung = false;
+                                player.Head = '^';
+                            }
 
                             break;
 
@@ -766,7 +773,14 @@ namespace Snake.io
                                 player2.InputY = 1;
                                 player2.InputX = 0;
                                 player2.Aenderung = false;
-                                player2.Head = 'V';
+                                player2.Head = 'v';
+                            }
+                            else if (player.InputY != -1 && player.Aenderung)
+                            {
+                                player.InputY = 1;
+                                player.InputX = 0;
+                                player.Aenderung = false;
+                                player.Head = 'v';
                             }
 
                             break;
@@ -780,6 +794,13 @@ namespace Snake.io
                                 player2.Aenderung = false;
                                 player2.Head = '>';
                             }
+                            else if (player.InputX != -1 && player.Aenderung)
+                            {
+                                player.InputY = 0;
+                                player.InputX = 1;
+                                player.Aenderung = false;
+                                player.Head = '>';
+                            }
 
                             break;
 
@@ -791,6 +812,13 @@ namespace Snake.io
                                 player2.InputX = -1;
                                 player2.Aenderung = false;
                                 player2.Head = '<';
+                            }
+                            else if (player.InputX != 1 && player.Aenderung)
+                            {
+                                player.InputY = 0;
+                                player.InputX = -1;
+                                player.Aenderung = false;
+                                player.Head = '<';
                             }
 
                             break;
