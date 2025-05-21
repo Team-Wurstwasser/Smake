@@ -275,7 +275,7 @@
                     2 => $"Gamemode ändern        [Aktuell: {Program.gamemode}]",
                     3 => $"Performance mode       [Aktuell: {(Program.performancemode ? "An" : "Aus")}]",
                     4 => $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
-                    5 => $"Sounds AN/AUS           [Aktuell: {(Program.soundplay ? "An" : "Aus")}]",
+                    5 => $"Sounds AN/AUS          [Aktuell: {(Program.soundplay ? "An" : "Aus")}]",
                     6 => "Zurück zum Hauptmenü",
                     _ => ""
                 };
