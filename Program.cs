@@ -486,9 +486,7 @@ namespace Snake.io
                             y = 1;
                         }
                     }
-                }
-
-                grid[y, x] = player.Head;  // Spieler auf neues Feld setzen
+                }                           
 
                 for (int i = 0; i <= player.Tail; i++)       // Tail des Spielers Zeichnen
                 {
@@ -496,6 +494,8 @@ namespace Snake.io
                 }
 
                 grid[player.PlayerY[player.Tail + 1], player.PlayerX[player.Tail + 1]] = ' ';        // Altes Feld leeren
+
+                grid[y, x] = player.Head;  // Spieler auf neues Feld setzen
 
                 player.PlayerX[0] = x;
 
@@ -509,7 +509,7 @@ namespace Snake.io
                     }
                     else if (player2.KollisionRand)
                     {
-                        if (player.KollisionRand)
+                        if (player2.KollisionRand)
                         {
                             if (player2.InputX == 1)
                             {
@@ -528,16 +528,16 @@ namespace Snake.io
                                 y2 = 1;
                             }
                         }
-                    }
-
-                    grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
+                    }                                        
 
                     for (int i = 0; i <= player2.Tail; i++)       // Tail des Spielers2 Zeichnen
                     {
                         grid[player2.PlayerY[i], player2.PlayerX[i]] = player2.Skin;
                     }
 
-                    grid[player.PlayerY[player.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
+                    grid[player2.PlayerY[player2.Tail + 1], player2.PlayerX[player2.Tail + 1]] = ' ';     // Altes Feld leeren
+
+                    grid[y2, x2] = player2.Head;  // Spieler2 auf neues Feld setzen
 
                     player2.PlayerX[0] = x2;
 
@@ -760,7 +760,7 @@ namespace Snake.io
                                 player2.Aenderung = false;
                                 player2.Head = '^';
                             }
-                            else if (player.InputY != 1 && player.Aenderung)
+                            else if (player.InputY != 1 && player.Aenderung && !multiplayer)
                             {
                                 player.InputY = -1;
                                 player.InputX = 0;
@@ -779,7 +779,7 @@ namespace Snake.io
                                 player2.Aenderung = false;
                                 player2.Head = 'v';
                             }
-                            else if (player.InputY != -1 && player.Aenderung)
+                            else if (player.InputY != -1 && player.Aenderung && !multiplayer)
                             {
                                 player.InputY = 1;
                                 player.InputX = 0;
@@ -798,7 +798,7 @@ namespace Snake.io
                                 player2.Aenderung = false;
                                 player2.Head = '>';
                             }
-                            else if (player.InputX != -1 && player.Aenderung)
+                            else if (player.InputX != -1 && player.Aenderung && !multiplayer)
                             {
                                 player.InputY = 0;
                                 player.InputX = 1;
@@ -817,7 +817,7 @@ namespace Snake.io
                                 player2.Aenderung = false;
                                 player2.Head = '<';
                             }
-                            else if (player.InputX != 1 && player.Aenderung)
+                            else if (player.InputX != 1 && player.Aenderung && !multiplayer)
                             {
                                 player.InputY = 0;
                                 player.InputX = -1;
