@@ -8,7 +8,7 @@
         public static int randfarbezahl;
         public static int randzahl;
 
-        //Freischaltbare Skins/Farben
+        //Freischaltbare Skins/Farbenf
         public static readonly ConsoleColor[] farben = [
                             ConsoleColor.White,
                             ConsoleColor.Blue,
