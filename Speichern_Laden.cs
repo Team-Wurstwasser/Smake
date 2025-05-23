@@ -143,10 +143,10 @@
                 $"player2.Skin={Program.player2.Skin}",
                 $"randfarbe={Program.randfarbe}",
                 $"foodfarbe={Program.foodfarbe}",
-                $"Farbe={Program.player.Farbe}",
+                $"player.Farbe={Program.player.Farbe}",
                 $"player2.Farbe={Program.player2.Farbe}",
-                $"Headfarbe={Program.player2.Farbe}",
-                $"player2.Headfarbe={Program.player2.Farbe}",
+                $"player.Headfarbe={Program.player.Headfarbe}",
+                $"player2.Headfarbe={Program.player2.Headfarbe}",
                 $"Musik={Musik.musikplay }",
                 $"Sound={Program.soundplay}"
             };
@@ -243,8 +243,8 @@
                     case "foodfarbe": Program.foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
                     case "player.Farbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
                     case "player2.Farbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.Headfarbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.Headfarbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.Headfarbe": Program.player.Headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.Headfarbe": Program.player2.Headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
                     case "Sound": Program.soundplay = bool.Parse(Wert); break;
                     case "Musik": Musik.musikplay = bool.Parse(Wert); break;
                 }
