@@ -348,6 +348,7 @@ namespace Snake.io
             TailShift();
             Bewegung(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
             EsseFutter();
+            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
         }
 
         // Prüft die Kollision
@@ -642,7 +643,7 @@ namespace Snake.io
 
 
 
-            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
+            
         }
 
         // Die Spieler Essen das Futter
