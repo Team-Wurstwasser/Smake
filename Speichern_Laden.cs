@@ -77,7 +77,7 @@
 
 
         // Speicher Logik
-        public static void Speichern(string pfad)
+        static void Speichern(string pfad)
         {
             //Liste was gespeichert wird
             var Zeilen = new List<string>
@@ -156,7 +156,7 @@
 
 
         // Speicher laden Logik 
-        public static void Laden(string pfad)
+        static void Laden(string pfad)
         {
 
             var Zeilen = File.ReadAllLines(pfad);
