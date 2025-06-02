@@ -91,10 +91,6 @@ namespace Snake.io
 
     public class Program
     {
-
-        static SoundPlayer click = new("click.wav");
-        static SoundPlayer select = new("select.wav");
-
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
         public static bool spiel = true;
         public static int gameover;
@@ -160,8 +156,6 @@ namespace Snake.io
     
             Thread melodieThread = new(Musik.Melodie);
             melodieThread.Start();
-            Thread soundThread = new(SoundEffects);
-            soundThread.Start();
 
             Menüs.Eingaben();
             do
@@ -171,7 +165,6 @@ namespace Snake.io
 
             } while (!exit);
             melodieThread.Join();
-            soundThread.Join();
         }
 
         // Allen Variablen den Startwert geben
@@ -355,6 +348,7 @@ namespace Snake.io
             TailShift();
             Bewegung(newPlayerX, newPlayerY, newPlayerX2, newPlayerY2);
             EsseFutter();
+            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
         }
 
         // Prüft die Kollision
@@ -649,7 +643,7 @@ namespace Snake.io
 
 
 
-            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
+            
         }
 
         // Die Spieler Essen das Futter
@@ -986,63 +980,6 @@ namespace Snake.io
             if (multiplayer)
             {
                 grid[player2.PlayerY[0], player2.PlayerX[0]] = player2.Head;
-            }
-
-        }
-
-        static void SoundEffects()
-        {
-            while (!spiel)
-            {
-                if (Console.KeyAvailable)
-
-                {
-
-
-                    var key = Console.ReadKey(true).Key;
-
-                    switch (key)
-
-                    {
-
-                        case ConsoleKey.UpArrow:
-
-                            click.Play();
-                            break;
-
-                        case ConsoleKey.DownArrow:
-
-                            click.Play();
-                            break;
-
-                        case ConsoleKey.RightArrow:
-
-                            click.Play();
-                            break;
-
-                        case ConsoleKey.LeftArrow:
-
-                            click.Play();
-                            break;
-
-                        case ConsoleKey.Escape:
-
-                            select.Play();
-                            break;
-
-                        case ConsoleKey.Enter:
-
-                            select.Play();
-                            break;
-
-                        case ConsoleKey.Spacebar:
-
-                            select.Play();
-                            break;
-
-                    }
-
-                }
             }
         }
 
