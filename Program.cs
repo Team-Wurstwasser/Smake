@@ -105,8 +105,8 @@ namespace Snake.io
 
 
         // Spielfeldgröße (Breite x Höhe)
-        static readonly int weite = 41;
-        static readonly int hoehe = 20;
+        static int weite = 41;
+        static int hoehe = 20;
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
         static char[,] grid = new char[hoehe, weite];
