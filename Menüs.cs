@@ -9,7 +9,7 @@
         public static int randzahl;
 
         //Freischaltbare Skins/Farbenf
-        public static readonly ConsoleColor[] farben = [
+        public static ConsoleColor[] farben = [
                             ConsoleColor.White,
                             ConsoleColor.Blue,
                             ConsoleColor.DarkBlue,
@@ -26,9 +26,9 @@
                             ConsoleColor.Gray,
                             ConsoleColor.DarkGray,
                                 ];
-        public static readonly char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
-        public static readonly char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
-        public static readonly char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
+        public static char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
+        public static char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
+        public static char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
 
         //Freigeschalteneskins/farben
         public static bool[] freigeschaltetTail = new bool[tailskins.Length];
@@ -38,16 +38,16 @@
 
         //Preise Skin/Farben
 
-        static readonly int[] TailPreis = [30, 40, 50, 60, 70];
-        static readonly int[] FoodPreis = [20, 30, 40, 50, 60, 70];
-        static readonly int[] RandPreis = [20, 30, 40, 50, 60, 70];
-        static readonly int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+        static int[] TailPreis = [30, 40, 50, 60, 70];
+        static int[] FoodPreis = [20, 30, 40, 50, 60, 70];
+        static int[] RandPreis = [20, 30, 40, 50, 60, 70];
+        static int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
 
         // Level für Skin/Farben
-        static readonly int[] TailLevel = [0, 1, 4, 6, 20];
-        static readonly int[] FoodLevel = [0, 0, 0, 3, 4, 7, 15];
-        static readonly int[] RandLevel = [0, 0, 0, 2, 4, 6, 8];
-        static readonly int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
+        static int[] TailLevel = [0, 1, 4, 6, 20];
+        static int[] FoodLevel = [0, 0, 0, 3, 4, 7, 15];
+        static int[] RandLevel = [0, 0, 0, 2, 4, 6, 8];
+        static int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
 
         // Eingaben für Spielernamen
         public static void Eingaben()
