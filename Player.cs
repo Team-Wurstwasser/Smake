@@ -19,7 +19,7 @@ namespace Snake.io
 
         public bool KollisionPlayer;
 
-        // Länge des Spielers
+        // LÃ¤nge des Spielers
 
         public int Tail;
 
