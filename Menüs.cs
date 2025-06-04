@@ -38,16 +38,16 @@
 
         //Preise Skin/Farben
 
-        static int[] TailPreis = [30, 40, 50, 60, 70];
-        static int[] FoodPreis = [20, 30, 40, 50, 60, 70];
-        static int[] RandPreis = [20, 30, 40, 50, 60, 70];
-        static int[] FarbenPreis = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140];
+        static int[] TailPreis = [300, 350, 400, 450, 500];
+        static int[] FoodPreis = [350, 500, 400, 300, 250, 250];
+        static int[] RandPreis = [200, 400, 400, 350, 300, 400];
+        static int[] FarbenPreis = [100, 259, 100, 250, 200, 300, 100, 300, 175, 250, 100, 250, 450, 500];
 
         // Level für Skin/Farben
-        static int[] TailLevel = [0, 1, 4, 6, 20];
-        static int[] FoodLevel = [0, 0, 0, 3, 4, 7, 15];
-        static int[] RandLevel = [0, 0, 0, 2, 4, 6, 8];
-        static int[] FarbenLevel = [0, 0, 8, 10, 10, 10, 10, 10, 10, 10, 20, 30, 40, 50];
+        static int[] TailLevel = [2, 4, 6, 8, 10];
+        static int[] FoodLevel = [2, 4, 6, 8, 10, 12, 14];
+        static int[] RandLevel = [2, 4, 6, 8, 10, 12, 14];
+        static int[] FarbenLevel = [0, 4, 0, 6, 8, 10, 0, 10, 20, 25, 0, 20, 25, 30];
 
         // Eingaben für Spielernamen
         public static void Eingaben()
