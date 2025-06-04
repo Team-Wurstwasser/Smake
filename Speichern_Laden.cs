@@ -200,7 +200,7 @@
                     case "freigeschaltetFood6": Menüs.freigeschaltetFood[6] = bool.Parse(Wert); break;
 
                     case "freigeschaltetRand0": Menüs.freigeschaltetRand[0] = bool.Parse(Wert); break;
-                    case "freigeschaltetRand1": Menüs.freigeschaltetRand[1] = bool.Parse(Wert); break;
+                    case "freigeschaltetRand1": Menüs.freigeschaltetRand[1] = bool.Parse(Wert); break; 
                     case "freigeschaltetRand2": Menüs.freigeschaltetRand[2] = bool.Parse(Wert); break;
                     case "freigeschaltetRand3": Menüs.freigeschaltetRand[3] = bool.Parse(Wert); break;
                     case "freigeschaltetRand4": Menüs.freigeschaltetRand[4] = bool.Parse(Wert); break;
