@@ -1,93 +1,6 @@
 namespace Snake.io
 {
     using System;
-    using System.Media;
-    public class Spieler
-    {
-        // Eingabe-Richtung (durch Pfeiltasten)
-        public int InputX { get; set; }
-
-        public int InputY { get; set; }
-
-        public bool Aenderung { get; set; }
-
-        // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX { get; set; }
-
-        public int[] PlayerY { get; set; }
-
-        // Kollisionsvariablen
-        public bool KollisionRand { get; set; }
-
-        public bool KollisionPlayer { get; set; }
-
-        // Länge des Spielers
-
-        public int Tail { get; set; }
-
-        //Punkte des Spielers
-        public int Punkte { get; set; }
-
-        // Namen der Spieler
-        public string? Name { get; set; }
-
-        // Aussehen des Spielers
-        public char Head { get; set; }
-
-        public char Skin { get; set; }
-
-        public  ConsoleColor Farbe { get; set; }
-
-        public  ConsoleColor Headfarbe { get; set; }
-
-        // Shop variablen
-        public int Skinzahl { get; set; }
-
-        public int Farbezahl { get; set; }
-
-        public int Headfarbezahl { get; set; }
-
-    }
-    public class Musik
-    {
-        public static bool musikplay = true;
-        public static string[] filenames = ["Smake.wav", "Smake2.wav"];
-        public static int currentmusik = 0;
-
-        static int lastmusik = -1;
-
-        public static void Melodie()
-        {
-            bool musikda = false;
-
-
-            while (!Program.exit)
-            {
-                SoundPlayer musik = new(filenames[currentmusik]);
-
-                if (musikplay)
-                {
-
-                    if (!musikda || currentmusik != lastmusik)
-                    {
-                        musik.PlayLooping();
-
-                        musikda = true;
-                        lastmusik = currentmusik;
-                    }
-                }
-                else
-                {
-                   musik.Stop();
-                   musikda = false;
-                   lastmusik = -1;
-   
-                }
-
-                Thread.Sleep(100);
-            }
-        }
-    }
 
     public class Program
     {
@@ -654,7 +567,6 @@ namespace Snake.io
             {
                 player.Tail++;
                 player.Punkte++;
-                Thread.Sleep(10);
                 if (soundplay)
                 {
                     Console.Beep(700, 100);
@@ -667,7 +579,6 @@ namespace Snake.io
             {
                 player2.Tail++;
                 player2.Punkte++;
-                Thread.Sleep(10);
                 if (soundplay)
                 {
                     Console.Beep(700, 100);
