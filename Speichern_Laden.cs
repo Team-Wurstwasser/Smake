@@ -1,4 +1,7 @@
-﻿namespace Snake.io
+﻿using Smake.io.Render;
+using Smake.io.Spiel;
+
+namespace Smake.io
 {
     public class SpeicherSytem
     {
@@ -11,17 +14,17 @@
             {
                 Menüs.randzahl = 0;
                 Menüs.foodzahl = 0;
-                Program.player.Skinzahl = 0;
-                Program.player2.Skinzahl = 1;
-                Program.player.Headfarbezahl = 0;
-                Program.player2.Headfarbezahl = 0;
-                Program.player.Farbezahl = 0;
-                Program.player2.Farbezahl = 0;
+                Spiellogik.player.Skinzahl = 0;
+                Spiellogik.player2.Skinzahl = 1;
+                Spiellogik.player.Headfarbezahl = 0;
+                Spiellogik.player2.Headfarbezahl = 0;
+                Spiellogik.player.Farbezahl = 0;
+                Spiellogik.player2.Farbezahl = 0;
                 Menüs.foodfarbezahl = 0;
                 Menüs.randfarbezahl = 0;
 
                 Musik.musikplay = true;
-                Program.soundplay = true;
+                Musik.soundplay = true;
 
                 Menüs.freigeschaltetTail[0] = true;
                 Menüs.freigeschaltetTail[1] = true;
@@ -29,28 +32,28 @@
                 Menüs.freigeschaltetRand[0] = true;
                 Menüs.freigeschaltetFarben[0] = true;
 
-                Program.performancemode = false;
+                RendernSpielfeld.performancemode = false;
 
                 // Startguthaben
                 Program.coins = 0;
                 Program.xp = 0;
 
                 // Standard Modi
-                Program.difficulty = "Mittel";
-                Program.gamemode = "Normal";
-                Program.multiplayer = false;
+                Spiellogik.difficulty = "Mittel";
+                Spiellogik.gamemode = "Normal";
+                Spiellogik.multiplayer = false;
 
                 // Standard Skins/Farben
-                Program.rand = '█';
-                Program.food = '*';
-                Program.player.Skin = '+';
-                Program.player2.Skin = 'x';
-                Program.randfarbe = ConsoleColor.White;
-                Program.foodfarbe = ConsoleColor.White;
-                Program.player.Farbe = ConsoleColor.White;
-                Program.player2.Farbe = ConsoleColor.White;
-                Program.player.Headfarbe = ConsoleColor.White;
-                Program.player2.Headfarbe = ConsoleColor.White;
+                Spiellogik.rand = '█';
+                Spiellogik.food = '*';
+                Spiellogik.player.Skin = '+';
+                Spiellogik.player2.Skin = 'x';
+                Spiellogik.randfarbe = ConsoleColor.White;
+                Spiellogik.foodfarbe = ConsoleColor.White;
+                Spiellogik.player.Farbe = ConsoleColor.White;
+                Spiellogik.player2.Farbe = ConsoleColor.White;
+                Spiellogik.player.Headfarbe = ConsoleColor.White;
+                Spiellogik.player2.Headfarbe = ConsoleColor.White;
 
 
                 Program.gesamtcoins = 0;
@@ -84,12 +87,12 @@
             {
                 $"randzahl={Menüs.randzahl}",
                 $"foodzahl={Menüs.foodzahl}",
-                $"Program.player.Skinzahl={Program.player.Skinzahl}",
-                $"Program.player2.Skinzahl={Program.player2.Skinzahl}",
-                $"Program.player.headfarbezahl={Program.player.Headfarbezahl}",
-                $"Program.player2.headfarbezahl={Program.player.Headfarbezahl}",
-                $"Program.player.Farbezahl={Program.player.Farbezahl}",
-                $"Program.player2.Farbezahl={Program.player2.Farbezahl}",
+                $"Program.player.Skinzahl={Spiellogik.player.Skinzahl}",
+                $"Program.player2.Skinzahl={Spiellogik.player2.Skinzahl}",
+                $"Program.player.headfarbezahl={Spiellogik.player.Headfarbezahl}",
+                $"Program.player2.headfarbezahl={Spiellogik.player.Headfarbezahl}",
+                $"Program.player.Farbezahl={Spiellogik.player.Farbezahl}",
+                $"Program.player2.Farbezahl={Spiellogik.player2.Farbezahl}",
                 $"foodfarbezahl={Menüs.foodfarbezahl}",
                 $"randfarbezahl={Menüs.randfarbezahl}",
                 $"freigeschaltetTail0={Menüs.freigeschaltetTail[0]}",
@@ -128,27 +131,27 @@
                 $"freigeschaltetFarben12={Menüs.freigeschaltetFarben[12]}",
                 $"freigeschaltetFarben13={Menüs.freigeschaltetFarben[13]}",
                 $"freigeschaltetFarben14={Menüs.freigeschaltetFarben[14]}",
-                $"performancemode={Program.performancemode}",
+                $"performancemode={RendernSpielfeld.performancemode}",
                 $"coins={Program.coins}",
                 $"xp={Program.xp}",
                 $"spieleGesamt={Program.spieleGesamt}",
                 $"highscore={Program.highscore}",
                 $"gesamtcoins={Program.gesamtcoins}",
-                $"difficulty={Program.difficulty}",
-                $"gamemode={Program.gamemode}",
-                $"multiplayer={Program.multiplayer}",
-                $"rand={Program.rand}",
-                $"food={Program.food}",
-                $"player.Skin={Program.player.Skin}",
-                $"player2.Skin={Program.player2.Skin}",
-                $"randfarbe={Program.randfarbe}",
-                $"foodfarbe={Program.foodfarbe}",
-                $"player.Farbe={Program.player.Farbe}",
-                $"player2.Farbe={Program.player2.Farbe}",
-                $"player.Headfarbe={Program.player.Headfarbe}",
-                $"player2.Headfarbe={Program.player2.Headfarbe}",
+                $"difficulty={Spiellogik.difficulty}",
+                $"gamemode={Spiellogik.gamemode}",
+                $"multiplayer={Spiellogik.multiplayer}",
+                $"rand={Spiellogik.rand}",
+                $"food={Spiellogik.food}",
+                $"player.Skin={Spiellogik.player.Skin}",
+                $"player2.Skin={Spiellogik.player2.Skin}",
+                $"randfarbe={Spiellogik.randfarbe}",
+                $"foodfarbe={Spiellogik.foodfarbe}",
+                $"player.Farbe={Spiellogik.player.Farbe}",
+                $"player2.Farbe={Spiellogik.player2.Farbe}",
+                $"player.Headfarbe={Spiellogik.player.Headfarbe}",
+                $"player2.Headfarbe={Spiellogik.player2.Headfarbe}",
                 $"Musik={Musik.musikplay }",
-                $"Sound={Program.soundplay}"
+                $"Sound={Musik.soundplay}"
             };
 
             File.WriteAllLines(pfad, Zeilen);
@@ -174,12 +177,12 @@
                 {
                     case "randzahl": Menüs.randzahl = int.Parse(Wert); break;
                     case "foodzahl": Menüs.foodzahl = int.Parse(Wert); break;
-                    case "Program.player.Skinzahl": Program.player.Skinzahl = int.Parse(Wert); break;
-                    case "Program.player2.Skinzahl": Program.player2.Skinzahl = int.Parse(Wert); break;
-                    case "Program.player.headfarbezahl": Program.player.Headfarbezahl = int.Parse(Wert); break;
-                    case "Program.player2.headfarbezahl": Program.player2.Headfarbezahl = int.Parse(Wert); break;
-                    case "Program.player.Farbezahl": Program.player.Farbezahl = int.Parse(Wert); break;
-                    case "Program.player2.farbe2zahl": Program.player2.Farbezahl = int.Parse(Wert); break;
+                    case "Program.player.Skinzahl": Spiellogik.player.Skinzahl = int.Parse(Wert); break;
+                    case "Program.player2.Skinzahl": Spiellogik.player2.Skinzahl = int.Parse(Wert); break;
+                    case "Program.player.headfarbezahl": Spiellogik.player.Headfarbezahl = int.Parse(Wert); break;
+                    case "Program.player2.headfarbezahl": Spiellogik.player2.Headfarbezahl = int.Parse(Wert); break;
+                    case "Program.player.Farbezahl": Spiellogik.player.Farbezahl = int.Parse(Wert); break;
+                    case "Program.player2.farbe2zahl": Spiellogik.player2.Farbezahl = int.Parse(Wert); break;
                     case "foodfarbezahl": Menüs.foodfarbezahl = int.Parse(Wert); break;
                     case "randfarbezahl": Menüs.randfarbezahl = int.Parse(Wert); break;
 
@@ -223,29 +226,29 @@
                     case "freigeschaltetFarben13": Menüs.freigeschaltetFarben[13] = bool.Parse(Wert); break;
                     case "freigeschaltetFarben14": Menüs.freigeschaltetFarben[14] = bool.Parse(Wert); break;
 
-                    case "performancemode": Program.performancemode = bool.Parse(Wert); break;
+                    case "performancemode": RendernSpielfeld.performancemode = bool.Parse(Wert); break;
                     case "coins": Program.coins = int.Parse(Wert); break;
                     case "xp": Program.xp = int.Parse(Wert); break;
                     case "gesamtcoins": Program.gesamtcoins = int.Parse(Wert); break;
                     case "highscore": Program.highscore = int.Parse(Wert); break;
                     case "spieleGesamt": Program.spieleGesamt = int.Parse(Wert); break;
 
-                    case "difficulty": Program.difficulty = Wert; break;
-                    case "gamemode": Program.gamemode = Wert; break;
-                    case "multiplayer": Program.multiplayer = bool.Parse(Wert); break;
+                    case "difficulty": Spiellogik.difficulty = Wert; break;
+                    case "gamemode": Spiellogik.gamemode = Wert; break;
+                    case "multiplayer": Spiellogik.multiplayer = bool.Parse(Wert); break;
 
-                    case "rand": Program.rand = char.Parse(Wert); break;
-                    case "food": Program.food = char.Parse(Wert); break;
-                    case "player.Skin": Program.player.Skin = char.Parse(Wert); break;
-                    case "player2.Skin": Program.player2.Skin = char.Parse(Wert); break;
+                    case "rand": Spiellogik.rand = char.Parse(Wert); break;
+                    case "food": Spiellogik.food = char.Parse(Wert); break;
+                    case "player.Skin": Spiellogik.player.Skin = char.Parse(Wert); break;
+                    case "player2.Skin": Spiellogik.player2.Skin = char.Parse(Wert); break;
 
-                    case "randfarbe": Program.randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "foodfarbe": Program.foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.Farbe": Program.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.Farbe": Program.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player.Headfarbe": Program.player.Headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "player2.Headfarbe": Program.player2.Headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
-                    case "Sound": Program.soundplay = bool.Parse(Wert); break;
+                    case "randfarbe": Spiellogik.randfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "foodfarbe": Spiellogik.foodfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.Farbe": Spiellogik.player.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.Farbe": Spiellogik.player2.Farbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player.Headfarbe": Spiellogik.player.Headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "player2.Headfarbe": Spiellogik.player2.Headfarbe = Enum.Parse<ConsoleColor>(Wert); break;
+                    case "Sound": Musik.soundplay = bool.Parse(Wert); break;
                     case "Musik": Musik.musikplay = bool.Parse(Wert); break;
                 }
             }
