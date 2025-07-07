@@ -1,4 +1,7 @@
-﻿namespace Snake.io
+﻿using Smake.io.Render;
+using Smake.io.Spiel;
+
+namespace Smake.io
 {
     public class Menüs
     {
@@ -54,12 +57,12 @@
         {
             Console.Clear();
             Console.Write("Spieler 1, gib deinen Namen ein: ");
-            Program.player.Name = Console.ReadLine();
+            Spiellogik.player.Name = Console.ReadLine();
             Console.Clear();
 
             Console.Clear();
             Console.Write("Spieler 2, gib deinen Namen ein: ");
-            Program.player2.Name = Console.ReadLine();
+            Spiellogik.player2.Name = Console.ReadLine();
             Console.Clear();
         }
 
@@ -72,18 +75,18 @@
             // Level-Berechnung (1 Level pro 100 XP)
             Program.level = Program.xp / 100 + 1;
 
-            if (Program.performancemode)
+            if (RendernSpielfeld.performancemode)
             {
-                Program.foodfarbe = ConsoleColor.White;
-                Program.randfarbe = ConsoleColor.White;
-                Program.player.Farbe = ConsoleColor.White;
-                Program.player.Headfarbe = ConsoleColor.White;
-                Program.player2.Farbe = ConsoleColor.White; ;
-                Program.player2.Headfarbe = ConsoleColor.White;
-                Program.player.Headfarbezahl = 0;
-                Program.player2.Headfarbezahl = 0;
-                Program.player.Farbezahl = 0;
-                Program.player2.Farbezahl = 0;
+                Spiellogik.foodfarbe = ConsoleColor.White;
+                Spiellogik.randfarbe = ConsoleColor.White;
+                Spiellogik.player.Farbe = ConsoleColor.White;
+                Spiellogik.player.Headfarbe = ConsoleColor.White;
+                Spiellogik.player2.Farbe = ConsoleColor.White; ;
+                Spiellogik.player2.Headfarbe = ConsoleColor.White;
+                Spiellogik.player.Headfarbezahl = 0;
+                Spiellogik.player2.Headfarbezahl = 0;
+                Spiellogik.player.Farbezahl = 0;
+                Spiellogik.player2.Farbezahl = 0;
                 foodfarbezahl = 0;
                 randfarbezahl = 0;
             }
@@ -126,7 +129,7 @@
             {
                 case 1:
                     Console.Clear();
-                    Program.Spiel();
+                    Spiellogik.Spiel();
                     break;
                 case 2:
                     Einstellungen();
@@ -144,7 +147,7 @@
                     Statistiken();
                     break;
                 case 7:
-                    Program.exit = true;
+                    Spiellogik.exit = true;
                     break;
             }
         }
@@ -234,19 +237,19 @@
                                 ChangeDifficulty();
                                 break;
                             case 2:
-                                Program.multiplayer = !Program.multiplayer;
+                                Spiellogik.multiplayer = !Spiellogik.multiplayer;
                                 break;
                             case 3:
                                 ChangeGamemode();
                                 break;
                             case 4:
-                                Program.performancemode = !Program.performancemode;
+                                RendernSpielfeld.performancemode = !RendernSpielfeld.performancemode;
                                 break;
                             case 5:
                                 Musik.musikplay = !Musik.musikplay;
                                 break;
                             case 6:
-                                Program.soundplay = !Program.soundplay;
+                                Musik.soundplay = !Musik.soundplay;
                                 break;
                             case 7:
                                 menu = false;
@@ -270,12 +273,12 @@
             {
                 string option = i switch
                 {
-                    0 => $"Schwierigkeit ändern   [Aktuell: {Program.difficulty}]",
-                    1 => $"Multiplayer            [Aktuell: {(Program.multiplayer ? "An" : "Aus")}]",
-                    2 => $"Gamemode ändern        [Aktuell: {Program.gamemode}]",
-                    3 => $"Performance mode       [Aktuell: {(Program.performancemode ? "An" : "Aus")}]",
+                    0 => $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
+                    1 => $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
+                    2 => $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
+                    3 => $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
                     4 => $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
-                    5 => $"Sounds AN/AUS          [Aktuell: {(Program.soundplay ? "An" : "Aus")}]",
+                    5 => $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
                     6 => "Zurück zum Hauptmenü",
                     _ => ""
                 };
@@ -289,17 +292,17 @@
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
         {
-            if (Program.difficulty == "Langsam") Program.difficulty = "Mittel";
-            else if (Program.difficulty == "Mittel") Program.difficulty = "Schnell";
-            else Program.difficulty = "Langsam";
+            if (Spiellogik.difficulty == "Langsam") Spiellogik.difficulty = "Mittel";
+            else if (Spiellogik.difficulty == "Mittel") Spiellogik.difficulty = "Schnell";
+            else Spiellogik.difficulty = "Langsam";
         }
 
         // Auswahl der Verschiedenen Modi
         static void ChangeGamemode()
         {
-            if (Program.gamemode == "Normal") Program.gamemode = "Unendlich";
-            else if (Program.gamemode == "Unendlich") Program.gamemode = "Babymode";
-            else Program.gamemode = "Normal";
+            if (Spiellogik.gamemode == "Normal") Spiellogik.gamemode = "Unendlich";
+            else if (Spiellogik.gamemode == "Unendlich") Spiellogik.gamemode = "Babymode";
+            else Spiellogik.gamemode = "Normal";
         }
 
         // Shop - Menü im Hauptmenü
@@ -575,21 +578,21 @@
                             case 1:
                                 do
                                 {
-                                    Program.player.Skinzahl = (Program.player.Skinzahl + 1) % tailskins.Length;
-                                } while (!freigeschaltetTail[Program.player.Skinzahl] || Program.player.Skinzahl == Program.player2.Skinzahl);
+                                    Spiellogik.player.Skinzahl = (Spiellogik.player.Skinzahl + 1) % tailskins.Length;
+                                } while (!freigeschaltetTail[Spiellogik.player.Skinzahl] || Spiellogik.player.Skinzahl == Spiellogik.player2.Skinzahl);
 
-                                if (freigeschaltetTail[Program.player.Skinzahl])
-                                    Program.player.Skin = tailskins[Program.player.Skinzahl];
+                                if (freigeschaltetTail[Spiellogik.player.Skinzahl])
+                                    Spiellogik.player.Skin = tailskins[Spiellogik.player.Skinzahl];
                                 break;
 
                             case 2:
                                 do
                                 {
-                                    Program.player2.Skinzahl = (Program.player2.Skinzahl + 1) % tailskins.Length;
-                                } while (!freigeschaltetTail[Program.player2.Skinzahl] || Program.player2.Skinzahl == Program.player.Skinzahl);
+                                    Spiellogik.player2.Skinzahl = (Spiellogik.player2.Skinzahl + 1) % tailskins.Length;
+                                } while (!freigeschaltetTail[Spiellogik.player2.Skinzahl] || Spiellogik.player2.Skinzahl == Spiellogik.player.Skinzahl);
 
-                                if (freigeschaltetTail[Program.player2.Skinzahl])
-                                    Program.player2.Skin = tailskins[Program.player2.Skinzahl];
+                                if (freigeschaltetTail[Spiellogik.player2.Skinzahl])
+                                    Spiellogik.player2.Skin = tailskins[Spiellogik.player2.Skinzahl];
                                 break;
                             case 3:
                                 do
@@ -598,7 +601,7 @@
                                 } while (!freigeschaltetFood[foodzahl]);
 
                                 if (freigeschaltetFood[foodzahl])
-                                    Program.food = foodskins[foodzahl];
+                                    Spiellogik.food = foodskins[foodzahl];
                                 break;
                             case 4:
                                 do
@@ -607,43 +610,43 @@
                                 } while ((!freigeschaltetRand[randzahl]));
 
                                 if (freigeschaltetRand[randzahl])
-                                    Program.rand = randskins[randzahl];
+                                    Spiellogik.rand = randskins[randzahl];
                                 break;
                             case 5:
                                 do
                                 {
-                                    Program.player.Headfarbezahl = (Program.player.Headfarbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[Program.player.Headfarbezahl]);
+                                    Spiellogik.player.Headfarbezahl = (Spiellogik.player.Headfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Spiellogik.player.Headfarbezahl]);
 
-                                if (freigeschaltetFarben[Program.player.Headfarbezahl])
-                                    Program.player.Headfarbe = farben[Program.player.Headfarbezahl];
+                                if (freigeschaltetFarben[Spiellogik.player.Headfarbezahl])
+                                    Spiellogik.player.Headfarbe = farben[Spiellogik.player.Headfarbezahl];
                                 break;
                             case 6:
                                 do
                                 {
-                                    Program.player2.Headfarbezahl = (Program.player2.Headfarbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[Program.player2.Headfarbezahl]);
+                                    Spiellogik.player2.Headfarbezahl = (Spiellogik.player2.Headfarbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Spiellogik.player2.Headfarbezahl]);
 
-                                if (freigeschaltetFarben[Program.player2.Headfarbezahl])
-                                    Program.player2.Headfarbe = farben[Program.player2.Headfarbezahl];
+                                if (freigeschaltetFarben[Spiellogik.player2.Headfarbezahl])
+                                    Spiellogik.player2.Headfarbe = farben[Spiellogik.player2.Headfarbezahl];
                                 break;
                             case 7:
                                 do
                                 {
-                                    Program.player.Farbezahl = (Program.player.Farbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[Program.player.Farbezahl]);
+                                    Spiellogik.player.Farbezahl = (Spiellogik.player.Farbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Spiellogik.player.Farbezahl]);
 
-                                if (freigeschaltetFarben[Program.player.Farbezahl])
-                                    Program.player.Farbe = farben[Program.player.Farbezahl];
+                                if (freigeschaltetFarben[Spiellogik.player.Farbezahl])
+                                    Spiellogik.player.Farbe = farben[Spiellogik.player.Farbezahl];
                                 break;
                             case 8:
                                 do
                                 {
-                                    Program.player2.Farbezahl = (Program.player2.Farbezahl + 1) % farben.Length;
-                                } while (!freigeschaltetFarben[Program.player2.Farbezahl]);
+                                    Spiellogik.player2.Farbezahl = (Spiellogik.player2.Farbezahl + 1) % farben.Length;
+                                } while (!freigeschaltetFarben[Spiellogik.player2.Farbezahl]);
 
-                                if (freigeschaltetFarben[Program.player2.Farbezahl])
-                                    Program.player2.Farbe = farben[Program.player2.Farbezahl];
+                                if (freigeschaltetFarben[Spiellogik.player2.Farbezahl])
+                                    Spiellogik.player2.Farbe = farben[Spiellogik.player2.Farbezahl];
                                 break;
                             case 9:
                                 do
@@ -652,7 +655,7 @@
                                 } while (!freigeschaltetFarben[foodfarbezahl]);
 
                                 if (freigeschaltetFarben[foodfarbezahl])
-                                    Program.foodfarbe = farben[foodfarbezahl];
+                                    Spiellogik.foodfarbe = farben[foodfarbezahl];
                                 break;
                             case 10:
                                 do
@@ -661,7 +664,7 @@
                                 } while (!freigeschaltetFarben[randfarbezahl]);
 
                                 if (freigeschaltetFarben[randfarbezahl])
-                                    Program.randfarbe = farben[randfarbezahl];
+                                    Spiellogik.randfarbe = farben[randfarbezahl];
                                 break;
                             case 11:
                                 menu = false; // Zurück zum Hauptmenü
@@ -692,51 +695,51 @@
                 switch (i)
                 {
                     case 0:
-                        option = $"Player 1 Tailskin ändern    [Aktuell: {Program.player.Skin}]";
+                        option = $"Player 1 Tailskin ändern    [Aktuell: {Spiellogik.player.Skin}]";
                         color = false;
                         break;
                     case 1:
-                        option = $"Player 2 Tailskin ändern    [Aktuell: {Program.player2.Skin}]";
+                        option = $"Player 2 Tailskin ändern    [Aktuell: {Spiellogik.player2.Skin}]";
                         color = false;
                         break;
                     case 2:
-                        option = $"Foodskin ändern             [Aktuell: {Program.food}]";
+                        option = $"Foodskin ändern             [Aktuell: {Spiellogik.food}]";
                         color = false;
                         break;
                     case 3:
-                        option = $"Randskin ändern             [Aktuell: {Program.rand}]";
+                        option = $"Randskin ändern             [Aktuell: {Spiellogik.rand}]";
                         color = false;
                         break;
                     case 4:
                         option = $"Player 1 Farbe ändern       [Aktuell: ";
-                        farbemenue = Program.player.Headfarbe;
+                        farbemenue = Spiellogik.player.Headfarbe;
                         color = true;
                         break;
                     case 5:
                         option = $"Player 2 Farbe ändern       [Aktuell: ";
-                        farbemenue = Program.player2.Headfarbe;
+                        farbemenue = Spiellogik.player2.Headfarbe;
                         color = true;
                         break;
                     case 6:
                         option = $"Player 1 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = Program.player.Farbe;
+                        farbemenue = Spiellogik.player.Farbe;
                         color = true;
                         break;
                     case 7:
                         option = $"Player 2 Tailfarbe ändern   [Aktuell: ";
-                        farbemenue = Program.player2.Farbe;
+                        farbemenue = Spiellogik.player2.Farbe;
                         color = true;
                         break;
 
                     case 8:
                         option = $"Foodfarbe ändern            [Aktuell: ";
-                        farbemenue = Program.foodfarbe;
+                        farbemenue = Spiellogik.foodfarbe;
                         color = true;
                         break;
 
                     case 9:
                         option = $"Randfarbe ändern            [Aktuell: ";
-                        farbemenue = Program.randfarbe;
+                        farbemenue = Spiellogik.randfarbe;
                         color = true;
                         break;
                     case 10:
@@ -749,7 +752,7 @@
                 if (color)
                 {
                     Console.Write(zeiger + " " + option);
-                    if (Program.performancemode)
+                    if (RendernSpielfeld.performancemode)
                     {
 
                         Console.Write("Performance Mode AN");
@@ -778,7 +781,7 @@
             Console.Clear();
             Console.WriteLine("ANLEITUNG");
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Ziel: Iss so viele {Program.food} wie möglich!");
+            Console.WriteLine($"Ziel: Iss so viele {Spiellogik.food} wie möglich!");
             Console.WriteLine();
             Console.WriteLine("Steuerung:");
             Console.WriteLine();
@@ -830,84 +833,6 @@
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
             Console.ReadKey();
-        }
-
-        // Zeigt den Game-Over-Screen an
-        public static void ShowGameOverScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("             GAME OVER              ");
-            Console.WriteLine("═════════════════════════════════════");
-
-            if (Program.multiplayer)
-            {
-                if (Program.unentschieden)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Unentschieden!");
-                    Console.WriteLine($"{Program.player.Name} hat {Program.player.Punkte} Punkte erreicht.");
-                    Console.WriteLine($"{Program.player2.Name} hat {Program.player2.Punkte} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-                else if (Program.gameover == 1)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"{Program.player2.Name} gewinnt!");
-                    Console.WriteLine($"Punkte: {Program.player2.Punkte}");
-                    Console.WriteLine($"{Program.player.Name} hat {Program.player.Punkte} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-                else if (Program.gameover == 2)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"{Program.player.Name} gewinnt!");
-                    Console.WriteLine($"Punkte: {Program.player.Punkte}");
-                    Console.WriteLine($"{Program.player2.Name} hat {Program.player2.Punkte} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                if (Program.gameover == 1)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Leider verloren – versuch's noch einmal!");
-                    Console.WriteLine($"Du hast {Program.player.Punkte} Punkte erreicht.");
-                    Console.WriteLine();
-                }
-                else if (Program.gameover == 2)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Glückwunsch! Du hast gewonnen!");
-                    Console.WriteLine($"Deine Punktzahl: {Program.player.Punkte}");
-                    Console.WriteLine();
-                }
-            }
-
-            Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("Drücke [Esc],   um zum Menü zurückzukehren\n" +
-                              "oder   [Enter], um ein neues Spiel zu starten ");
-            bool check = false;
-            do
-            {
-                while (Console.KeyAvailable) Console.ReadKey(true);
-                var key2 = Console.ReadKey(true).Key;
-                switch (key2)
-                {
-                    case ConsoleKey.Enter:
-                        check = true;
-                        Console.Clear();
-                        Program.Spiel();
-                        continue;
-
-                    case ConsoleKey.Escape:
-                        check = true;
-                        break;
-
-                }
-            }
-            while (!check);
         }
     }
 }
