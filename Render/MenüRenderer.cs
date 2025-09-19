@@ -6,7 +6,6 @@ namespace Smake.io.Render
 {
     public static class MenüRenderer
     {
-        // Der ASCII-Titel bleibt unverändert.
         public static void DrawTitle()
         {
             Console.SetCursorPosition(0, 0);
