@@ -5,7 +5,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>titel.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="titel.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Windows.Extensions" Version="9.0.9" />
