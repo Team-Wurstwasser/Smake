@@ -44,7 +44,7 @@ namespace Smake.io
         // Coins und xp hinzufügen
         public static void Coins()
         {
-            if (Spiellogik.gamemode != "babymode")
+            if (Spiellogik.gamemode != "Babymode")
             {
                 if (highscore < Spiellogik.player.Punkte)
                 { highscore = Spiellogik.player.Punkte; }
@@ -74,12 +74,16 @@ namespace Smake.io
                         break;
                 }
             }
+            else
+            {
+                gesamtcoins = (Spiellogik.maxpunkte) / 2 + gesamtcoins;
+                coins = (Spiellogik.maxpunkte) / 2 + coins;
+            }
 
         }
 
-        // Initialisiert das Spielfeld: Rahmen, leere Fläche, Spieler
+        // Initialisiert das Spielfeld: Rahmen, leere Fläche
         public static void InitialisiereSpiel()
-
         {
 
             Console.SetCursorPosition(0, 0);
@@ -92,7 +96,7 @@ namespace Smake.io
 
                 {
 
-                    // Rand des Spielfelds mit '#' markieren
+                    // Rand des Spielfelds mit RandSkin markieren
 
                     if (reihe == 0 || reihe == Spiellogik.grid.GetLength(0) - 1 || symbol == 0 || symbol == Spiellogik.grid.GetLength(1) - 1)
 
@@ -114,14 +118,6 @@ namespace Smake.io
 
             }
 
-            // Spielerzeichen auf Startposition setzen
-
-            Spiellogik.grid[Spiellogik.player.PlayerY[0], Spiellogik.player.PlayerX[0]] = Spiellogik.player.Head;
-
-            if (Spiellogik.multiplayer)
-            {
-                Spiellogik.grid[Spiellogik.player2.PlayerY[0], Spiellogik.player2.PlayerX[0]] = Spiellogik.player2.Head;
-            }
         }
 
     }
