@@ -70,7 +70,7 @@ namespace Smake.io
         public static void ShowMainMenue()
         {
             Musik.currentmusik = 0;
-            SpeicherSytem.Speichern_Laden("Speichern");
+            SpeicherSystem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
             Program.level = Program.xp / 100 + 1;
