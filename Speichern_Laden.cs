@@ -58,6 +58,7 @@ namespace Smake.io
             {
                 case "Zurücksetzen":
                     SetzeStandardwerte();
+                    Speichern();
                     break;
                 case "Speichern":
                     Speichern();
@@ -261,7 +262,7 @@ namespace Smake.io
                 }
                 catch
                 {
-                    // Fehlerhafte Werte ignorieren
+                    return false;
                 }
             }
 
