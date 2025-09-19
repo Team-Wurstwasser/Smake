@@ -142,15 +142,15 @@ namespace Smake.io.Spiel
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
-            var ergebnis1 = player.Gameover();
-            spieler1Tot = spieler1Tot || ergebnis1.gegnerTot;
-            spieler2Tot = spieler2Tot || ergebnis1.spielerTot;
+            (var gegnerTot1, var spielerTot1) = player.Gameover();
+            spieler1Tot |= gegnerTot1;
+            spieler2Tot |= spielerTot1;
 
             if (multiplayer)
             {
-                var ergebnis2 = player2.Gameover();
-                spieler1Tot = spieler1Tot || ergebnis2.gegnerTot;
-                spieler2Tot = spieler2Tot || ergebnis2.spielerTot;
+                (var gegnerTot2, var spielerTot2) = player2.Gameover();
+                spieler1Tot |= gegnerTot2;
+                spieler2Tot |= spielerTot2;
             }
 
             if (spieler1Tot && spieler2Tot)

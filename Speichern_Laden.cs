@@ -13,7 +13,9 @@ namespace Smake.io
         public static byte[] Encrypt(string plainText)
         {
             using var aes = Aes.Create();
-            var key = new Rfc2898DeriveBytes(Passwort, Salt, 10000);
+
+            // Rfc2898DeriveBytes mit SHA256 und 100.000 Iterationen
+            using var key = new Rfc2898DeriveBytes(Passwort, Salt, 100_000, HashAlgorithmName.SHA256);
             aes.Key = key.GetBytes(32);
             aes.IV = key.GetBytes(16);
 
@@ -28,7 +30,7 @@ namespace Smake.io
         public static string Decrypt(byte[] cipherText)
         {
             using var aes = Aes.Create();
-            var key = new Rfc2898DeriveBytes(Passwort, Salt, 10000);
+            using var key = new Rfc2898DeriveBytes(Passwort, Salt, 100_000, HashAlgorithmName.SHA256);
             aes.Key = key.GetBytes(32);
             aes.IV = key.GetBytes(16);
 

@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Smake.io.Spiel
 {
-    public class Spieler
+    public class Spieler(int xstart, int ystart)
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
@@ -48,14 +48,9 @@ namespace Smake.io.Spiel
 
         public int Headfarbezahl;
 
-        private int xstart;
-        private int ystart;
+        private int xstart = xstart;
+        private int ystart = ystart;
 
-        public Spieler(int xstart, int ystart)
-        {
-            this.xstart = xstart;
-            this.ystart = ystart;
-        }
         private void InitialisiereSpieler()
         {
             // Spielerzeichen auf Startposition setzen
