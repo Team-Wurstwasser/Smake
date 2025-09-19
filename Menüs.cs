@@ -52,6 +52,11 @@ namespace Smake.io
         public static readonly int[] RandLevel = [2, 4, 6, 8, 10, 12, 14];
         public static readonly int[] FarbenLevel = [0, 4, 0, 6, 8, 10, 0, 10, 20, 25, 0, 20, 25, 30];
 
+        // Statistik
+        public static int spieleGesamt;
+        public static int highscore;
+        public static int gesamtcoins;
+
         // Eingaben für Spielernamen
         public static void Eingaben()
         {
@@ -73,7 +78,7 @@ namespace Smake.io
             SpeicherSystem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
-            Program.level = Program.xp / 100 + 1;
+            Spiellogik.level = Spiellogik.xp / 100 + 1;
 
             if (RendernSpielfeld.performancemode)
             {
@@ -311,28 +316,28 @@ namespace Smake.io
                             // Kauflogik für Skins
                             else if (auswahl + 1 < tailskins.Length)
                             {
-                                if (!freigeschaltetTail[auswahl + 1] && Program.coins >= TailPreis[auswahl - 1] && Program.level >= TailLevel[auswahl - 1])
+                                if (!freigeschaltetTail[auswahl + 1] && Spiellogik.coins >= TailPreis[auswahl - 1] && Spiellogik.level >= TailLevel[auswahl - 1])
                                 {
                                     freigeschaltetTail[auswahl + 1] = true;
-                                    Program.coins -= TailPreis[auswahl - 1];
+                                    Spiellogik.coins -= TailPreis[auswahl - 1];
                                 }
                             }
                             else if (auswahl + 2 < tailskins.Length + foodskins.Length)
                             {
                                 int i = auswahl + 2 - tailskins.Length;
-                                if (!freigeschaltetFood[i] && Program.coins >= FoodPreis[auswahl - 6] && Program.level >= FoodLevel[auswahl - 6])
+                                if (!freigeschaltetFood[i] && Spiellogik.coins >= FoodPreis[auswahl - 6] && Spiellogik.level >= FoodLevel[auswahl - 6])
                                 {
                                     freigeschaltetFood[i] = true;
-                                    Program.coins -= FoodPreis[auswahl - 6];
+                                    Spiellogik.coins -= FoodPreis[auswahl - 6];
                                 }
                             }
                             else if (auswahl + 3 < tailskins.Length + foodskins.Length + randskins.Length)
                             {
                                 int i = auswahl + 3 - tailskins.Length - foodskins.Length;
-                                if (!freigeschaltetRand[i] && Program.coins >= RandPreis[auswahl - 12] && Program.level >= RandLevel[auswahl - 12])
+                                if (!freigeschaltetRand[i] && Spiellogik.coins >= RandPreis[auswahl - 12] && Spiellogik.level >= RandLevel[auswahl - 12])
                                 {
                                     freigeschaltetRand[i] = true;
-                                    Program.coins -= RandPreis[auswahl - 12];
+                                    Spiellogik.coins -= RandPreis[auswahl - 12];
                                 }
                             }
                             break;
@@ -373,10 +378,10 @@ namespace Smake.io
                             {
                                 menu = false;
                             }
-                            else if (!freigeschaltetFarben[auswahl] && Program.coins >= FarbenPreis[auswahl - 1] && Program.level >= FarbenLevel[auswahl - 1])
+                            else if (!freigeschaltetFarben[auswahl] && Spiellogik.coins >= FarbenPreis[auswahl - 1] && Spiellogik.level >= FarbenLevel[auswahl - 1])
                             {
                                 freigeschaltetFarben[auswahl] = true;
-                                Program.coins -= FarbenPreis[auswahl - 1];
+                                Spiellogik.coins -= FarbenPreis[auswahl - 1];
                             }
                             break;
 

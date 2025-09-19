@@ -36,6 +36,11 @@ namespace Smake.io.Spiel
         public static char rand;
         public static ConsoleColor randfarbe;
 
+        // Level und Experience
+        public static int coins;
+        public static int xp;
+        public static int level;
+
         // Maximale Punkte
         public readonly static int maxpunkte = 20;
 
@@ -108,7 +113,7 @@ namespace Smake.io.Spiel
 
             }
 
-            Program.Coins();
+            Coins();
 
             inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
@@ -261,6 +266,47 @@ namespace Smake.io.Spiel
                 }
             }
             while (!check);
+        }
+
+        // Coins und xp hinzufügen
+        static void Coins()
+        {
+            if (gamemode != "Babymode")
+            {
+                if (Menüs.highscore < player.Punkte)
+                { Menüs.highscore = player.Punkte; }
+                else if (Menüs.highscore < player2.Punkte)
+                { Menüs.highscore = player2.Punkte; }
+
+                Menüs.spieleGesamt++;
+
+                switch (difficulty)
+                {
+                    case "Langsam":
+                        Menüs.gesamtcoins = player.Punkte + player2.Punkte + Menüs.gesamtcoins;
+                        coins = player.Punkte + player2.Punkte + coins;
+                        xp = player.Punkte + player2.Punkte + xp;
+                        break;
+
+                    case "Mittel":
+                        Menüs.gesamtcoins = 2 * (player.Punkte + player2.Punkte) + Menüs.gesamtcoins;
+                        coins = 2 * (player.Punkte + player2.Punkte) + coins;
+                        xp = 2 * (player.Punkte + player2.Punkte) + xp;
+                        break;
+
+                    case "Schnell":
+                        Menüs.gesamtcoins = 3 * (player.Punkte + player2.Punkte) + Menüs.gesamtcoins;
+                        coins = 3 * (player.Punkte + player2.Punkte) + coins;
+                        xp = 3 * (player.Punkte + player2.Punkte) + xp;
+                        break;
+                }
+            }
+            else
+            {
+                Menüs.gesamtcoins = (Spiellogik.maxpunkte) / 2 + Menüs.gesamtcoins;
+                coins = (Spiellogik.maxpunkte) / 2 + coins;
+            }
+
         }
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
