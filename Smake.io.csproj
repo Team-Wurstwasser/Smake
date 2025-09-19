@@ -2,37 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-
-    <!-- Single-File EXE -->
-    <PublishSingleFile>true</PublishSingleFile>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-
-    <!-- Icon einbinden -->
-    <ApplicationIcon>titel.ico</ApplicationIcon>
-
-    <!-- Nullable und Implicit Usings -->
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
-    <!-- Trimming deaktivieren -->
-    <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Icon ins Build einbinden -->
-    <None Include="titel.ico" Pack="True" CopyToOutputDirectory="Always" />
-
-    <!-- JSON-Dateien als EmbeddedResource -->
-    <EmbeddedResource Include="Json\*.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Für SoundPlayer -->
-    <PackageReference Include="System.Windows.Extensions" Version="9.0.5" />
-    <!-- System.Text.Json Source Generator -->
-    <PackageReference Include="System.Text.Json" Version="9.0.9" />
+    <PackageReference Include="System.Windows.Extensions" Version="9.0.9" />
   </ItemGroup>
 
 </Project>
