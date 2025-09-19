@@ -30,10 +30,16 @@ namespace Smake.io.Render
             Console.WriteLine("║       SMAKE MAIN MENU        ║");
             Console.WriteLine("╠══════════════════════════════╣");
 
-            string[] optionen = {
-                "Spiel starten", "Einstellungen", "Shop", "Skins/Farben",
-                "Statistiken", "Anleitung", "Beenden"
-            };
+            ReadOnlySpan<string> optionen =
+            [
+                "Spiel starten",
+                "Einstellungen",
+                "Shop",
+                "Skins/Farben",
+                "Statistiken",
+                "Anleitung",
+                "Beenden"
+            ];
 
             for (int i = 0; i < optionen.Length; i++)
             {
@@ -61,7 +67,8 @@ namespace Smake.io.Render
 
         public static void RenderEinstellungen(int selected)
         {
-            string[] optionen = {
+            var optionen = new[]
+            {
                 $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
                 $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
                 $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
@@ -81,7 +88,7 @@ namespace Smake.io.Render
             Console.WriteLine("Skins/Farben");
             Console.WriteLine("══════════════════════════════");
 
-            var options = new List<(string Text, object Value, bool IsColor)>
+            var options = new List<(string Text, object? Value, bool IsColor)>
             {
                 ($"Player 1 Tailskin ändern    [Aktuell: ", Spiellogik.player.Skin, false),
                 ($"Player 2 Tailskin ändern    [Aktuell: ", Spiellogik.player2.Skin, false),
@@ -94,7 +101,7 @@ namespace Smake.io.Render
                 ($"Foodfarbe ändern            [Aktuell: ", Spiellogik.foodfarbe, true),
                 ($"Randfarbe ändern            [Aktuell: ", Spiellogik.randfarbe, true),
                 ("Zurück zum Hauptmenü", null, false)
-            };
+             };
 
             for (int i = 0; i < options.Count; i++)
             {
