@@ -51,7 +51,7 @@ namespace Smake.io.Spiel
         static void Neustart()
         {
             Musik.currentmusik = 1;
-            SpeicherSytem.Speichern_Laden("Speichern");
+            SpeicherSystem.Speichern_Laden("Speichern");
 
             spiel = true;
 
