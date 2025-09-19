@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Smake.io.Spiel;
+using Smake.io.Speicher;
 
 namespace Smake.io.Render
 {
@@ -90,7 +91,7 @@ namespace Smake.io.Render
                     break;
                 case 4:
                     SetFarbe(Spiellogik.player.Headfarbe);
-                    string maxpunkte = Spiellogik.gamemode != "Unendlich" ? Spiellogik.maxpunkte.ToString() : "∞";
+                    string maxpunkte = Spiellogik.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                     Console.Write($"  {Spiellogik.player.Name}: {Spiellogik.player.Punkte}/{maxpunkte}");
                     SetFarbe(Spiellogik.randfarbe);
                     break;
@@ -102,7 +103,7 @@ namespace Smake.io.Render
                     if (Spiellogik.multiplayer)
                     {
                         SetFarbe(Spiellogik.player2.Headfarbe);
-                        string maxpunkte2 = Spiellogik.gamemode != "Unendlich" ? Spiellogik.maxpunkte.ToString() : "∞";
+                        string maxpunkte2 = Spiellogik.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                         Console.Write($"  {Spiellogik.player2.Name}: {Spiellogik.player2.Punkte}/{maxpunkte2}");
                         SetFarbe(Spiellogik.randfarbe);
                     }

@@ -1,5 +1,6 @@
 ﻿using Smake.io.Render;
 using Smake.io.Spiel;
+using Smake.io.Speicher;
 
 namespace Smake.io
 {
@@ -11,46 +12,11 @@ namespace Smake.io
         public static int randfarbezahl;
         public static int randzahl;
 
-        //Freischaltbare Skins/Farbenf
-        public readonly static ConsoleColor[] farben = [
-                            ConsoleColor.White,
-                            ConsoleColor.Blue,
-                            ConsoleColor.DarkBlue,
-                            ConsoleColor.Green,
-                            ConsoleColor.DarkGreen,
-                            ConsoleColor.Cyan,
-                            ConsoleColor.DarkCyan,
-                            ConsoleColor.Red,
-                            ConsoleColor.DarkRed,
-                            ConsoleColor.Magenta,
-                            ConsoleColor.DarkMagenta,
-                            ConsoleColor.Yellow,
-                            ConsoleColor.DarkYellow,
-                            ConsoleColor.Gray,
-                            ConsoleColor.DarkGray,
-                                ];
-        public readonly static char[] tailskins = ['+', 'x', '~', '=', '-', 'o', '•'];
-        public readonly static char[] foodskins = ['*', '@', '$', '♥', '%', '¤', '&'];
-        public readonly static char[] randskins = ['█', '#', '▓', '░', '■', '▌', '▒'];
-
         //Freigeschalteneskins/farben
-        public static bool[] freigeschaltetTail = new bool[tailskins.Length];
-        public static bool[] freigeschaltetFood = new bool[foodskins.Length];
-        public static bool[] freigeschaltetRand = new bool[randskins.Length];
-        public static bool[] freigeschaltetFarben = new bool[farben.Length];
-
-        //Preise Skin/Farben
-
-        public static readonly int[] TailPreis = [300, 350, 400, 450, 500];
-        public static readonly int[] FoodPreis = [350, 500, 400, 300, 250, 250];
-        public static readonly int[] RandPreis = [200, 400, 400, 350, 300, 400];
-        public static readonly int[] FarbenPreis = [100, 259, 100, 250, 200, 300, 100, 300, 175, 250, 100, 250, 450, 500];
-
-        // Level für Skin/Farben
-        public static readonly int[] TailLevel = [2, 4, 6, 8, 10];
-        public static readonly int[] FoodLevel = [2, 4, 6, 8, 10, 12, 14];
-        public static readonly int[] RandLevel = [2, 4, 6, 8, 10, 12, 14];
-        public static readonly int[] FarbenLevel = [0, 4, 0, 6, 8, 10, 0, 10, 20, 25, 0, 20, 25, 30];
+        public static bool[] freigeschaltetTail = new bool[GameData.TailSkins.Length];
+        public static bool[] freigeschaltetFood = new bool[GameData.FoodSkins.Length];
+        public static bool[] freigeschaltetRand = new bool[GameData.RandSkins.Length];
+        public static bool[] freigeschaltetFarben = new bool[GameData.Farben.Length];
 
         // Statistik
         public static int spieleGesamt;
@@ -270,8 +236,8 @@ namespace Smake.io
             int auswahl = 1;
 
             // Zähle alle Shop-Optionen zusammen
-            int gesamtOptionenSkins = tailskins.Length + foodskins.Length + randskins.Length - 3;
-            int gesamtOptionenFarben = farben.Length;
+            int gesamtOptionenSkins = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
+            int gesamtOptionenFarben = GameData.Farben.Length;
 
             bool Shopskins = false;
             do
@@ -314,30 +280,30 @@ namespace Smake.io
                             }
 
                             // Kauflogik für Skins
-                            else if (auswahl + 1 < tailskins.Length)
+                            else if (auswahl + 1 < GameData.TailSkins.Length)
                             {
-                                if (!freigeschaltetTail[auswahl + 1] && Spiellogik.coins >= TailPreis[auswahl - 1] && Spiellogik.level >= TailLevel[auswahl - 1])
+                                if (!freigeschaltetTail[auswahl + 1] && Spiellogik.coins >= GameData.TailPreis[auswahl - 1] && Spiellogik.level >= GameData.TailLevel[auswahl - 1])
                                 {
                                     freigeschaltetTail[auswahl + 1] = true;
-                                    Spiellogik.coins -= TailPreis[auswahl - 1];
+                                    Spiellogik.coins -= GameData.TailPreis[auswahl - 1];
                                 }
                             }
-                            else if (auswahl + 2 < tailskins.Length + foodskins.Length)
+                            else if (auswahl + 2 < GameData.TailSkins.Length + GameData.FoodSkins.Length)
                             {
-                                int i = auswahl + 2 - tailskins.Length;
-                                if (!freigeschaltetFood[i] && Spiellogik.coins >= FoodPreis[auswahl - 6] && Spiellogik.level >= FoodLevel[auswahl - 6])
+                                int i = auswahl + 2 - GameData.TailSkins.Length;
+                                if (!freigeschaltetFood[i] && Spiellogik.coins >= GameData.FoodPreis[auswahl - 6] && Spiellogik.level >= GameData.FoodLevel[auswahl - 6])
                                 {
                                     freigeschaltetFood[i] = true;
-                                    Spiellogik.coins -= FoodPreis[auswahl - 6];
+                                    Spiellogik.coins -= GameData.FoodPreis[auswahl - 6];
                                 }
                             }
-                            else if (auswahl + 3 < tailskins.Length + foodskins.Length + randskins.Length)
+                            else if (auswahl + 3 < GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length)
                             {
-                                int i = auswahl + 3 - tailskins.Length - foodskins.Length;
-                                if (!freigeschaltetRand[i] && Spiellogik.coins >= RandPreis[auswahl - 12] && Spiellogik.level >= RandLevel[auswahl - 12])
+                                int i = auswahl + 3 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
+                                if (!freigeschaltetRand[i] && Spiellogik.coins >= GameData.RandPreis[auswahl - 12] && Spiellogik.level >= GameData.RandLevel[auswahl - 12])
                                 {
                                     freigeschaltetRand[i] = true;
-                                    Spiellogik.coins -= RandPreis[auswahl - 12];
+                                    Spiellogik.coins -= GameData.RandPreis[auswahl - 12];
                                 }
                             }
                             break;
@@ -378,10 +344,10 @@ namespace Smake.io
                             {
                                 menu = false;
                             }
-                            else if (!freigeschaltetFarben[auswahl] && Spiellogik.coins >= FarbenPreis[auswahl - 1] && Spiellogik.level >= FarbenLevel[auswahl - 1])
+                            else if (!freigeschaltetFarben[auswahl] && Spiellogik.coins >= GameData.FarbenPreis[auswahl - 1] && Spiellogik.level >= GameData.FarbenLevel[auswahl - 1])
                             {
                                 freigeschaltetFarben[auswahl] = true;
-                                Spiellogik.coins -= FarbenPreis[auswahl - 1];
+                                Spiellogik.coins -= GameData.FarbenPreis[auswahl - 1];
                             }
                             break;
 
@@ -431,93 +397,93 @@ namespace Smake.io
                             case 1:
                                 do
                                 {
-                                    Spiellogik.player.Skinzahl = (Spiellogik.player.Skinzahl + 1) % tailskins.Length;
+                                    Spiellogik.player.Skinzahl = (Spiellogik.player.Skinzahl + 1) % GameData.TailSkins.Length;
                                 } while (!freigeschaltetTail[Spiellogik.player.Skinzahl] || Spiellogik.player.Skinzahl == Spiellogik.player2.Skinzahl);
 
                                 if (freigeschaltetTail[Spiellogik.player.Skinzahl])
-                                    Spiellogik.player.Skin = tailskins[Spiellogik.player.Skinzahl];
+                                    Spiellogik.player.Skin = GameData.TailSkins[Spiellogik.player.Skinzahl];
                                 break;
 
                             case 2:
                                 do
                                 {
-                                    Spiellogik.player2.Skinzahl = (Spiellogik.player2.Skinzahl + 1) % tailskins.Length;
+                                    Spiellogik.player2.Skinzahl = (Spiellogik.player2.Skinzahl + 1) % GameData.TailSkins.Length;
                                 } while (!freigeschaltetTail[Spiellogik.player2.Skinzahl] || Spiellogik.player2.Skinzahl == Spiellogik.player.Skinzahl);
 
                                 if (freigeschaltetTail[Spiellogik.player2.Skinzahl])
-                                    Spiellogik.player2.Skin = tailskins[Spiellogik.player2.Skinzahl];
+                                    Spiellogik.player2.Skin = GameData.TailSkins[Spiellogik.player2.Skinzahl];
                                 break;
                             case 3:
                                 do
                                 {
-                                    foodzahl = (foodzahl + 1) % foodskins.Length;
+                                    foodzahl = (foodzahl + 1) % GameData.FoodSkins.Length;
                                 } while (!freigeschaltetFood[foodzahl]);
 
                                 if (freigeschaltetFood[foodzahl])
-                                    Spiellogik.food = foodskins[foodzahl];
+                                    Spiellogik.food = GameData.FoodSkins[foodzahl];
                                 break;
                             case 4:
                                 do
                                 {
-                                    randzahl = (randzahl + 1) % randskins.Length;
+                                    randzahl = (randzahl + 1) % GameData.RandSkins.Length;
                                 } while ((!freigeschaltetRand[randzahl]));
 
                                 if (freigeschaltetRand[randzahl])
-                                    Spiellogik.rand = randskins[randzahl];
+                                    Spiellogik.rand = GameData.RandSkins[randzahl];
                                 break;
                             case 5:
                                 do
                                 {
-                                    Spiellogik.player.Headfarbezahl = (Spiellogik.player.Headfarbezahl + 1) % farben.Length;
+                                    Spiellogik.player.Headfarbezahl = (Spiellogik.player.Headfarbezahl + 1) % GameData.Farben.Length;
                                 } while (!freigeschaltetFarben[Spiellogik.player.Headfarbezahl]);
 
                                 if (freigeschaltetFarben[Spiellogik.player.Headfarbezahl])
-                                    Spiellogik.player.Headfarbe = farben[Spiellogik.player.Headfarbezahl];
+                                    Spiellogik.player.Headfarbe = GameData.Farben[Spiellogik.player.Headfarbezahl];
                                 break;
                             case 6:
                                 do
                                 {
-                                    Spiellogik.player2.Headfarbezahl = (Spiellogik.player2.Headfarbezahl + 1) % farben.Length;
+                                    Spiellogik.player2.Headfarbezahl = (Spiellogik.player2.Headfarbezahl + 1) % GameData.Farben.Length;
                                 } while (!freigeschaltetFarben[Spiellogik.player2.Headfarbezahl]);
 
                                 if (freigeschaltetFarben[Spiellogik.player2.Headfarbezahl])
-                                    Spiellogik.player2.Headfarbe = farben[Spiellogik.player2.Headfarbezahl];
+                                    Spiellogik.player2.Headfarbe = GameData.Farben[Spiellogik.player2.Headfarbezahl];
                                 break;
                             case 7:
                                 do
                                 {
-                                    Spiellogik.player.Farbezahl = (Spiellogik.player.Farbezahl + 1) % farben.Length;
+                                    Spiellogik.player.Farbezahl = (Spiellogik.player.Farbezahl + 1) % GameData.Farben.Length;
                                 } while (!freigeschaltetFarben[Spiellogik.player.Farbezahl]);
 
                                 if (freigeschaltetFarben[Spiellogik.player.Farbezahl])
-                                    Spiellogik.player.Farbe = farben[Spiellogik.player.Farbezahl];
+                                    Spiellogik.player.Farbe = GameData.Farben[Spiellogik.player.Farbezahl];
                                 break;
                             case 8:
                                 do
                                 {
-                                    Spiellogik.player2.Farbezahl = (Spiellogik.player2.Farbezahl + 1) % farben.Length;
+                                    Spiellogik.player2.Farbezahl = (Spiellogik.player2.Farbezahl + 1) % GameData.Farben.Length;
                                 } while (!freigeschaltetFarben[Spiellogik.player2.Farbezahl]);
 
                                 if (freigeschaltetFarben[Spiellogik.player2.Farbezahl])
-                                    Spiellogik.player2.Farbe = farben[Spiellogik.player2.Farbezahl];
+                                    Spiellogik.player2.Farbe = GameData.Farben[Spiellogik.player2.Farbezahl];
                                 break;
                             case 9:
                                 do
                                 {
-                                    foodfarbezahl = (foodfarbezahl + 1) % farben.Length;
+                                    foodfarbezahl = (foodfarbezahl + 1) % GameData.Farben.Length;
                                 } while (!freigeschaltetFarben[foodfarbezahl]);
 
                                 if (freigeschaltetFarben[foodfarbezahl])
-                                    Spiellogik.foodfarbe = farben[foodfarbezahl];
+                                    Spiellogik.foodfarbe = GameData.Farben[foodfarbezahl];
                                 break;
                             case 10:
                                 do
                                 {
-                                    randfarbezahl = (randfarbezahl + 1) % farben.Length;
+                                    randfarbezahl = (randfarbezahl + 1) % GameData.Farben.Length;
                                 } while (!freigeschaltetFarben[randfarbezahl]);
 
                                 if (freigeschaltetFarben[randfarbezahl])
-                                    Spiellogik.randfarbe = farben[randfarbezahl];
+                                    Spiellogik.randfarbe = GameData.Farben[randfarbezahl];
                                 break;
                             case 11:
                                 menu = false; // Zurück zum Hauptmenü

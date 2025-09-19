@@ -3,6 +3,7 @@ namespace Smake.io
     using System;
     using System.Numerics;
     using Smake.io.Spiel;
+    using Smake.io.Speicher;
 
     public class Program
     {
@@ -14,6 +15,7 @@ namespace Smake.io
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
+            GameData.LoadAllConfigs();
 
             SpeicherSystem.Speichern_Laden("Laden");
     

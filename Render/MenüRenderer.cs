@@ -1,4 +1,5 @@
 ﻿using Smake.io.Spiel;
+using Smake.io.Speicher;
 using System;
 using System.Collections.Generic;
 
@@ -163,10 +164,10 @@ namespace Smake.io.Render
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("Tail Skins", option, selected, Menüs.tailskins, Menüs.TailLevel, Menüs.freigeschaltetTail, Menüs.TailPreis, 2);
+            option = RenderShopSection("Tail Skins", option, selected, GameData.TailSkins, GameData.TailLevel, Menüs.freigeschaltetTail, GameData.TailPreis, 2);
 
-            option = RenderShopSection("Food Skins", option, selected, Menüs.foodskins, Menüs.FoodLevel, Menüs.freigeschaltetFood, Menüs.FoodPreis);
-            option = RenderShopSection("Rand Skins", option, selected, Menüs.randskins, Menüs.RandLevel, Menüs.freigeschaltetRand, Menüs.RandPreis);
+            option = RenderShopSection("Food Skins", option, selected, GameData.FoodSkins, GameData.FoodLevel, Menüs.freigeschaltetFood, GameData.FoodPreis);
+            option = RenderShopSection("Rand Skins", option, selected, GameData.RandSkins, GameData.RandLevel, Menüs.freigeschaltetRand, GameData.RandPreis);
 
             string zeiger = (option + 1 == selected) ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger} Zurück zum Hauptmenü");
@@ -178,15 +179,15 @@ namespace Smake.io.Render
             RenderShopHeader();
             Console.WriteLine("\nFarben:");
             int option = 0;
-            for (int i = 1; i < Menüs.farben.Length; i++, option++)
+            for (int i = 1; i < GameData.Farben.Length; i++, option++)
             {
-                string shoptext = Spiellogik.level < Menüs.FarbenLevel[i - 1]
-                    ? $"[Benötigtes Level: {Menüs.FarbenLevel[i - 1]}]"
-                    : Menüs.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{Menüs.FarbenPreis[i - 1]} Coins]";
+                string shoptext = Spiellogik.level < GameData.FarbenLevel[i - 1]
+                    ? $"[Benötigtes Level: {GameData.FarbenLevel[i - 1]}]"
+                    : Menüs.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
 
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
-                Console.ForegroundColor = Menüs.farben[i];
-                Console.WriteLine($"{zeiger} {Menüs.farben[i],-12} {shoptext}");
+                Console.ForegroundColor = GameData.Farben[i];
+                Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext}");
                 Console.ResetColor();
             }
 
