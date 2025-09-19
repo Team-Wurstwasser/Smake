@@ -43,9 +43,9 @@ namespace Smake.io.Spiel
         static int zeit;
 
 
-        public static Spieler player = new();
+        public static Spieler player = new(36,4);
 
-        public static Spieler player2 = new();
+        public static Spieler player2 = new(4,4);
 
         // Allen Variablen den Startwert geben
         static void Neustart()
@@ -61,13 +61,6 @@ namespace Smake.io.Spiel
 
             player.Neustart();
             player2.Neustart();
-
-            // Spieler-Positionen auf Startwerte setzen
-            player.PlayerX[0] = 36;
-            player.PlayerY[0] = 4;
-            player2.PlayerX[0] = 4;
-            player2.PlayerY[0] = 4;
-
 
             // Zeit einstellen
             if (difficulty == "Langsam") zeit = 150;
