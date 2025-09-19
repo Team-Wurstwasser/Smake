@@ -26,7 +26,7 @@ namespace Smake.io
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
 
-            SpeicherSytem.Speichern_Laden("Laden");
+            SpeicherSystem.Speichern_Laden("Laden");
     
             Thread melodieThread = new(Musik.Melodie);
             melodieThread.Start();
