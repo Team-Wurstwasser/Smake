@@ -18,7 +18,7 @@ namespace Smake.io.Render
 
             for (int y = 0; y < rows; y++)
             {
-                StringBuilder zeile = new StringBuilder();
+                StringBuilder zeile = new();
 
                 for (int x = 0; x < cols; x++)
                 {
