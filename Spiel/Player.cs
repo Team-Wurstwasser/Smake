@@ -56,6 +56,11 @@ namespace Smake.io.Spiel
             this.xstart = xstart;
             this.ystart = ystart;
         }
+        private void InitialisiereSpieler()
+        {
+            // Spielerzeichen auf Startposition setzen
+            Spiellogik.grid[PlayerY[0], PlayerX[0]] = Head;
+        }
 
         public void Neustart()
         {
@@ -98,6 +103,8 @@ namespace Smake.io.Spiel
             InputX = 0;
             InputY = 0;
             Aenderung = true;
+
+            InitialisiereSpieler();
         }
 
         public void Update()
@@ -111,10 +118,11 @@ namespace Smake.io.Spiel
             Kollision(newPlayerX, newPlayerY);
             TailShift();
             Bewegung(newPlayerX, newPlayerY);
+            EsseFutter();
         }
 
         // Prüft die Kollision
-        void Kollision(int x, int y)
+        private void Kollision(int x, int y)
         {
             if (Spiellogik.grid[y, x] == ' ' || Spiellogik.grid[y, x] == Spiellogik.food || Spiellogik.grid[y, x] == Head)
             {
@@ -134,7 +142,7 @@ namespace Smake.io.Spiel
         }
 
         // Tailkoordinaten berechnen
-        void TailShift()
+        private void TailShift()
         {
             for (int i = PlayerX.Length - 1; i > 0; i--)
             {
@@ -149,7 +157,7 @@ namespace Smake.io.Spiel
         }
 
         // Bewegt die Spieler
-        void Bewegung(int x, int y)
+        private void Bewegung(int x, int y)
         {
             // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
             if (Spiellogik.gamemode != "Babymode")
@@ -167,48 +175,93 @@ namespace Smake.io.Spiel
                     PlayerX[0] = x;
                     PlayerY[0] = y;
                 }
+                else
+                {
+                    return;
+                }
+
             }
             else
             {
-                if (!KollisionRand)
-                {
 
-                }
-                else if (KollisionRand)
+                if (KollisionRand)
                 {
-                    if (KollisionRand)
+                    if (InputX == 1)
                     {
-                        if (InputX == 1)
-                        {
-                            x = 2;
-                        }
-                        else if (InputX == -1)
-                        {
-                            x = Spiellogik.weite - 3;
-                        }
-                        else if (InputY == -1)
-                        {
-                            y = Spiellogik.hoehe - 2;
-                        }
-                        else if (InputY == 1)
-                        {
-                            y = 1;
-                        }
+                        x = 2;
+                    }
+                    else if (InputX == -1)
+                    {
+                        x = Spiellogik.weite - 3;
+                    }
+                    else if (InputY == -1)
+                    {
+                        y = Spiellogik.hoehe - 2;
+                    }
+                    else if (InputY == 1)
+                    {
+                        y = 1;
                     }
                 }
+            }
 
-                for (int i = 0; i <= Tail; i++)       // Tail des Spielers Zeichnen
+            for (int i = 0; i <= Tail; i++)       // Tail des Spielers Zeichnen
+            {
+                Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
+            }
+            
+            Spiellogik.grid[PlayerY[Tail + 1], PlayerX[Tail + 1]] = ' ';        // Altes Feld leeren
+
+            Spiellogik.grid[y, x] = Head;  // Spieler auf neues Feld setzen
+
+            PlayerX[0] = x;
+            PlayerY[0] = y;
+
+        }
+
+        // Der Spieler isst das Futter
+        private void EsseFutter()
+        {
+            // Spieler frisst Futter
+            if (PlayerX[0] == Spiellogik.futterX && PlayerY[0] == Spiellogik.futterY)
+            {
+                Tail++;
+                Punkte++;
+                if (Musik.soundplay)
                 {
-                    Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
+                    Console.Beep(700, 100);
                 }
-                Spiellogik.grid[PlayerY[Tail + 1], PlayerX[Tail + 1]] = ' ';        // Altes Feld leeren
-
-                Spiellogik.grid[y, x] = Head;  // Spieler auf neues Feld setzen
-
-                PlayerX[0] = x;
-                PlayerY[0] = y;
-  
+                Spiellogik.SetzeFutter();
             }
         }
+
+        public (bool spielerTot, bool gegnerTot) Gameover()
+        {
+            bool spielerTot = false;
+            bool gegnerTot = false;
+
+            if (Spiellogik.gamemode == "Unendlich")
+            {
+                if (KollisionPlayer || KollisionRand)
+                    spielerTot = true;
+            }
+            else if (Spiellogik.gamemode == "Normal")
+            {
+                if (KollisionPlayer || KollisionRand)
+                    spielerTot = true;
+                else if (Punkte >= Spiellogik.maxpunkte)
+                    gegnerTot = true;
+            }
+            else if (Spiellogik.gamemode == "Babymode")
+            {
+                if (Punkte >= Spiellogik.maxpunkte)
+                {
+                    gegnerTot = true;
+                }
+            }
+
+            return (spielerTot, gegnerTot);
+        }
+
     }
 }

@@ -22,8 +22,8 @@ namespace Smake.io.Spiel
         public static char[,] grid = new char[hoehe, weite];
 
         // Position des Futters
-        static int futterX;
-        static int futterY;
+        public static int futterX;
+        public static int futterY;
 
         // Spielmodi
         public static bool multiplayer;
@@ -42,7 +42,6 @@ namespace Smake.io.Spiel
         // Spielgeschwindigkeit
         static int zeit;
 
-
         public static Spieler player = new(36,4);
 
         public static Spieler player2 = new(4,4);
@@ -59,14 +58,22 @@ namespace Smake.io.Spiel
 
             unentschieden = false;
 
-            player.Neustart();
-            player2.Neustart();
-
             // Zeit einstellen
             if (difficulty == "Langsam") zeit = 150;
             else if (difficulty == "Mittel") zeit = 100;
             else zeit = 50;
 
+            // Initialisiere das Spielfeld mit Rahmen
+            Program.InitialisiereSpiel();
+
+            SetzeFutter(); // Futter setzen
+
+            player.Neustart();
+
+            if (multiplayer)
+            {
+                player2.Neustart();
+            }
         }
 
         // Spielablauf
@@ -76,12 +83,6 @@ namespace Smake.io.Spiel
             Thread inputThread = new(ReadInput);
 
             inputThread.Start();
-
-            // Initialisiere das Spielfeld mit Rahmen und Spielerposition
-
-            Program.InitialisiereSpiel();
-
-            SetzeFutter(); // Futter setzen
 
             RendernSpielfeld.Render();
 
@@ -100,7 +101,10 @@ namespace Smake.io.Spiel
 
                 player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
-                player2.Aenderung = true;
+                if (multiplayer)
+                {
+                    player2.Aenderung = true;
+                }
 
             }
 
@@ -117,14 +121,14 @@ namespace Smake.io.Spiel
         static void Update()
         {
             player.Update();
+
             if (multiplayer)
             {
                 player2.Update();
             }
+
             Gameover();
             if (!spiel) return;
-            EsseFutter();
-            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
         }
 
         // Prüft, ob das Spiel vorbei ist
@@ -133,58 +137,15 @@ namespace Smake.io.Spiel
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
-            if (gamemode == "Unendlich")
-            {
-                if (player.KollisionPlayer || player.KollisionRand)
-                {
-                    spieler1Tot = true;
-                }
+            var ergebnis1 = player.Gameover();
+            spieler1Tot = spieler1Tot || ergebnis1.gegnerTot;
+            spieler2Tot = spieler2Tot || ergebnis1.spielerTot;
 
-                if (multiplayer)
-                {
-                    if (player2.KollisionPlayer || player2.KollisionRand)
-                    {
-                        spieler2Tot = true;
-                    }
-                }
-            }
-            else if (gamemode == "Normal")
+            if (multiplayer)
             {
-                if (player.KollisionPlayer || player.KollisionRand || player2.Punkte == maxpunkte)
-                {
-                    spieler1Tot = true;
-                }
-
-                if (multiplayer)
-                {
-                    if (player2.KollisionPlayer || player2.KollisionRand || player.Punkte == maxpunkte)
-                    {
-                        spieler2Tot = true;
-                    }
-                }
-                else
-                {
-                    if (player.Punkte == maxpunkte)
-                    {
-                        spieler2Tot = true;
-                    }
-                }
-            }
-            else if (gamemode == "Babymode")
-            {
-                if (player2.Punkte == maxpunkte)
-                {
-                    spieler1Tot = true;
-                    Program.coins += 10;
-                    Program.xp += 10;
-                }
-
-                if (player.Punkte == maxpunkte)
-                {
-                    spieler2Tot = true;
-                    Program.coins += 10;
-                    Program.xp += 10;
-                }
+                var ergebnis2 = player2.Gameover();
+                spieler1Tot = spieler1Tot || ergebnis2.gegnerTot;
+                spieler2Tot = spieler2Tot || ergebnis2.spielerTot;
             }
 
             if (spieler1Tot && spieler2Tot)
@@ -207,7 +168,7 @@ namespace Smake.io.Spiel
         }
 
         // Setzt das Futter an eine Zufällige Position
-        static void SetzeFutter()
+        public static void SetzeFutter()
         {
             Random rand = new();
 
@@ -220,35 +181,8 @@ namespace Smake.io.Spiel
                 futterY = rand.Next(1, hoehe - 2);
             }
             while (grid[futterY, futterX] != ' '); // Stelle muss wirklich leer sein
+            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
 
-        }
-
-        // Die Spieler Essen das Futter
-        static void EsseFutter()
-        {
-            // Spieler 1 frisst Futter
-            if (player.PlayerX[0] == futterX && player.PlayerY[0] == futterY)
-            {
-                player.Tail++;
-                player.Punkte++;
-                if (Musik.soundplay)
-                {
-                    Console.Beep(700, 100);
-                }
-                SetzeFutter();
-            }
-
-            // Spieler 2 frisst Futter
-            if (player2.PlayerX[0] == futterX && player2.PlayerY[0] == futterY && multiplayer)
-            {
-                player2.Tail++;
-                player2.Punkte++;
-                if (Musik.soundplay)
-                {
-                    Console.Beep(700, 100);
-                }
-                SetzeFutter();
-            }
         }
 
         // Zeigt den Game-Over-Screen an
@@ -331,7 +265,6 @@ namespace Smake.io.Spiel
 
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
         static void ReadInput()
-
         {
 
             while (spiel)
