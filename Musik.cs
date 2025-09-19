@@ -2,11 +2,11 @@ namespace Smake.io
 {
     using System.Media;
     using Smake.io.Spiel;
+    using Smake.io.Speicher;
 
     public class Musik
     {
-        public static bool musikplay = true;
-        public static string[] filenames = ["Smake.wav", "Smake2.wav"];
+        public static bool musikplay;
         public static int currentmusik = 0;
         public static bool soundplay;
 
@@ -19,7 +19,8 @@ namespace Smake.io
 
             while (!Spiellogik.exit)
             {
-                SoundPlayer musik = new(filenames[currentmusik]);
+                string dateipfad = Path.Combine("Sounds", GameData.Filenames[currentmusik]);
+                SoundPlayer musik = new(dateipfad);
 
                 if (musikplay)
                 {
