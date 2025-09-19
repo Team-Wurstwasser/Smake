@@ -7,8 +7,8 @@ namespace Smake.io
 {
     public static class CryptoHelper
     {
-        private static readonly string Passwort = "i4ui63uz6o5z6uzu3zuzm,fcngihdoihf";
-        private static readonly byte[] Salt = Encoding.UTF8.GetBytes("546354636453654");
+        private static readonly string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
+        private static readonly byte[] Salt = Encoding.UTF8.GetBytes("8475864856485");
 
         public static byte[] Encrypt(string plainText)
         {
@@ -42,6 +42,7 @@ namespace Smake.io
     public class SpeicherSystem
     {
         private const string SpeicherDatei = "spielstand.bin";
+        private const string BackupDatei = "spielstand.bak";
 
         public static void Speichern_Laden(string aktion)
         {
@@ -57,7 +58,23 @@ namespace Smake.io
                     Speichern();
                     break;
                 case "Laden":
-                    Laden();
+                    if (!Laden(SpeicherDatei))
+                    {
+                        Console.WriteLine("⚠ Fehler beim Laden, versuche Backup...");
+                        Console.ReadKey();
+                        if (!Laden(BackupDatei))
+                        {
+                            Console.WriteLine("❌ Backup auch beschädigt – Standardwerte werden gesetzt.");
+                            Console.ReadKey();
+                            SetzeStandardwerte();
+                            Speichern();
+                        }
+                    }
+                    else
+                    {
+                        // Bei erfolgreichem Laden ein Backup anlegen
+                        File.Copy(SpeicherDatei, BackupDatei, true);
+                    }
                     break;
             }
         }
@@ -160,11 +177,11 @@ namespace Smake.io
             File.WriteAllBytes(SpeicherDatei, encrypted);
         }
 
-        private static void Laden()
+        private static bool Laden(string datei)
         {
-            if (!File.Exists(SpeicherDatei)) return;
+            if (!File.Exists(datei)) return false;
 
-            byte[] encrypted = File.ReadAllBytes(SpeicherDatei);
+            byte[] encrypted = File.ReadAllBytes(datei);
             string plainText;
 
             try
@@ -173,8 +190,7 @@ namespace Smake.io
             }
             catch
             {
-                Console.WriteLine("Fehler beim Entschlüsseln! Datei beschädigt!");
-                return;
+                return false;
             }
 
             var zeilen = plainText.Split(Environment.NewLine);
@@ -243,6 +259,8 @@ namespace Smake.io
                     // Fehlerhafte Werte ignorieren
                 }
             }
+
+            return true;
         }
     }
 }
