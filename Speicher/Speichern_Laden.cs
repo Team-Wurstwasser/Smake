@@ -3,7 +3,7 @@ using Smake.io.Spiel;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace Smake.io
+namespace Smake.io.Speicher
 {
     public static class CryptoHelper
     {
