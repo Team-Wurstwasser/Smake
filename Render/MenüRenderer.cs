@@ -68,6 +68,7 @@ namespace Smake.io.Render
                 $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
                 $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
                 $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
+                "Spielstand zurücksetzen",
                 "Zurück zum Hauptmenü"
             };
             RenderGenericMenu("EINSTELLUNGEN", optionen, selected);
