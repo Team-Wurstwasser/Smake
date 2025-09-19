@@ -48,6 +48,15 @@ namespace Smake.io.Spiel
 
         public int Headfarbezahl;
 
+        private int xstart;
+        private int ystart;
+
+        public Spieler(int xstart, int ystart)
+        {
+            this.xstart = xstart;
+            this.ystart = ystart;
+        }
+
         public void Neustart()
         {
 
@@ -77,6 +86,10 @@ namespace Smake.io.Spiel
             // Arrays zurücksetzen
             Array.Clear(PlayerX, 0, PlayerX.Length);
             Array.Clear(PlayerY, 0, PlayerY.Length);
+
+            // Spieler-Positionen auf Startwerte setzen
+            PlayerX[0] = xstart;
+            PlayerY[0] = ystart;
 
             // Aussehen einstellen
             Head = Skin;
