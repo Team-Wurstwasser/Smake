@@ -64,7 +64,7 @@ namespace Smake.io.Spiel
             else zeit = 50;
 
             // Initialisiere das Spielfeld mit Rahmen
-            Program.InitialisiereSpiel();
+            InitialisiereSpiel();
 
             SetzeFutter(); // Futter setzen
 
@@ -261,6 +261,44 @@ namespace Smake.io.Spiel
                 }
             }
             while (!check);
+        }
+
+        // Initialisiert das Spielfeld: Rahmen, leere Fläche
+        static void InitialisiereSpiel()
+        {
+
+            Console.SetCursorPosition(0, 0);
+
+            for (int reihe = 0; reihe < Spiellogik.grid.GetLength(0); reihe++)
+
+            {
+
+                for (int symbol = 0; symbol < Spiellogik.grid.GetLength(1); symbol++)
+
+                {
+
+                    // Rand des Spielfelds mit RandSkin markieren
+
+                    if (reihe == 0 || reihe == Spiellogik.grid.GetLength(0) - 1 || symbol == 0 || symbol == Spiellogik.grid.GetLength(1) - 1)
+
+                    {
+
+                        Spiellogik.grid[reihe, symbol] = Spiellogik.rand;
+
+                    }
+
+                    else
+
+                    {
+
+                        Spiellogik.grid[reihe, symbol] = ' ';
+
+                    }
+
+                }
+
+            }
+
         }
 
         // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
