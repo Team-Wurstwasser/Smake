@@ -82,44 +82,6 @@ namespace Smake.io
 
         }
 
-        // Initialisiert das Spielfeld: Rahmen, leere Fläche
-        public static void InitialisiereSpiel()
-        {
-
-            Console.SetCursorPosition(0, 0);
-
-            for (int reihe = 0; reihe < Spiellogik.grid.GetLength(0); reihe++)
-
-            {
-
-                for (int symbol = 0; symbol < Spiellogik.grid.GetLength(1); symbol++)
-
-                {
-
-                    // Rand des Spielfelds mit RandSkin markieren
-
-                    if (reihe == 0 || reihe == Spiellogik.grid.GetLength(0) - 1 || symbol == 0 || symbol == Spiellogik.grid.GetLength(1) - 1)
-
-                    {
-
-                        Spiellogik.grid[reihe, symbol] = Spiellogik.rand;
-
-                    }
-
-                    else
-
-                    {
-
-                        Spiellogik.grid[reihe, symbol] = ' ';
-
-                    }
-
-                }
-
-            }
-
-        }
-
     }
 
 }
