@@ -77,25 +77,25 @@ namespace Smake.io.Speicher
         static void LoadSounds(string path)
         {
             var data = LoadJson<Sounds>(path);
-            Filenames = data?.Filenames ?? Array.Empty<string>();
+            Filenames = data?.Filenames ?? [];
         }
 
         static void LoadPreise(string path)
         {
             var data = LoadJson<Preise>(path);
-            TailPreis = data?.TailPreis ?? Array.Empty<int>();
-            FoodPreis = data?.FoodPreis ?? Array.Empty<int>();
-            RandPreis = data?.RandPreis ?? Array.Empty<int>();
-            FarbenPreis = data?.FarbenPreis ?? Array.Empty<int>();
+            TailPreis = data?.TailPreis ?? [];
+            FoodPreis = data?.FoodPreis ?? [];
+            RandPreis = data?.RandPreis ?? [];
+            FarbenPreis = data?.FarbenPreis ?? [];
         }
 
         static void LoadLevel(string path)
         {
             var data = LoadJson<Level>(path);
-            TailLevel = data?.TailLevel ?? Array.Empty<int>();
-            FoodLevel = data?.FoodLevel ?? Array.Empty<int>();
-            RandLevel = data?.RandLevel ?? Array.Empty<int>();
-            FarbenLevel = data?.FarbenLevel ?? Array.Empty<int>();
+            TailLevel = data?.TailLevel ?? [];
+            FoodLevel = data?.FoodLevel ?? [];
+            RandLevel = data?.RandLevel ?? [];
+            FarbenLevel = data?.FarbenLevel ?? [];
         }
 
         static void LoadSkins(string path)
@@ -104,10 +104,10 @@ namespace Smake.io.Speicher
             Farben = data?.Farben?.Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? (ConsoleColor?)c : null)
                                   .Where(c => c.HasValue)
                                   .Select(c => c.Value)
-                                  .ToArray() ?? Array.Empty<ConsoleColor>();
-            TailSkins = data?.TailSkins ?? Array.Empty<char>();
-            FoodSkins = data?.FoodSkins ?? Array.Empty<char>();
-            RandSkins = data?.RandSkins ?? Array.Empty<char>();
+                                  .ToArray() ?? [];
+            TailSkins = data?.TailSkins ?? [];
+            FoodSkins = data?.FoodSkins ?? [];
+            RandSkins = data?.RandSkins ?? [];
         }
 
         static void LoadGameConfig(string path)
@@ -165,8 +165,8 @@ namespace Smake.io.Speicher
         // XOR-Entschlüsselung
         private static class XorCrypt
         {
-            public static readonly byte[] key = new byte[]
-            {
+            public static readonly byte[] key =
+            [
                 0x5B, 0x42, 0x9D, 0xB1, 0xB4, 0x40, 0xDB, 0x83, 0x85,
                 0x35, 0x79, 0x37, 0xF6, 0xB3, 0xF8, 0x9C, 0x47, 0xB5,
                 0xE1, 0x96, 0x74, 0x55, 0x92, 0x43, 0xAD, 0x49, 0x90,
@@ -197,18 +197,18 @@ namespace Smake.io.Speicher
                 0xE2, 0x7E, 0xA8, 0x4F, 0x5D, 0x80, 0x12, 0x12, 0x9B,
                 0x62, 0xE3, 0x1B, 0x1D, 0x8F, 0xA3, 0xE9, 0xE9, 0xC4,
                 0xF4, 0x32
-            };
+            ];
 
             public static string DecryptJsonFileToString(string path)
             {
                 byte[] encryptedData = File.ReadAllBytes(path);
                 if (encryptedData.Length <= 3) return string.Empty;
 
-                byte[] decryptedData = new byte[encryptedData.Length - 3]; // Header FNX entfernen
-                for (int i = 3; i < encryptedData.Length; i++)
+                byte[] decryptedData = new byte[encryptedData.Length - 5]; // Header SMAKE entfernen
+                for (int i = 5; i < encryptedData.Length; i++)
                 {
-                    int k = (i - 3) % key.Length;
-                    decryptedData[i - 3] = (byte)(encryptedData[i] ^ key[k]);
+                    int k = (i - 5) % key.Length;
+                    decryptedData[i - 5] = (byte)(encryptedData[i] ^ key[k]);
                 }
 
                 return Encoding.UTF8.GetString(decryptedData);
