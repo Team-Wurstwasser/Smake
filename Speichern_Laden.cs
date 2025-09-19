@@ -173,7 +173,7 @@ namespace Smake.io
             }
             catch
             {
-                Console.WriteLine("Fehler beim Entschlüsseln! Datei beschädigt oder falsches Passwort.");
+                Console.WriteLine("Fehler beim Entschlüsseln! Datei beschädigt!");
                 return;
             }
 
