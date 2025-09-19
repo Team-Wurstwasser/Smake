@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Media;
 using System.Numerics;
 using Smake.io.Render;
+using Smake.io.Speicher;
 
 namespace Smake.io.Spiel
 {
@@ -41,15 +42,12 @@ namespace Smake.io.Spiel
         public static int xp;
         public static int level;
 
-        // Maximale Punkte
-        public readonly static int maxpunkte = 20;
-
         // Spielgeschwindigkeit
         static int zeit;
 
-        public static Spieler player = new(36,4);
+        public static Spieler player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y);
 
-        public static Spieler player2 = new(4,4);
+        public static Spieler player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y);
 
         // Allen Variablen den Startwert geben
         static void Neustart()
@@ -64,9 +62,9 @@ namespace Smake.io.Spiel
             unentschieden = false;
 
             // Zeit einstellen
-            if (difficulty == "Langsam") zeit = 150;
-            else if (difficulty == "Mittel") zeit = 100;
-            else zeit = 50;
+            if (difficulty == "Langsam") zeit = GameData.SpielSchwierigkeit.Langsam;
+            else if (difficulty == "Mittel") zeit = GameData.SpielSchwierigkeit.Mittel;
+            else zeit = GameData.SpielSchwierigkeit.Schnell;
 
             // Initialisiere das Spielfeld mit Rahmen
             InitialisiereSpiel();
@@ -303,8 +301,8 @@ namespace Smake.io.Spiel
             }
             else
             {
-                Menüs.gesamtcoins = (Spiellogik.maxpunkte) / 2 + Menüs.gesamtcoins;
-                coins = (Spiellogik.maxpunkte) / 2 + coins;
+                Menüs.gesamtcoins = (GameData.MaxPunkte) / 2 + Menüs.gesamtcoins;
+                coins = (GameData.MaxPunkte) / 2 + coins;
             }
 
         }
@@ -315,21 +313,21 @@ namespace Smake.io.Spiel
 
             Console.SetCursorPosition(0, 0);
 
-            for (int reihe = 0; reihe < Spiellogik.grid.GetLength(0); reihe++)
+            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
 
             {
 
-                for (int symbol = 0; symbol < Spiellogik.grid.GetLength(1); symbol++)
+                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
 
                 {
 
                     // Rand des Spielfelds mit RandSkin markieren
 
-                    if (reihe == 0 || reihe == Spiellogik.grid.GetLength(0) - 1 || symbol == 0 || symbol == Spiellogik.grid.GetLength(1) - 1)
+                    if (reihe == 0 || reihe == grid.GetLength(0) - 1 || symbol == 0 || symbol == grid.GetLength(1) - 1)
 
                     {
 
-                        Spiellogik.grid[reihe, symbol] = Spiellogik.rand;
+                        grid[reihe, symbol] = rand;
 
                     }
 
@@ -337,7 +335,7 @@ namespace Smake.io.Spiel
 
                     {
 
-                        Spiellogik.grid[reihe, symbol] = ' ';
+                        grid[reihe, symbol] = ' ';
 
                     }
 

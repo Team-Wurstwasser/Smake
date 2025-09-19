@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Numerics;
+using Smake.io.Speicher;
 
 namespace Smake.io.Spiel
 {
@@ -73,8 +74,8 @@ namespace Smake.io.Spiel
             // Maximale Länge einstellen
             if (Spiellogik.gamemode == "Normal" || Spiellogik.gamemode == "Babymode")
             {
-                PlayerX = new int[Spiellogik.maxpunkte + Tail + 2];
-                PlayerY = new int[Spiellogik.maxpunkte + Tail + 2];
+                PlayerX = new int[GameData.MaxPunkte + Tail + 2];
+                PlayerY = new int[GameData.MaxPunkte + Tail + 2];
             }
             else
             {
@@ -244,12 +245,12 @@ namespace Smake.io.Spiel
             {
                 if (KollisionPlayer || KollisionRand)
                     spielerTot = true;
-                else if (Punkte >= Spiellogik.maxpunkte)
+                else if (Punkte >= GameData.MaxPunkte)
                     gegnerTot = true;
             }
             else if (Spiellogik.gamemode == "Babymode")
             {
-                if (Punkte >= Spiellogik.maxpunkte)
+                if (Punkte >= GameData.MaxPunkte)
                 {
                     gegnerTot = true;
                 }
