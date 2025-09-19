@@ -126,8 +126,8 @@ namespace Smake.io.Render
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {Program.coins}");
-            Console.WriteLine($"Level: {Program.level}");
+            Console.WriteLine($"Coins: {Spiellogik.coins}");
+            Console.WriteLine($"Level: {Spiellogik.level}");
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine("←  Wechsle die Shopseite  →");
         }
@@ -140,7 +140,7 @@ namespace Smake.io.Render
                 // Korrigiert den Index für Preis- und Level-Arrays basierend auf dem StartIndex
                 int shopItemIndex = i - startIndex;
 
-                string shoptext = Program.level < levels[shopItemIndex]
+                string shoptext = Spiellogik.level < levels[shopItemIndex]
                     ? $"[Benötigtes Level: {levels[shopItemIndex]}]"
                     : unlocked[i] ? "[Freigeschaltet]" : $"[{prices[shopItemIndex]} Coins]";
 
@@ -173,7 +173,7 @@ namespace Smake.io.Render
             int option = 0;
             for (int i = 1; i < Menüs.farben.Length; i++, option++)
             {
-                string shoptext = Program.level < Menüs.FarbenLevel[i - 1]
+                string shoptext = Spiellogik.level < Menüs.FarbenLevel[i - 1]
                     ? $"[Benötigtes Level: {Menüs.FarbenLevel[i - 1]}]"
                     : Menüs.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{Menüs.FarbenPreis[i - 1]} Coins]";
 
@@ -209,19 +209,19 @@ namespace Smake.io.Render
             Console.WriteLine("Statistiken\n ");
             Console.WriteLine("══════════════════════════════\n ");
 
-            int punktefürLevel = Program.xp % 100;
+            int punktefürLevel = Spiellogik.xp % 100;
             int balkenLänge = 20;
             int gefüllt = (punktefürLevel * balkenLänge) / 100;
             string bar = new string('█', gefüllt).PadRight(balkenLänge, '-');
 
-            Console.WriteLine($"Level:                    {Program.level}");
+            Console.WriteLine($"Level:                    {Spiellogik.level}");
             Console.WriteLine($"Fortschritt:              [{bar}] {punktefürLevel}/100\n");
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Gesamte Spiele:           {Program.spieleGesamt}");
-            Console.WriteLine($"Höchste Punktzahl:        {Program.highscore}");
-            Console.WriteLine($"Durchschnittliche XP:     {(Program.spieleGesamt > 0 ? Program.xp / Program.spieleGesamt : 0)}");
-            Console.WriteLine($"Gesamte Coins:            {Program.gesamtcoins}");
-            Console.WriteLine($"Aktuelle Coins:           {Program.coins}");
+            Console.WriteLine($"Gesamte Spiele:           {Menüs.spieleGesamt}");
+            Console.WriteLine($"Höchste Punktzahl:        {Menüs.highscore}");
+            Console.WriteLine($"Durchschnittliche XP:     {(Menüs.spieleGesamt > 0 ? Spiellogik.xp / Menüs.spieleGesamt : 0)}");
+            Console.WriteLine($"Gesamte Coins:            {Menüs.gesamtcoins}");
+            Console.WriteLine($"Aktuelle Coins:           {Spiellogik.coins}");
             Console.WriteLine("══════════════════════════════");
             Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
             Console.ReadKey();

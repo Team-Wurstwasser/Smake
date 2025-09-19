@@ -105,11 +105,11 @@ namespace Smake.io
 
             RendernSpielfeld.performancemode = false;
 
-            Program.coins = 0;
-            Program.xp = 0;
-            Program.gesamtcoins = 0;
-            Program.highscore = 0;
-            Program.spieleGesamt = 0;
+            Spiellogik.coins = 0;
+            Spiellogik.xp = 0;
+            Menüs.gesamtcoins = 0;
+            Menüs.highscore = 0;
+            Menüs.spieleGesamt = 0;
 
             Spiellogik.difficulty = "Mittel";
             Spiellogik.gamemode = "Normal";
@@ -143,11 +143,11 @@ namespace Smake.io
                 $"foodfarbezahl={Menüs.foodfarbezahl}",
                 $"randfarbezahl={Menüs.randfarbezahl}",
                 $"performancemode={RendernSpielfeld.performancemode}",
-                $"coins={Program.coins}",
-                $"xp={Program.xp}",
-                $"spieleGesamt={Program.spieleGesamt}",
-                $"highscore={Program.highscore}",
-                $"gesamtcoins={Program.gesamtcoins}",
+                $"coins={Spiellogik.coins}",
+                $"xp={Spiellogik.xp}",
+                $"spieleGesamt={Menüs.spieleGesamt}",
+                $"highscore={Menüs.highscore}",
+                $"gesamtcoins={Menüs.gesamtcoins}",
                 $"difficulty={Spiellogik.difficulty}",
                 $"gamemode={Spiellogik.gamemode}",
                 $"multiplayer={Spiellogik.multiplayer}",
@@ -222,11 +222,11 @@ namespace Smake.io
                         case "randfarbezahl": Menüs.randfarbezahl = int.Parse(wert); break;
 
                         case "performancemode": RendernSpielfeld.performancemode = bool.Parse(wert); break;
-                        case "coins": Program.coins = int.Parse(wert); break;
-                        case "xp": Program.xp = int.Parse(wert); break;
-                        case "gesamtcoins": Program.gesamtcoins = int.Parse(wert); break;
-                        case "highscore": Program.highscore = int.Parse(wert); break;
-                        case "spieleGesamt": Program.spieleGesamt = int.Parse(wert); break;
+                        case "coins": Spiellogik.coins = int.Parse(wert); break;
+                        case "xp": Spiellogik.xp = int.Parse(wert); break;
+                        case "gesamtcoins": Menüs.gesamtcoins = int.Parse(wert); break;
+                        case "highscore": Menüs.highscore = int.Parse(wert); break;
+                        case "spieleGesamt": Menüs.spieleGesamt = int.Parse(wert); break;
 
                         case "difficulty": Spiellogik.difficulty = wert; break;
                         case "gamemode": Spiellogik.gamemode = wert; break;
