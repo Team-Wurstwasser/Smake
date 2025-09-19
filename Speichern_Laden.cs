@@ -54,6 +54,9 @@ namespace Smake.io
 
             switch (aktion)
             {
+                case "Zurücksetzen":
+                    SetzeStandardwerte();
+                    break;
                 case "Speichern":
                     Speichern();
                     break;
