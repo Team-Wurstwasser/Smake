@@ -171,12 +171,12 @@ namespace Smake.io
                 {
                     case ConsoleKey.UpArrow:
                         einstellungsAuswahl--;
-                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 7;
+                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 8;
                         break;
 
                     case ConsoleKey.DownArrow:
                         einstellungsAuswahl++;
-                        if (einstellungsAuswahl > 7) einstellungsAuswahl = 1;
+                        if (einstellungsAuswahl > 8) einstellungsAuswahl = 1;
                         break;
                     case ConsoleKey.Escape:
                         menu = false;
@@ -206,6 +206,9 @@ namespace Smake.io
                                 Musik.soundplay = !Musik.soundplay;
                                 break;
                             case 7:
+                                ResetSpielstand();
+                                break;
+                            case 8:
                                 menu = false;
                                 break;
                         }
@@ -229,6 +232,29 @@ namespace Smake.io
             if (Spiellogik.gamemode == "Normal") Spiellogik.gamemode = "Unendlich";
             else if (Spiellogik.gamemode == "Unendlich") Spiellogik.gamemode = "Babymode";
             else Spiellogik.gamemode = "Normal";
+        }
+
+        static void ResetSpielstand()
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                Console.WriteLine($"Willst du deinen Spielstand wirklich zurücksetzen? ({i}/3) [ja/nein]");
+                string eingabe = Console.ReadLine()?.Trim().ToLower();
+                Console.Clear();
+                if (eingabe != "ja")
+                {
+                    Console.WriteLine("Zurücksetzen abgebrochen.");
+                    Console.ReadKey();
+                    Console.Clear();
+                    return;
+                }
+            }
+
+            // Wenn alle drei Bestätigungen "ja" waren:
+            SpeicherSystem.Speichern_Laden("Zurücksetzen");
+            Console.WriteLine("Dein Spielstand wurde zurückgesetzt!");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         // Shop - Menü im Hauptmenü
