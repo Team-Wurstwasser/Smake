@@ -87,17 +87,6 @@ namespace Smake.io.Speicher
 
         private static void SetzeStandardwerte()
         {
-            Menüs.randzahl = 0;
-            Menüs.foodzahl = 0;
-            Spiellogik.player.Skinzahl = 0;
-            Spiellogik.player2.Skinzahl = 1;
-            Spiellogik.player.Headfarbezahl = 0;
-            Spiellogik.player2.Headfarbezahl = 0;
-            Spiellogik.player.Farbezahl = 0;
-            Spiellogik.player2.Farbezahl = 0;
-            Menüs.foodfarbezahl = 0;
-            Menüs.randfarbezahl = 0;
-
             Musik.musikplay = true;
             Musik.soundplay = true;
 
@@ -135,16 +124,6 @@ namespace Smake.io.Speicher
         {
             var zeilen = new List<string>
             {
-                $"randzahl={Menüs.randzahl}",
-                $"foodzahl={Menüs.foodzahl}",
-                $"player1.Skinzahl={Spiellogik.player.Skinzahl}",
-                $"player2.Skinzahl={Spiellogik.player2.Skinzahl}",
-                $"player1.Headfarbezahl={Spiellogik.player.Headfarbezahl}",
-                $"player2.Headfarbezahl={Spiellogik.player2.Headfarbezahl}",
-                $"player1.Farbezahl={Spiellogik.player.Farbezahl}",
-                $"player2.Farbezahl={Spiellogik.player2.Farbezahl}",
-                $"foodfarbezahl={Menüs.foodfarbezahl}",
-                $"randfarbezahl={Menüs.randfarbezahl}",
                 $"performancemode={RendernSpielfeld.performancemode}",
                 $"coins={Spiellogik.coins}",
                 $"xp={Spiellogik.xp}",
@@ -213,17 +192,6 @@ namespace Smake.io.Speicher
                 {
                     switch (name)
                     {
-                        case "randzahl": Menüs.randzahl = int.Parse(wert); break;
-                        case "foodzahl": Menüs.foodzahl = int.Parse(wert); break;
-                        case "player1.Skinzahl": Spiellogik.player.Skinzahl = int.Parse(wert); break;
-                        case "player2.Skinzahl": Spiellogik.player2.Skinzahl = int.Parse(wert); break;
-                        case "player1.Headfarbezahl": Spiellogik.player.Headfarbezahl = int.Parse(wert); break;
-                        case "player2.Headfarbezahl": Spiellogik.player2.Headfarbezahl = int.Parse(wert); break;
-                        case "player1.Farbezahl": Spiellogik.player.Farbezahl = int.Parse(wert); break;
-                        case "player2.Farbezahl": Spiellogik.player2.Farbezahl = int.Parse(wert); break;
-                        case "foodfarbezahl": Menüs.foodfarbezahl = int.Parse(wert); break;
-                        case "randfarbezahl": Menüs.randfarbezahl = int.Parse(wert); break;
-
                         case "performancemode": RendernSpielfeld.performancemode = bool.Parse(wert); break;
                         case "coins": Spiellogik.coins = int.Parse(wert); break;
                         case "xp": Spiellogik.xp = int.Parse(wert); break;
