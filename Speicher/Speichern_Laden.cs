@@ -181,6 +181,7 @@ namespace Smake.io.Speicher
                 $"coins={Spiellogik.coins}",
                 $"xp={Spiellogik.xp}",
                 $"spieleGesamt={Menüs.spieleGesamt}",
+                $"maxfutter={Spiellogik.maxfutter}",
                 $"highscore={Menüs.highscore}",
                 $"gesamtcoins={Menüs.gesamtcoins}",
                 $"difficulty={Spiellogik.difficulty}",
@@ -251,6 +252,7 @@ namespace Smake.io.Speicher
                         case "gesamtcoins": Menüs.gesamtcoins = int.Parse(wert); break;
                         case "highscore": Menüs.highscore = int.Parse(wert); break;
                         case "spieleGesamt": Menüs.spieleGesamt = int.Parse(wert); break;
+                        case "maxfutter": Spiellogik.maxfutter = int.Parse(wert); break;
 
                         case "difficulty": Spiellogik.difficulty = wert; break;
                         case "gamemode": Spiellogik.gamemode = wert; break;
