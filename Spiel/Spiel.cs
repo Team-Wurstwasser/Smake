@@ -4,6 +4,7 @@ using System.Media;
 using System.Numerics;
 using Smake.io.Render;
 using Smake.io.Speicher;
+using static Smake.io.Speicher.GameData;
 
 namespace Smake.io.Spiel
 {
@@ -52,7 +53,31 @@ namespace Smake.io.Spiel
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
-            Musik.currentmusik = 1;
+            int currentMusik = 0;
+
+            if (gamemode == "Normal")
+            {
+                if (difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Normal.Langsam;
+                else if (difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Normal.Mittel;
+                else if (difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Normal.Schnell;
+            }
+            else if (gamemode == "Unendlich")
+            {
+                if (difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Unendlich.Langsam;
+                else if (difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Unendlich.Mittel;
+                else if (difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Unendlich.Schnell;
+            }
+            else if (gamemode == "Babymode")
+            {
+                if (difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Babymode.Langsam;
+                else if (difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Babymode.Mittel;
+                else if (difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Babymode.Schnell;
+            }
+
+            // Zuweisung an dein Musiksystem
+            Musik.currentmusik = currentMusik;
+
+
             SpeicherSystem.Speichern_Laden("Speichern");
 
             spiel = true;

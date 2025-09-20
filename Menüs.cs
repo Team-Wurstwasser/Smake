@@ -26,6 +26,9 @@ namespace Smake.io
         // Eingaben für Spielernamen
         public static void Eingaben()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.currentmusik = GameData.MusikDaten.Menue.Eingabe;
+
             Console.Clear();
             Console.Write("Spieler 1, gib deinen Namen ein: ");
             Spiellogik.player.Name = Console.ReadLine();
@@ -40,7 +43,9 @@ namespace Smake.io
         //Logik des Mainmenüs
         public static void ShowMainMenue()
         {
-            Musik.currentmusik = 0;
+            // Zuweisung an dein Musiksystem
+            Musik.currentmusik = GameData.MusikDaten.Menue.Main;
+
             SpeicherSystem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
@@ -112,9 +117,13 @@ namespace Smake.io
                     Skin_Farben();
                     break;
                 case 6:
+                    // Zuweisung an dein Musiksystem
+                    Musik.currentmusik = GameData.MusikDaten.Menue.Anleitung;
                     MenüRenderer.RenderAnleitung();
                     break;
                 case 5:
+                    // Zuweisung an dein Musiksystem
+                    Musik.currentmusik = GameData.MusikDaten.Menue.Statistiken;
                     MenüRenderer.RenderStatistiken();
                     break;
                 case 7:
@@ -126,6 +135,9 @@ namespace Smake.io
         // Einstellungsmenü im Hauptmenü
         static void Einstellungen()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.currentmusik = GameData.MusikDaten.Menue.Einstellungen;
+
             Console.Clear();
             bool menu = true;
             int einstellungsAuswahl = 1;
@@ -231,6 +243,8 @@ namespace Smake.io
         // Shop - Menü im Hauptmenü
         static void Shop()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.currentmusik = GameData.MusikDaten.Menue.Shop;
             Console.Clear();
             bool menu = true;
             int auswahl = 1;
@@ -363,6 +377,8 @@ namespace Smake.io
         // Logik für Skin und Farben menü
         static void Skin_Farben()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.currentmusik = GameData.MusikDaten.Menue.SkinFarben;
             Console.Clear();
             bool menu = true;
             int Skin_FarbenAuswahl = 1;
