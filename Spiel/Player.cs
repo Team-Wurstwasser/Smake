@@ -222,8 +222,6 @@ namespace Smake.io.Spiel
             PlayerY[0] = y;
         }
 
-
-
         // Der Spieler isst das Futter
         void EsseFutter()
         {
