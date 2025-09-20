@@ -8,35 +8,61 @@ namespace Smake.io.Speicher
     public static class CryptoHelper
     {
         private static readonly string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
-        private static readonly byte[] Salt = Encoding.UTF8.GetBytes("8475864856485");
+
+        // Länge des Salts in Bytes
+        private const int SaltLength = 16;
 
         public static byte[] Encrypt(string plainText)
         {
-            using var aes = Aes.Create();
+            // Zufälligen Salt erzeugen
+            byte[] salt = RandomNumberGenerator.GetBytes(SaltLength);
 
-            // Rfc2898DeriveBytes mit SHA256 und 100.000 Iterationen
-            using var key = new Rfc2898DeriveBytes(Passwort, Salt, 100_000, HashAlgorithmName.SHA256);
+            using var aes = Aes.Create();
+            using var key = new Rfc2898DeriveBytes(Passwort, salt, 100_000, HashAlgorithmName.SHA256);
+
             aes.Key = key.GetBytes(32);
             aes.IV = key.GetBytes(16);
 
             using var ms = new MemoryStream();
-            using var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);
-            using var sw = new StreamWriter(cs);
-            sw.Write(plainText);
-            sw.Close();
-            return ms.ToArray();
+            using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+            using (var sw = new StreamWriter(cs))
+            {
+                sw.Write(plainText);
+            }
+
+            byte[] encryptedData = ms.ToArray();
+
+            // Salt vorne anfügen, damit es beim Entschlüsseln verfügbar ist
+            byte[] result = new byte[SaltLength + encryptedData.Length];
+            Array.Copy(salt, 0, result, 0, SaltLength);
+            Array.Copy(encryptedData, 0, result, SaltLength, encryptedData.Length);
+
+            return result;
         }
 
-        public static string Decrypt(byte[] cipherText)
+        public static string Decrypt(byte[] cipherWithSalt)
         {
+            if (cipherWithSalt.Length < SaltLength)
+                throw new ArgumentException("Ungültige verschlüsselte Daten");
+
+            // Salt aus den ersten Bytes auslesen
+            byte[] salt = new byte[SaltLength];
+            Array.Copy(cipherWithSalt, 0, salt, 0, SaltLength);
+
+            // Restliche Daten = verschlüsselter Text
+            byte[] cipherText = new byte[cipherWithSalt.Length - SaltLength];
+            Array.Copy(cipherWithSalt, SaltLength, cipherText, 0, cipherText.Length);
+
             using var aes = Aes.Create();
-            using var key = new Rfc2898DeriveBytes(Passwort, Salt, 100_000, HashAlgorithmName.SHA256);
+            using var key = new Rfc2898DeriveBytes(Passwort, salt, 100_000, HashAlgorithmName.SHA256);
+
             aes.Key = key.GetBytes(32);
             aes.IV = key.GetBytes(16);
 
             using var ms = new MemoryStream(cipherText);
             using var cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
             using var sr = new StreamReader(cs);
+
             return sr.ReadToEnd();
         }
     }
@@ -48,7 +74,28 @@ namespace Smake.io.Speicher
 
         public static void Speichern_Laden(string aktion)
         {
-            if (!File.Exists(SpeicherDatei))
+            // Wenn die Hauptdatei fehlt, aber ein Backup existiert, lade das Backup
+            if (!File.Exists(SpeicherDatei) && File.Exists(BackupDatei))
+            {
+                Console.WriteLine("Hauptdatei fehlt, lade Backup...");
+                Console.ReadKey();
+                if (!Laden(BackupDatei))
+                {
+                    Console.WriteLine("❌ Backup beschädigt – Standardwerte werden gesetzt.");
+                    Console.ReadKey();
+                    SetzeStandardwerte();
+                    Speichern();
+                }
+                else
+                {
+                    // Backup erfolgreich geladen → Backup als Hauptdatei speichern
+                    File.Copy(BackupDatei, SpeicherDatei, true);
+                }
+                return; // Aktion bereits erledigt
+            }
+
+            // Wenn weder Hauptdatei noch Backup existieren
+            if (!File.Exists(SpeicherDatei) && !File.Exists(BackupDatei))
             {
                 SetzeStandardwerte();
                 Speichern();
@@ -75,6 +122,11 @@ namespace Smake.io.Speicher
                             SetzeStandardwerte();
                             Speichern();
                         }
+                        else
+                        {
+                            // Bei erfolgreichem Laden ein Backup anlegen
+                            File.Copy(BackupDatei, SpeicherDatei, true);
+                        }
                     }
                     else
                     {
@@ -84,6 +136,7 @@ namespace Smake.io.Speicher
                     break;
             }
         }
+
 
         private static void SetzeStandardwerte()
         {
