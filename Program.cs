@@ -18,7 +18,9 @@ namespace Smake.io
             GameData.LoadAllConfigs();
 
             SpeicherSystem.Speichern_Laden("Laden");
-    
+            Spiellogik.coins = 50000000;
+            Spiellogik.xp = 50000000;
+
             Thread melodieThread = new(Musik.Melodie);
             melodieThread.Start();
 

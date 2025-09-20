@@ -291,19 +291,21 @@ namespace Smake.io
                             else if (auswahl + 2 < GameData.TailSkins.Length + GameData.FoodSkins.Length)
                             {
                                 int i = auswahl + 2 - GameData.TailSkins.Length;
-                                if (!freigeschaltetFood[i] && Spiellogik.coins >= GameData.FoodPreis[auswahl - 6] && Spiellogik.level >= GameData.FoodLevel[auswahl - 6])
+                                int b = auswahl + 1 - GameData.TailSkins.Length;
+                                if (!freigeschaltetFood[i] && Spiellogik.coins >= GameData.FoodPreis[b] && Spiellogik.level >= GameData.FoodLevel[b])
                                 {
                                     freigeschaltetFood[i] = true;
-                                    Spiellogik.coins -= GameData.FoodPreis[auswahl - 6];
+                                    Spiellogik.coins -= GameData.FoodPreis[b];
                                 }
                             }
                             else if (auswahl + 3 < GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length)
                             {
                                 int i = auswahl + 3 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
-                                if (!freigeschaltetRand[i] && Spiellogik.coins >= GameData.RandPreis[auswahl - 12] && Spiellogik.level >= GameData.RandLevel[auswahl - 12])
+                                int b = auswahl + 2 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
+                                if (!freigeschaltetRand[i] && Spiellogik.coins >= GameData.RandPreis[b] && Spiellogik.level >= GameData.RandLevel[b])
                                 {
                                     freigeschaltetRand[i] = true;
-                                    Spiellogik.coins -= GameData.RandPreis[auswahl - 12];
+                                    Spiellogik.coins -= GameData.RandPreis[b];
                                 }
                             }
                             break;
