@@ -1,2 +1,20 @@
-SMAKE O—‘”`û¡òPC“‘Â¼s„Í›~u²ckøÔ¢óß„ƒ¢ÀXû”Ší}Ú›,'¨À"Ó°Iý±9òll~áTÏnDÜ¼¬È/ãË#ñ3S ôìãLGÎŒ„#º­XgC•%Õ!“ØŒ‡#`…Íï¬
-vqwQ:ô–ñ*e²~ÃPùºÈŒºñ3WŽ¥9þUˆîî4#Šs`5é#:,.½²Øú<—0ÞxvB¢ÊòÐ;J>6zTWŒKÚ$û&®€""‰Û‰ÇOhÌQl¥$ÜÐÈ›k[’¯Üto„*QÒï‡Ÿå¹ŸR¥E} 22¹Š}{æÀœ…°abæ¼¾`û£¥YÖ‘”ý)Ò’÷w¨cœ| —qpçñÍ”2Š\‰Q¼•<È½9„ÀtO€Ú"Á ,2Iÿâz¸q}sÿL€C7=¿óÏé†pÔá%
+SMAKE{
+    "weite": 41,
+    "hoehe": 20,
+    "maxpunkte": 20,
+    "startpositionen": {
+        "spieler1": {
+            "x": 36,
+            "y": 4
+        },
+        "spieler2": {
+            "x": 4,
+            "y": 4
+        }
+    },
+    "difficulty": {
+        "langsam": 150,
+        "mittel": 100,
+        "schnell": 50
+    }
+}
