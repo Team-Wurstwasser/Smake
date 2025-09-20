@@ -11,26 +11,26 @@ namespace Smake.io.Speicher
     public static class GameData
     {
         // Sounds
-        public static string[] Filenames = Array.Empty<string>();
+        public static string[] Filenames;
         public static Musik MusikDaten = new();
 
         // Preise
-        public static int[] TailPreis = Array.Empty<int>();
-        public static int[] FoodPreis = Array.Empty<int>();
-        public static int[] RandPreis = Array.Empty<int>();
-        public static int[] FarbenPreis = Array.Empty<int>();
+        public static int[] TailPreis;
+        public static int[] FoodPreis;
+        public static int[] RandPreis;
+        public static int[] FarbenPreis;
 
         // Level
-        public static int[] TailLevel = Array.Empty<int>();
-        public static int[] FoodLevel = Array.Empty<int>();
-        public static int[] RandLevel = Array.Empty<int>();
-        public static int[] FarbenLevel = Array.Empty<int>();
+        public static int[] TailLevel;
+        public static int[] FoodLevel;
+        public static int[] RandLevel;
+        public static int[] FarbenLevel;
 
         // Skins / Farben
-        public static ConsoleColor[] Farben = Array.Empty<ConsoleColor>();
-        public static char[] TailSkins = Array.Empty<char>();
-        public static char[] FoodSkins = Array.Empty<char>();
-        public static char[] RandSkins = Array.Empty<char>();
+        public static ConsoleColor[] Farben;
+        public static char[] TailSkins;
+        public static char[] FoodSkins;
+        public static char[] RandSkins;
 
         // Spielkonfiguration
         public static int Weite;
@@ -48,24 +48,24 @@ namespace Smake.io.Speicher
         {
             Load<Sounds>("Json/sounds.json", data =>
             {
-                Filenames = data?.Filenames ?? Array.Empty<string>();
+                Filenames = data?.Filenames ?? [];
                 MusikDaten = data?.Musik ?? new();
             });
 
             Load<Preise>("Json/preise.json", data =>
             {
-                TailPreis = data?.TailPreis ?? Array.Empty<int>();
-                FoodPreis = data?.FoodPreis ?? Array.Empty<int>();
-                RandPreis = data?.RandPreis ?? Array.Empty<int>();
-                FarbenPreis = data?.FarbenPreis ?? Array.Empty<int>();
+                TailPreis = data?.TailPreis ?? [];
+                FoodPreis = data?.FoodPreis ?? [];
+                RandPreis = data?.RandPreis ?? [];
+                FarbenPreis = data?.FarbenPreis ?? [];
             });
 
             Load<Level>("Json/level.json", data =>
             {
-                TailLevel = data?.TailLevel ?? Array.Empty<int>();
-                FoodLevel = data?.FoodLevel ?? Array.Empty<int>();
-                RandLevel = data?.RandLevel ?? Array.Empty<int>();
-                FarbenLevel = data?.FarbenLevel ?? Array.Empty<int>();
+                TailLevel = data?.TailLevel ?? [];
+                FoodLevel = data?.FoodLevel ?? [];
+                RandLevel = data?.RandLevel ?? [];
+                FarbenLevel = data?.FarbenLevel ?? [];
             });
 
             Load<Skins>("Json/skins.json", data =>
@@ -74,11 +74,11 @@ namespace Smake.io.Speicher
                     .Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? (ConsoleColor?)c : null)
                     .Where(c => c.HasValue)
                     .Select(c => c!.Value)
-                    .ToArray() ?? Array.Empty<ConsoleColor>();
+                    .ToArray() ?? [];
 
-                TailSkins = data?.TailSkins ?? Array.Empty<char>();
-                FoodSkins = data?.FoodSkins ?? Array.Empty<char>();
-                RandSkins = data?.RandSkins ?? Array.Empty<char>();
+                TailSkins = data?.TailSkins ?? [];
+                FoodSkins = data?.FoodSkins ?? [];
+                RandSkins = data?.RandSkins ?? [];
             });
 
             Load<GameConfig>("Json/game_config.json", data =>
