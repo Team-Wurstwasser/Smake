@@ -153,12 +153,14 @@ namespace Smake.io.Spiel
                 KollisionPlayer = false;
                 KollisionRand = true;
             }
-            else if (Spiellogik.grid[y, x] != ' ' || Spiellogik.grid[y, x] != Spiellogik.food || Spiellogik.grid[y, x] != Head || Spiellogik.grid[y, x] != Spiellogik.rand)
+            else
             {
+                // Wenn das Feld nicht leer, nicht Food, nicht Head, nicht Rand → Kollision mit Spieler
                 KollisionPlayer = true;
                 KollisionRand = false;
             }
         }
+
 
         // Tailkoordinaten berechnen
         void TailShift()
@@ -178,49 +180,48 @@ namespace Smake.io.Spiel
         // Bewegt die Spieler
         void Bewegung(int x, int y)
         {
-            // Alte Tail-Position berechnen
             int oldTailX = PlayerX[Tail + 1];
             int oldTailY = PlayerY[Tail + 1];
 
-            // Nur bewegen, wenn keine Kollision vorliegt
-            if (!KollisionPlayer && !KollisionRand)
+            // Babymode Wrap-around
+            if (Spiellogik.gamemode == "Babymode")
             {
-                // Spieler-Tail zeichnen
-                for (int i = 0; i <= Tail; i++)
+                if (KollisionRand)
                 {
-                    if (PlayerX[i] >= 0 && PlayerY[i] >= 0) // Nur gültige Koordinaten
-                    {
-                        Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
-                    }
+                    if (InputX == 1) x = 2;
+                    else if (InputX == -1) x = Spiellogik.weite - 3;
+                    else if (InputY == -1) y = Spiellogik.hoehe - 2;
+                    else if (InputY == 1) y = 1;
                 }
-
-                // Altes Tail-Feld leeren, aber niemals den Rand überschreiben
-                if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.grid[oldTailY, oldTailX] != Spiellogik.rand)
-                {
-                    Spiellogik.grid[oldTailY, oldTailX] = ' ';
-                }
-
-                // Spieler-Kopf auf neue Position setzen
-                Spiellogik.grid[y, x] = Head;
-
-                // Spieler-Koordinaten aktualisieren
-                PlayerX[0] = x;
-                PlayerY[0] = y;
             }
-            else if (Spiellogik.gamemode == "Babymode" && KollisionRand)
+            else
             {
-                // Wrap-around im Babymode
-                if (InputX == 1) x = 2;
-                else if (InputX == -1) x = Spiellogik.weite - 3;
-                else if (InputY == -1) y = Spiellogik.hoehe - 2;
-                else if (InputY == 1) y = 1;
-
-                // Kopf nach Wrap-around setzen
-                Spiellogik.grid[y, x] = Head;
-                PlayerX[0] = x;
-                PlayerY[0] = y;
+                // Standard: Bewegung nur wenn keine Kollision
+                if (KollisionPlayer || KollisionRand)
+                    return;
             }
+
+            // Spieler-Tail zeichnen
+            for (int i = 0; i <= Tail; i++)
+            {
+                if (PlayerX[i] >= 0 && PlayerY[i] >= 0)
+                    Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
+            }
+
+            // Altes Tail-Feld leeren (nicht Rand)
+            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.grid[oldTailY, oldTailX] != Spiellogik.rand)
+            {
+                Spiellogik.grid[oldTailY, oldTailX] = ' ';
+            }
+
+            // Kopf setzen
+            Spiellogik.grid[y, x] = Head;
+
+            // Spieler-Koordinaten aktualisieren
+            PlayerX[0] = x;
+            PlayerY[0] = y;
         }
+
 
 
         // Der Spieler isst das Futter
