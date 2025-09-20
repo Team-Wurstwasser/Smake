@@ -19,13 +19,12 @@ namespace Smake.io.Spiel
         public int[] PlayerY;
 
         // Kollisionsvariablen
-        public bool KollisionRand;
+        bool KollisionRand;
 
-        public bool KollisionPlayer;
+        bool KollisionPlayer;
 
         // Länge des Spielers
-
-        public int Tail;
+        int Tail;
 
         //Punkte des Spielers
         public int Punkte;
@@ -42,17 +41,10 @@ namespace Smake.io.Spiel
 
         public ConsoleColor Headfarbe;
 
-        // Shop variablen
-        public int Skinzahl;
+        int xstart = xstart;
+        int ystart = ystart;
 
-        public int Farbezahl;
-
-        public int Headfarbezahl;
-
-        private int xstart = xstart;
-        private int ystart = ystart;
-
-        private void InitialisiereSpieler()
+        void InitialisiereSpieler()
         {
             // Spielerzeichen auf Startposition setzen
             Spiellogik.grid[PlayerY[0], PlayerX[0]] = Head;
@@ -85,8 +77,8 @@ namespace Smake.io.Spiel
 
 
             // Arrays zurücksetzen
-            Array.Clear(PlayerX, 0, PlayerX.Length);
-            Array.Clear(PlayerY, 0, PlayerY.Length);
+            Array.Fill(PlayerX, -1);
+            Array.Fill(PlayerY, -1);
 
             // Spieler-Positionen auf Startwerte setzen
             PlayerX[0] = xstart;
@@ -103,7 +95,7 @@ namespace Smake.io.Spiel
             InitialisiereSpieler();
         }
 
-        public void Update()
+        public (bool spielerTot, bool gegnerTot) Update()
         {
 
             // Neue Zielkoordinaten berechnen
@@ -115,123 +107,12 @@ namespace Smake.io.Spiel
             TailShift();
             Bewegung(newPlayerX, newPlayerY);
             EsseFutter();
+
+            return GameoverChecker();
         }
 
-        // Prüft die Kollision
-        private void Kollision(int x, int y)
-        {
-            if (Spiellogik.grid[y, x] == ' ' || Spiellogik.grid[y, x] == Spiellogik.food || Spiellogik.grid[y, x] == Head)
-            {
-                KollisionPlayer = false;
-                KollisionRand = false;
-            }
-            else if (Spiellogik.grid[y, x] == Spiellogik.rand)
-            {
-                KollisionPlayer = false;
-                KollisionRand = true;
-            }
-            else if (Spiellogik.grid[y, x] != ' ' || Spiellogik.grid[y, x] != Spiellogik.food || Spiellogik.grid[y, x] != Head || Spiellogik.grid[y, x] != Spiellogik.rand)
-            {
-                KollisionPlayer = true;
-                KollisionRand = false;
-            }
-        }
 
-        // Tailkoordinaten berechnen
-        private void TailShift()
-        {
-            for (int i = PlayerX.Length - 1; i > 0; i--)
-            {
-                PlayerX[i] = PlayerX[i - 1];
-            }
-
-            for (int i = PlayerY.Length - 1; i > 0; i--)
-            {
-                PlayerY[i] = PlayerY[i - 1];
-            }
-
-        }
-
-        // Bewegt die Spieler
-        private void Bewegung(int x, int y)
-        {
-            // Wenn das Zielfeld leer ist (kein Hindernis), bewege den Spieler
-            if (Spiellogik.gamemode != "Babymode")
-            {
-                if (!KollisionPlayer && !KollisionRand)
-                {
-                    for (int i = 0; i <= Tail; i++)       // Tail des Spielers Zeichnen
-                    {
-                        Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
-                    }
-                    Spiellogik.grid[PlayerY[Tail + 1], PlayerX[Tail + 1]] = ' ';        // Altes Feld leeren
-
-                    Spiellogik.grid[y, x] = Head;  // Spieler auf neues Feld setzen
-
-                    PlayerX[0] = x;
-                    PlayerY[0] = y;
-                }
-                else
-                {
-                    return;
-                }
-
-            }
-            else
-            {
-
-                if (KollisionRand)
-                {
-                    if (InputX == 1)
-                    {
-                        x = 2;
-                    }
-                    else if (InputX == -1)
-                    {
-                        x = Spiellogik.weite - 3;
-                    }
-                    else if (InputY == -1)
-                    {
-                        y = Spiellogik.hoehe - 2;
-                    }
-                    else if (InputY == 1)
-                    {
-                        y = 1;
-                    }
-                }
-            }
-
-            for (int i = 0; i <= Tail; i++)       // Tail des Spielers Zeichnen
-            {
-                Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
-            }
-            
-            Spiellogik.grid[PlayerY[Tail + 1], PlayerX[Tail + 1]] = ' ';        // Altes Feld leeren
-
-            Spiellogik.grid[y, x] = Head;  // Spieler auf neues Feld setzen
-
-            PlayerX[0] = x;
-            PlayerY[0] = y;
-
-        }
-
-        // Der Spieler isst das Futter
-        private void EsseFutter()
-        {
-            // Spieler frisst Futter
-            if (PlayerX[0] == Spiellogik.futterX && PlayerY[0] == Spiellogik.futterY)
-            {
-                Tail++;
-                Punkte++;
-                if (Musik.soundplay)
-                {
-                    Console.Beep(700, 100);
-                }
-                Spiellogik.SetzeFutter();
-            }
-        }
-
-        public (bool spielerTot, bool gegnerTot) Gameover()
+        (bool spielerTot, bool gegnerTot) GameoverChecker()
         {
             bool spielerTot = false;
             bool gegnerTot = false;
@@ -259,5 +140,103 @@ namespace Smake.io.Spiel
             return (spielerTot, gegnerTot);
         }
 
+        // Prüft die Kollision
+        void Kollision(int x, int y)
+        {
+            if (Spiellogik.grid[y, x] == ' ' || Spiellogik.grid[y, x] == Spiellogik.food || Spiellogik.grid[y, x] == Head)
+            {
+                KollisionPlayer = false;
+                KollisionRand = false;
+            }
+            else if (Spiellogik.grid[y, x] == Spiellogik.rand)
+            {
+                KollisionPlayer = false;
+                KollisionRand = true;
+            }
+            else if (Spiellogik.grid[y, x] != ' ' || Spiellogik.grid[y, x] != Spiellogik.food || Spiellogik.grid[y, x] != Head || Spiellogik.grid[y, x] != Spiellogik.rand)
+            {
+                KollisionPlayer = true;
+                KollisionRand = false;
+            }
+        }
+
+        // Tailkoordinaten berechnen
+        void TailShift()
+        {
+            for (int i = PlayerX.Length - 1; i > 0; i--)
+            {
+                PlayerX[i] = PlayerX[i - 1];
+            }
+
+            for (int i = PlayerY.Length - 1; i > 0; i--)
+            {
+                PlayerY[i] = PlayerY[i - 1];
+            }
+
+        }
+
+        // Bewegt die Spieler
+        void Bewegung(int x, int y)
+        {
+            // Alte Tail-Position berechnen
+            int oldTailX = PlayerX[Tail + 1];
+            int oldTailY = PlayerY[Tail + 1];
+
+            // Nur bewegen, wenn keine Kollision vorliegt
+            if (!KollisionPlayer && !KollisionRand)
+            {
+                // Spieler-Tail zeichnen
+                for (int i = 0; i <= Tail; i++)
+                {
+                    if (PlayerX[i] >= 0 && PlayerY[i] >= 0) // Nur gültige Koordinaten
+                    {
+                        Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
+                    }
+                }
+
+                // Altes Tail-Feld leeren, aber niemals den Rand überschreiben
+                if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.grid[oldTailY, oldTailX] != Spiellogik.rand)
+                {
+                    Spiellogik.grid[oldTailY, oldTailX] = ' ';
+                }
+
+                // Spieler-Kopf auf neue Position setzen
+                Spiellogik.grid[y, x] = Head;
+
+                // Spieler-Koordinaten aktualisieren
+                PlayerX[0] = x;
+                PlayerY[0] = y;
+            }
+            else if (Spiellogik.gamemode == "Babymode" && KollisionRand)
+            {
+                // Wrap-around im Babymode
+                if (InputX == 1) x = 2;
+                else if (InputX == -1) x = Spiellogik.weite - 3;
+                else if (InputY == -1) y = Spiellogik.hoehe - 2;
+                else if (InputY == 1) y = 1;
+
+                // Kopf nach Wrap-around setzen
+                Spiellogik.grid[y, x] = Head;
+                PlayerX[0] = x;
+                PlayerY[0] = y;
+            }
+        }
+
+
+        // Der Spieler isst das Futter
+        void EsseFutter()
+        {
+            // Spieler frisst Futter
+            if (PlayerX[0] == Spiellogik.futterX && PlayerY[0] == Spiellogik.futterY)
+            {
+                Tail++;
+                Punkte++;
+                if (Musik.soundplay)
+                {
+                    Console.Beep(700, 100);
+                }
+                Spiellogik.SetzeFutter();
+            }
+        }
     }
 }
