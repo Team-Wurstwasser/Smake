@@ -368,18 +368,18 @@ namespace Smake.io
             // Zuweisung an dein Musiksystem
             Musik.currentmusik = GameData.MusikDaten.Menue.SkinFarben;
             Console.Clear();
+
             bool menu = true;
             int Skin_FarbenAuswahl = 1;
 
-            do
+            while (menu)
             {
+                // Menü rendern
                 MenüRenderer.RenderSkin_FarbenOptions(Skin_FarbenAuswahl);
 
-                while (Console.KeyAvailable)
-                    Console.ReadKey(true);
-
-                var key = Console.ReadKey(true).Key;
-                switch (key)
+                // Warten auf Eingabe
+                var keyInfo = Console.ReadKey(true);
+                switch (keyInfo.Key)
                 {
                     case ConsoleKey.UpArrow:
                         Skin_FarbenAuswahl--;
@@ -400,136 +400,48 @@ namespace Smake.io
                         Console.Clear();
                         switch (Skin_FarbenAuswahl)
                         {
-                            case 1: // Spieler 1 Tail-Skin
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.TailSkins, Spiellogik.player.Skin);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.TailSkins.Length;
-                                    } while (!freigeschaltetTail[currentIndex] || GameData.TailSkins[currentIndex] == Spiellogik.player2.Skin);
-
-                                    Spiellogik.player.Skin = GameData.TailSkins[currentIndex];
-                                }
-                                break;
-
-                            case 2: // Spieler 2 Tail-Skin
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.TailSkins, Spiellogik.player2.Skin);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.TailSkins.Length;
-                                    } while (!freigeschaltetTail[currentIndex] || GameData.TailSkins[currentIndex] == Spiellogik.player.Skin);
-
-                                    Spiellogik.player2.Skin = GameData.TailSkins[currentIndex];
-                                }
-                                break;
-
-                            case 3: // Food-Skin
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.FoodSkins, Spiellogik.food);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.FoodSkins.Length;
-                                    } while (!freigeschaltetFood[currentIndex]);
-
-                                    Spiellogik.food = GameData.FoodSkins[currentIndex];
-                                }
-                                break;
-
-                            case 4: // Rand-Skin
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.RandSkins, Spiellogik.rand);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.RandSkins.Length;
-                                    } while (!freigeschaltetRand[currentIndex]);
-
-                                    Spiellogik.rand = GameData.RandSkins[currentIndex];
-                                }
-                                break;
-
-                            case 5: // Spieler 1 Kopf-Farbe
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.Farben, Spiellogik.player.Headfarbe);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.Farben.Length;
-                                    } while (!freigeschaltetFarben[currentIndex]);
-
-                                    Spiellogik.player.Headfarbe = GameData.Farben[currentIndex];
-                                }
-                                break;
-
-                            case 6: // Spieler 2 Kopf-Farbe
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.Farben, Spiellogik.player2.Headfarbe);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.Farben.Length;
-                                    } while (!freigeschaltetFarben[currentIndex]);
-
-                                    Spiellogik.player2.Headfarbe = GameData.Farben[currentIndex];
-                                }
-                                break;
-
-                            case 7: // Spieler 1 Körper-Farbe
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.Farben, Spiellogik.player.Farbe);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.Farben.Length;
-                                    } while (!freigeschaltetFarben[currentIndex]);
-
-                                    Spiellogik.player.Farbe = GameData.Farben[currentIndex];
-                                }
-                                break;
-
-                            case 8: // Spieler 2 Körper-Farbe
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.Farben, Spiellogik.player2.Farbe);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.Farben.Length;
-                                    } while (!freigeschaltetFarben[currentIndex]);
-
-                                    Spiellogik.player2.Farbe = GameData.Farben[currentIndex];
-                                }
-                                break;
-
-                            case 9: // Food-Farbe
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.Farben, Spiellogik.foodfarbe);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.Farben.Length;
-                                    } while (!freigeschaltetFarben[currentIndex]);
-
-                                    Spiellogik.foodfarbe = GameData.Farben[currentIndex];
-                                }
-                                break;
-
-                            case 10: // Rand-Farbe
-                                {
-                                    int currentIndex = Array.IndexOf(GameData.Farben, Spiellogik.randfarbe);
-                                    do
-                                    {
-                                        currentIndex = (currentIndex + 1) % GameData.Farben.Length;
-                                    } while (!freigeschaltetFarben[currentIndex]);
-
-                                    Spiellogik.randfarbe = GameData.Farben[currentIndex];
-                                }
-                                break;
-
-                            case 11: // Zurück
-                                menu = false;
-                                break;
+                            case 1: WechselSkin(ref Spiellogik.player.Skin, GameData.TailSkins, freigeschaltetTail, Spiellogik.player2.Skin); break;
+                            case 2: WechselSkin(ref Spiellogik.player2.Skin, GameData.TailSkins, freigeschaltetTail, Spiellogik.player.Skin); break;
+                            case 3: WechselSkin(ref Spiellogik.food, GameData.FoodSkins, freigeschaltetFood); break;
+                            case 4: WechselSkin(ref Spiellogik.rand, GameData.RandSkins, freigeschaltetRand); break;
+                            case 5: WechselFarbe(ref Spiellogik.player.Headfarbe); break;
+                            case 6: WechselFarbe(ref Spiellogik.player2.Headfarbe); break;
+                            case 7: WechselFarbe(ref Spiellogik.player.Farbe); break;
+                            case 8: WechselFarbe(ref Spiellogik.player2.Farbe); break;
+                            case 9: WechselFarbe(ref Spiellogik.foodfarbe); break;
+                            case 10: WechselFarbe(ref Spiellogik.randfarbe); break;
+                            case 11: menu = false; break; // Zurück
                         }
+
                         break;
-
                 }
-
             }
-            while (menu);
+        }
+
+        // Helper für Tail/Food/Rand
+        static void WechselSkin(ref char aktuellesSkin, char[] skins, bool[] freigeschaltet, char? verboteneSkin = null)
+        {
+            if (skins.Length == 0) return;
+            int idx = Array.IndexOf(skins, aktuellesSkin);
+            int start = idx;
+            do
+            {
+                idx = (idx + 1) % skins.Length;
+            } while ((!freigeschaltet[idx] || (verboteneSkin.HasValue && skins[idx] == verboteneSkin.Value)) && idx != start);
+            aktuellesSkin = skins[idx];
+        }
+
+        // Helper für Farben
+        static void WechselFarbe(ref ConsoleColor aktuelleFarbe)
+        {
+            if (GameData.Farben.Length == 0) return;
+            int idx = Array.IndexOf(GameData.Farben, aktuelleFarbe);
+            int start = idx;
+            do
+            {
+                idx = (idx + 1) % GameData.Farben.Length;
+            } while (!freigeschaltetFarben[idx] && idx != start);
+            aktuelleFarbe = GameData.Farben[idx];
         }
     }
 }

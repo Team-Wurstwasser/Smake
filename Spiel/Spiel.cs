@@ -17,8 +17,8 @@ namespace Smake.io.Spiel
         public static bool exit = false;
 
         // Spielfeldgröße (Breite x Höhe)
-        public readonly static int weite = 41;
-        public readonly static int hoehe = 20;
+        public readonly static int weite = GameData.Weite;
+        public readonly static int hoehe = GameData.Hoehe;
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
         public static char[,] grid = new char[hoehe, weite];
