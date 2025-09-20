@@ -24,7 +24,7 @@ namespace Smake.io.Spiel
         bool KollisionPlayer;
 
         // Länge des Spielers
-        int Tail;
+        public int Tail;
 
         //Punkte des Spielers
         public int Punkte;
@@ -106,11 +106,14 @@ namespace Smake.io.Spiel
             Kollision(newPlayerX, newPlayerY);
             TailShift();
             Bewegung(newPlayerX, newPlayerY);
-            EsseFutter();
+
+            foreach (var Futter in Spiellogik.Essen)
+            {
+                Futter.EsseFutter(this);
+            }
 
             return GameoverChecker();
         }
-
 
         (bool spielerTot, bool gegnerTot) GameoverChecker()
         {
@@ -219,22 +222,6 @@ namespace Smake.io.Spiel
             // Spieler-Koordinaten aktualisieren
             PlayerX[0] = x;
             PlayerY[0] = y;
-        }
-
-        // Der Spieler isst das Futter
-        void EsseFutter()
-        {
-            // Spieler frisst Futter
-            if (PlayerX[0] == Spiellogik.futterX && PlayerY[0] == Spiellogik.futterY)
-            {
-                Tail++;
-                Punkte++;
-                if (Musik.soundplay)
-                {
-                    Console.Beep(700, 100);
-                }
-                Spiellogik.SetzeFutter();
-            }
         }
     }
 }
