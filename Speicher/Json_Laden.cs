@@ -36,6 +36,7 @@ namespace Smake.io.Speicher
         public static int Weite;
         public static int Hoehe;
         public static int MaxPunkte;
+        public static int MaxFutterconfig;
         public static Positionen Startpositionen = new();
         public static Difficulty SpielSchwierigkeit = new();
 
@@ -86,6 +87,7 @@ namespace Smake.io.Speicher
                 Weite = data?.Weite ?? 0;
                 Hoehe = data?.Hoehe ?? 0;
                 MaxPunkte = data?.MaxPunkte ?? 0;
+                MaxFutterconfig = data?.MaxFutterconfig ?? 0;
                 Startpositionen = data?.Startpositionen ?? new Positionen();
                 SpielSchwierigkeit = data?.Difficulty ?? new Difficulty();
             });
@@ -105,6 +107,7 @@ namespace Smake.io.Speicher
             catch (Exception ex)
             {
                 Console.WriteLine($"Fehler beim Laden der Datei {path}: {ex.Message}");
+                Console.ReadKey();  
                 setData(default);
             }
         }
@@ -181,6 +184,7 @@ namespace Smake.io.Speicher
             public int Weite { get; set; }
             public int Hoehe { get; set; }
             public int MaxPunkte { get; set; }
+            public int MaxFutterconfig { get; set; }
             public Positionen Startpositionen { get; set; }
             public Difficulty Difficulty { get; set; }
         }
@@ -227,7 +231,7 @@ namespace Smake.io.Speicher
                 var encrypted = File.ReadAllBytes(path);
                 if (encrypted.Length <= 5) return string.Empty;
 
-                var decrypted = new byte[encrypted.Length - 5];
+                var decrypted = new byte[encrypted.Length - 5]; //Enfernt HEADER SMAKE
                 for (int i = 5; i < encrypted.Length; i++)
                     decrypted[i - 5] = (byte)(encrypted[i] ^ key[(i - 5) % key.Length]);
 

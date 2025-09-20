@@ -11,10 +11,11 @@ namespace Smake.io.Spiel
     public class Spiellogik
     {
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
-        public static bool spiel = true;
+        public static bool spiel;
         public static int gameover;
         static bool unentschieden;
-        public static bool exit = false;
+        public static bool exit;
+        public static int maxfutter;
 
         // Spielfeldgröße (Breite x Höhe)
         public readonly static int weite = GameData.Weite;
@@ -23,20 +24,16 @@ namespace Smake.io.Spiel
         // Das Spielfeld als zweidimensionales Zeichen-Array
         public static char[,] grid = new char[hoehe, weite];
 
-        // Position des Futters
-        public static int futterX;
-        public static int futterY;
-
         // Spielmodi
         public static bool multiplayer;
         public static string difficulty;
         public static string gamemode;
 
         //Weitere Skins
-        public static char food;
-        public static ConsoleColor foodfarbe;
         public static char rand;
         public static ConsoleColor randfarbe;
+        public static char food;
+        public static ConsoleColor foodfarbe;
 
         // Level und Experience
         public static int coins;
@@ -49,6 +46,8 @@ namespace Smake.io.Spiel
         public static Spieler player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y);
 
         public static Spieler player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y);
+
+        public static List<Futter> Essen;
 
         // Allen Variablen den Startwert geben
         static void Neustart()
@@ -94,19 +93,32 @@ namespace Smake.io.Spiel
             // Initialisiere das Spielfeld mit Rahmen
             InitialisiereSpiel();
 
-            SetzeFutter(); // Futter setzen
-
             player.Neustart();
 
             if (multiplayer)
             {
                 player2.Neustart();
             }
+
+            Essen.Clear();
+
+            for (int i = 0; i < maxfutter;)
+            {
+                Essen.Add(new Futter(food));
+                i++;
+            }
+
+            foreach (var Futter in Essen)
+            {
+                Futter.SetzeFutter();
+            }
+ 
         }
 
         // Spielablauf
         public static void Spiel()
         {
+            Essen = [];
             Neustart();
             Thread inputThread = new(Steuerung.ReadInput);
 
@@ -186,24 +198,6 @@ namespace Smake.io.Spiel
                 gameover = 2;
                 spiel = false;
             }
-
-        }
-
-        // Setzt das Futter an eine Zufällige Position
-        public static void SetzeFutter()
-        {
-            Random rand = new();
-
-            // Futter nur auf X-Positionen spawnen lassen, die durch 2 teilbar sind
-            do
-            {
-                futterX = rand.Next(1, weite - 2);
-                if (futterX % 2 != 0) futterX++; // Auf gerade X-Position korrigieren
-
-                futterY = rand.Next(1, hoehe - 2);
-            }
-            while (grid[futterY, futterX] != ' '); // Stelle muss wirklich leer sein
-            grid[futterY, futterX] = food; // Setze Futter an die berechnete Position
 
         }
 
