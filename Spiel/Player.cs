@@ -161,7 +161,6 @@ namespace Smake.io.Spiel
             }
         }
 
-
         // Tailkoordinaten berechnen
         void TailShift()
         {

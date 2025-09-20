@@ -1,138 +1,124 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Smake.io.Speicher
 {
     public static class GameData
     {
         // Sounds
-        public static string[] Filenames;
-        public static Musik MusikDaten;
+        public static string[] Filenames = Array.Empty<string>();
+        public static Musik MusikDaten = new();
 
         // Preise
-        public static int[] TailPreis;
-        public static int[] FoodPreis;
-        public static int[] RandPreis;
-        public static int[] FarbenPreis;
+        public static int[] TailPreis = Array.Empty<int>();
+        public static int[] FoodPreis = Array.Empty<int>();
+        public static int[] RandPreis = Array.Empty<int>();
+        public static int[] FarbenPreis = Array.Empty<int>();
 
         // Level
-        public static int[] TailLevel;
-        public static int[] FoodLevel;
-        public static int[] RandLevel;
-        public static int[] FarbenLevel;
+        public static int[] TailLevel = Array.Empty<int>();
+        public static int[] FoodLevel = Array.Empty<int>();
+        public static int[] RandLevel = Array.Empty<int>();
+        public static int[] FarbenLevel = Array.Empty<int>();
 
         // Skins / Farben
-        public static ConsoleColor[] Farben;
-        public static char[] TailSkins;
-        public static char[] FoodSkins;
-        public static char[] RandSkins;
+        public static ConsoleColor[] Farben = Array.Empty<ConsoleColor>();
+        public static char[] TailSkins = Array.Empty<char>();
+        public static char[] FoodSkins = Array.Empty<char>();
+        public static char[] RandSkins = Array.Empty<char>();
 
         // Spielkonfiguration
         public static int Weite;
         public static int Hoehe;
         public static int MaxPunkte;
-        public static Positionen Startpositionen;
-        public static Difficulty SpielSchwierigkeit;
+        public static Positionen Startpositionen = new();
+        public static Difficulty SpielSchwierigkeit = new();
 
-        // Positionen
-        public class Positionen
-        {
-            public SpielerPosition Spieler1 { get; set; }
-            public SpielerPosition Spieler2 { get; set; }
-        }
-
-        public class SpielerPosition
-        {
-            public int X { get; set; }
-            public int Y { get; set; }
-        }
-
-        // Schwierigkeit
-        public class Difficulty
-        {
-            public int Langsam { get; set; }
-            public int Mittel { get; set; }
-            public int Schnell { get; set; }
-        }
-
-        // Allgemeine Optionen für JSON: Groß-/Kleinschreibung ignorieren
-        private static readonly JsonSerializerOptions JsonOptions = new()
+        static readonly JsonSerializerOptions JsonOptions = new()
         {
             PropertyNameCaseInsensitive = true
         };
 
-        // Lade alle Konfigurationen
         public static void LoadAllConfigs()
         {
-            LoadSounds(Path.Combine("Json", "sounds.json"));
-            LoadPreise(Path.Combine("Json", "preise.json"));
-            LoadLevel(Path.Combine("Json", "level.json"));
-            LoadSkins(Path.Combine("Json", "skins.json"));
-            LoadGameConfig(Path.Combine("Json", "game_config.json"));
+            Load<Sounds>("Json/sounds.json", data =>
+            {
+                Filenames = data?.Filenames ?? Array.Empty<string>();
+                MusikDaten = data?.Musik ?? new();
+            });
+
+            Load<Preise>("Json/preise.json", data =>
+            {
+                TailPreis = data?.TailPreis ?? Array.Empty<int>();
+                FoodPreis = data?.FoodPreis ?? Array.Empty<int>();
+                RandPreis = data?.RandPreis ?? Array.Empty<int>();
+                FarbenPreis = data?.FarbenPreis ?? Array.Empty<int>();
+            });
+
+            Load<Level>("Json/level.json", data =>
+            {
+                TailLevel = data?.TailLevel ?? Array.Empty<int>();
+                FoodLevel = data?.FoodLevel ?? Array.Empty<int>();
+                RandLevel = data?.RandLevel ?? Array.Empty<int>();
+                FarbenLevel = data?.FarbenLevel ?? Array.Empty<int>();
+            });
+
+            Load<Skins>("Json/skins.json", data =>
+            {
+                Farben = data?.Farben?
+                    .Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? (ConsoleColor?)c : null)
+                    .Where(c => c.HasValue)
+                    .Select(c => c!.Value)
+                    .ToArray() ?? Array.Empty<ConsoleColor>();
+
+                TailSkins = data?.TailSkins ?? Array.Empty<char>();
+                FoodSkins = data?.FoodSkins ?? Array.Empty<char>();
+                RandSkins = data?.RandSkins ?? Array.Empty<char>();
+            });
+
+            Load<GameConfig>("Json/game_config.json", data =>
+            {
+                Weite = data?.Weite ?? 0;
+                Hoehe = data?.Hoehe ?? 0;
+                MaxPunkte = data?.MaxPunkte ?? 0;
+                Startpositionen = data?.Startpositionen ?? new Positionen();
+                SpielSchwierigkeit = data?.Difficulty ?? new Difficulty();
+            });
         }
 
-        // Ladefunktionen
-        static void LoadSounds(string path)
+        static void Load<T>(string path, Action<T?> setData)
         {
-            var data = LoadJson<Sounds>(path);
-            Filenames = data?.Filenames ?? [];
-            MusikDaten = data?.Musik ?? new Musik();
-        }
+            try
+            {
+                if (!File.Exists(path))
+                    throw new FileNotFoundException($"JSON-Datei nicht gefunden: {path}");
 
-        static void LoadPreise(string path)
-        {
-            var data = LoadJson<Preise>(path);
-            TailPreis = data?.TailPreis ?? [];
-            FoodPreis = data?.FoodPreis ?? [];
-            RandPreis = data?.RandPreis ?? [];
-            FarbenPreis = data?.FarbenPreis ?? [];
-        }
-
-        static void LoadLevel(string path)
-        {
-            var data = LoadJson<Level>(path);
-            TailLevel = data?.TailLevel ?? [];
-            FoodLevel = data?.FoodLevel ?? [];
-            RandLevel = data?.RandLevel ?? [];
-            FarbenLevel = data?.FarbenLevel ?? [];
-        }
-
-        static void LoadSkins(string path)
-        {
-            var data = LoadJson<Skins>(path);
-            Farben = data?.Farben?.Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? (ConsoleColor?)c : null)
-                                  .Where(c => c.HasValue)
-                                  .Select(c => c.Value)
-                                  .ToArray() ?? [];
-            TailSkins = data?.TailSkins ?? [];
-            FoodSkins = data?.FoodSkins ?? [];
-            RandSkins = data?.RandSkins ?? [];
-        }
-
-        static void LoadGameConfig(string path)
-        {
-            var data = LoadJson<GameConfig>(path);
-            Weite = data?.Weite ?? 0;
-            Hoehe = data?.Hoehe ?? 0;
-            MaxPunkte = data?.MaxPunkte ?? 0;
-            Startpositionen = data?.Startpositionen ?? new Positionen();
-            SpielSchwierigkeit = data?.Difficulty ?? new Difficulty();
-        }
-
-        // Generische Funktion zum Laden von JSON-Dateien mit XOR-Entschlüsselung
-        private static T LoadJson<T>(string path)
-        {
-            if (!File.Exists(path))
-                throw new FileNotFoundException($"JSON-Datei nicht gefunden: {path}");
-
-            string json = XorCrypt.DecryptJsonFileToString(path);
-            return JsonSerializer.Deserialize<T>(json, JsonOptions);
+                string json = XorCrypt.DecryptJsonFileToString(path);
+                var data = JsonSerializer.Deserialize<T>(json, JsonOptions);
+                setData(data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fehler beim Laden der Datei {path}: {ex.Message}");
+                setData(default);
+            }
         }
 
         // Hilfsklassen für JSON-Struktur
+        public class Positionen
+        {
+            public SpielerPosition Spieler1 { get; set; } = new();
+            public SpielerPosition Spieler2 { get; set; } = new();
+        }
+
+        public class SpielerPosition { public int X { get; set; } public int Y { get; set; } }
+        public class Difficulty { public int Langsam { get; set; } public int Mittel { get; set; } public int Schnell { get; set; } }
+
         private class Sounds
         {
             public string[] Filenames { get; set; }
@@ -169,28 +155,28 @@ namespace Smake.io.Speicher
             public int Anleitung { get; set; }
             public int Statistiken { get; set; }
         }
-        private class Preise
+        class Preise
         {
             public int[] TailPreis { get; set; }
             public int[] FoodPreis { get; set; }
             public int[] RandPreis { get; set; }
             public int[] FarbenPreis { get; set; }
         }
-        private class Level
+        class Level
         {
             public int[] TailLevel { get; set; }
             public int[] FoodLevel { get; set; }
             public int[] RandLevel { get; set; }
             public int[] FarbenLevel { get; set; }
         }
-        private class Skins
+        class Skins
         {
             public string[] Farben { get; set; }
             public char[] TailSkins { get; set; }
             public char[] FoodSkins { get; set; }
             public char[] RandSkins { get; set; }
         }
-        private class GameConfig
+        class GameConfig
         {
             public int Weite { get; set; }
             public int Hoehe { get; set; }
@@ -200,9 +186,9 @@ namespace Smake.io.Speicher
         }
 
         // XOR-Entschlüsselung
-        private static class XorCrypt
+        static class XorCrypt
         {
-            public static readonly byte[] key =
+            static readonly byte[] key =
             [
                 0x5B, 0x42, 0x9D, 0xB1, 0xB4, 0x40, 0xDB, 0x83, 0x85,
                 0x35, 0x79, 0x37, 0xF6, 0xB3, 0xF8, 0x9C, 0x47, 0xB5,
@@ -238,17 +224,14 @@ namespace Smake.io.Speicher
 
             public static string DecryptJsonFileToString(string path)
             {
-                byte[] encryptedData = File.ReadAllBytes(path);
-                if (encryptedData.Length <= 3) return string.Empty;
+                var encrypted = File.ReadAllBytes(path);
+                if (encrypted.Length <= 5) return string.Empty;
 
-                byte[] decryptedData = new byte[encryptedData.Length - 5]; // Header SMAKE entfernen
-                for (int i = 5; i < encryptedData.Length; i++)
-                {
-                    int k = (i - 5) % key.Length;
-                    decryptedData[i - 5] = (byte)(encryptedData[i] ^ key[k]);
-                }
+                var decrypted = new byte[encrypted.Length - 5];
+                for (int i = 5; i < encrypted.Length; i++)
+                    decrypted[i - 5] = (byte)(encrypted[i] ^ key[(i - 5) % key.Length]);
 
-                return Encoding.UTF8.GetString(decryptedData);
+                return Encoding.UTF8.GetString(decrypted);
             }
         }
     }
