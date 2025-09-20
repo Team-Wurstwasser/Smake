@@ -12,7 +12,7 @@ namespace Smake.io.Spiel
     {
         // Spielstatus: true = Spiel läuft, false = Spiel beendet
         public static bool spiel = true;
-        static int gameover;
+        public static int gameover;
         static bool unentschieden;
         public static bool exit = false;
 
@@ -108,7 +108,7 @@ namespace Smake.io.Spiel
         public static void Spiel()
         {
             Neustart();
-            Thread inputThread = new(ReadInput);
+            Thread inputThread = new(Steuerung.ReadInput);
 
             inputThread.Start();
 
@@ -361,164 +361,6 @@ namespace Smake.io.Spiel
                     {
 
                         grid[reihe, symbol] = ' ';
-
-                    }
-
-                }
-
-            }
-
-        }
-
-        // Läuft in einem eigenen Thread(Parallel): verarbeitet Tasteneingaben und Speichert diese
-        static void ReadInput()
-        {
-
-            while (spiel)
-
-            {
-
-                if (Console.KeyAvailable)
-
-                {
-
-
-                    var key = Console.ReadKey(true).Key;
-
-                    switch (key)
-
-                    {
-
-                        case ConsoleKey.UpArrow:
-
-                            if (player.InputY != 1 && player.Aenderung)
-                            {
-                                player.InputY = -1;
-                                player.InputX = 0;
-                                player.Aenderung = false;
-                                player.Head = '^';
-                            }
-
-                            break;
-
-                        case ConsoleKey.DownArrow:
-
-                            if (player.InputY != -1 && player.Aenderung)
-                            {
-                                player.InputY = 1;
-                                player.InputX = 0;
-                                player.Aenderung = false;
-                                player.Head = 'v';
-                            }
-
-                            break;
-
-                        case ConsoleKey.RightArrow:
-
-                            if (player.InputX != -1 && player.Aenderung)
-                            {
-                                player.InputY = 0;
-                                player.InputX = 1;
-                                player.Aenderung = false;
-                                player.Head = '>';
-                            }
-
-                            break;
-
-                        case ConsoleKey.LeftArrow:
-
-                            if (player.InputX != 1 && player.Aenderung)
-                            {
-                                player.InputY = 0;
-                                player.InputX = -1;
-                                player.Aenderung = false;
-                                player.Head = '<';
-                            }
-
-                            break;
-
-                        case ConsoleKey.Escape:
-
-                            spiel = false;
-                            gameover = 3;
-
-                            break;
-
-                        case ConsoleKey.W:
-
-                            if (player2.InputY != 1 && player2.Aenderung && multiplayer)
-                            {
-                                player2.InputY = -1;
-                                player2.InputX = 0;
-                                player2.Aenderung = false;
-                                player2.Head = '^';
-                            }
-                            else if (player.InputY != 1 && player.Aenderung && !multiplayer)
-                            {
-                                player.InputY = -1;
-                                player.InputX = 0;
-                                player.Aenderung = false;
-                                player.Head = '^';
-                            }
-
-                            break;
-
-                        case ConsoleKey.S:
-
-                            if (player2.InputY != -1 && player2.Aenderung && multiplayer)
-                            {
-                                player2.InputY = 1;
-                                player2.InputX = 0;
-                                player2.Aenderung = false;
-                                player2.Head = 'v';
-                            }
-                            else if (player.InputY != -1 && player.Aenderung && !multiplayer)
-                            {
-                                player.InputY = 1;
-                                player.InputX = 0;
-                                player.Aenderung = false;
-                                player.Head = 'v';
-                            }
-
-                            break;
-
-                        case ConsoleKey.D:
-
-                            if (player2.InputX != -1 && player2.Aenderung && multiplayer)
-                            {
-                                player2.InputY = 0;
-                                player2.InputX = 1;
-                                player2.Aenderung = false;
-                                player2.Head = '>';
-                            }
-                            else if (player.InputX != -1 && player.Aenderung && !multiplayer)
-                            {
-                                player.InputY = 0;
-                                player.InputX = 1;
-                                player.Aenderung = false;
-                                player.Head = '>';
-                            }
-
-                            break;
-
-                        case ConsoleKey.A:
-
-                            if (player2.InputX != 1 && player2.Aenderung && multiplayer)
-                            {
-                                player2.InputY = 0;
-                                player2.InputX = -1;
-                                player2.Aenderung = false;
-                                player2.Head = '<';
-                            }
-                            else if (player.InputX != 1 && player.Aenderung && !multiplayer)
-                            {
-                                player.InputY = 0;
-                                player.InputX = -1;
-                                player.Aenderung = false;
-                                player.Head = '<';
-                            }
-
-                            break;
 
                     }
 

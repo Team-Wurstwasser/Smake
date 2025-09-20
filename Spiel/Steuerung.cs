@@ -1,0 +1,92 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Smake.io.Spiel
+{
+    public class Steuerung
+    {
+        // Läuft in einem eigenen Thread (Parallel): verarbeitet Tasteneingaben und speichert diese
+        public static void ReadInput()
+        {
+            while (Spiellogik.spiel)
+            {
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true).Key;
+
+                    switch (key)
+                    {
+                        // Player 1 Steuerung (Pfeiltasten)
+                        case ConsoleKey.UpArrow:
+                            UpdatePlayerDirection(Spiellogik.player, 0, -1, '^');
+                            break;
+                        case ConsoleKey.DownArrow:
+                            UpdatePlayerDirection(Spiellogik.player, 0, 1, 'v');
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            UpdatePlayerDirection(Spiellogik.player, -1, 0, '<');
+                            break;
+                        case ConsoleKey.RightArrow:
+                            UpdatePlayerDirection(Spiellogik.player, 1, 0, '>');
+                            break;
+
+                        // Player 2 Steuerung (WASD) im Multiplayer
+                        case ConsoleKey.W:
+                            if (Spiellogik.multiplayer)
+                                UpdatePlayerDirection(Spiellogik.player2, 0, -1, '^');
+                            else
+                                UpdatePlayerDirection(Spiellogik.player, 0, -1, '^');
+                            break;
+                        case ConsoleKey.S:
+                            if (Spiellogik.multiplayer)
+                                UpdatePlayerDirection(Spiellogik.player2, 0, 1, 'v');
+                            else
+                                UpdatePlayerDirection(Spiellogik.player, 0, 1, 'v');
+                            break;
+                        case ConsoleKey.A:
+                            if (Spiellogik.multiplayer)
+                                UpdatePlayerDirection(Spiellogik.player2, -1, 0, '<');
+                            else
+                                UpdatePlayerDirection(Spiellogik.player, -1, 0, '<');
+                            break;
+                        case ConsoleKey.D:
+                            if (Spiellogik.multiplayer)
+                                UpdatePlayerDirection(Spiellogik.player2, 1, 0, '>');
+                            else
+                                UpdatePlayerDirection(Spiellogik.player, 1, 0, '>');
+                            break;
+
+                        // Spiel beenden
+                        case ConsoleKey.Escape:
+                            Spiellogik.spiel = false;
+                            Spiellogik.gameover = 3;
+                            break;
+                    }
+                }
+                else
+                {
+                    Thread.Sleep(5); // CPU schonen
+                }
+            }
+        }
+
+        // Hilfsmethode zum Setzen der neuen Richtung eines Spielers
+        private static void UpdatePlayerDirection(Spieler p, int newX, int newY, char head)
+        {
+            // Verhindert Rückwärtsbewegung und doppelte Änderungen pro Tick
+            if (p.Aenderung && (p.InputX != -newX || p.InputY != -newY))
+            {
+                p.InputX = newX;
+                p.InputY = newY;
+                p.Head = head;
+                p.Aenderung = false;
+            }
+        }
+
+    }
+
+}
