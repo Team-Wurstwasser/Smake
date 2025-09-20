@@ -73,6 +73,7 @@ namespace Smake.io.Render
                 $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
                 $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
                 $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
+                $"MaxFutter ändern       [Aktuell: {Spiellogik.maxfutter}]",
                 $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
                 $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
                 $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
