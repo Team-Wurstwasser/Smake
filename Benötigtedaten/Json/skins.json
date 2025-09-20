@@ -1,3 +1,9 @@
-SMAKE O—‘”b½â÷WYÔ‰ØÇJ¿Á¶Tu°Å äÞ^Vçó`T˜Ñ>ˆ¤D
-²»r‡ø*˜ÐzøŸg¢,0-¼ãr—m}zýL€TDIÔ½Íå†/Š*—z
-áJøÁÉLFNù…Ô>¸µ<"ç`‘#ŸØŽêb[%Ë›ö¬v`EuaT³Ó¿~$°rÃR€ýÝÂï¦%v¤§]¿Ã—«x2É	H9é!]~oä°Ö©F“.ÐM6K ¼õú;72PTWŽ›mTªœmú^–4ØÐ‹ËO0ÎœQnû$‰ÒÐ†}z¸­Ñvc†eSƒÂ¯]¨g»¿R¥E} 0tô‡hvæÍšËþÔiyh¿”b›¡©[ÔŸØ¾¥,D´Xu°fe°™¾ÞåýË–ò>¥;ÀZ«˜p–îcÝž+`°ÚYÃb7„0Eý³:ò38=qø·‚Z'WE~ëŠ-û	Î\_ ÔB@á@DŒ¸9Â/ûåšr
+SMAKE{
+  "farben": [
+    "White", "Blue", "DarkBlue", "Green", "DarkGreen", "Cyan", "DarkCyan",
+    "Red", "DarkRed", "Magenta", "DarkMagenta", "Yellow", "DarkYellow", "Gray", "DarkGray"
+  ],
+  "tailskins": ["+", "x", "~", "=", "-", "o", "â€¢"],
+  "foodskins": ["*", "@", "$", "â™¥", "%", "Â¤", "&"],
+  "randskins": ["â–ˆ", "#", "â–“", "â–‘", "â– ", "â–Œ", "â–’"]
+}

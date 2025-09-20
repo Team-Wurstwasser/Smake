@@ -10,6 +10,7 @@ namespace Smake.io.Speicher
     {
         // Sounds
         public static string[] Filenames;
+        public static Musik MusikDaten;
 
         // Preise
         public static int[] TailPreis;
@@ -78,6 +79,7 @@ namespace Smake.io.Speicher
         {
             var data = LoadJson<Sounds>(path);
             Filenames = data?.Filenames ?? [];
+            MusikDaten = data?.Musik ?? new Musik();
         }
 
         static void LoadPreise(string path)
@@ -131,7 +133,42 @@ namespace Smake.io.Speicher
         }
 
         // Hilfsklassen für JSON-Struktur
-        private class Sounds { public string[] Filenames { get; set; } }
+        private class Sounds
+        {
+            public string[] Filenames { get; set; }
+            public Musik Musik { get; set; }
+        }
+
+        public class Musik
+        {
+            public GameMusik Game { get; set; }
+            public MenueMusik Menue { get; set; }
+        }
+
+        public class GameMusik
+        {
+            public MusikSpeed Normal { get; set; }
+            public MusikSpeed Unendlich { get; set; }
+            public MusikSpeed Babymode { get; set; }
+        }
+
+        public class MusikSpeed
+        {
+            public int Langsam { get; set; }
+            public int Mittel { get; set; }
+            public int Schnell { get; set; }
+        }
+
+        public class MenueMusik
+        {
+            public int Eingabe { get; set; }
+            public int Main { get; set; }
+            public int Einstellungen { get; set; }
+            public int Shop { get; set; }
+            public int SkinFarben { get; set; }
+            public int Anleitung { get; set; }
+            public int Statistiken { get; set; }
+        }
         private class Preise
         {
             public int[] TailPreis { get; set; }
