@@ -148,33 +148,27 @@ namespace Smake.io.Spiel
         // Aktualisiert die Position des Spielers anhand der Eingabe
         static void Update()
         {
-            player.Update();
-
-            if (multiplayer)
-            {
-                player2.Update();
-            }
-
-            Gameover();
-            if (!spiel) return;
-        }
-
-        // Prüft, ob das Spiel vorbei ist
-        static void Gameover()
-        {
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
-            (var gegnerTot1, var spielerTot1) = player.Gameover();
+            (var gegnerTot1, var spielerTot1) = player.Update();
             spieler1Tot |= gegnerTot1;
             spieler2Tot |= spielerTot1;
 
             if (multiplayer)
             {
-                (var gegnerTot2, var spielerTot2) = player2.Gameover();
+                (var gegnerTot2, var spielerTot2) = player2.Update();
                 spieler1Tot |= gegnerTot2;
                 spieler2Tot |= spielerTot2;
             }
+
+            GameoverCheck(spieler1Tot, spieler2Tot);
+            if (!spiel) return;
+        }
+
+        // Prüft, ob das Spiel vorbei ist
+        static void GameoverCheck(bool spieler1Tot, bool spieler2Tot)
+        {
 
             if (spieler1Tot && spieler2Tot)
             {
