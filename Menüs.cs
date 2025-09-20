@@ -142,12 +142,12 @@ namespace Smake.io
                 {
                     case ConsoleKey.UpArrow:
                         einstellungsAuswahl--;
-                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 8;
+                        if (einstellungsAuswahl < 1) einstellungsAuswahl = 9;
                         break;
 
                     case ConsoleKey.DownArrow:
                         einstellungsAuswahl++;
-                        if (einstellungsAuswahl > 8) einstellungsAuswahl = 1;
+                        if (einstellungsAuswahl > 9) einstellungsAuswahl = 1;
                         break;
                     case ConsoleKey.Escape:
                         menu = false;
@@ -168,18 +168,21 @@ namespace Smake.io
                                 ChangeGamemode();
                                 break;
                             case 4:
-                                RendernSpielfeld.performancemode = !RendernSpielfeld.performancemode;
+                                ChangeMaxFutter();
                                 break;
                             case 5:
-                                Musik.musikplay = !Musik.musikplay;
+                                RendernSpielfeld.performancemode = !RendernSpielfeld.performancemode;
                                 break;
                             case 6:
-                                Musik.soundplay = !Musik.soundplay;
+                                Musik.musikplay = !Musik.musikplay;
                                 break;
                             case 7:
-                                ResetSpielstand();
+                                Musik.soundplay = !Musik.soundplay;
                                 break;
                             case 8:
+                                ResetSpielstand();
+                                break;
+                            case 9:
                                 menu = false;
                                 break;
                         }
@@ -205,6 +208,62 @@ namespace Smake.io
             else Spiellogik.gamemode = "Normal";
         }
 
+        static void ChangeMaxFutter()
+        {
+            bool gültig = false;
+
+            do
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 0);
+
+                // Box anzeigen
+                Console.WriteLine("╔════════════════════════════════════════════╗");
+                Console.WriteLine("║          Maximal Futter einstellen         ║");
+                Console.WriteLine("╠════════════════════════════════════════════╣");
+                Console.WriteLine($"║ Maximal erlaubte Anzahl: {GameData.MaxFutterconfig,-18}║");
+                Console.WriteLine("╚════════════════════════════════════════════╝");
+                Console.Write("Eingabe: ");
+
+                string input = Console.ReadLine()!;
+
+                if (int.TryParse(input, out int wert) && wert > 0)
+                {
+                    if (wert > GameData.MaxFutterconfig)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"\n⚠ Der Wert darf maximal {GameData.MaxFutterconfig} sein.");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Spiellogik.maxfutter = wert;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"\n✔ MaxFutter wurde auf {wert} gesetzt!");
+                        Console.ResetColor();
+                        gültig = true;
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n⚠ Ungültige Eingabe. Bitte eine gültige positive Zahl eingeben.");
+                    Console.ResetColor();
+                }
+
+                if (!gültig)
+                {
+                    Console.WriteLine("\nDrücke eine beliebige Taste, um es erneut zu versuchen...");
+                    Console.ReadKey();
+                }
+
+            } while (!gültig);
+
+            Console.WriteLine("\nDrücke eine beliebige Taste, um zurückzukehren...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
         static void ResetSpielstand()
         {
             for (int i = 1; i <= 3; i++)
@@ -224,6 +283,7 @@ namespace Smake.io
             // Wenn alle drei Bestätigungen "ja" waren:
             SpeicherSystem.Speichern_Laden("Zurücksetzen");
             Console.WriteLine("Dein Spielstand wurde zurückgesetzt!");
+            Console.WriteLine("Drücke eine Taste, um zurückzukehren...");
             Console.ReadKey();
             Console.Clear();
         }
