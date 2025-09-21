@@ -98,7 +98,7 @@ namespace Smake.io.Render
                 ($"Player 2 Farbe ändern       [Aktuell: ", Spiellogik.player2.Headfarbe, true),
                 ($"Player 1 Tailfarbe ändern   [Aktuell: ", Spiellogik.player.Farbe, true),
                 ($"Player 2 Tailfarbe ändern   [Aktuell: ", Spiellogik.player2.Farbe, true),
-                ($"Foodfarbe ändern            [Aktuell: ", Spiellogik.foodfarbe, true),
+                ($"Foodfarbe ändern            [Aktuell: ", Spiellogik.foodfarbeRandom ? "Random" : (object)Spiellogik.foodfarbe, !Spiellogik.foodfarbeRandom),
                 ($"Randfarbe ändern            [Aktuell: ", Spiellogik.randfarbe, true),
                 ("Zurück zum Hauptmenü", null, false)
              };
