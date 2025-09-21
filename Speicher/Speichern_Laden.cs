@@ -137,7 +137,6 @@ namespace Smake.io.Speicher
             }
         }
 
-
         private static void SetzeStandardwerte()
         {
             Musik.musikplay = true;
