@@ -1,6 +1,4 @@
 using System.Media;
-using System.IO;
-using System.Threading;
 using Smake.io.Spiel;
 using Smake.io.Speicher;
 

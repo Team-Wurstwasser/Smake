@@ -1,10 +1,5 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-using System.Media;
-using System.Numerics;
-using Smake.io.Render;
+﻿using Smake.io.Render;
 using Smake.io.Speicher;
-using static Smake.io.Speicher.GameData;
 
 namespace Smake.io.Spiel
 {
