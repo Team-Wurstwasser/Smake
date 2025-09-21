@@ -1,6 +1,5 @@
 ﻿using Smake.io.Render;
 using Smake.io.Spiel;
-using System.Text;
 using System.Security.Cryptography;
 
 namespace Smake.io.Speicher

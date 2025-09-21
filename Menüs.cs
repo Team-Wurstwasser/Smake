@@ -1,6 +1,6 @@
-﻿using Smake.io.Render;
-using Smake.io.Spiel;
+﻿using Smake.io.Spiel;
 using Smake.io.Speicher;
+using Smake.io.Render;
 
 namespace Smake.io
 {
@@ -47,12 +47,12 @@ namespace Smake.io
 
             if (RendernSpielfeld.performancemode)
             {
-                Spiellogik.foodfarbe = ConsoleColor.White;
-                Spiellogik.randfarbe = ConsoleColor.White;
-                Spiellogik.player.Farbe = ConsoleColor.White;
-                Spiellogik.player.Headfarbe = ConsoleColor.White;
-                Spiellogik.player2.Farbe = ConsoleColor.White; ;
-                Spiellogik.player2.Headfarbe = ConsoleColor.White;
+                Spiellogik.foodfarbe = GameData.Farben[0];
+                Spiellogik.randfarbe = GameData.Farben[0];
+                Spiellogik.player.Farbe = GameData.Farben[0];
+                Spiellogik.player.Headfarbe = GameData.Farben[0];
+                Spiellogik.player2.Farbe = GameData.Farben[0];
+                Spiellogik.player2.Headfarbe = GameData.Farben[0];
             }
 
             Console.Clear();
