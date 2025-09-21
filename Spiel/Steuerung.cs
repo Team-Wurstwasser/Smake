@@ -2,7 +2,7 @@
 {
     public class Steuerung
     {
-        // Läuft in einem eigenen Thread (Parallel): verarbeitet Tasteneingaben und speichert diese
+        // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und speichert diese
         public static void ReadInput()
         {
             while (Spiellogik.spiel)
