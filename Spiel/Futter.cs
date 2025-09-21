@@ -1,15 +1,23 @@
 ﻿namespace Smake.io.Spiel
 {
-    public class Futter (char food)
+    public class Futter
     {
         // Position des Futters
-        int FutterX;
-        int FutterY;
+        public int FutterX { get; private set; }
+        public int FutterY { get; private set; }
 
-        char food = food;
+        public char Food { get; private set; }
+        public ConsoleColor Foodfarbe { get; private set; }
+
+        public Futter(char Food, ConsoleColor Foodfarbe)
+        {
+            this.Food = Food;
+            this.Foodfarbe = Foodfarbe;
+            SetzeFutter();
+        }
 
         // Setzt das Futter an eine Zufällige Position
-        public void SetzeFutter()
+        void SetzeFutter()
         {
             Random rand = new();
 
@@ -22,7 +30,7 @@
                 FutterY = rand.Next(1, Spiellogik.hoehe - 2);
             }
             while (Spiellogik.grid[FutterY, FutterX] != ' '); // Stelle muss wirklich leer sein
-            Spiellogik.grid[FutterY, FutterX] = food; // Setze Futter an die berechnete Position
+            Spiellogik.grid[FutterY, FutterX] = Food; // Setze Futter an die berechnete Position
 
         }
 

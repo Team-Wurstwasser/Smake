@@ -71,7 +71,6 @@ namespace Smake.io.Spiel
             // Zuweisung an dein Musiksystem
             Musik.currentmusik = currentMusik;
 
-
             SpeicherSystem.Speichern_Laden("Speichern");
 
             spiel = true;
@@ -95,19 +94,10 @@ namespace Smake.io.Spiel
                 player2.Neustart();
             }
 
-            Essen.Clear();
-
-            for (int i = 0; i < maxfutter;)
+            for (int i = 0; i < maxfutter; i++)
             {
-                Essen.Add(new Futter(food));
-                i++;
+                Essen.Add(new Futter(food, GameData.Farben[i]));
             }
-
-            foreach (var Futter in Essen)
-            {
-                Futter.SetzeFutter();
-            }
- 
         }
 
         // Spielablauf
