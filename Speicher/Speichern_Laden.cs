@@ -155,6 +155,7 @@ namespace Smake.io.Speicher
             Menüs.gesamtcoins = 0;
             Menüs.highscore = 0;
             Menüs.spieleGesamt = 0;
+            Spiellogik.maxfutter = 1;
 
             Spiellogik.difficulty = "Mittel";
             Spiellogik.gamemode = "Normal";
