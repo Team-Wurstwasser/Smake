@@ -48,6 +48,7 @@ namespace Smake.io
             if (RendernSpielfeld.performancemode)
             {
                 Spiellogik.foodfarbe = GameData.Farben[0];
+                Spiellogik.foodfarbeRandom = false;
                 Spiellogik.randfarbe = GameData.Farben[0];
                 Spiellogik.player.Farbe = GameData.Farben[0];
                 Spiellogik.player.Headfarbe = GameData.Farben[0];
@@ -468,7 +469,7 @@ namespace Smake.io
                             case 6: WechselFarbe(ref Spiellogik.player2.Headfarbe); break;
                             case 7: WechselFarbe(ref Spiellogik.player.Farbe); break;
                             case 8: WechselFarbe(ref Spiellogik.player2.Farbe); break;
-                            case 9: WechselFarbe(ref Spiellogik.foodfarbe); break;
+                            case 9: WechselFarbe(ref Spiellogik.foodfarbe, true); break;
                             case 10: WechselFarbe(ref Spiellogik.randfarbe); break;
                             case 11: menu = false; break; // Zurück
                         }
@@ -492,16 +493,45 @@ namespace Smake.io
         }
 
         // Helper für Farben
-        static void WechselFarbe(ref ConsoleColor aktuelleFarbe)
+        static void WechselFarbe(ref ConsoleColor aktuelleFarbe, bool isFood = false)
         {
             if (GameData.Farben.Length == 0) return;
+
+            // Nächste freigeschaltete Farbe suchen
             int idx = Array.IndexOf(GameData.Farben, aktuelleFarbe);
             int start = idx;
             do
             {
                 idx = (idx + 1) % GameData.Farben.Length;
             } while (!freigeschaltetFarben[idx] && idx != start);
+
             aktuelleFarbe = GameData.Farben[idx];
+
+            if (isFood)
+            {
+                int lastIndex = -1;
+
+                for (int i = 0; i < freigeschaltetFarben.Length; i++)
+                {
+                    if (freigeschaltetFarben[i])
+                    {
+                        lastIndex = i; // letzte Position merken
+                    }
+                }
+
+                // Nur für foodfarbe: Random aktivieren, wenn letzte freigeschaltete Farbe erreicht
+                if (!Spiellogik.foodfarbeRandom)
+                {
+                    if (lastIndex == idx)
+                    {
+                        Spiellogik.foodfarbeRandom = true;
+                    }
+                }
+                else
+                {
+                    Spiellogik.foodfarbeRandom = false;
+                }
+            }
         }
     }
 }

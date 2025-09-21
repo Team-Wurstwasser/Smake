@@ -29,6 +29,7 @@ namespace Smake.io.Spiel
         public static ConsoleColor randfarbe;
         public static char food;
         public static ConsoleColor foodfarbe;
+        public static bool foodfarbeRandom;
 
         // Level und Experience
         public static int coins;
@@ -96,7 +97,17 @@ namespace Smake.io.Spiel
 
             for (int i = 0; i < maxfutter; i++)
             {
-                Essen.Add(new Futter(food, GameData.Farben[i]));
+                if(!foodfarbeRandom)
+                {
+                    Essen.Add(new Futter(food, foodfarbe));
+                }
+                else
+                {
+                    Random Random = new();
+                    int randomZahl = Random.Next(GameData.Farben.Length);
+                    Essen.Add(new Futter(food, GameData.Farben[randomZahl]));
+                }
+
             }
         }
 
@@ -191,7 +202,7 @@ namespace Smake.io.Spiel
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("             GAME OVER              ");
+            Console.WriteLine("              GAME OVER              ");
             Console.WriteLine("═════════════════════════════════════");
 
             if (multiplayer)
