@@ -41,7 +41,6 @@ def aes_encrypt(plaintext: bytes) -> bytes:
     encryptor = cipher.encryptor()
     ciphertext = encryptor.update(padded) + encryptor.finalize()
 
-    # Salt vorne anfügen
     return salt + ciphertext
 
 
@@ -61,7 +60,7 @@ def aes_decrypt(data: bytes) -> bytes:
     return unpadder.update(padded_plain) + unpadder.finalize()
 
 
-# --- GUI-Funktionalität ---
+# --- GUI ---
 class CryptoGUI(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -92,12 +91,17 @@ class CryptoGUI(tk.Tk):
             return
         try:
             in_path = Path(self.file_path.get())
-            out_path = in_path.with_suffix(in_path.suffix + ".enc")
-
             data = in_path.read_bytes()
             encrypted = aes_encrypt(data)
-            out_path.write_bytes(encrypted)
 
+            if in_path.suffix == ".dec":
+                # "save.bin.dec" -> "save.bin.enc"
+                out_path = in_path.with_name(in_path.stem + ".enc")
+                in_path.unlink()  # alte .dec löschen
+            else:
+                out_path = in_path.with_suffix(in_path.suffix + ".enc")
+
+            out_path.write_bytes(encrypted)
             messagebox.showinfo("Erfolg", f"Datei verschlüsselt:\n{out_path}")
         except Exception as e:
             messagebox.showerror("Fehler", str(e))
@@ -108,12 +112,17 @@ class CryptoGUI(tk.Tk):
             return
         try:
             in_path = Path(self.file_path.get())
-            out_path = in_path.with_suffix(".dec" + in_path.suffix)
-
             data = in_path.read_bytes()
             decrypted = aes_decrypt(data)
-            out_path.write_bytes(decrypted)
 
+            if in_path.suffix == ".enc":
+                # "save.bin.enc" -> "save.bin.dec"
+                out_path = in_path.with_name(in_path.stem + ".dec")
+                in_path.unlink()  # alte .enc löschen
+            else:
+                out_path = in_path.with_suffix(in_path.suffix + ".dec")
+
+            out_path.write_bytes(decrypted)
             messagebox.showinfo("Erfolg", f"Datei entschlüsselt:\n{out_path}")
         except Exception as e:
             messagebox.showerror("Fehler", str(e))
