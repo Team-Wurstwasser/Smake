@@ -1,5 +1,3 @@
-using System;
-using System.Numerics;
 using Smake.io.Spiel;
 using Smake.io.Speicher;
 

@@ -1,7 +1,5 @@
 ﻿using Smake.io.Spiel;
 using Smake.io.Speicher;
-using System;
-using System.Collections.Generic;
 
 namespace Smake.io.Render
 {
