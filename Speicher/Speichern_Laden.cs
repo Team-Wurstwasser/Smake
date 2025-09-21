@@ -142,17 +142,10 @@ namespace Smake.io.Speicher
             Musik.soundplay = true;
 
             // Erst alle auf false setzen
-            for (int i = 0; i < Menüs.freigeschaltetTail.Length; i++)
-                Menüs.freigeschaltetTail[i] = false;
-
-            for (int i = 0; i < Menüs.freigeschaltetFood.Length; i++)
-                Menüs.freigeschaltetFood[i] = false;
-
-            for (int i = 0; i < Menüs.freigeschaltetRand.Length; i++)
-                Menüs.freigeschaltetRand[i] = false;
-
-            for (int i = 0; i < Menüs.freigeschaltetFarben.Length; i++)
-                Menüs.freigeschaltetFarben[i] = false;
+            Array.Clear(Menüs.freigeschaltetTail);
+            Array.Clear(Menüs.freigeschaltetFood);
+            Array.Clear(Menüs.freigeschaltetRand);
+            Array.Clear(Menüs.freigeschaltetFarben);
 
             Menüs.freigeschaltetTail[0] = true;
             Menüs.freigeschaltetTail[1] = true;
@@ -180,6 +173,7 @@ namespace Smake.io.Speicher
 
             Spiellogik.randfarbe = GameData.Farben[0];
             Spiellogik.foodfarbe = GameData.Farben[0];
+            Spiellogik.foodfarbeRandom = false;
             Spiellogik.player.Farbe = GameData.Farben[0];
             Spiellogik.player2.Farbe = GameData.Farben[0];
             Spiellogik.player.Headfarbe = GameData.Farben[0];
@@ -206,6 +200,7 @@ namespace Smake.io.Speicher
                 $"player2.Skin={Spiellogik.player2.Skin}",
                 $"randfarbe={Spiellogik.randfarbe}",
                 $"foodfarbe={Spiellogik.foodfarbe}",
+                $"foodfarbeRandom={Spiellogik.foodfarbeRandom}",
                 $"player1.Farbe={Spiellogik.player.Farbe}",
                 $"player2.Farbe={Spiellogik.player2.Farbe}",
                 $"player1.Headfarbe={Spiellogik.player.Headfarbe}",
@@ -278,6 +273,7 @@ namespace Smake.io.Speicher
 
                         case "randfarbe": Spiellogik.randfarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "foodfarbe": Spiellogik.foodfarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "foodfarbeRandom": Spiellogik.foodfarbeRandom = bool.Parse(wert); break;
                         case "player1.Farbe": Spiellogik.player.Farbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "player2.Farbe": Spiellogik.player2.Farbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "player1.Headfarbe": Spiellogik.player.Headfarbe = Enum.Parse<ConsoleColor>(wert); break;
