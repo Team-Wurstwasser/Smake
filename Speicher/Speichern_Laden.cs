@@ -143,7 +143,21 @@ namespace Smake.io.Speicher
             Musik.musikplay = true;
             Musik.soundplay = true;
 
+            // Erst alle auf false setzen
+            for (int i = 0; i < Menüs.freigeschaltetTail.Length; i++)
+                Menüs.freigeschaltetTail[i] = false;
+
+            for (int i = 0; i < Menüs.freigeschaltetFood.Length; i++)
+                Menüs.freigeschaltetFood[i] = false;
+
+            for (int i = 0; i < Menüs.freigeschaltetRand.Length; i++)
+                Menüs.freigeschaltetRand[i] = false;
+
+            for (int i = 0; i < Menüs.freigeschaltetFarben.Length; i++)
+                Menüs.freigeschaltetFarben[i] = false;
+
             Menüs.freigeschaltetTail[0] = true;
+            Menüs.freigeschaltetTail[1] = true;
             Menüs.freigeschaltetFood[0] = true;
             Menüs.freigeschaltetRand[0] = true;
             Menüs.freigeschaltetFarben[0] = true;
@@ -161,17 +175,17 @@ namespace Smake.io.Speicher
             Spiellogik.gamemode = "Normal";
             Spiellogik.multiplayer = false;
 
-            Spiellogik.rand = '█';
-            Spiellogik.food = '*';
-            Spiellogik.player.Skin = '+';
-            Spiellogik.player2.Skin = 'x';
+            Spiellogik.rand = GameData.RandSkins[0];
+            Spiellogik.food = GameData.FoodSkins[0];
+            Spiellogik.player.Skin = GameData.TailSkins[0];
+            Spiellogik.player2.Skin = GameData.TailSkins[1];
 
-            Spiellogik.randfarbe = ConsoleColor.White;
-            Spiellogik.foodfarbe = ConsoleColor.White;
-            Spiellogik.player.Farbe = ConsoleColor.White;
-            Spiellogik.player2.Farbe = ConsoleColor.White;
-            Spiellogik.player.Headfarbe = ConsoleColor.White;
-            Spiellogik.player2.Headfarbe = ConsoleColor.White;
+            Spiellogik.randfarbe = GameData.Farben[0];
+            Spiellogik.foodfarbe = GameData.Farben[0];
+            Spiellogik.player.Farbe = GameData.Farben[0];
+            Spiellogik.player2.Farbe = GameData.Farben[0];
+            Spiellogik.player.Headfarbe = GameData.Farben[0];
+            Spiellogik.player2.Headfarbe = GameData.Farben[0];
         }
 
         private static void Speichern()
