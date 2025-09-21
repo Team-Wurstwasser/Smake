@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Numerics;
 using Smake.io.Speicher;
 
 namespace Smake.io.Spiel
