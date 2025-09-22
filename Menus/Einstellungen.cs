@@ -46,7 +46,7 @@ namespace Smake.io.Menus
                     default:
                         break;
                 }
-                selected = MenuTracker;
+                Display = BuildMenu();
                 Render();
             }
         }
@@ -71,6 +71,7 @@ namespace Smake.io.Menus
                     {
                         menuTracker = value;
                     }
+                    selected = MenuTracker;
                 }
             }
         }
@@ -78,10 +79,9 @@ namespace Smake.io.Menus
         public Einstellungen()
         {
             title = "Einstellungen";
-            Display = einstellungen;
+            Display = BuildMenu();
             MenuTracker = 1;
             InitialRender();
-            Thread.Sleep(1000); // input cooldown
             StartInputstream();
         }
 
@@ -115,11 +115,29 @@ namespace Smake.io.Menus
                     break;
                 case 9:
                     Menu menu = new();
+                    Thread.CurrentThread.Join();
                     break;
                 default:
                     break;
             }
         }
+
+        private string[] BuildMenu()
+        {
+            return new string[]
+            {
+        $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
+        $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
+        $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
+        $"MaxFutter ändern       [Aktuell: {Spiellogik.maxfutter}]",
+        $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
+        $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
+        $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
+        "Spielstand zurücksetzen",
+        "Zurück zum Hauptmenü"
+            };
+        }
+
 
         // Auswahl der Spielgeschwindigkeit
         void ChangeDifficulty()

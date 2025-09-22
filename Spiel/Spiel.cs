@@ -46,6 +46,12 @@ namespace Smake.io.Spiel
 
         public static List<Futter> Essen;
 
+        public Spiellogik()
+        {
+          Spiel();
+        }
+
+
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
@@ -151,7 +157,6 @@ namespace Smake.io.Spiel
 
             ShowGameOverScreen(); // Spielende-Bildschirm
 
-            while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
         }
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
@@ -264,6 +269,7 @@ namespace Smake.io.Spiel
                     case ConsoleKey.Enter:
                         check = true;
                         Console.Clear();
+                        while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
                         Spiel();
                         continue;
 
@@ -274,6 +280,8 @@ namespace Smake.io.Spiel
                 }
             }
             while (!check);
+            while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
+            Menu menu = new();
         }
 
         // Coins und xp hinzufügen
