@@ -1,7 +1,5 @@
-﻿using System.Text;
-using Smake.io.Spiel;
+﻿using Smake.io.Spiel;
 using Smake.io.Speicher;
-using System.Collections.Generic;
 
 namespace Smake.io.Render
 {
@@ -12,48 +10,52 @@ namespace Smake.io.Render
         public static void Render()
         {
             Console.SetCursorPosition(0, 0);
-            ConsoleColor aktuelleFarbe = ConsoleColor.White;
-
-            if (!performancemode)
-            {
-                aktuelleFarbe = Console.ForegroundColor;
-            }
-            else
-            {
-                Console.ForegroundColor = aktuelleFarbe;
-            }
+            ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
             int rows = Spiellogik.grid.GetLength(0);
             int cols = Spiellogik.grid.GetLength(1);
 
             for (int y = 0; y < rows; y++)
             {
-
                 for (int x = 0; x < cols; x++)
                 {
                     char zeichen = Spiellogik.grid[y, x];
-                    if (!performancemode){
-                        ConsoleColor neueFarbe = BestimmeFarbe(x, y, zeichen);
 
+                    if (!performancemode)
+                    {
+                        ConsoleColor neueFarbe = BestimmeFarbe(x, y, zeichen);
                         if (neueFarbe != aktuelleFarbe)
                         {
                             Console.ForegroundColor = neueFarbe;
                             aktuelleFarbe = neueFarbe;
                         }
                     }
+
                     Console.Write(zeichen);
                 }
 
-                aktuelleFarbe = RenderLegende(y, aktuelleFarbe);
+                // Legende am Ende der Zeile hinzufügen
+                if (!performancemode)
+                {
+                    aktuelleFarbe = RenderLegende(y, aktuelleFarbe);
+                }
+                else
+                {
+                    RenderLegende(y); // Performance: nur Text ausgeben, Farbe ignoriert
+                }
+
                 Console.WriteLine();
             }
 
-            Console.ResetColor();
+            if (!performancemode)
+            {
+                Console.ResetColor();
+            }
+              
         }
 
         private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
-            if (performancemode) return ConsoleColor.White;
             if (zeichen == ' ') return ConsoleColor.White;
             if (x == Spiellogik.player.PlayerX[0] && y == Spiellogik.player.PlayerY[0])
                 return Spiellogik.player.Headfarbe;
@@ -74,8 +76,7 @@ namespace Smake.io.Render
 
             return ConsoleColor.White;
         }
-
-        private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
+        private static void RenderLegende(int y)
         {
             if (performancemode)
             {
@@ -112,10 +113,11 @@ namespace Smake.io.Render
                         }
                         break;
                 }
-
-                return aktuelleFarbe; // Keine Änderung in Performance Mode
             }
+        }
 
+        private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
+        {
             // Normaler Modus mit Farben
             void SetFarbe(ConsoleColor farbe)
             {
