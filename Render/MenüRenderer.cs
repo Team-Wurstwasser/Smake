@@ -1,86 +1,11 @@
 ﻿using Smake.io.Spiel;
 using Smake.io.Speicher;
+using Smake.io.Menus;
 
 namespace Smake.io.Render
 {
     public static class MenüRenderer
     {
-        public static void DrawTitle()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(@"
-  ██████  ███▄ ▄███▓ ▄▄▄       ██ ▄█▀▓█████ 
-▒██    ▒ ▓██▒▀█▀ ██▒▒████▄     ██▄█▒ ▓█   ▀ 
-░ ▓██▄   ▓██    ▓██░▒██  ▀█▄  ▓███▄░ ▒███   
-  ▒   ██▒▒██    ▒██ ░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄ 
-▒██████▒▒▒██▒   ░██▒ ▓█   ▓██▒▒██▒ █▄░▒████▒
-▒ ▒▓▒ ▒ ░░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░
-░ ░▒  ░ ░░  ░      ░  ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░
-░  ░  ░  ░      ░     ░   ▒   ░ ░░ ░    ░   
-      ░         ░         ░  ░░  ░      ░  ░
-");
-            Console.ResetColor();
-        }
-
-        public static void RenderMainMenueOptions(int selected)
-        {
-            Console.WriteLine("╔══════════════════════════════╗");
-            Console.WriteLine("║       SMAKE MAIN MENU        ║");
-            Console.WriteLine("╠══════════════════════════════╣");
-
-            ReadOnlySpan<string> optionen =
-            [
-                "Spiel starten",
-                "Einstellungen",
-                "Shop",
-                "Skins/Farben",
-                "Statistiken",
-                "Anleitung",
-                "Beenden"
-            ];
-
-            for (int i = 0; i < optionen.Length; i++)
-            {
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"║  {zeiger} {optionen[i],-25}║");
-            }
-
-            Console.WriteLine("╚══════════════════════════════╝");
-        }
-
-        static void RenderGenericMenu(string title, string[] options, int selected)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine(title);
-            Console.WriteLine("══════════════════════════════");
-
-            for (int i = 0; i < options.Length; i++)
-            {
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {options[i]}");
-            }
-
-            Console.WriteLine("══════════════════════════════");
-        }
-
-        public static void RenderEinstellungen(int selected)
-        {
-            var optionen = new[]
-            {
-                $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
-                $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
-                $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
-                $"MaxFutter ändern       [Aktuell: {Spiellogik.maxfutter}]",
-                $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
-                $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
-                $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
-                "Spielstand zurücksetzen",
-                "Zurück zum Hauptmenü"
-            };
-            RenderGenericMenu("EINSTELLUNGEN", optionen, selected);
-        }
-
         public static void RenderSkin_FarbenOptions(int selected)
         {
             Console.SetCursorPosition(0, 0);
@@ -120,10 +45,12 @@ namespace Smake.io.Render
                     }
                     else
                     {
-                        Console.Write(RendernSpielfeld.performancemode && IsColor ? "Performance Mode AN" : Value);
+                        Console.Write(RendernSpielfeld.performancemode ? "Performance Mode AN" : Value);
                     }
+
                     Console.Write("]");
                 }
+
                 Console.WriteLine();
             }
             Console.WriteLine("══════════════════════════════");
@@ -163,10 +90,10 @@ namespace Smake.io.Render
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("Tail Skins", option, selected, GameData.TailSkins, GameData.TailLevel, Menüs.freigeschaltetTail, GameData.TailPreis, 2);
+            option = RenderShopSection("Tail Skins", option, selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.freigeschaltetTail, GameData.TailPreis, 2);
 
-            option = RenderShopSection("Food Skins", option, selected, GameData.FoodSkins, GameData.FoodLevel, Menüs.freigeschaltetFood, GameData.FoodPreis);
-            option = RenderShopSection("Rand Skins", option, selected, GameData.RandSkins, GameData.RandLevel, Menüs.freigeschaltetRand, GameData.RandPreis);
+            option = RenderShopSection("Food Skins", option, selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.freigeschaltetFood, GameData.FoodPreis);
+            option = RenderShopSection("Rand Skins", option, selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.freigeschaltetRand, GameData.RandPreis);
 
             string zeiger = (option + 1 == selected) ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger} Zurück zum Hauptmenü");
@@ -182,7 +109,7 @@ namespace Smake.io.Render
             {
                 string shoptext = Spiellogik.level < GameData.FarbenLevel[i - 1]
                     ? $"[Benötigtes Level: {GameData.FarbenLevel[i - 1]}]"
-                    : Menüs.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
+                    : Menüsvalues.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
 
                 string zeiger = (option + 1 == selected) ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
@@ -193,45 +120,6 @@ namespace Smake.io.Render
             string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════");
-        }
-
-        public static void RenderAnleitung()
-        {
-            Console.Clear();
-            Console.WriteLine("ANLEITUNG");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Ziel: Iss so viele {Spiellogik.food} wie möglich!");
-            Console.WriteLine("\nSteuerung:\n");
-            Console.WriteLine("Spieler 1:\n  ↑ - Hoch\n  ← - Links\n  ↓ - Runter\n  → - Rechts\n");
-            Console.WriteLine("Spieler 2:\n  W - Hoch\n  A - Links\n  S - Runter\n  D - Rechts\n");
-            Console.WriteLine("Vermeide Kollisionen mit dir selbst oder dem Rand!");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
-            Console.ReadKey();
-        }
-
-        public static void RenderStatistiken()
-        {
-            Console.Clear();
-            Console.WriteLine("Statistiken\n ");
-            Console.WriteLine("══════════════════════════════\n ");
-
-            int punktefürLevel = Spiellogik.xp % 100;
-            int balkenLänge = 20;
-            int gefüllt = (punktefürLevel * balkenLänge) / 100;
-            string bar = new string('█', gefüllt).PadRight(balkenLänge, '-');
-
-            Console.WriteLine($"Level:                    {Spiellogik.level}");
-            Console.WriteLine($"Fortschritt:              [{bar}] {punktefürLevel}/100\n");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Gesamte Spiele:           {Menüs.spieleGesamt}");
-            Console.WriteLine($"Höchste Punktzahl:        {Menüs.highscore}");
-            Console.WriteLine($"Durchschnittliche XP:     {(Menüs.spieleGesamt > 0 ? Spiellogik.xp / Menüs.spieleGesamt : 0)}");
-            Console.WriteLine($"Gesamte Coins:            {Menüs.gesamtcoins}");
-            Console.WriteLine($"Aktuelle Coins:           {Spiellogik.coins}");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
-            Console.ReadKey();
         }
     }
 }
