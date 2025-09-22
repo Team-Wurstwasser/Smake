@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Smake.io.Spiel;
 using Smake.io.Speicher;
+using System.Collections.Generic;
 
 namespace Smake.io.Render
 {
@@ -11,24 +12,34 @@ namespace Smake.io.Render
         public static void Render()
         {
             Console.SetCursorPosition(0, 0);
-            ConsoleColor aktuelleFarbe = Console.ForegroundColor;
+            ConsoleColor aktuelleFarbe = ConsoleColor.White;
+
+            if (!performancemode)
+            {
+                aktuelleFarbe = Console.ForegroundColor;
+            }
+            else
+            {
+                Console.ForegroundColor = aktuelleFarbe;
+            }
 
             int rows = Spiellogik.grid.GetLength(0);
             int cols = Spiellogik.grid.GetLength(1);
 
             for (int y = 0; y < rows; y++)
             {
-                StringBuilder zeile = new();
 
                 for (int x = 0; x < cols; x++)
                 {
                     char zeichen = Spiellogik.grid[y, x];
-                    ConsoleColor neueFarbe = BestimmeFarbe(x, y, zeichen, Spiellogik.Essen);
+                    if (!performancemode){
+                        ConsoleColor neueFarbe = BestimmeFarbe(x, y, zeichen);
 
-                    if (neueFarbe != aktuelleFarbe)
-                    {
-                        Console.ForegroundColor = neueFarbe;
-                        aktuelleFarbe = neueFarbe;
+                        if (neueFarbe != aktuelleFarbe)
+                        {
+                            Console.ForegroundColor = neueFarbe;
+                            aktuelleFarbe = neueFarbe;
+                        }
                     }
                     Console.Write(zeichen);
                 }
@@ -40,7 +51,7 @@ namespace Smake.io.Render
             Console.ResetColor();
         }
 
-        private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen, List<Futter> essen)
+        private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
             if (performancemode) return ConsoleColor.White;
             if (zeichen == ' ') return ConsoleColor.White;
@@ -55,7 +66,7 @@ namespace Smake.io.Render
             if (zeichen == Spiellogik.rand)
                 return Spiellogik.randfarbe;
             // Alle Futter durchgehen
-            foreach (var f in essen)
+            foreach (var f in Spiellogik.Essen)
             {
                 if (x == f.FutterX && y == f.FutterY && zeichen == f.Food)
                     return f.Foodfarbe;
@@ -66,6 +77,46 @@ namespace Smake.io.Render
 
         private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
         {
+            if (performancemode)
+            {
+                // Nur Text ausgeben, keine Farbwechsel
+                switch (y)
+                {
+                    case 1:
+                        Console.Write("  ══════════════════════════════");
+                        break;
+                    case 2:
+                        Console.Write("  Punkte:");
+                        break;
+                    case 3:
+                        Console.Write("  ══════════════════════════════");
+                        break;
+                    case 4:
+                        string maxpunkte = Spiellogik.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
+                        Console.Write($"  {Spiellogik.player.Name}: {Spiellogik.player.Punkte}/{maxpunkte}");
+                        break;
+                    case 5:
+                        Console.Write("  ══════════════════════════════");
+                        break;
+                    case 6:
+                        if (Spiellogik.multiplayer)
+                        {
+                            string maxpunkte2 = Spiellogik.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
+                            Console.Write($"  {Spiellogik.player2.Name}: {Spiellogik.player2.Punkte}/{maxpunkte2}");
+                        }
+                        break;
+                    case 7:
+                        if (Spiellogik.multiplayer)
+                        {
+                            Console.Write("  ══════════════════════════════");
+                        }
+                        break;
+                }
+
+                return aktuelleFarbe; // Keine Änderung in Performance Mode
+            }
+
+            // Normaler Modus mit Farben
             void SetFarbe(ConsoleColor farbe)
             {
                 if (farbe != aktuelleFarbe)
