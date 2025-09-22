@@ -22,11 +22,9 @@ namespace Smake.io
             melodieThread.Start();
 
             Eingaben();
-            do
-            {
-                Menu menu = new();
 
-            } while (!Spiellogik.exit);
+            Menu menu = new();
+
             melodieThread.Join();
         }
 

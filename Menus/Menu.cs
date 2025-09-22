@@ -95,7 +95,6 @@ namespace Smake.io.Menus
             Display = menu;
             MenuTracker = 1;
             InitialRender();
-            Thread.Sleep(1000); // input cooldown
             StartInputstream();
         }
 
@@ -104,7 +103,8 @@ namespace Smake.io.Menus
             switch (MenuTracker)
             {
                 case 1:
-                    Spiellogik.Spiel();
+                    DoReadInput = false;
+                    Spiellogik Spiel = new();
                     Thread.CurrentThread.Join();
                     break;
                 case 2:
@@ -115,6 +115,7 @@ namespace Smake.io.Menus
                     Thread.CurrentThread.Join();
                     break;
                 case 4:
+                    Thread.CurrentThread.Join();
                     break;
                 case 5:
                     Statistiken Statistiken = new();
@@ -125,8 +126,7 @@ namespace Smake.io.Menus
                     Thread.CurrentThread.Join();
                     break;
                 case 7:
-                    Spiellogik.exit = true;
-                    Thread.CurrentThread.Join();
+                    Environment.Exit(0);
                     break;
                 default:
                     break;
