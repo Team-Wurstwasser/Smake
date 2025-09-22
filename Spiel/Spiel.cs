@@ -1,4 +1,5 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Menus;
+using Smake.io.Render;
 using Smake.io.Speicher;
 
 namespace Smake.io.Spiel
@@ -280,29 +281,29 @@ namespace Smake.io.Spiel
         {
             if (gamemode != "Babymode")
             {
-                if (Menüs.highscore < player.Punkte)
-                { Menüs.highscore = player.Punkte; }
-                else if (Menüs.highscore < player2.Punkte)
-                { Menüs.highscore = player2.Punkte; }
+                if (Menüsvalues.highscore < player.Punkte)
+                { Menüsvalues.highscore = player.Punkte; }
+                else if (Menüsvalues.highscore < player2.Punkte)
+                { Menüsvalues.highscore = player2.Punkte; }
 
-                Menüs.spieleGesamt++;
+                Menüsvalues.spieleGesamt++;
 
                 switch (difficulty)
                 {
                     case "Langsam":
-                        Menüs.gesamtcoins = player.Punkte + player2.Punkte + Menüs.gesamtcoins;
+                        Menüsvalues.gesamtcoins = player.Punkte + player2.Punkte + Menüsvalues.gesamtcoins;
                         coins = player.Punkte + player2.Punkte + coins;
                         xp = player.Punkte + player2.Punkte + xp;
                         break;
 
                     case "Mittel":
-                        Menüs.gesamtcoins = 2 * (player.Punkte + player2.Punkte) + Menüs.gesamtcoins;
+                        Menüsvalues.gesamtcoins = 2 * (player.Punkte + player2.Punkte) + Menüsvalues.gesamtcoins;
                         coins = 2 * (player.Punkte + player2.Punkte) + coins;
                         xp = 2 * (player.Punkte + player2.Punkte) + xp;
                         break;
 
                     case "Schnell":
-                        Menüs.gesamtcoins = 3 * (player.Punkte + player2.Punkte) + Menüs.gesamtcoins;
+                        Menüsvalues.gesamtcoins = 3 * (player.Punkte + player2.Punkte) + Menüsvalues.gesamtcoins;
                         coins = 3 * (player.Punkte + player2.Punkte) + coins;
                         xp = 3 * (player.Punkte + player2.Punkte) + xp;
                         break;
@@ -310,7 +311,7 @@ namespace Smake.io.Spiel
             }
             else
             {
-                Menüs.gesamtcoins = (GameData.MaxPunkte) / 2 + Menüs.gesamtcoins;
+                Menüsvalues.gesamtcoins = (GameData.MaxPunkte) / 2 + Menüsvalues.gesamtcoins;
                 coins = (GameData.MaxPunkte) / 2 + coins;
             }
 

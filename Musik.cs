@@ -18,35 +18,32 @@ namespace Smake.io
         {
             while (!Spiellogik.exit)
             {
-                lock (lockObj)
+                // Prüfen, ob wir die Musik wechseln oder starten müssen
+                if (musikplay)
                 {
-                    // Prüfen, ob wir die Musik wechseln oder starten müssen
-                    if (musikplay)
+                    if (currentmusik != lastmusik)
                     {
-                        if (currentmusik != lastmusik)
-                        {
-                            // Stoppe vorherige Musik, falls vorhanden
-                            currentPlayer?.Stop();
+                        // Stoppe vorherige Musik, falls vorhanden
+                        currentPlayer?.Stop();
 
-                            // Erstelle neuen SoundPlayer für die aktuelle Musik
-                            string dateipfad = Path.Combine("Sounds", GameData.Filenames[currentmusik]);
-                            if (File.Exists(dateipfad))
-                            {
-                                currentPlayer = new SoundPlayer(dateipfad);
-                                currentPlayer.PlayLooping();
-                                lastmusik = currentmusik;
-                            }
+                        // Erstelle neuen SoundPlayer für die aktuelle Musik
+                        string dateipfad = Path.Combine("Sounds", GameData.Filenames[currentmusik]);
+                        if (File.Exists(dateipfad))
+                        {
+                            currentPlayer = new SoundPlayer(dateipfad);
+                            currentPlayer.PlayLooping();
+                            lastmusik = currentmusik;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    // Musik stoppen, wenn play deaktiviert ist
+                    if (currentPlayer != null)
                     {
-                        // Musik stoppen, wenn play deaktiviert ist
-                        if (currentPlayer != null)
-                        {
-                            currentPlayer.Stop();
-                            currentPlayer = null;
-                            lastmusik = -1;
-                        }
+                        currentPlayer.Stop();
+                        currentPlayer = null;
+                        lastmusik = -1;
                     }
                 }
 

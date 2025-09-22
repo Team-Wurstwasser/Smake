@@ -1,4 +1,5 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Menus;
+using Smake.io.Render;
 using Smake.io.Spiel;
 using System.Security.Cryptography;
 
@@ -142,24 +143,24 @@ namespace Smake.io.Speicher
             Musik.soundplay = true;
 
             // Erst alle auf false setzen
-            Array.Clear(Menüs.freigeschaltetTail);
-            Array.Clear(Menüs.freigeschaltetFood);
-            Array.Clear(Menüs.freigeschaltetRand);
-            Array.Clear(Menüs.freigeschaltetFarben);
+            Array.Clear(Menüsvalues.freigeschaltetTail);
+            Array.Clear(Menüsvalues.freigeschaltetFood);
+            Array.Clear(Menüsvalues.freigeschaltetRand);
+            Array.Clear(Menüsvalues.freigeschaltetFarben);
 
-            Menüs.freigeschaltetTail[0] = true;
-            Menüs.freigeschaltetTail[1] = true;
-            Menüs.freigeschaltetFood[0] = true;
-            Menüs.freigeschaltetRand[0] = true;
-            Menüs.freigeschaltetFarben[0] = true;
+            Menüsvalues.freigeschaltetTail[0] = true;
+            Menüsvalues.freigeschaltetTail[1] = true;
+            Menüsvalues.freigeschaltetFood[0] = true;
+            Menüsvalues.freigeschaltetRand[0] = true;
+            Menüsvalues.freigeschaltetFarben[0] = true;
 
             RendernSpielfeld.performancemode = false;
 
             Spiellogik.coins = 0;
             Spiellogik.xp = 0;
-            Menüs.gesamtcoins = 0;
-            Menüs.highscore = 0;
-            Menüs.spieleGesamt = 0;
+            Menüsvalues.gesamtcoins = 0;
+            Menüsvalues.highscore = 0;
+            Menüsvalues.spieleGesamt = 0;
             Spiellogik.maxfutter = 1;
 
             Spiellogik.difficulty = "Mittel";
@@ -187,10 +188,10 @@ namespace Smake.io.Speicher
                 $"performancemode={RendernSpielfeld.performancemode}",
                 $"coins={Spiellogik.coins}",
                 $"xp={Spiellogik.xp}",
-                $"spieleGesamt={Menüs.spieleGesamt}",
+                $"spieleGesamt={Menüsvalues.spieleGesamt}",
                 $"maxfutter={Spiellogik.maxfutter}",
-                $"highscore={Menüs.highscore}",
-                $"gesamtcoins={Menüs.gesamtcoins}",
+                $"highscore={Menüsvalues.highscore}",
+                $"gesamtcoins={Menüsvalues.gesamtcoins}",
                 $"difficulty={Spiellogik.difficulty}",
                 $"gamemode={Spiellogik.gamemode}",
                 $"multiplayer={Spiellogik.multiplayer}",
@@ -209,14 +210,14 @@ namespace Smake.io.Speicher
                 $"Sound={Musik.soundplay}"
             };
 
-            for (int i = 0; i < Menüs.freigeschaltetTail.Length; i++)
-                zeilen.Add($"freigeschaltetTail{i}={Menüs.freigeschaltetTail[i]}");
-            for (int i = 0; i < Menüs.freigeschaltetFood.Length; i++)
-                zeilen.Add($"freigeschaltetFood{i}={Menüs.freigeschaltetFood[i]}");
-            for (int i = 0; i < Menüs.freigeschaltetRand.Length; i++)
-                zeilen.Add($"freigeschaltetRand{i}={Menüs.freigeschaltetRand[i]}");
-            for (int i = 0; i < Menüs.freigeschaltetFarben.Length; i++)
-                zeilen.Add($"freigeschaltetFarben{i}={Menüs.freigeschaltetFarben[i]}");
+            for (int i = 0; i < Menüsvalues.freigeschaltetTail.Length; i++)
+                zeilen.Add($"freigeschaltetTail{i}={Menüsvalues.freigeschaltetTail[i]}");
+            for (int i = 0; i < Menüsvalues.freigeschaltetFood.Length; i++)
+                zeilen.Add($"freigeschaltetFood{i}={Menüsvalues.freigeschaltetFood[i]}");
+            for (int i = 0; i < Menüsvalues.freigeschaltetRand.Length; i++)
+                zeilen.Add($"freigeschaltetRand{i}={Menüsvalues.freigeschaltetRand[i]}");
+            for (int i = 0; i < Menüsvalues.freigeschaltetFarben.Length; i++)
+                zeilen.Add($"freigeschaltetFarben{i}={Menüsvalues.freigeschaltetFarben[i]}");
 
             string plainText = string.Join(Environment.NewLine, zeilen);
             byte[] encrypted = CryptoHelper.Encrypt(plainText);
@@ -257,9 +258,9 @@ namespace Smake.io.Speicher
                         case "performancemode": RendernSpielfeld.performancemode = bool.Parse(wert); break;
                         case "coins": Spiellogik.coins = int.Parse(wert); break;
                         case "xp": Spiellogik.xp = int.Parse(wert); break;
-                        case "gesamtcoins": Menüs.gesamtcoins = int.Parse(wert); break;
-                        case "highscore": Menüs.highscore = int.Parse(wert); break;
-                        case "spieleGesamt": Menüs.spieleGesamt = int.Parse(wert); break;
+                        case "gesamtcoins": Menüsvalues.gesamtcoins = int.Parse(wert); break;
+                        case "highscore": Menüsvalues.highscore = int.Parse(wert); break;
+                        case "spieleGesamt": Menüsvalues.spieleGesamt = int.Parse(wert); break;
                         case "maxfutter": Spiellogik.maxfutter = int.Parse(wert); break;
 
                         case "difficulty": Spiellogik.difficulty = wert; break;
@@ -282,13 +283,13 @@ namespace Smake.io.Speicher
                         case "Musik": Musik.musikplay = bool.Parse(wert); break;
                         default:
                             if (name.StartsWith("freigeschaltetTail"))
-                                Menüs.freigeschaltetTail[int.Parse(name.Replace("freigeschaltetTail", ""))] = bool.Parse(wert);
+                                Menüsvalues.freigeschaltetTail[int.Parse(name.Replace("freigeschaltetTail", ""))] = bool.Parse(wert);
                             else if (name.StartsWith("freigeschaltetFood"))
-                                Menüs.freigeschaltetFood[int.Parse(name.Replace("freigeschaltetFood", ""))] = bool.Parse(wert);
+                                Menüsvalues.freigeschaltetFood[int.Parse(name.Replace("freigeschaltetFood", ""))] = bool.Parse(wert);
                             else if (name.StartsWith("freigeschaltetRand"))
-                                Menüs.freigeschaltetRand[int.Parse(name.Replace("freigeschaltetRand", ""))] = bool.Parse(wert);
+                                Menüsvalues.freigeschaltetRand[int.Parse(name.Replace("freigeschaltetRand", ""))] = bool.Parse(wert);
                             else if (name.StartsWith("freigeschaltetFarben"))
-                                Menüs.freigeschaltetFarben[int.Parse(name.Replace("freigeschaltetFarben", ""))] = bool.Parse(wert);
+                                Menüsvalues.freigeschaltetFarben[int.Parse(name.Replace("freigeschaltetFarben", ""))] = bool.Parse(wert);
                             break;
                     }
                 }
