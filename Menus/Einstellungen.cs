@@ -37,6 +37,7 @@ namespace Smake.io.Menus
                         break;
                     case ConsoleKey.Escape:
                         Menu menu = new();
+                        Thread.CurrentThread.Join();
                         break;
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
