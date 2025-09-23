@@ -65,7 +65,7 @@ namespace Smake.io.Menus
                         menuTracker = value;
                     }
                     selected = MenuTracker;
-                    RenderMainMenue();
+                    Render();
                 }
             }
         }
@@ -105,25 +105,21 @@ namespace Smake.io.Menus
                 case 1:
                     DoReadInput = false;
                     Spiellogik Spiel = new();
-                    Thread.CurrentThread.Join();
                     break;
                 case 2:
                     Einstellungen Einstellungen = new();
-                    Thread.CurrentThread.Join();
                     break;
                 case 3:
-                    Thread.CurrentThread.Join();
+                    Shop Shop = new();
                     break;
                 case 4:
-                    Thread.CurrentThread.Join();
+                    Skin_Farben Skin_Farben = new();
                     break;
                 case 5:
                     Statistiken Statistiken = new();
-                    Thread.CurrentThread.Join();
                     break;
                 case 6:
                     Anleitung Anleitung = new();
-                    Thread.CurrentThread.Join();
                     break;
                 case 7:
                     Environment.Exit(0);
@@ -131,6 +127,7 @@ namespace Smake.io.Menus
                 default:
                     break;
             }
+            Thread.CurrentThread.Join();
         }
     }
 }
