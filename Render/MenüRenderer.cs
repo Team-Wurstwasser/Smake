@@ -6,55 +6,6 @@ namespace Smake.io.Render
 {
     public static class MenüRenderer
     {
-        public static void RenderSkin_FarbenOptions(int selected)
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.ResetColor();
-            Console.WriteLine("Skins/Farben");
-            Console.WriteLine("══════════════════════════════");
-
-            var options = new List<(string Text, object? Value, bool IsColor)>
-            {
-                ($"Player 1 Tailskin ändern    [Aktuell: ", Spiellogik.player.Skin, false),
-                ($"Player 2 Tailskin ändern    [Aktuell: ", Spiellogik.player2.Skin, false),
-                ($"Foodskin ändern             [Aktuell: ", Spiellogik.food, false),
-                ($"Randskin ändern             [Aktuell: ", Spiellogik.rand, false),
-                ($"Player 1 Farbe ändern       [Aktuell: ", Spiellogik.player.Headfarbe, true),
-                ($"Player 2 Farbe ändern       [Aktuell: ", Spiellogik.player2.Headfarbe, true),
-                ($"Player 1 Tailfarbe ändern   [Aktuell: ", Spiellogik.player.Farbe, true),
-                ($"Player 2 Tailfarbe ändern   [Aktuell: ", Spiellogik.player2.Farbe, true),
-                ($"Foodfarbe ändern            [Aktuell: ", Spiellogik.foodfarbeRandom ? "Random" : (object)Spiellogik.foodfarbe, !Spiellogik.foodfarbeRandom),
-                ($"Randfarbe ändern            [Aktuell: ", Spiellogik.randfarbe, true),
-                ("Zurück zum Hauptmenü", null, false)
-             };
-
-            for (int i = 0; i < options.Count; i++)
-            {
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
-                var (Text, Value, IsColor) = options[i];
-
-                Console.Write($"{zeiger} {Text}");
-
-                if (Value != null)
-                {
-                    if (IsColor && !RendernSpielfeld.performancemode)
-                    {
-                        Console.ForegroundColor = (ConsoleColor)Value;
-                        Console.Write(Value);
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        Console.Write(RendernSpielfeld.performancemode ? "Performance Mode AN" : Value);
-                    }
-
-                    Console.Write("]");
-                }
-
-                Console.WriteLine();
-            }
-            Console.WriteLine("══════════════════════════════");
-        }
 
         static void RenderShopHeader()
         {
