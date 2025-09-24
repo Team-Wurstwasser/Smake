@@ -1,4 +1,4 @@
-﻿using Smake.io.Menus;
+﻿using Smake.io.Values;
 using Smake.io.Render;
 using Smake.io.Spiel;
 using System.Security.Cryptography;
@@ -156,25 +156,25 @@ namespace Smake.io.Speicher
 
             RendernSpielfeld.performancemode = false;
 
-            Spiellogik.coins = 0;
-            Spiellogik.xp = 0;
+            Spielstatus.coins = 0;
+            Spielstatus.xp = 0;
             Menüsvalues.gesamtcoins = 0;
             Menüsvalues.highscore = 0;
             Menüsvalues.spieleGesamt = 0;
-            Spiellogik.maxfutter = 1;
+            Spielvalues.maxfutter = 1;
 
-            Spiellogik.difficulty = "Mittel";
-            Spiellogik.gamemode = "Normal";
-            Spiellogik.multiplayer = false;
+            Spielvalues.difficulty = "Mittel";
+            Spielvalues.gamemode = "Normal";
+            Spielvalues.multiplayer = false;
 
-            Spiellogik.rand = GameData.RandSkins[0];
-            Spiellogik.food = GameData.FoodSkins[0];
+            Skinvalues.rand = GameData.RandSkins[0];
+            Skinvalues.food = GameData.FoodSkins[0];
             Spiellogik.player.Skin = GameData.TailSkins[0];
             Spiellogik.player2.Skin = GameData.TailSkins[1];
 
-            Spiellogik.randfarbe = GameData.Farben[0];
-            Spiellogik.foodfarbe = GameData.Farben[0];
-            Spiellogik.foodfarbeRandom = false;
+            Skinvalues.randfarbe = GameData.Farben[0];
+            Skinvalues.foodfarbe = GameData.Farben[0];
+            Skinvalues.foodfarbeRandom = false;
             Spiellogik.player.Farbe = GameData.Farben[0];
             Spiellogik.player2.Farbe = GameData.Farben[0];
             Spiellogik.player.Headfarbe = GameData.Farben[0];
@@ -186,22 +186,22 @@ namespace Smake.io.Speicher
             var zeilen = new List<string>
             {
                 $"performancemode={RendernSpielfeld.performancemode}",
-                $"coins={Spiellogik.coins}",
-                $"xp={Spiellogik.xp}",
+                $"coins={Spielstatus.coins}",
+                $"xp={Spielstatus.xp}",
                 $"spieleGesamt={Menüsvalues.spieleGesamt}",
-                $"maxfutter={Spiellogik.maxfutter}",
+                $"maxfutter={Spielvalues.maxfutter}",
                 $"highscore={Menüsvalues.highscore}",
                 $"gesamtcoins={Menüsvalues.gesamtcoins}",
-                $"difficulty={Spiellogik.difficulty}",
-                $"gamemode={Spiellogik.gamemode}",
-                $"multiplayer={Spiellogik.multiplayer}",
-                $"rand={Spiellogik.rand}",
-                $"food={Spiellogik.food}",
+                $"difficulty={Spielvalues.difficulty}",
+                $"gamemode={Spielvalues.gamemode}",
+                $"multiplayer={Spielvalues.multiplayer}",
+                $"rand={Skinvalues.rand}",
+                $"food={Skinvalues.food}",
                 $"player1.Skin={Spiellogik.player.Skin}",
                 $"player2.Skin={Spiellogik.player2.Skin}",
-                $"randfarbe={Spiellogik.randfarbe}",
-                $"foodfarbe={Spiellogik.foodfarbe}",
-                $"foodfarbeRandom={Spiellogik.foodfarbeRandom}",
+                $"randfarbe={Skinvalues.randfarbe}",
+                $"foodfarbe={Skinvalues.foodfarbe}",
+                $"foodfarbeRandom={Skinvalues.foodfarbeRandom}",
                 $"player1.Farbe={Spiellogik.player.Farbe}",
                 $"player2.Farbe={Spiellogik.player2.Farbe}",
                 $"player1.Headfarbe={Spiellogik.player.Headfarbe}",
@@ -256,25 +256,25 @@ namespace Smake.io.Speicher
                     switch (name)
                     {
                         case "performancemode": RendernSpielfeld.performancemode = bool.Parse(wert); break;
-                        case "coins": Spiellogik.coins = int.Parse(wert); break;
-                        case "xp": Spiellogik.xp = int.Parse(wert); break;
+                        case "coins": Spielstatus.coins = int.Parse(wert); break;
+                        case "xp": Spielstatus.xp = int.Parse(wert); break;
                         case "gesamtcoins": Menüsvalues.gesamtcoins = int.Parse(wert); break;
                         case "highscore": Menüsvalues.highscore = int.Parse(wert); break;
                         case "spieleGesamt": Menüsvalues.spieleGesamt = int.Parse(wert); break;
-                        case "maxfutter": Spiellogik.maxfutter = int.Parse(wert); break;
+                        case "maxfutter": Spielvalues.maxfutter = int.Parse(wert); break;
 
-                        case "difficulty": Spiellogik.difficulty = wert; break;
-                        case "gamemode": Spiellogik.gamemode = wert; break;
-                        case "multiplayer": Spiellogik.multiplayer = bool.Parse(wert); break;
+                        case "difficulty": Spielvalues.difficulty = wert; break;
+                        case "gamemode": Spielvalues.gamemode = wert; break;
+                        case "multiplayer": Spielvalues.multiplayer = bool.Parse(wert); break;
 
-                        case "rand": Spiellogik.rand = wert[0]; break;
-                        case "food": Spiellogik.food = wert[0]; break;
+                        case "rand": Skinvalues.rand = wert[0]; break;
+                        case "food": Skinvalues.food = wert[0]; break;
                         case "player1.Skin": Spiellogik.player.Skin = wert[0]; break;
                         case "player2.Skin": Spiellogik.player2.Skin = wert[0]; break;
 
-                        case "randfarbe": Spiellogik.randfarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "foodfarbe": Spiellogik.foodfarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "foodfarbeRandom": Spiellogik.foodfarbeRandom = bool.Parse(wert); break;
+                        case "randfarbe": Skinvalues.randfarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "foodfarbe": Skinvalues.foodfarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "foodfarbeRandom": Skinvalues.foodfarbeRandom = bool.Parse(wert); break;
                         case "player1.Farbe": Spiellogik.player.Farbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "player2.Farbe": Spiellogik.player2.Farbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "player1.Headfarbe": Spiellogik.player.Headfarbe = Enum.Parse<ConsoleColor>(wert); break;

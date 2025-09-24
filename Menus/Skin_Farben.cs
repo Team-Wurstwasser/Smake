@@ -1,4 +1,5 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Values;
+using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 using System.Drawing;
@@ -8,7 +9,7 @@ namespace Smake.io.Menus
     public class Skin_Farben : Screen
     {
         
-        string[] skin_farben = {
+        string[] skin_farben = [
                 ($"Player 1 Tailskin ändern    [Aktuell: "),
                 ($"Player 2 Tailskin ändern    [Aktuell: "),
                 ($"Foodskin ändern             [Aktuell: "),
@@ -20,10 +21,10 @@ namespace Smake.io.Menus
                 ($"Foodfarbe ändern            [Aktuell: "),
                 ($"Randfarbe ändern            [Aktuell: "),
                 ("Zurück zum Hauptmenü")
-        };
+        ];
 
         bool[] Color =
-        {
+        [
             false,
             false,
             false,
@@ -34,7 +35,7 @@ namespace Smake.io.Menus
             true,
             true,
             false,
-        }; 
+        ]; 
 
         private ConsoleKey input;
         public override ConsoleKey Input
@@ -58,7 +59,6 @@ namespace Smake.io.Menus
                         break;
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
-                        Console.Clear();
                         SelectMenu();
                         break;
                     default:
@@ -77,26 +77,26 @@ namespace Smake.io.Menus
             {
                 if (value != menuTracker) // loop index
                 {
-                    if (value > 10)
+                    if (value > 11)
                     {
                         menuTracker = 1;
                     }
                     else if (value < 1)
                     {
-                        menuTracker = 10;
+                        menuTracker = 11;
                     }
                     else
                     {
                         menuTracker = value;
                     }
-                    selected = MenuTracker;
+                    Selected = MenuTracker;
                 }
             }
         }
 
         public Skin_Farben()
         {
-            title = "Skin_Farben";
+            Title = "Skin_Farben";
             Display = skin_farben;
             IsColor = Color;
             GameValue = BuildMenu();
@@ -111,14 +111,14 @@ namespace Smake.io.Menus
             {
                 case 1: WechselSkin(ref Spiellogik.player.Skin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player2.Skin); break;
                 case 2: WechselSkin(ref Spiellogik.player2.Skin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player.Skin); break;
-                case 3: WechselSkin(ref Spiellogik.food, GameData.FoodSkins, Menüsvalues.freigeschaltetFood); break;
-                case 4: WechselSkin(ref Spiellogik.rand, GameData.RandSkins, Menüsvalues.freigeschaltetRand); break;
+                case 3: WechselSkin(ref Skinvalues.food, GameData.FoodSkins, Menüsvalues.freigeschaltetFood); break;
+                case 4: WechselSkin(ref Skinvalues.rand, GameData.RandSkins, Menüsvalues.freigeschaltetRand); break;
                 case 5: WechselFarbe(ref Spiellogik.player.Headfarbe); break;
                 case 6: WechselFarbe(ref Spiellogik.player2.Headfarbe); break;
                 case 7: WechselFarbe(ref Spiellogik.player.Farbe); break;
                 case 8: WechselFarbe(ref Spiellogik.player2.Farbe); break;
-                case 9: WechselFarbe(ref Spiellogik.foodfarbe, true); break;
-                case 10: WechselFarbe(ref Spiellogik.randfarbe); break;
+                case 9: WechselFarbe(ref Skinvalues.foodfarbe, true); break;
+                case 10: WechselFarbe(ref Skinvalues.randfarbe); break;
                 case 11: 
                     Menu menu = new();
                     Thread.CurrentThread.Join();
@@ -128,26 +128,27 @@ namespace Smake.io.Menus
             }
         }
 
-        private object[] BuildMenu()
+        private static object?[] BuildMenu()
         {
-            return new object[]
-            {
+            return [
                 Spiellogik.player.Skin,
                 Spiellogik.player2.Skin,
-                Spiellogik.food,
-                Spiellogik.rand,
+                Skinvalues.food,
+                Skinvalues.rand,
                 Spiellogik.player.Headfarbe,
                 Spiellogik.player2.Headfarbe,
                 Spiellogik.player.Farbe,
                 Spiellogik.player2.Farbe,
-                Spiellogik.foodfarbeRandom ? "Random" : (object)Spiellogik.foodfarbe,
-                Spiellogik.randfarbe,
+                Skinvalues.foodfarbeRandom ? "Random" : (object?)Skinvalues.foodfarbe,
+                Skinvalues.randfarbe,
                 null
-            };
+            ];
         }
 
+
+
         // Helper für Tail/Food/Rand
-        void WechselSkin(ref char aktuellesSkin, char[] skins, bool[] freigeschaltet, char? verboteneSkin = null)
+        static void WechselSkin(ref char aktuellesSkin, char[] skins, bool[] freigeschaltet, char? verboteneSkin = null)
         {
             if (skins.Length == 0) return;
             int idx = Array.IndexOf(skins, aktuellesSkin);
@@ -160,7 +161,7 @@ namespace Smake.io.Menus
         }
 
         // Helper für Farben
-        void WechselFarbe(ref ConsoleColor aktuelleFarbe, bool isFood = false)
+        static void WechselFarbe(ref ConsoleColor aktuelleFarbe, bool isFood = false)
         {
             if (GameData.Farben.Length == 0) return;
 
@@ -187,16 +188,16 @@ namespace Smake.io.Menus
                 }
 
                 // Nur für foodfarbe: Random aktivieren, wenn letzte freigeschaltete Farbe erreicht
-                if (!Spiellogik.foodfarbeRandom)
+                if (!Skinvalues.foodfarbeRandom)
                 {
                     if (lastIndex == idx)
                     {
-                        Spiellogik.foodfarbeRandom = true;
+                        Skinvalues.foodfarbeRandom = true;
                     }
                 }
                 else
                 {
-                    Spiellogik.foodfarbeRandom = false;
+                    Skinvalues.foodfarbeRandom = false;
                 }
             }
         }
