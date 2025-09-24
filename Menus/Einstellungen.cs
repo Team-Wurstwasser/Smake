@@ -1,4 +1,5 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Values;
+using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 
@@ -6,18 +7,6 @@ namespace Smake.io.Menus
 {
     public class Einstellungen : Screen
     {
-        string[] einstellungen = {
-                $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
-                $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
-                $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
-                $"MaxFutter ändern       [Aktuell: {Spiellogik.maxfutter}]",
-                $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
-                $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
-                $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
-                "Spielstand zurücksetzen",
-                "Zurück zum Hauptmenü"
-            };
-
 
         private ConsoleKey input;
         public override ConsoleKey Input
@@ -72,14 +61,14 @@ namespace Smake.io.Menus
                     {
                         menuTracker = value;
                     }
-                    selected = MenuTracker;
+                    Selected = MenuTracker;
                 }
             }
         }
 
         public Einstellungen()
         {
-            title = "Einstellungen";
+            Title = "Einstellungen";
             Display = BuildMenu();
             MenuTracker = 1;
             InitialRender();
@@ -94,7 +83,7 @@ namespace Smake.io.Menus
                     ChangeDifficulty();
                     break;
                 case 2:
-                    Spiellogik.multiplayer = !Spiellogik.multiplayer;
+                    Spielvalues.multiplayer = !Spielvalues.multiplayer;
                     break;
                 case 3:
                     ChangeGamemode();
@@ -123,40 +112,40 @@ namespace Smake.io.Menus
             }
         }
 
-        private string[] BuildMenu()
+        private static string[] BuildMenu()
         {
-            return new string[]
-            {
-        $"Schwierigkeit ändern   [Aktuell: {Spiellogik.difficulty}]",
-        $"Multiplayer            [Aktuell: {(Spiellogik.multiplayer ? "An" : "Aus")}]",
-        $"Gamemode ändern        [Aktuell: {Spiellogik.gamemode}]",
-        $"MaxFutter ändern       [Aktuell: {Spiellogik.maxfutter}]",
+            return
+            [
+        $"Schwierigkeit ändern   [Aktuell: {Spielvalues.difficulty}]",
+        $"Multiplayer            [Aktuell: {(Spielvalues.multiplayer ? "An" : "Aus")}]",
+        $"Gamemode ändern        [Aktuell: {Spielvalues.gamemode}]",
+        $"MaxFutter ändern       [Aktuell: {Spielvalues.maxfutter}]",
         $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
         $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
         $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
         "Spielstand zurücksetzen",
         "Zurück zum Hauptmenü"
-            };
+            ];
         }
 
 
         // Auswahl der Spielgeschwindigkeit
-        void ChangeDifficulty()
+        static void ChangeDifficulty()
         {
-            if (Spiellogik.difficulty == "Langsam") Spiellogik.difficulty = "Mittel";
-            else if (Spiellogik.difficulty == "Mittel") Spiellogik.difficulty = "Schnell";
-            else Spiellogik.difficulty = "Langsam";
+            if (Spielvalues.difficulty == "Langsam") Spielvalues.difficulty = "Mittel";
+            else if (Spielvalues.difficulty == "Mittel") Spielvalues.difficulty = "Schnell";
+            else Spielvalues.difficulty = "Langsam";
         }
 
         // Auswahl der Verschiedenen Modi
-        void ChangeGamemode()
+        static void ChangeGamemode()
         {
-            if (Spiellogik.gamemode == "Normal") Spiellogik.gamemode = "Unendlich";
-            else if (Spiellogik.gamemode == "Unendlich") Spiellogik.gamemode = "Babymode";
-            else Spiellogik.gamemode = "Normal";
+            if (Spielvalues.gamemode == "Normal") Spielvalues.gamemode = "Unendlich";
+            else if (Spielvalues.gamemode == "Unendlich") Spielvalues.gamemode = "Babymode";
+            else Spielvalues.gamemode = "Normal";
         }
 
-        void ChangeMaxFutter()
+        static void ChangeMaxFutter()
         {
             bool gültig = false;
 
@@ -185,7 +174,7 @@ namespace Smake.io.Menus
                     }
                     else
                     {
-                        Spiellogik.maxfutter = wert;
+                        Spielvalues.maxfutter = wert;
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"\n✔ MaxFutter wurde auf {wert} gesetzt!");
                         Console.ResetColor();
@@ -212,7 +201,7 @@ namespace Smake.io.Menus
             Console.Clear();
         }
 
-        void ResetSpielstand()
+        static void ResetSpielstand()
         {
             for (int i = 1; i <= 3; i++)
             {

@@ -1,4 +1,5 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Values;
+using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 
@@ -6,7 +7,7 @@ namespace Smake.io.Menus
 {
     public class Menu : Screen
     {
-        string[] menu = {
+        string[] menu = [
                 "Spiel starten",
                 "Einstellungen",
                 "Shop",
@@ -14,7 +15,7 @@ namespace Smake.io.Menus
                 "Statistiken",
                 "Anleitung",
                 "Beenden"
-        };
+        ];
 
 
         private ConsoleKey input;
@@ -64,7 +65,7 @@ namespace Smake.io.Menus
                     {
                         menuTracker = value;
                     }
-                    selected = MenuTracker;
+                    Selected = MenuTracker;
                     Render();
                 }
             }
@@ -78,20 +79,20 @@ namespace Smake.io.Menus
             SpeicherSystem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
-            Spiellogik.level = Spiellogik.xp / 100 + 1;
+            Spielstatus.level = Spielstatus.xp / 100 + 1;
 
             if (RendernSpielfeld.performancemode)
             {
-                Spiellogik.foodfarbe = GameData.Farben[0];
-                Spiellogik.foodfarbeRandom = false;
-                Spiellogik.randfarbe = GameData.Farben[0];
+                Skinvalues.foodfarbe = GameData.Farben[0];
+                Skinvalues.foodfarbeRandom = false;
+                Skinvalues.randfarbe = GameData.Farben[0];
                 Spiellogik.player.Farbe = GameData.Farben[0];
                 Spiellogik.player.Headfarbe = GameData.Farben[0];
                 Spiellogik.player2.Farbe = GameData.Farben[0];
                 Spiellogik.player2.Headfarbe = GameData.Farben[0];
             }
 
-            title = "Menü";
+            Title = "Menü";
             Display = menu;
             MenuTracker = 1;
             InitialRender();
