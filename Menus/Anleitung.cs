@@ -1,4 +1,6 @@
-﻿using Smake.io.Spiel;
+﻿using Smake.io.Values;
+using Smake.io.Render;
+using Smake.io.Spiel;
 
 namespace Smake.io.Menus
 {
@@ -9,14 +11,14 @@ namespace Smake.io.Menus
             Console.Clear();
             RenderAnleitung();
             Console.ReadKey();
-            Menu menu = new Menu();
+            Menu menu = new();
         }
-        void RenderAnleitung()
+        static void RenderAnleitung()
         {
             Console.Clear();
             Console.WriteLine("ANLEITUNG");
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Ziel: Iss so viele {Spiellogik.food} wie möglich!");
+            Console.WriteLine($"Ziel: Iss so viele {Skinvalues.food} wie möglich!");
             Console.WriteLine("\nSteuerung:\n");
             Console.WriteLine("Spieler 1:\n  ↑ - Hoch\n  ← - Links\n  ↓ - Runter\n  → - Rechts\n");
             Console.WriteLine("Spieler 2:\n  W - Hoch\n  A - Links\n  S - Runter\n  D - Rechts\n");

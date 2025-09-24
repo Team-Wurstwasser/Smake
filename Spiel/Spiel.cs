@@ -1,44 +1,19 @@
-﻿using Smake.io.Menus;
+﻿using Smake.io.Values;
+using Smake.io.Menus;
 using Smake.io.Render;
 using Smake.io.Speicher;
+using System.ComponentModel;
 
 namespace Smake.io.Spiel
 {
-    public class Spiellogik
+    public class Spiellogik : RendernSpielfeld
     {
-        // Spielstatus: true = Spiel läuft, false = Spiel beendet
         public static bool spiel;
         public static int gameover;
-        static bool unentschieden;
-        public static bool exit;
-        public static int maxfutter;
-
-        // Spielfeldgröße (Breite x Höhe)
-        public readonly static int weite = GameData.Weite;
-        public readonly static int hoehe = GameData.Hoehe;
+        public static bool unentschieden;
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
-        public static char[,] grid = new char[hoehe, weite];
-
-        // Spielmodi
-        public static bool multiplayer;
-        public static string difficulty;
-        public static string gamemode;
-
-        //Weitere Skins
-        public static char rand;
-        public static ConsoleColor randfarbe;
-        public static char food;
-        public static ConsoleColor foodfarbe;
-        public static bool foodfarbeRandom;
-
-        // Level und Experience
-        public static int coins;
-        public static int xp;
-        public static int level;
-
-        // Spielgeschwindigkeit
-        static int zeit;
+        public static char[,] grid = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         public static Spieler player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y);
 
@@ -57,23 +32,23 @@ namespace Smake.io.Spiel
         {
             int currentMusik = 0;
 
-            if (gamemode == "Normal")
+            if (Spielvalues.gamemode == "Normal")
             {
-                if (difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Normal.Langsam;
-                else if (difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Normal.Mittel;
-                else if (difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Normal.Schnell;
+                if (Spielvalues.difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Normal.Langsam;
+                else if (Spielvalues.difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Normal.Mittel;
+                else if (Spielvalues.difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Normal.Schnell;
             }
-            else if (gamemode == "Unendlich")
+            else if (Spielvalues.gamemode == "Unendlich")
             {
-                if (difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Unendlich.Langsam;
-                else if (difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Unendlich.Mittel;
-                else if (difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Unendlich.Schnell;
+                if (Spielvalues.difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Unendlich.Langsam;
+                else if (Spielvalues.difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Unendlich.Mittel;
+                else if (Spielvalues.difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Unendlich.Schnell;
             }
-            else if (gamemode == "Babymode")
+            else if (Spielvalues.gamemode == "Babymode")
             {
-                if (difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Babymode.Langsam;
-                else if (difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Babymode.Mittel;
-                else if (difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Babymode.Schnell;
+                if (Spielvalues.difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Babymode.Langsam;
+                else if (Spielvalues.difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Babymode.Mittel;
+                else if (Spielvalues.difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Babymode.Schnell;
             }
 
             // Zuweisung an dein Musiksystem
@@ -88,38 +63,38 @@ namespace Smake.io.Spiel
             unentschieden = false;
 
             // Zeit einstellen
-            if (difficulty == "Langsam") zeit = GameData.SpielSchwierigkeit.Langsam;
-            else if (difficulty == "Mittel") zeit = GameData.SpielSchwierigkeit.Mittel;
-            else zeit = GameData.SpielSchwierigkeit.Schnell;
+            if (Spielvalues.difficulty == "Langsam") Spielvalues.zeit = GameData.SpielSchwierigkeit.Langsam;
+            else if (Spielvalues.difficulty == "Mittel") Spielvalues.zeit = GameData.SpielSchwierigkeit.Mittel;
+            else Spielvalues.zeit = GameData.SpielSchwierigkeit.Schnell;
 
             // Initialisiere das Spielfeld mit Rahmen
             InitialisiereSpiel();
 
             player.Neustart();
 
-            if (multiplayer)
+            if (Spielvalues.multiplayer)
             {
                 player2.Neustart();
             }
 
-            for (int i = 0; i < maxfutter; i++)
+            for (int i = 0; i < Spielvalues.maxfutter; i++)
             {
-                if(!foodfarbeRandom)
+                if(!Skinvalues.foodfarbeRandom)
                 {
-                    Essen.Add(new Futter(food, foodfarbe));
+                    Essen.Add(new Futter(Skinvalues.food, Skinvalues.foodfarbe));
                 }
                 else
                 {
                     Random Random = new();
                     int randomZahl = Random.Next(GameData.Farben.Length);
-                    Essen.Add(new Futter(food, GameData.Farben[randomZahl]));
+                    Essen.Add(new Futter(Skinvalues.food, GameData.Farben[randomZahl]));
                 }
 
             }
         }
 
         // Spielablauf
-        public static void Spiel()
+        void Spiel()
         {
             Essen = [];
             Neustart();
@@ -127,7 +102,7 @@ namespace Smake.io.Spiel
 
             inputThread.Start();
 
-            RendernSpielfeld.Render();
+            Render();
 
             Thread.Sleep(1000);
 
@@ -138,13 +113,13 @@ namespace Smake.io.Spiel
 
                 Update();   // Spielerposition aktualisieren
 
-                RendernSpielfeld.Render();   // Spielfeld neu zeichnen
+                Render();   // Spielfeld neu zeichnen
 
-                Thread.Sleep(zeit); // Spieltempo regulieren
+                Thread.Sleep(Spielvalues.zeit); // Spieltempo regulieren
 
                 player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
-                if (multiplayer)
+                if (Spielvalues.multiplayer)
                 {
                     player2.Aenderung = true;
                 }
@@ -169,7 +144,7 @@ namespace Smake.io.Spiel
             spieler1Tot |= gegnerTot1;
             spieler2Tot |= spielerTot1;
 
-            if (multiplayer)
+            if (Spielvalues.multiplayer)
             {
                 (var gegnerTot2, var spielerTot2) = player2.Update();
                 spieler1Tot |= gegnerTot2;
@@ -204,14 +179,14 @@ namespace Smake.io.Spiel
         }
 
         // Zeigt den Game-Over-Screen an
-        static void ShowGameOverScreen()
+        void ShowGameOverScreen()
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
             Console.WriteLine("              GAME OVER              ");
             Console.WriteLine("═════════════════════════════════════");
 
-            if (multiplayer)
+            if (Spielvalues.multiplayer)
             {
                 if (unentschieden)
                 {
@@ -282,12 +257,13 @@ namespace Smake.io.Spiel
             while (!check);
             while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
             Menu menu = new();
+            Thread.CurrentThread.Join();
         }
 
         // Coins und xp hinzufügen
         static void Coins()
         {
-            if (gamemode != "Babymode")
+            if (Spielvalues.gamemode != "Babymode")
             {
                 if (Menüsvalues.highscore < player.Punkte)
                 { Menüsvalues.highscore = player.Punkte; }
@@ -296,31 +272,31 @@ namespace Smake.io.Spiel
 
                 Menüsvalues.spieleGesamt++;
 
-                switch (difficulty)
+                switch (Spielvalues.difficulty)
                 {
                     case "Langsam":
                         Menüsvalues.gesamtcoins = player.Punkte + player2.Punkte + Menüsvalues.gesamtcoins;
-                        coins = player.Punkte + player2.Punkte + coins;
-                        xp = player.Punkte + player2.Punkte + xp;
+                        Spielstatus.coins = player.Punkte + player2.Punkte + Spielstatus.coins;
+                        Spielstatus.xp = player.Punkte + player2.Punkte + Spielstatus.xp;
                         break;
 
                     case "Mittel":
                         Menüsvalues.gesamtcoins = 2 * (player.Punkte + player2.Punkte) + Menüsvalues.gesamtcoins;
-                        coins = 2 * (player.Punkte + player2.Punkte) + coins;
-                        xp = 2 * (player.Punkte + player2.Punkte) + xp;
+                        Spielstatus.coins = 2 * (player.Punkte + player2.Punkte) + Spielstatus.coins;
+                        Spielstatus.xp = 2 * (player.Punkte + player2.Punkte) + Spielstatus.xp;
                         break;
 
                     case "Schnell":
                         Menüsvalues.gesamtcoins = 3 * (player.Punkte + player2.Punkte) + Menüsvalues.gesamtcoins;
-                        coins = 3 * (player.Punkte + player2.Punkte) + coins;
-                        xp = 3 * (player.Punkte + player2.Punkte) + xp;
+                        Spielstatus.coins = 3 * (player.Punkte + player2.Punkte) + Spielstatus.coins;
+                        Spielstatus.xp = 3 * (player.Punkte + player2.Punkte) + Spielstatus.xp;
                         break;
                 }
             }
             else
             {
                 Menüsvalues.gesamtcoins = (GameData.MaxPunkte) / 2 + Menüsvalues.gesamtcoins;
-                coins = (GameData.MaxPunkte) / 2 + coins;
+                Spielstatus.coins = (GameData.MaxPunkte) / 2 + Spielstatus.coins;
             }
 
         }
@@ -345,7 +321,7 @@ namespace Smake.io.Spiel
 
                     {
 
-                        grid[reihe, symbol] = rand;
+                        grid[reihe, symbol] = Skinvalues.rand;
 
                     }
 

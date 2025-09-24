@@ -1,20 +1,23 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Values;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 
-namespace Smake.io.Menus
+namespace Smake.io.Render
 {
     public class Screen
     {
         public string[] Display { get; set; }
-        public int selected { get; set; }
-        public string title { get; set; }
-        public object[] GameValue { get; set; }
+        public int Selected { get; set; }
+        public string Title { get; set; }
+        public object?[] GameValue { get; set; }
         public bool[] IsColor { get; set; }
         public virtual ConsoleKey Input { get; set; }
         public bool DoReadInput { get; set; } = true;
 
-        public Screen() { }
+        public Screen() 
+        {
+            Console.Clear();
+        }
 
         public void InitialRender()
         {
@@ -25,7 +28,7 @@ namespace Smake.io.Menus
         {
             Console.SetCursorPosition(0, 0);
 
-            switch (title)
+            switch (Title)
             {
                 case "Menü":
                     DrawTitle();
@@ -52,19 +55,19 @@ namespace Smake.io.Menus
 
         private void RenderDefaultLayout()
         {
-            Console.WriteLine(title);
+            Console.WriteLine(Title);
             Console.WriteLine("══════════════════════════════");
 
             for (int i = 0; i < Display.Length; i++)
             {
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                string zeiger = i + 1 == Selected ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {Display[i]}");
             }
 
             Console.WriteLine("══════════════════════════════");
         }
 
-        private void DrawTitle()
+        static private void DrawTitle()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(@"
@@ -90,7 +93,7 @@ namespace Smake.io.Menus
 
             for (int i = 0; i < Display.Length; i++)
             {
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                string zeiger = i + 1 == Selected ? ">>" : "  ";
                 Console.WriteLine($"║  {zeiger} {Display[i],-25}║");
             }
 
@@ -104,7 +107,7 @@ namespace Smake.io.Menus
 
             for (int i = 0; i < Display.Length; i++)
             {
-                string zeiger = (i + 1 == selected) ? ">>" : "  ";
+                string zeiger = i + 1 == Selected ? ">>" : "  ";
                 Console.Write($"{zeiger} {Display[i]}");
 
                 if (GameValue[i] != null)
@@ -127,7 +130,7 @@ namespace Smake.io.Menus
                         Console.Write(RendernSpielfeld.performancemode ? "Performance Mode AN" : GameValue[i]);
                     }
 
-                    Console.Write("]");
+                    Console.Write("]".PadRight(13));
                 }
 
                 Console.WriteLine();
@@ -135,28 +138,28 @@ namespace Smake.io.Menus
             Console.WriteLine("══════════════════════════════");
         }
 
-        private void RenderShopHeader()
+        private static void RenderShopHeader()
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {Spiellogik.coins}");
-            Console.WriteLine($"Level: {Spiellogik.level}");
+            Console.WriteLine($"Coins: {Spielstatus.coins}");
+            Console.WriteLine($"Level: {Spielstatus.level}");
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine("←  Wechsle die Shopseite  →");
         }
 
-        private int RenderShopSection(string title, int optionCounter, int selected, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
+        private static int RenderShopSection(string title1, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
         {
-            Console.WriteLine($"\n{title}:");
+            Console.WriteLine($"\n{title1}:");
             for (int i = startIndex; i < items.Length; i++)
             {
                 int shopItemIndex = i - startIndex;
 
-                string shoptext = Spiellogik.level < levels[shopItemIndex]
+                string shoptext = Spielstatus.level < levels[shopItemIndex]
                     ? $"[Benötigtes Level: {levels[shopItemIndex]}]"
                     : unlocked[i] ? "[Freigeschaltet]" : $"[{prices[shopItemIndex]} Coins]";
 
-                string zeiger = (optionCounter + 1 == selected) ? ">>" : "  ";
+                string zeiger = optionCounter + 1 == selected1 ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {items[i]} {shoptext}");
                 optionCounter++;
             }
@@ -168,11 +171,11 @@ namespace Smake.io.Menus
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("Tail Skins", option, selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.freigeschaltetTail, GameData.TailPreis, 2);
-            option = RenderShopSection("Food Skins", option, selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.freigeschaltetFood, GameData.FoodPreis);
-            option = RenderShopSection("Rand Skins", option, selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.freigeschaltetRand, GameData.RandPreis);
+            option = RenderShopSection("Tail Skins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.freigeschaltetTail, GameData.TailPreis, 2);
+            option = RenderShopSection("Food Skins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.freigeschaltetFood, GameData.FoodPreis);
+            option = RenderShopSection("Rand Skins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.freigeschaltetRand, GameData.RandPreis);
 
-            string zeiger = (option + 1 == selected) ? ">>" : "  ";
+            string zeiger = option + 1 == Selected ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger} Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════");
         }
@@ -184,24 +187,24 @@ namespace Smake.io.Menus
             int option = 0;
             for (int i = 1; i < GameData.Farben.Length; i++, option++)
             {
-                string shoptext = Spiellogik.level < GameData.FarbenLevel[i - 1]
+                string shoptext = Spielstatus.level < GameData.FarbenLevel[i - 1]
                     ? $"[Benötigtes Level: {GameData.FarbenLevel[i - 1]}]"
                     : Menüsvalues.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
 
-                string zeiger = (option + 1 == selected) ? ">>" : "  ";
+                string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
                 Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext}");
                 Console.ResetColor();
             }
 
-            string zeiger2 = (option + 1 == selected) ? ">>" : "  ";
+            string zeiger2 = option + 1 == Selected ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
             Console.WriteLine("══════════════════════════");
         }
 
         public void StartInputstream()
         {
-            Thread InputThread = new Thread(Readinput);
+            Thread InputThread = new(Readinput);
             InputThread.Start();
         }
 

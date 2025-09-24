@@ -1,4 +1,5 @@
-﻿using Smake.io.Render;
+﻿using Smake.io.Values;
+using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 
@@ -24,8 +25,8 @@ namespace Smake.io.Menus
                         break;
                     case ConsoleKey.RightArrow:
                     case ConsoleKey.LeftArrow:
+                        Console.Clear();
                         ShopSkins = !ShopSkins; // Seitenwechsel
-                        MenuTracker = 1;
                         break;
                     case ConsoleKey.Escape:
                         Menu menu = new();
@@ -33,12 +34,10 @@ namespace Smake.io.Menus
                         break;
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
-                        Console.Clear();
                         SelectMenu();
                         break;
                 }
-
-                GameValue = BuildMenu();
+                BuildMenu();
                 Render();
             }
         }
@@ -59,7 +58,7 @@ namespace Smake.io.Menus
                     else
                         menuTracker = value;
 
-                    selected = MenuTracker;
+                    Selected = MenuTracker;
                 }
             }
         }
@@ -70,14 +69,11 @@ namespace Smake.io.Menus
 
         public Shop()
         {
-            title = "Shop";
             gesamtOptionenSkins = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
             gesamtOptionenFarben = GameData.Farben.Length;
 
-            Display = BuildDisplay();
-            GameValue = BuildMenu();
             MenuTracker = 1;
-
+            BuildMenu();
             InitialRender();
             StartInputstream();
         }
@@ -97,11 +93,11 @@ namespace Smake.io.Menus
                 if (MenuTracker + 1 < GameData.TailSkins.Length)
                 {
                     if (!Menüsvalues.freigeschaltetTail[MenuTracker + 1] &&
-                        Spiellogik.coins >= GameData.TailPreis[MenuTracker - 1] &&
-                        Spiellogik.level >= GameData.TailLevel[MenuTracker - 1])
+                        Spielstatus.coins >= GameData.TailPreis[MenuTracker - 1] &&
+                        Spielstatus.level >= GameData.TailLevel[MenuTracker - 1])
                     {
                         Menüsvalues.freigeschaltetTail[MenuTracker + 1] = true;
-                        Spiellogik.coins -= GameData.TailPreis[MenuTracker - 1];
+                        Spielstatus.coins -= GameData.TailPreis[MenuTracker - 1];
                     }
                 }
                 else if (MenuTracker + 2 < GameData.TailSkins.Length + GameData.FoodSkins.Length)
@@ -109,11 +105,11 @@ namespace Smake.io.Menus
                     int i = MenuTracker + 2 - GameData.TailSkins.Length;
                     int b = MenuTracker + 1 - GameData.TailSkins.Length;
                     if (!Menüsvalues.freigeschaltetFood[i] &&
-                        Spiellogik.coins >= GameData.FoodPreis[b] &&
-                        Spiellogik.level >= GameData.FoodLevel[b])
+                        Spielstatus.coins >= GameData.FoodPreis[b] &&
+                        Spielstatus.level >= GameData.FoodLevel[b])
                     {
                         Menüsvalues.freigeschaltetFood[i] = true;
-                        Spiellogik.coins -= GameData.FoodPreis[b];
+                        Spielstatus.coins -= GameData.FoodPreis[b];
                     }
                 }
                 else if (MenuTracker + 3 < GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length)
@@ -121,11 +117,11 @@ namespace Smake.io.Menus
                     int i = MenuTracker + 3 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
                     int b = MenuTracker + 2 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
                     if (!Menüsvalues.freigeschaltetRand[i] &&
-                        Spiellogik.coins >= GameData.RandPreis[b] &&
-                        Spiellogik.level >= GameData.RandLevel[b])
+                        Spielstatus.coins >= GameData.RandPreis[b] &&
+                        Spielstatus.level >= GameData.RandLevel[b])
                     {
                         Menüsvalues.freigeschaltetRand[i] = true;
-                        Spiellogik.coins -= GameData.RandPreis[b];
+                        Spielstatus.coins -= GameData.RandPreis[b];
                     }
                 }
             }
@@ -140,49 +136,26 @@ namespace Smake.io.Menus
 
                 // Kauflogik Farben
                 if (!Menüsvalues.freigeschaltetFarben[MenuTracker] &&
-                    Spiellogik.coins >= GameData.FarbenPreis[MenuTracker - 1] &&
-                    Spiellogik.level >= GameData.FarbenLevel[MenuTracker - 1])
+                    Spielstatus.coins >= GameData.FarbenPreis[MenuTracker - 1] &&
+                    Spielstatus.level >= GameData.FarbenLevel[MenuTracker - 1])
                 {
                     Menüsvalues.freigeschaltetFarben[MenuTracker] = true;
-                    Spiellogik.coins -= GameData.FarbenPreis[MenuTracker - 1];
+                    Spielstatus.coins -= GameData.FarbenPreis[MenuTracker - 1];
                 }
             }
         }
 
-        private string[] BuildDisplay()
+        private  void BuildMenu()
         {
             if (ShopSkins)
             {
-                List<string> items = new();
-                items.AddRange(GameData.TailSkins.Select(c => $"Tail Skin {c}"));
-                items.AddRange(GameData.FoodSkins.Select(c => $"Food Skin {c}"));
-                items.AddRange(GameData.RandSkins.Select(c => $"Rand Skin {c}"));
-                items.Add("Zurück zum Hauptmenü");
-                return items.ToArray();
+                 Title = "Shop_Skins";
             }
             else
             {
-                List<string> items = new();
-                items.AddRange(GameData.Farben.Select(f => f.ToString()));
-                items.Add("Zurück zum Hauptmenü");
-                return items.ToArray();
+                 Title = "Shop_Farben";
             }
         }
 
-        private object[] BuildMenu()
-        {
-            if (ShopSkins)
-            {
-                object[] values = new object[GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length];
-                Array.Copy(GameData.TailSkins, 0, values, 0, GameData.TailSkins.Length);
-                Array.Copy(GameData.FoodSkins, 0, values, GameData.TailSkins.Length, GameData.FoodSkins.Length);
-                Array.Copy(GameData.RandSkins, 0, values, GameData.TailSkins.Length + GameData.FoodSkins.Length, GameData.RandSkins.Length);
-                return values;
-            }
-            else
-            {
-                return GameData.Farben.Cast<object>().ToArray();
-            }
-        }
     }
 }

@@ -12,11 +12,10 @@ namespace Smake.io
 
         private static SoundPlayer? currentPlayer;
         private static int lastmusik = -1;
-        private static readonly object lockObj = new();
 
         public static void Melodie()
         {
-            while (!Spiellogik.exit)
+            while (true)
             {
                 // Prüfen, ob wir die Musik wechseln oder starten müssen
                 if (musikplay)
@@ -49,9 +48,6 @@ namespace Smake.io
 
                 Thread.Sleep(100); // CPU schonen
             }
-
-            // Beim Beenden sicherstellen, dass Musik gestoppt wird
-            currentPlayer?.Stop();
         }
     }
 }

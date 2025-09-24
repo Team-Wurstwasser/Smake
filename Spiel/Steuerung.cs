@@ -1,6 +1,8 @@
-﻿namespace Smake.io.Spiel
+﻿using Smake.io.Values;
+
+namespace Smake.io.Spiel
 {
-    public class Steuerung
+    public class Steuerung 
     {
         // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und speichert diese
         public static void ReadInput()
@@ -29,25 +31,25 @@
 
                         // Player 2 Steuerung (WASD) im Multiplayer
                         case ConsoleKey.W:
-                            if (Spiellogik.multiplayer)
+                            if (Spielvalues.multiplayer)
                                 UpdatePlayerDirection(Spiellogik.player2, 0, -1, '^');
                             else
                                 UpdatePlayerDirection(Spiellogik.player, 0, -1, '^');
                             break;
                         case ConsoleKey.S:
-                            if (Spiellogik.multiplayer)
+                            if (Spielvalues.multiplayer)
                                 UpdatePlayerDirection(Spiellogik.player2, 0, 1, 'v');
                             else
                                 UpdatePlayerDirection(Spiellogik.player, 0, 1, 'v');
                             break;
                         case ConsoleKey.A:
-                            if (Spiellogik.multiplayer)
+                            if (Spielvalues.multiplayer)
                                 UpdatePlayerDirection(Spiellogik.player2, -1, 0, '<');
                             else
                                 UpdatePlayerDirection(Spiellogik.player, -1, 0, '<');
                             break;
                         case ConsoleKey.D:
-                            if (Spiellogik.multiplayer)
+                            if (Spielvalues.multiplayer)
                                 UpdatePlayerDirection(Spiellogik.player2, 1, 0, '>');
                             else
                                 UpdatePlayerDirection(Spiellogik.player, 1, 0, '>');
