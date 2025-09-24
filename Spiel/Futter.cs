@@ -1,4 +1,6 @@
-﻿namespace Smake.io.Spiel
+﻿using Smake.io.Values;
+
+namespace Smake.io.Spiel
 {
     public class Futter
     {
@@ -24,10 +26,10 @@
             // Futter nur auf X-Positionen spawnen lassen, die durch 2 teilbar sind
             do
             {
-                FutterX = rand.Next(1, Spiellogik.weite - 2);
+                FutterX = rand.Next(1, Spielvalues.weite - 2);
                 if (FutterX % 2 != 0) FutterX++; // Auf gerade X-Position korrigieren
 
-                FutterY = rand.Next(1, Spiellogik.hoehe - 2);
+                FutterY = rand.Next(1, Spielvalues.hoehe - 2);
             }
             while (Spiellogik.grid[FutterY, FutterX] != ' '); // Stelle muss wirklich leer sein
             Spiellogik.grid[FutterY, FutterX] = Food; // Setze Futter an die berechnete Position
