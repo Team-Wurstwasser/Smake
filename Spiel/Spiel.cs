@@ -305,8 +305,6 @@ namespace Smake.io.Spiel
         static void InitialisiereSpiel()
         {
 
-            Console.SetCursorPosition(0, 0);
-
             for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
 
             {
