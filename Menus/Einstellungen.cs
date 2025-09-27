@@ -26,7 +26,6 @@ namespace Smake.io.Menus
                         break;
                     case ConsoleKey.Escape:
                         _ = new Menu();
-                        DoReadInput = false;
                         StopInputstream();
                         Thread.Sleep(5);
                         break;
@@ -69,7 +68,6 @@ namespace Smake.io.Menus
 
         public Einstellungen()
         {
-            Console.Clear();
             Title = "Einstellungen";
             Display = BuildMenu();
             MenuTracker = 1;
@@ -108,7 +106,6 @@ namespace Smake.io.Menus
                     break;
                 case 9:
                     _ = new Menu();
-                    DoReadInput = false;
                     StopInputstream();
                     Thread.Sleep(5);
                     break;
