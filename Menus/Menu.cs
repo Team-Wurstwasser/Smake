@@ -73,6 +73,7 @@ namespace Smake.io.Menus
 
         public Menu()
         {
+            Console.Clear();
             // Zuweisung an dein Musiksystem
             Musik.currentmusik = GameData.MusikDaten.Menue.Main;
 
@@ -128,6 +129,7 @@ namespace Smake.io.Menus
                     break;
             }
             DoReadInput = false;
+            StopInputstream();
         }
     }
 }

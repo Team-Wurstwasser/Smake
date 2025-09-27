@@ -12,7 +12,6 @@ namespace Smake.io.Menus
             RenderAnleitung();
             Console.ReadKey();
             _ = new Menu();
-            DoReadInput = false;
             Thread.Sleep(5);
         }
         static void RenderAnleitung()
