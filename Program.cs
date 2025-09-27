@@ -19,6 +19,7 @@ namespace Smake.io
             SpeicherSystem.Speichern_Laden("Laden");
 
             Musik.Melodie();
+
             Eingaben();
             Menu menu = new();
         }
@@ -32,9 +33,9 @@ namespace Smake.io
             Console.Clear();
             Console.Write("Spieler 1, gib deinen Namen ein: ");
             Spiellogik.player.Name = Console.ReadLine();
-            Console.Clear();
 
             Console.Clear();
+
             Console.Write("Spieler 2, gib deinen Namen ein: ");
             Spiellogik.player2.Name = Console.ReadLine();
             Console.Clear();
