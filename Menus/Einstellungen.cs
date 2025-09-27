@@ -208,6 +208,7 @@ namespace Smake.io.Menus
 
         static void ResetSpielstand()
         {
+            Console.Clear();
             for (int i = 1; i <= 3; i++)
             {
                 Console.WriteLine($"Willst du deinen Spielstand wirklich zurücksetzen? ({i}/3) [ja/nein]");
