@@ -11,12 +11,13 @@ namespace Smake.io.Render
         public object?[] GameValue { get; set; }
         public bool[] IsColor { get; set; }
         public virtual ConsoleKey Input { get; set; }
-        public bool DoReadInput { get; set; } = true;
+        bool DoReadInput = true;
         Thread InputThread;
 
         public void InitialRender()
         {
             Musik.Melodie();
+            Console.Clear();
             Render();
         }
 
@@ -206,6 +207,7 @@ namespace Smake.io.Render
 
         public void StopInputstream()
         {
+            DoReadInput = false;
             InputThread.Join();
         }
 
