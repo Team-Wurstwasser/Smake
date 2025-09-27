@@ -11,7 +11,9 @@ namespace Smake.io.Menus
             Console.Clear();
             RenderStatistiken();
             Console.ReadKey();
-            Menu menu = new();
+            _ = new Menu();
+            DoReadInput = false;
+            Thread.Sleep(5);
         }
         static void RenderStatistiken()
         {

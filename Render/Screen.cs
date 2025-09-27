@@ -1,6 +1,5 @@
 ﻿using Smake.io.Values;
 using Smake.io.Speicher;
-using Smake.io.Spiel;
 
 namespace Smake.io.Render
 {
@@ -21,6 +20,7 @@ namespace Smake.io.Render
 
         public void InitialRender()
         {
+            Musik.Melodie();
             Render();
         }
 
