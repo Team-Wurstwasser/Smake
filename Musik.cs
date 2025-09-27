@@ -1,6 +1,5 @@
-using System.Media;
-using Smake.io.Spiel;
 using Smake.io.Speicher;
+using System.Media;
 
 namespace Smake.io
 {
@@ -12,42 +11,41 @@ namespace Smake.io
 
         private static SoundPlayer? currentPlayer;
         private static int lastmusik = -1;
+        private static bool lastPlayState = false; // merkt sich, ob Musik an/aus war
 
         public static void Melodie()
         {
-            while (true)
+            // Prüfen, ob sich Musik oder der Status geändert hat
+            if (currentmusik != lastmusik || musikplay != lastPlayState)
             {
-                // Prüfen, ob wir die Musik wechseln oder starten müssen
+                // Stoppe vorherige Musik
+                currentPlayer?.Stop();
+                currentPlayer = null;
+
+                // Dateipfad bestimmen
+                string dateipfad;
                 if (musikplay)
                 {
-                    if (currentmusik != lastmusik)
-                    {
-                        // Stoppe vorherige Musik, falls vorhanden
-                        currentPlayer?.Stop();
-
-                        // Erstelle neuen SoundPlayer für die aktuelle Musik
-                        string dateipfad = Path.Combine("Sounds", GameData.Filenames[currentmusik]);
-                        if (File.Exists(dateipfad))
-                        {
-                            currentPlayer = new SoundPlayer(dateipfad);
-                            currentPlayer.PlayLooping();
-                            lastmusik = currentmusik;
-                        }
-                    }
+                    dateipfad = Path.Combine("Sounds", GameData.Filenames[currentmusik]);
                 }
                 else
                 {
-                    // Musik stoppen, wenn play deaktiviert ist
-                    if (currentPlayer != null)
-                    {
-                        currentPlayer.Stop();
-                        currentPlayer = null;
-                        lastmusik = -1;
-                    }
+                    dateipfad = Path.Combine("Sounds", GameData.NoMusikFile);
                 }
 
-                Thread.Sleep(100); // CPU schonen
+                // Prüfen, ob Datei existiert
+                if (File.Exists(dateipfad))
+                {
+                    currentPlayer = new SoundPlayer(dateipfad);
+                    currentPlayer.PlayLooping();
+                }
+
+                // Status merken
+                lastmusik = currentmusik;
+                lastPlayState = musikplay;
             }
+
+            Thread.Sleep(50); // CPU schonen
         }
     }
 }

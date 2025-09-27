@@ -7,6 +7,7 @@ namespace Smake.io.Speicher
     {
         // Sounds
         public static string[] Filenames;
+        public static string NoMusikFile;
         public static Musik MusikDaten = new();
 
         // Preise
@@ -45,6 +46,7 @@ namespace Smake.io.Speicher
             Load<Sounds>("Json/sounds.json", data =>
             {
                 Filenames = data?.Filenames ?? [];
+                NoMusikFile = data?.NoMusikFile ?? "";
                 MusikDaten = data?.Musik ?? new();
             });
 
@@ -120,6 +122,7 @@ namespace Smake.io.Speicher
         private class Sounds
         {
             public string[] Filenames { get; set; }
+            public string NoMusikFile { get; set; }
             public Musik Musik { get; set; }
         }
 
