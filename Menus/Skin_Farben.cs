@@ -34,6 +34,7 @@ namespace Smake.io.Menus
             true,
             true,
             true,
+            true,
             false,
         ]; 
 
