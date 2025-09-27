@@ -25,7 +25,6 @@ namespace Smake.io.Spiel
           Spiel();
         }
 
-
         // Allen Variablen den Startwert geben
         static void Neustart()
         {
@@ -253,20 +252,18 @@ namespace Smake.io.Spiel
                 {
                     case ConsoleKey.Enter:
                         check = true;
-                        Console.Clear();
-                        while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
-                        Spiel();
-                        continue;
+                        _ = new Spiellogik();
+                        break;
 
                     case ConsoleKey.Escape:
                         check = true;
+                        _ = new Menu();
                         break;
 
                 }
             }
             while (!check);
             while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
-            _ = new Menu();
         }
 
         // Coins und xp hinzufügen
