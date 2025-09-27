@@ -12,11 +12,7 @@ namespace Smake.io.Render
         public bool[] IsColor { get; set; }
         public virtual ConsoleKey Input { get; set; }
         public bool DoReadInput { get; set; } = true;
-
-        public Screen() 
-        {
-            Console.Clear();
-        }
+        Thread InputThread;
 
         public void InitialRender()
         {
@@ -61,7 +57,7 @@ namespace Smake.io.Render
             for (int i = 0; i < Display.Length; i++)
             {
                 string zeiger = i + 1 == Selected ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {Display[i]}");
+                Console.WriteLine($"{zeiger} {Display[i],-25}");
             }
 
             Console.WriteLine("══════════════════════════════");
@@ -204,8 +200,13 @@ namespace Smake.io.Render
 
         public void StartInputstream()
         {
-            Thread InputThread = new(Readinput);
+            InputThread = new(Readinput);
             InputThread.Start();
+        }
+
+        public void StopInputstream()
+        {
+            InputThread.Join();
         }
 
         private void Readinput()
@@ -217,7 +218,6 @@ namespace Smake.io.Render
                     Input = Console.ReadKey(true).Key;
                 }
             }
-            Thread.CurrentThread.Join();
         }
     }
 }

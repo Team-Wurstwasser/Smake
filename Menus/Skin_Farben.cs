@@ -56,6 +56,7 @@ namespace Smake.io.Menus
                     case ConsoleKey.Escape:
                         _ = new Menu();
                         DoReadInput = false;
+                        StopInputstream();
                         Thread.Sleep(5);
                         break;
                     case ConsoleKey.Enter:
@@ -97,6 +98,7 @@ namespace Smake.io.Menus
 
         public Skin_Farben()
         {
+            Console.Clear();
             Title = "Skin_Farben";
             Display = skin_farben;
             IsColor = Color;
@@ -123,6 +125,7 @@ namespace Smake.io.Menus
                 case 11:
                     _ = new Menu();
                     DoReadInput = false;
+                    StopInputstream();
                     Thread.Sleep(5);
                     break;
                 default:
