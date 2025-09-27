@@ -8,7 +8,6 @@ namespace Smake.io.Menus
     {
         public Statistiken()
         {
-            Console.Clear();
             RenderStatistiken();
             Console.ReadKey();
             _ = new Menu();
