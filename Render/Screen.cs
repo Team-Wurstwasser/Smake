@@ -214,7 +214,7 @@ namespace Smake.io.Render
             {
                 if (Console.KeyAvailable)
                 {
-                    Input = Console.ReadKey().Key;
+                    Input = Console.ReadKey(true).Key;
                 }
             }
             Thread.CurrentThread.Join();
