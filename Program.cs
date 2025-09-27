@@ -18,14 +18,9 @@ namespace Smake.io
 
             SpeicherSystem.Speichern_Laden("Laden");
 
-            Thread melodieThread = new(Musik.Melodie);
-            melodieThread.Start();
-
+            Musik.Melodie();
             Eingaben();
-
             Menu menu = new();
-
-            melodieThread.Join();
         }
 
         // Eingaben für Spielernamen

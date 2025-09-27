@@ -29,8 +29,9 @@ namespace Smake.io.Menus
                         ShopSkins = !ShopSkins; // Seitenwechsel
                         break;
                     case ConsoleKey.Escape:
-                        Menu menu = new();
-                        Thread.CurrentThread.Join();
+                        _ = new Menu();
+                        DoReadInput = false;
+                        Thread.Sleep(5);
                         break;
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
@@ -84,9 +85,9 @@ namespace Smake.io.Menus
             {
                 if (MenuTracker == gesamtOptionenSkins)
                 {
-                    Menu menu = new();
-                    Thread.CurrentThread.Join();
-                    return;
+                    _ = new Menu();
+                    DoReadInput = false;
+                    Thread.Sleep(5);
                 }
 
                 // Kauflogik Skins
@@ -129,9 +130,9 @@ namespace Smake.io.Menus
             {
                 if (MenuTracker == gesamtOptionenFarben)
                 {
-                    Menu menu = new();
-                    Thread.CurrentThread.Join();
-                    return;
+                    _ = new Menu();
+                    DoReadInput = false;
+                    Thread.Sleep(5);
                 }
 
                 // Kauflogik Farben

@@ -104,23 +104,22 @@ namespace Smake.io.Menus
             switch (MenuTracker)
             {
                 case 1:
-                    DoReadInput = false;
-                    Spiellogik Spiel = new();
+                    _ = new Spiellogik();
                     break;
                 case 2:
-                    Einstellungen Einstellungen = new();
+                    _ = new Einstellungen();
                     break;
                 case 3:
-                    Shop Shop = new();
+                    _ = new Shop();
                     break;
                 case 4:
-                    Skin_Farben Skin_Farben = new();
+                    _ = new Skin_Farben();
                     break;
                 case 5:
-                    Statistiken Statistiken = new();
+                    _ = new Statistiken();
                     break;
                 case 6:
-                    Anleitung Anleitung = new();
+                    _ = new Anleitung();
                     break;
                 case 7:
                     Environment.Exit(0);
@@ -128,7 +127,7 @@ namespace Smake.io.Menus
                 default:
                     break;
             }
-            Thread.CurrentThread.Join();
+            DoReadInput = false;
         }
     }
 }
