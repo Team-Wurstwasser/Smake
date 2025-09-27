@@ -12,6 +12,7 @@ namespace Smake.io
             
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.Title = "Smake.io";
+
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
             GameData.LoadAllConfigs();
