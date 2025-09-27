@@ -103,7 +103,7 @@ namespace Smake.io.Spiel
         }
 
         // Spielablauf
-        void Spiel()
+        static void Spiel()
         {
             Essen = [];
 
@@ -188,7 +188,7 @@ namespace Smake.io.Spiel
         }
 
         // Zeigt den Game-Over-Screen an
-        void ShowGameOverScreen()
+        static void ShowGameOverScreen()
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
@@ -310,6 +310,7 @@ namespace Smake.io.Spiel
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
         static void InitialisiereSpiel()
         {
+            Console.Clear();
 
             for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
 

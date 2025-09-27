@@ -8,7 +8,6 @@ namespace Smake.io.Menus
     {
         public Anleitung()
         {
-            Console.Clear();
             RenderAnleitung();
             Console.ReadKey();
             _ = new Menu();
