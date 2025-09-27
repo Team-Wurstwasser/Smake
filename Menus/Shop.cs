@@ -31,6 +31,7 @@ namespace Smake.io.Menus
                     case ConsoleKey.Escape:
                         _ = new Menu();
                         DoReadInput = false;
+                        StopInputstream();
                         Thread.Sleep(5);
                         break;
                     case ConsoleKey.Enter:
@@ -70,6 +71,7 @@ namespace Smake.io.Menus
 
         public Shop()
         {
+            Console.Clear();
             gesamtOptionenSkins = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
             gesamtOptionenFarben = GameData.Farben.Length;
 
@@ -87,6 +89,7 @@ namespace Smake.io.Menus
                 {
                     _ = new Menu();
                     DoReadInput = false;
+                    StopInputstream();
                     Thread.Sleep(5);
                 }
 
@@ -132,6 +135,7 @@ namespace Smake.io.Menus
                 {
                     _ = new Menu();
                     DoReadInput = false;
+                    StopInputstream();
                     Thread.Sleep(5);
                 }
 
