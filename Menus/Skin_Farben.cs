@@ -54,8 +54,9 @@ namespace Smake.io.Menus
                         MenuTracker++;
                         break;
                     case ConsoleKey.Escape:
-                        Menu menu = new();
-                        Thread.CurrentThread.Join();
+                        _ = new Menu();
+                        DoReadInput = false;
+                        Thread.Sleep(5);
                         break;
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
@@ -119,9 +120,10 @@ namespace Smake.io.Menus
                 case 8: WechselFarbe(ref Spiellogik.player2.Farbe); break;
                 case 9: WechselFarbe(ref Skinvalues.foodfarbe, true); break;
                 case 10: WechselFarbe(ref Skinvalues.randfarbe); break;
-                case 11: 
-                    Menu menu = new();
-                    Thread.CurrentThread.Join();
+                case 11:
+                    _ = new Menu();
+                    DoReadInput = false;
+                    Thread.Sleep(5);
                     break;
                 default:
                     break;

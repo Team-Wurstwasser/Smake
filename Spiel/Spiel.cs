@@ -2,7 +2,6 @@
 using Smake.io.Menus;
 using Smake.io.Render;
 using Smake.io.Speicher;
-using System.ComponentModel;
 
 namespace Smake.io.Spiel
 {
@@ -53,7 +52,7 @@ namespace Smake.io.Spiel
 
             // Zuweisung an dein Musiksystem
             Musik.currentmusik = currentMusik;
-
+            Musik.Melodie();
             SpeicherSystem.Speichern_Laden("Speichern");
 
             spiel = true;
@@ -85,9 +84,20 @@ namespace Smake.io.Spiel
                 }
                 else
                 {
-                    Random Random = new();
-                    int randomZahl = Random.Next(GameData.Farben.Length);
-                    Essen.Add(new Futter(Skinvalues.food, GameData.Farben[randomZahl]));
+                    List<int> freigeschalteteFarbenIndex = [0]; // Weiß ist immer dabei
+
+                    for (int t = 1; t < Menüsvalues.freigeschaltetFarben.Length; t++)
+                    {
+                        if (Menüsvalues.freigeschaltetFarben[t])
+                            freigeschalteteFarbenIndex.Add(t);
+                    }
+
+                    // Zufällige Auswahl aus den freigeschalteten Farben
+                    Random random = new();
+                    int zufallIndex = random.Next(freigeschalteteFarbenIndex.Count);
+                    int farbenIndex = freigeschalteteFarbenIndex[zufallIndex];
+
+                    Essen.Add(new Futter(Skinvalues.food, GameData.Farben[farbenIndex]));
                 }
 
             }
@@ -97,17 +107,17 @@ namespace Smake.io.Spiel
         void Spiel()
         {
             Essen = [];
+
             Neustart();
+            Render();
+
+            Thread.Sleep(5);
+
             Thread inputThread = new(Steuerung.ReadInput);
 
             inputThread.Start();
 
-            Render();
-
-            Thread.Sleep(1000);
-
             // Game Loop 
-
             while (spiel)
             {
 
@@ -128,7 +138,7 @@ namespace Smake.io.Spiel
 
             Coins();
 
-            inputThread.Join();   // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
+            inputThread.Join(); // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
             ShowGameOverScreen(); // Spielende-Bildschirm
 
@@ -256,8 +266,7 @@ namespace Smake.io.Spiel
             }
             while (!check);
             while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
-            Menu menu = new();
-            Thread.CurrentThread.Join();
+            _ = new Menu();
         }
 
         // Coins und xp hinzufügen

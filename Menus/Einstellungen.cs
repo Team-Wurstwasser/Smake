@@ -25,8 +25,9 @@ namespace Smake.io.Menus
                         MenuTracker++;
                         break;
                     case ConsoleKey.Escape:
-                        Menu menu = new();
-                        Thread.CurrentThread.Join();
+                        _ = new Menu();
+                        DoReadInput = false;
+                        Thread.Sleep(5);
                         break;
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
@@ -96,6 +97,7 @@ namespace Smake.io.Menus
                     break;
                 case 6:
                     Musik.musikplay = !Musik.musikplay;
+                    Musik.Melodie();
                     break;
                 case 7:
                     Musik.soundplay = !Musik.soundplay;
@@ -104,8 +106,9 @@ namespace Smake.io.Menus
                     ResetSpielstand();
                     break;
                 case 9:
-                    Menu menu = new();
-                    Thread.CurrentThread.Join();
+                    _ = new Menu();
+                    DoReadInput = false;
+                    Thread.Sleep(5);
                     break;
                 default:
                     break;
