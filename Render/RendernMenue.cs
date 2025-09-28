@@ -5,11 +5,11 @@ namespace Smake.io.Render
 {
     public class RendernMenue
     {
-        public string[] Display { get; set; }
-        public int Selected { get; set; }
-        public string Title { get; set; }
-        public object?[] GameValue { get; set; }
-        public bool[] IsColor { get; set; }
+        public string[] Display { private get; set; }
+        public int Selected { private get; set; }
+        public string Title { private get; set; }
+        public object?[] GameValue { private get; set; }
+        public bool[] IsColor { private get; set; }
         public virtual ConsoleKey Input { get; set; }
         bool DoReadInput = true;
         Thread InputThread;
