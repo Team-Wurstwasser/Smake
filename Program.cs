@@ -1,6 +1,6 @@
 using Smake.io.Spiel;
 using Smake.io.Speicher;
-using Smake.io.Menus;
+using Smake.io.Menues;
 
 namespace Smake.io
 {
