@@ -3,7 +3,7 @@ using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 
-namespace Smake.io.Menus
+namespace Smake.io.Menues
 {
     public class Menue : RendernMenue
     {

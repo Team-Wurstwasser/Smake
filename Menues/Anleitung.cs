@@ -2,7 +2,7 @@
 using Smake.io.Render;
 using Smake.io.Spiel;
 
-namespace Smake.io.Menus
+namespace Smake.io.Menues
 {
     public class Anleitung : RendernMenue
     {
