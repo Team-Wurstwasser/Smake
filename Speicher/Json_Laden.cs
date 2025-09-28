@@ -6,35 +6,35 @@ namespace Smake.io.Speicher
     public static class GameData
     {
         // Sounds
-        public static string[] Filenames;
-        public static string NoMusikFile;
-        public static Musik MusikDaten = new();
+        public static string[] Filenames { get; private set; } = [];
+        public static string NoMusikFile { get; private set; } = "";
+        public static Musik MusikDaten { get; private set; } = new();
 
         // Preise
-        public static int[] TailPreis;
-        public static int[] FoodPreis;
-        public static int[] RandPreis;
-        public static int[] FarbenPreis;
+        public static int[] TailPreis { get; private set; } = [];
+        public static int[] FoodPreis { get; private set; } = [];
+        public static int[] RandPreis { get; private set; } = [];
+        public static int[] FarbenPreis { get; private set; } = [];
 
         // Level
-        public static int[] TailLevel;
-        public static int[] FoodLevel;
-        public static int[] RandLevel;
-        public static int[] FarbenLevel;
+        public static int[] TailLevel { get; private set; } = [];
+        public static int[] FoodLevel { get; private set; } = [];
+        public static int[] RandLevel { get; private set; } = [];
+        public static int[] FarbenLevel { get; private set; } = [];
 
         // Skins / Farben
-        public static ConsoleColor[] Farben;
-        public static char[] TailSkins;
-        public static char[] FoodSkins;
-        public static char[] RandSkins;
+        public static ConsoleColor[] Farben { get; private set; } = [];
+        public static char[] TailSkins { get; private set; } = [];
+        public static char[] FoodSkins { get; private set; } = [];
+        public static char[] RandSkins { get; private set; } = [];
 
         // Spielkonfiguration
-        public static int Weite;
-        public static int Hoehe;
-        public static int MaxPunkte;
-        public static int MaxFutterconfig;
-        public static Positionen Startpositionen = new();
-        public static Difficulty SpielSchwierigkeit = new();
+        public static int Weite { get; private set; }
+        public static int Hoehe { get; private set; }
+        public static int MaxPunkte { get; private set; }
+        public static int MaxFutterconfig { get; private set; }
+        public static Positionen Startpositionen { get; private set; } = new();
+        public static Difficulty SpielSchwierigkeit { get; private set; } = new();
 
         static readonly JsonSerializerOptions JsonOptions = new()
         {
@@ -121,22 +121,22 @@ namespace Smake.io.Speicher
 
         private class Sounds
         {
-            public string[] Filenames { get; set; }
-            public string NoMusikFile { get; set; }
-            public Musik Musik { get; set; }
+            public string[]? Filenames { get; set; }
+            public string? NoMusikFile { get; set; }
+            public Musik? Musik { get; set; }
         }
 
         public class Musik
         {
-            public GameMusik Game { get; set; }
-            public MenueMusik Menue { get; set; }
+            public GameMusik? Game { get; set; }
+            public MenueMusik? Menue { get; set; }
         }
 
         public class GameMusik
         {
-            public MusikSpeed Normal { get; set; }
-            public MusikSpeed Unendlich { get; set; }
-            public MusikSpeed Babymode { get; set; }
+            public MusikSpeed? Normal { get; set; }
+            public MusikSpeed? Unendlich { get; set; }
+            public MusikSpeed? Babymode { get; set; }
         }
 
         public class MusikSpeed
@@ -158,24 +158,24 @@ namespace Smake.io.Speicher
         }
         class Preise
         {
-            public int[] TailPreis { get; set; }
-            public int[] FoodPreis { get; set; }
-            public int[] RandPreis { get; set; }
-            public int[] FarbenPreis { get; set; }
+            public int[]? TailPreis { get; set; }
+            public int[]? FoodPreis { get; set; }
+            public int[]? RandPreis { get; set; }
+            public int[]? FarbenPreis { get; set; }
         }
         class Level
         {
-            public int[] TailLevel { get; set; }
-            public int[] FoodLevel { get; set; }
-            public int[] RandLevel { get; set; }
-            public int[] FarbenLevel { get; set; }
+            public int[]? TailLevel { get; set; }
+            public int[]? FoodLevel { get; set; }
+            public int[]? RandLevel { get; set; }
+            public int[]? FarbenLevel { get; set; }
         }
         class Skins
         {
-            public string[] Farben { get; set; }
-            public char[] TailSkins { get; set; }
-            public char[] FoodSkins { get; set; }
-            public char[] RandSkins { get; set; }
+            public string[]? Farben { get; set; }
+            public char[]? TailSkins { get; set; }
+            public char[]? FoodSkins { get; set; }
+            public char[]? RandSkins { get; set; }
         }
         class GameConfig
         {
@@ -183,8 +183,8 @@ namespace Smake.io.Speicher
             public int Hoehe { get; set; }
             public int MaxPunkte { get; set; }
             public int MaxFutterconfig { get; set; }
-            public Positionen Startpositionen { get; set; }
-            public Difficulty Difficulty { get; set; }
+            public Positionen? Startpositionen { get; set; }
+            public Difficulty? Difficulty { get; set; }
         }
 
         // XOR-Entschlüsselung

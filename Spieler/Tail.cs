@@ -41,13 +41,13 @@ namespace Smake.io.Spieler
             for (int i = 0; i <= TailLaenge; i++)
             {
                 if (p.PlayerX[i] >= 0 && p.PlayerY[i] >= 0)
-                    Spiellogik.grid[p.PlayerY[i], p.PlayerX[i]] = TailSkin;
+                    Spiellogik.Grid[p.PlayerY[i], p.PlayerX[i]] = TailSkin;
             }
 
             // Altes Tail-Feld leeren (nicht Rand)
-            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.grid[oldTailY, oldTailX] != Skinvalues.rand)
+            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.Grid[oldTailY, oldTailX] != Skinvalues.rand)
             {
-                Spiellogik.grid[oldTailY, oldTailX] = ' ';
+                Spiellogik.Grid[oldTailY, oldTailX] = ' ';
             }
         }
 
