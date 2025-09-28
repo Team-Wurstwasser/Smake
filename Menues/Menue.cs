@@ -7,7 +7,7 @@ namespace Smake.io.Menues
 {
     public class Menue : RendernMenue
     {
-        string[] menu = [
+        readonly string[] menu = [
                 "Spiel starten",
                 "Einstellungen",
                 "Shop",
@@ -74,22 +74,22 @@ namespace Smake.io.Menues
         public Menue()
         {
             // Zuweisung an dein Musiksystem
-            Musik.currentmusik = GameData.MusikDaten.Menue.Main;
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
 
             SpeicherSystem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
             Spielstatus.level = Spielstatus.xp / 100 + 1;
 
-            if (RendernSpielfeld.performancemode)
+            if (RendernSpielfeld.Performancemode)
             {
                 Skinvalues.foodfarbe = GameData.Farben[0];
                 Skinvalues.foodfarbeRandom = false;
                 Skinvalues.randfarbe = GameData.Farben[0];
-                Spiellogik.player.TailFarbe = GameData.Farben[0];
-                Spiellogik.player.HeadFarbe = GameData.Farben[0];
-                Spiellogik.player2.TailFarbe = GameData.Farben[0];
-                Spiellogik.player2.HeadFarbe = GameData.Farben[0];
+                Spiellogik.Player.TailFarbe = GameData.Farben[0];
+                Spiellogik.Player.HeadFarbe = GameData.Farben[0];
+                Spiellogik.Player2.TailFarbe = GameData.Farben[0];
+                Spiellogik.Player2.HeadFarbe = GameData.Farben[0];
             }
 
             Title = "Menü";

@@ -1,6 +1,6 @@
-﻿using Smake.io.Values;
-using Smake.io.Render;
-using Smake.io.Spiel;
+﻿using Smake.io.Render;
+using Smake.io.Speicher;
+using Smake.io.Values;
 
 namespace Smake.io.Menues
 {
@@ -8,6 +8,10 @@ namespace Smake.io.Menues
     {
         public Statistiken()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Statistiken;
+            Musik.Melodie();
+
             RenderStatistiken();
             Console.ReadKey();
             _ = new Menue();

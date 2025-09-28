@@ -5,18 +5,18 @@ namespace Smake.io
 {
     public class Musik
     {
-        public static bool musikplay;
-        public static int currentmusik = 0;
-        public static bool soundplay;
+        public static bool Musikplay { get; set; }
+        public static int? Currentmusik { private get; set; } = 0;
+        public static bool Soundplay { get; set; }
 
         private static SoundPlayer? currentPlayer;
-        private static int lastmusik = -1;
+        private static int? lastmusik = -1;
         private static bool lastPlayState = false; // merkt sich, ob Musik an/aus war
 
         public static void Melodie()
         {
             // Prüfen, ob sich Musik oder der Status geändert hat
-            if (currentmusik != lastmusik || musikplay != lastPlayState)
+            if (Currentmusik != lastmusik || Musikplay != lastPlayState)
             {
                 // Stoppe vorherige Musik
                 currentPlayer?.Stop();
@@ -24,9 +24,9 @@ namespace Smake.io
 
                 // Dateipfad bestimmen
                 string dateipfad;
-                if (musikplay)
+                if (Musikplay)
                 {
-                    dateipfad = Path.Combine("Sounds", GameData.Filenames[currentmusik]);
+                    dateipfad = Path.Combine("Sounds", GameData.Filenames[Currentmusik ?? 0]);
                 }
                 else
                 {
@@ -41,8 +41,8 @@ namespace Smake.io
                 }
 
                 // Status merken
-                lastmusik = currentmusik;
-                lastPlayState = musikplay;
+                lastmusik = Currentmusik;
+                lastPlayState = Musikplay;
             }
 
             Thread.Sleep(50); // CPU schonen

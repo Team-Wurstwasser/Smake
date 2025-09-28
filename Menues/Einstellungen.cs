@@ -1,7 +1,6 @@
 ﻿using Smake.io.Values;
 using Smake.io.Render;
 using Smake.io.Speicher;
-using Smake.io.Spiel;
 
 namespace Smake.io.Menues
 {
@@ -68,6 +67,9 @@ namespace Smake.io.Menues
 
         public Einstellungen()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Einstellungen;
+
             Title = "Einstellungen";
             Display = BuildMenu();
             MenuTracker = 1;
@@ -92,14 +94,14 @@ namespace Smake.io.Menues
                     ChangeMaxFutter();
                     break;
                 case 5:
-                    RendernSpielfeld.performancemode = !RendernSpielfeld.performancemode;
+                    RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode;
                     break;
                 case 6:
-                    Musik.musikplay = !Musik.musikplay;
+                    Musik.Musikplay = !Musik.Musikplay;
                     Musik.Melodie();
                     break;
                 case 7:
-                    Musik.soundplay = !Musik.soundplay;
+                    Musik.Soundplay = !Musik.Soundplay;
                     break;
                 case 8:
                     ResetSpielstand();
@@ -122,9 +124,9 @@ namespace Smake.io.Menues
         $"Multiplayer            [Aktuell: {(Spielvalues.multiplayer ? "An" : "Aus")}]",
         $"Gamemode ändern        [Aktuell: {Spielvalues.gamemode}]",
         $"MaxFutter ändern       [Aktuell: {Spielvalues.maxfutter}]",
-        $"Performance mode       [Aktuell: {(RendernSpielfeld.performancemode ? "An" : "Aus")}]",
-        $"Musik AN/AUS           [Aktuell: {(Musik.musikplay ? "An" : "Aus")}]",
-        $"Sounds AN/AUS          [Aktuell: {(Musik.soundplay ? "An" : "Aus")}]",
+        $"Performance mode       [Aktuell: {(RendernSpielfeld.Performancemode ? "An" : "Aus")}]",
+        $"Musik AN/AUS           [Aktuell: {(Musik.Musikplay ? "An" : "Aus")}]",
+        $"Sounds AN/AUS          [Aktuell: {(Musik.Soundplay ? "An" : "Aus")}]",
         "Spielstand zurücksetzen",
         "Zurück zum Hauptmenü"
             ];

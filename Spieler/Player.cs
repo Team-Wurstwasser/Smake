@@ -1,6 +1,7 @@
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 using Smake.io.Values;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace Smake.io.Spieler
@@ -15,9 +16,9 @@ namespace Smake.io.Spieler
         public bool Aenderung;
 
         // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX { get; private set; }
+        public int[] PlayerX { get; private set; } = [];
 
-        public int[] PlayerY { get; private set; }
+        public int[] PlayerY { get; private set; } = [];
 
         // Kollisionsvariablen
         bool KollisionRand;
@@ -35,13 +36,13 @@ namespace Smake.io.Spieler
 
         public ConsoleColor HeadFarbe;
 
-        int xstart = xstart;
-        int ystart = ystart;
+        readonly int xstart = xstart;
+        readonly int ystart = ystart;
 
         void InitialisiereSpieler()
         {
             // Spielerzeichen auf Startposition setzen
-            Spiellogik.grid[PlayerY[0], PlayerX[0]] = HeadSkin;
+            Spiellogik.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
         }
 
         public void Neustart()
@@ -143,11 +144,11 @@ namespace Smake.io.Spieler
         // Prüft die Kollision
         void Kollision(int x, int y)
         {
-            if (Spiellogik.grid[y, x] == ' ' || Spiellogik.grid[y, x] == Skinvalues.food || x == PlayerX[0] && y == PlayerY[0])
+            if (Spiellogik.Grid[y, x] == ' ' || Spiellogik.Grid[y, x] == Skinvalues.food || x == PlayerX[0] && y == PlayerY[0])
             {
                 return;
             }
-            else if (Spiellogik.grid[y, x] == Skinvalues.rand)
+            else if (Spiellogik.Grid[y, x] == Skinvalues.rand)
             {
                 KollisionRand = true;
             }
@@ -175,7 +176,7 @@ namespace Smake.io.Spieler
             }
 
             // Kopf setzen
-            Spiellogik.grid[y, x] = HeadSkin;
+            Spiellogik.Grid[y, x] = HeadSkin;
 
             // Spieler-Koordinaten aktualisieren
             PlayerX[0] = x;

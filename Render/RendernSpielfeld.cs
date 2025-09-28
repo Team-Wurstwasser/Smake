@@ -6,31 +6,31 @@ namespace Smake.io.Render
 {
     public class RendernSpielfeld
     {
-        public static bool performancemode;
+        public static bool Performancemode { get; set; }
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
-        public static char[,] grid = new char[Spielvalues.hoehe, Spielvalues.weite];
+        public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
         public static void InitialisiereSpielfeld()
         {
             Console.Clear();
 
-            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+            for (int reihe = 0; reihe < Grid.GetLength(0); reihe++)
 
             {
 
-                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+                for (int symbol = 0; symbol < Grid.GetLength(1); symbol++)
 
                 {
 
                     // Rand des Spielfelds mit RandSkin markieren
 
-                    if (reihe == 0 || reihe == grid.GetLength(0) - 1 || symbol == 0 || symbol == grid.GetLength(1) - 1)
+                    if (reihe == 0 || reihe == Grid.GetLength(0) - 1 || symbol == 0 || symbol == Grid.GetLength(1) - 1)
 
                     {
 
-                        grid[reihe, symbol] = Skinvalues.rand;
+                        Grid[reihe, symbol] = Skinvalues.rand;
 
                     }
 
@@ -38,7 +38,7 @@ namespace Smake.io.Render
 
                     {
 
-                        grid[reihe, symbol] = ' ';
+                        Grid[reihe, symbol] = ' ';
 
                     }
 
@@ -53,16 +53,16 @@ namespace Smake.io.Render
             Console.SetCursorPosition(0, 0);
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
-            int rows = grid.GetLength(0);
-            int cols = grid.GetLength(1);
+            int rows = Grid.GetLength(0);
+            int cols = Grid.GetLength(1);
 
             for (int y = 0; y < rows; y++)
             {
                 for (int x = 0; x < cols; x++)
                 {
-                    char zeichen = grid[y, x];
+                    char zeichen = Grid[y, x];
 
-                    if (!performancemode)
+                    if (!Performancemode)
                     {
                         ConsoleColor neueFarbe = BestimmeFarbe(x, y, zeichen);
                         if (neueFarbe != aktuelleFarbe)
@@ -76,7 +76,7 @@ namespace Smake.io.Render
                 }
 
                 // Legende am Ende der Zeile hinzufügen
-                if (!performancemode)
+                if (!Performancemode)
                 {
                     aktuelleFarbe = RenderLegende(y, aktuelleFarbe);
                 }
@@ -88,7 +88,7 @@ namespace Smake.io.Render
                 Console.WriteLine();
             }
 
-            if (!performancemode)
+            if (!Performancemode)
             {
                 Console.ResetColor();
             }
@@ -98,14 +98,14 @@ namespace Smake.io.Render
         private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
             if (zeichen == ' ') return ConsoleColor.White;
-            if (x == Spiellogik.player.PlayerX[0] && y == Spiellogik.player.PlayerY[0])
-                return Spiellogik.player.HeadFarbe;
-            if (Spielvalues.multiplayer && x == Spiellogik.player2.PlayerX[0] && y == Spiellogik.player2.PlayerY[0])
-                return Spiellogik.player2.HeadFarbe;
-            if (zeichen == Spiellogik.player.TailSkin)
-                return Spiellogik.player.TailFarbe;
-            if (zeichen == Spiellogik.player2.TailSkin)
-                return Spiellogik.player2.TailFarbe;
+            if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
+                return Spiellogik.Player.HeadFarbe;
+            if (Spielvalues.multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0])
+                return Spiellogik.Player2.HeadFarbe;
+            if (zeichen == Spiellogik.Player.TailSkin)
+                return Spiellogik.Player.TailFarbe;
+            if (zeichen == Spiellogik.Player2.TailSkin)
+                return Spiellogik.Player2.TailFarbe;
             if (zeichen == Skinvalues.rand)
                 return Skinvalues.randfarbe;
             // Alle Futter durchgehen
@@ -119,7 +119,7 @@ namespace Smake.io.Render
         }
         private static void RenderLegende(int y)
         {
-            if (performancemode)
+            if (Performancemode)
             {
                 // Nur Text ausgeben, keine Farbwechsel
                 switch (y)
@@ -135,7 +135,7 @@ namespace Smake.io.Render
                         break;
                     case 4:
                         string maxpunkte = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
-                        Console.Write($"  {Spiellogik.player.Name}: {Spiellogik.player.Punkte}/{maxpunkte}");
+                        Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
                         break;
                     case 5:
                         Console.Write("  ══════════════════════════════");
@@ -144,7 +144,7 @@ namespace Smake.io.Render
                         if (Spielvalues.multiplayer)
                         {
                             string maxpunkte2 = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
-                            Console.Write($"  {Spiellogik.player2.Name}: {Spiellogik.player2.Punkte}/{maxpunkte2}");
+                            Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
                         }
                         break;
                     case 7:
@@ -184,9 +184,9 @@ namespace Smake.io.Render
                     Console.Write("  ══════════════════════════════");
                     break;
                 case 4:
-                    SetFarbe(Spiellogik.player.HeadFarbe);
+                    SetFarbe(Spiellogik.Player.HeadFarbe);
                     string maxpunkte = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
-                    Console.Write($"  {Spiellogik.player.Name}: {Spiellogik.player.Punkte}/{maxpunkte}");
+                    Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
                     break;
                 case 5:
                     SetFarbe(Skinvalues.randfarbe);
@@ -195,9 +195,9 @@ namespace Smake.io.Render
                 case 6:
                     if (Spielvalues.multiplayer)
                     {
-                        SetFarbe(Spiellogik.player2.HeadFarbe);
+                        SetFarbe(Spiellogik.Player2.HeadFarbe);
                         string maxpunkte2 = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
-                        Console.Write($"  {Spiellogik.player2.Name}: {Spiellogik.player2.Punkte}/{maxpunkte2}");
+                        Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
                     }
                     break;
                 case 7:
