@@ -25,7 +25,7 @@ namespace Smake.io.Spieler
         bool KollisionPlayer;
 
         //Punkte des Spielers
-        public int Punkte;
+        public int Punkte { get; set; }
 
         // Namen der Spieler
         public readonly string? Name = Name;
