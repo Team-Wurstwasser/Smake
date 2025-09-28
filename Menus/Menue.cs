@@ -5,7 +5,7 @@ using Smake.io.Spiel;
 
 namespace Smake.io.Menus
 {
-    public class Menu : Screen
+    public class Menue : RendernMenue
     {
         string[] menu = [
                 "Spiel starten",
@@ -71,7 +71,7 @@ namespace Smake.io.Menus
             }
         }
 
-        public Menu()
+        public Menue()
         {
             // Zuweisung an dein Musiksystem
             Musik.currentmusik = GameData.MusikDaten.Menue.Main;
@@ -86,10 +86,10 @@ namespace Smake.io.Menus
                 Skinvalues.foodfarbe = GameData.Farben[0];
                 Skinvalues.foodfarbeRandom = false;
                 Skinvalues.randfarbe = GameData.Farben[0];
-                Spiellogik.player.Farbe = GameData.Farben[0];
-                Spiellogik.player.Headfarbe = GameData.Farben[0];
-                Spiellogik.player2.Farbe = GameData.Farben[0];
-                Spiellogik.player2.Headfarbe = GameData.Farben[0];
+                Spiellogik.player.TailFarbe = GameData.Farben[0];
+                Spiellogik.player.HeadFarbe = GameData.Farben[0];
+                Spiellogik.player2.TailFarbe = GameData.Farben[0];
+                Spiellogik.player2.HeadFarbe = GameData.Farben[0];
             }
 
             Title = "Menü";

@@ -4,13 +4,13 @@ using Smake.io.Spiel;
 
 namespace Smake.io.Menus
 {
-    public class Anleitung : Screen
+    public class Anleitung : RendernMenue
     {
         public Anleitung()
         {
             RenderAnleitung();
             Console.ReadKey();
-            _ = new Menu();
+            _ = new Menue();
             Thread.Sleep(5);
         }
         static void RenderAnleitung()

@@ -1,9 +1,11 @@
-using Smake.io.Values;
 using Smake.io.Speicher;
+using Smake.io.Spiel;
+using Smake.io.Values;
+using System.Diagnostics;
 
-namespace Smake.io.Spiel
+namespace Smake.io.Spieler
 {
-    public class Spieler(int xstart, int ystart)
+    public class Player(int xstart, int ystart, string? Name) : Tail
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
@@ -22,23 +24,16 @@ namespace Smake.io.Spiel
 
         bool KollisionPlayer;
 
-        // Länge des Spielers
-        public int Tail;
-
         //Punkte des Spielers
         public int Punkte;
 
         // Namen der Spieler
-        public string? Name;
+        public readonly string? Name = Name;
 
         // Aussehen des Spielers
-        public char Head;
+        public char HeadSkin;
 
-        public char Skin;
-
-        public ConsoleColor Farbe;
-
-        public ConsoleColor Headfarbe;
+        public ConsoleColor HeadFarbe;
 
         int xstart = xstart;
         int ystart = ystart;
@@ -46,7 +41,7 @@ namespace Smake.io.Spiel
         void InitialisiereSpieler()
         {
             // Spielerzeichen auf Startposition setzen
-            Spiellogik.grid[PlayerY[0], PlayerX[0]] = Head;
+            Spiellogik.grid[PlayerY[0], PlayerX[0]] = HeadSkin;
         }
 
         public void Neustart()
@@ -56,7 +51,7 @@ namespace Smake.io.Spiel
             KollisionRand = false;
 
             // Taillängen zurücksetzen
-            Tail = 3;
+            TailLaenge = 3;
 
             // Punkte zurücksetzen
 
@@ -65,8 +60,8 @@ namespace Smake.io.Spiel
             // Maximale Länge einstellen
             if (Spielvalues.gamemode == "Normal" || Spielvalues.gamemode == "Babymode")
             {
-                PlayerX = new int[GameData.MaxPunkte + Tail + 2];
-                PlayerY = new int[GameData.MaxPunkte + Tail + 2];
+                PlayerX = new int[GameData.MaxPunkte + TailLaenge + 2];
+                PlayerY = new int[GameData.MaxPunkte + TailLaenge + 2];
             }
             else
             {
@@ -84,7 +79,7 @@ namespace Smake.io.Spiel
             PlayerY[0] = ystart;
 
             // Aussehen einstellen
-            Head = Skin;
+            HeadSkin = TailSkin;
 
             // Alle Eingabewerte zurücksetzen
             InputX = 0;
@@ -94,7 +89,7 @@ namespace Smake.io.Spiel
             InitialisiereSpieler();
         }
 
-        public (bool spielerTot, bool gegnerTot) Update()
+        public (bool spielerTot, bool Maxpunkte) Update()
         {
 
             // Neue Zielkoordinaten berechnen
@@ -103,21 +98,24 @@ namespace Smake.io.Spiel
             int newPlayerY = PlayerY[0] + InputY;
 
             Kollision(newPlayerX, newPlayerY);
-            TailShift();
-            Bewegung(newPlayerX, newPlayerY);
-
-            foreach (var Futter in Spiellogik.Essen)
+            if(!KollisionPlayer && !KollisionRand || Spielvalues.gamemode == "Babymode")
             {
-                Futter.EsseFutter(this);
-            }
+                TailShift(this);
+                TailBewegung(this);
+                Bewegung(newPlayerX, newPlayerY);
 
+                foreach (var Futter in Spiellogik.Essen)
+                {
+                    Futter.EsseFutter(this);
+                }
+            }
             return GameoverChecker();
         }
 
-        (bool spielerTot, bool gegnerTot) GameoverChecker()
+        (bool spielerTot, bool Maxpunkte) GameoverChecker()
         {
             bool spielerTot = false;
-            bool gegnerTot = false;
+            bool Maxpunkte = false;
 
             if (Spielvalues.gamemode == "Unendlich")
             {
@@ -129,61 +127,41 @@ namespace Smake.io.Spiel
                 if (KollisionPlayer || KollisionRand)
                     spielerTot = true;
                 else if (Punkte >= GameData.MaxPunkte)
-                    gegnerTot = true;
+                    Maxpunkte = true;
             }
             else if (Spielvalues.gamemode == "Babymode")
             {
                 if (Punkte >= GameData.MaxPunkte)
                 {
-                    gegnerTot = true;
+                    Maxpunkte = true;
                 }
             }
+            return (spielerTot, Maxpunkte);
 
-            return (spielerTot, gegnerTot);
         }
 
         // Prüft die Kollision
         void Kollision(int x, int y)
         {
-            if (Spiellogik.grid[y, x] == ' ' || Spiellogik.grid[y, x] == Skinvalues.food || Spiellogik.grid[y, x] == Head)
+            if (Spiellogik.grid[y, x] == ' ' || Spiellogik.grid[y, x] == Skinvalues.food || x == PlayerX[0] && y == PlayerY[0])
             {
-                KollisionPlayer = false;
-                KollisionRand = false;
+                return;
             }
             else if (Spiellogik.grid[y, x] == Skinvalues.rand)
             {
-                KollisionPlayer = false;
                 KollisionRand = true;
             }
             else
             {
                 // Wenn das Feld nicht leer, nicht Food, nicht Head, nicht Rand → Kollision mit Spieler
                 KollisionPlayer = true;
-                KollisionRand = false;
-            }
-        }
 
-        // Tailkoordinaten berechnen
-        void TailShift()
-        {
-            for (int i = PlayerX.Length - 1; i > 0; i--)
-            {
-                PlayerX[i] = PlayerX[i - 1];
             }
-
-            for (int i = PlayerY.Length - 1; i > 0; i--)
-            {
-                PlayerY[i] = PlayerY[i - 1];
-            }
-
         }
 
         // Bewegt die Spieler
         void Bewegung(int x, int y)
         {
-            int oldTailX = PlayerX[Tail + 1];
-            int oldTailY = PlayerY[Tail + 1];
-
             // Babymode Wrap-around
             if (Spielvalues.gamemode == "Babymode")
             {
@@ -195,32 +173,14 @@ namespace Smake.io.Spiel
                     else if (InputY == 1) y = 1;
                 }
             }
-            else
-            {
-                // Standard: Bewegung nur wenn keine Kollision
-                if (KollisionPlayer || KollisionRand)
-                    return;
-            }
-
-            // Spieler-Tail zeichnen
-            for (int i = 0; i <= Tail; i++)
-            {
-                if (PlayerX[i] >= 0 && PlayerY[i] >= 0)
-                    Spiellogik.grid[PlayerY[i], PlayerX[i]] = Skin;
-            }
-
-            // Altes Tail-Feld leeren (nicht Rand)
-            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.grid[oldTailY, oldTailX] != Skinvalues.rand)
-            {
-                Spiellogik.grid[oldTailY, oldTailX] = ' ';
-            }
 
             // Kopf setzen
-            Spiellogik.grid[y, x] = Head;
+            Spiellogik.grid[y, x] = HeadSkin;
 
             // Spieler-Koordinaten aktualisieren
             PlayerX[0] = x;
             PlayerY[0] = y;
+
         }
     }
 }

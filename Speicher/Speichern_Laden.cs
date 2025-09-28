@@ -169,16 +169,16 @@ namespace Smake.io.Speicher
 
             Skinvalues.rand = GameData.RandSkins[0];
             Skinvalues.food = GameData.FoodSkins[0];
-            Spiellogik.player.Skin = GameData.TailSkins[0];
-            Spiellogik.player2.Skin = GameData.TailSkins[1];
+            Spiellogik.player.TailSkin = GameData.TailSkins[0];
+            Spiellogik.player2.TailSkin = GameData.TailSkins[1];
 
             Skinvalues.randfarbe = GameData.Farben[0];
             Skinvalues.foodfarbe = GameData.Farben[0];
             Skinvalues.foodfarbeRandom = false;
-            Spiellogik.player.Farbe = GameData.Farben[0];
-            Spiellogik.player2.Farbe = GameData.Farben[0];
-            Spiellogik.player.Headfarbe = GameData.Farben[0];
-            Spiellogik.player2.Headfarbe = GameData.Farben[0];
+            Spiellogik.player.TailFarbe = GameData.Farben[0];
+            Spiellogik.player2.TailFarbe = GameData.Farben[0];
+            Spiellogik.player.HeadFarbe = GameData.Farben[0];
+            Spiellogik.player2.HeadFarbe = GameData.Farben[0];
         }
 
         private static void Speichern()
@@ -197,15 +197,15 @@ namespace Smake.io.Speicher
                 $"multiplayer={Spielvalues.multiplayer}",
                 $"rand={Skinvalues.rand}",
                 $"food={Skinvalues.food}",
-                $"player1.Skin={Spiellogik.player.Skin}",
-                $"player2.Skin={Spiellogik.player2.Skin}",
+                $"player1.TailSkin={Spiellogik.player.TailSkin}",
+                $"player2.TailSkin={Spiellogik.player2.TailSkin}",
                 $"randfarbe={Skinvalues.randfarbe}",
                 $"foodfarbe={Skinvalues.foodfarbe}",
                 $"foodfarbeRandom={Skinvalues.foodfarbeRandom}",
-                $"player1.Farbe={Spiellogik.player.Farbe}",
-                $"player2.Farbe={Spiellogik.player2.Farbe}",
-                $"player1.Headfarbe={Spiellogik.player.Headfarbe}",
-                $"player2.Headfarbe={Spiellogik.player2.Headfarbe}",
+                $"player1.TailFarbe={Spiellogik.player.TailFarbe}",
+                $"player2.TailFarbe={Spiellogik.player2.TailFarbe}",
+                $"player1.HeadFarbe={Spiellogik.player.HeadFarbe}",
+                $"player2.HeadFarbe={Spiellogik.player2.HeadFarbe}",
                 $"Musik={Musik.musikplay}",
                 $"Sound={Musik.soundplay}"
             };
@@ -269,16 +269,16 @@ namespace Smake.io.Speicher
 
                         case "rand": Skinvalues.rand = wert[0]; break;
                         case "food": Skinvalues.food = wert[0]; break;
-                        case "player1.Skin": Spiellogik.player.Skin = wert[0]; break;
-                        case "player2.Skin": Spiellogik.player2.Skin = wert[0]; break;
+                        case "player1.TailSkin": Spiellogik.player.TailSkin = wert[0]; break;
+                        case "player2.TailSkin": Spiellogik.player2.TailSkin = wert[0]; break;
 
                         case "randfarbe": Skinvalues.randfarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "foodfarbe": Skinvalues.foodfarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "foodfarbeRandom": Skinvalues.foodfarbeRandom = bool.Parse(wert); break;
-                        case "player1.Farbe": Spiellogik.player.Farbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "player2.Farbe": Spiellogik.player2.Farbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "player1.Headfarbe": Spiellogik.player.Headfarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "player2.Headfarbe": Spiellogik.player2.Headfarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "player1.TailFarbe": Spiellogik.player.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "player2.TailFarbe": Spiellogik.player2.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "player1.HeadFarbe": Spiellogik.player.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "player2.HeadFarbe": Spiellogik.player2.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "Sound": Musik.soundplay = bool.Parse(wert); break;
                         case "Musik": Musik.musikplay = bool.Parse(wert); break;
                         default:
