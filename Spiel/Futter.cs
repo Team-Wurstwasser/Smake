@@ -1,4 +1,5 @@
 ﻿using Smake.io.Values;
+using Smake.io.Spieler;
 
 namespace Smake.io.Spiel
 {
@@ -36,12 +37,12 @@ namespace Smake.io.Spiel
 
         }
 
-        public void EsseFutter(Spieler p)
+        public void EsseFutter(Player p)
         {
             // Spieler frisst Futter
             if (p.PlayerX[0] == FutterX && p.PlayerY[0] == FutterY)
             {
-                p.Tail++;
+                p.TailLaenge++;
                 p.Punkte++;
                 if (Musik.soundplay)
                 {

@@ -5,7 +5,7 @@ using Smake.io.Spiel;
 
 namespace Smake.io.Menus
 {
-    public class Einstellungen : Screen
+    public class Einstellungen : RendernMenue
     {
 
         private ConsoleKey input;
@@ -25,7 +25,7 @@ namespace Smake.io.Menus
                         MenuTracker++;
                         break;
                     case ConsoleKey.Escape:
-                        _ = new Menu();
+                        _ = new Menue();
                         StopInputstream();
                         Thread.Sleep(5);
                         break;
@@ -105,7 +105,7 @@ namespace Smake.io.Menus
                     ResetSpielstand();
                     break;
                 case 9:
-                    _ = new Menu();
+                    _ = new Menue();
                     StopInputstream();
                     Thread.Sleep(5);
                     break;

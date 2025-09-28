@@ -5,7 +5,7 @@ using Smake.io.Spiel;
 
 namespace Smake.io.Menus
 {
-    public class Shop : Screen
+    public class Shop : RendernMenue
     {
         private ConsoleKey input;
         public override ConsoleKey Input
@@ -29,7 +29,7 @@ namespace Smake.io.Menus
                         ShopSkins = !ShopSkins; // Seitenwechsel
                         break;
                     case ConsoleKey.Escape:
-                        _ = new Menu();
+                        _ = new Menue();
                         StopInputstream();
                         Thread.Sleep(5);
                         break;
@@ -85,7 +85,7 @@ namespace Smake.io.Menus
             {
                 if (MenuTracker == gesamtOptionenSkins)
                 {
-                    _ = new Menu();
+                    _ = new Menue();
                     StopInputstream();
                     Thread.Sleep(5);
                 }
@@ -130,7 +130,7 @@ namespace Smake.io.Menus
             {
                 if (MenuTracker == gesamtOptionenFarben)
                 {
-                    _ = new Menu();
+                    _ = new Menue();
                     StopInputstream();
                     Thread.Sleep(5);
                 }

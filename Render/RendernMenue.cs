@@ -3,7 +3,7 @@ using Smake.io.Speicher;
 
 namespace Smake.io.Render
 {
-    public class Screen
+    public class RendernMenue
     {
         public string[] Display { get; set; }
         public int Selected { get; set; }
