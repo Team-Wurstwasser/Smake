@@ -28,18 +28,18 @@ namespace Smake.io
         public static void Eingaben()
         {
             // Zuweisung an dein Musiksystem
-            Musik.currentmusik = GameData.MusikDaten.Menue.Eingabe;
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Eingabe;
             Musik.Melodie();
 
             Console.Clear();
 
             Console.Write("Spieler 1, gib deinen Namen ein: ");
-            Spiellogik.player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, Console.ReadLine());
+            Spiellogik.Player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, Console.ReadLine());
 
             Console.Clear();
 
             Console.Write("Spieler 2, gib deinen Namen ein: ");
-            Spiellogik.player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, Console.ReadLine());
+            Spiellogik.Player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, Console.ReadLine());
 
             Console.Clear();
         }

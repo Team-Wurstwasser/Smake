@@ -8,25 +8,27 @@ namespace Smake.io.Spiel
 {
     public class Spiellogik : RendernSpielfeld
     {
-        public static bool spiel;
+        public static bool Spiel { get; set; }
         int gameover;
         bool unentschieden;
 
-        public static Player player;
+#pragma warning disable CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
+        public static Player Player { get; set; }
 
-        public static Player player2;
+        public static Player Player2 { get; set; }
+#pragma warning restore CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Fügen Sie ggf. den „erforderlichen“ Modifizierer hinzu, oder deklarieren Sie den Modifizierer als NULL-Werte zulassend.
 
-        public static List<Futter> Essen;
+        public static List<Futter> Essen { get; private set; } = [];
 
         public Spiellogik()
         {
-          Spiel();
+          Spielloop();
         }
 
         // Allen Variablen den Startwert geben
         void Neustart()
         {
-            int currentMusik = 0;
+            int? currentMusik = 0;
 
             if (Spielvalues.gamemode == "Normal")
             {
@@ -48,11 +50,11 @@ namespace Smake.io.Spiel
             }
 
             // Zuweisung an dein Musiksystem
-            Musik.currentmusik = currentMusik;
+            Musik.Currentmusik = currentMusik;
             Musik.Melodie();
             SpeicherSystem.Speichern_Laden("Speichern");
 
-            spiel = true;
+            Spiel = true;
 
             gameover = 0;
 
@@ -66,11 +68,11 @@ namespace Smake.io.Spiel
             // Initialisiere das Spielfeld mit Rahmen
             InitialisiereSpielfeld();
 
-            player.Neustart();
+            Player.Neustart();
 
             if (Spielvalues.multiplayer)
             {
-                player2.Neustart();
+                Player2.Neustart();
             }
 
             for (int i = 0; i < Spielvalues.maxfutter; i++)
@@ -101,7 +103,7 @@ namespace Smake.io.Spiel
         }
 
         // Spielablauf
-        void Spiel()
+        void Spielloop()
         {
             Essen = [];
 
@@ -115,7 +117,7 @@ namespace Smake.io.Spiel
             inputThread.Start();
 
             // Game Loop 
-            while (spiel)
+            while (Spiel)
             {
 
                 Update();   // Spielerposition aktualisieren
@@ -124,11 +126,11 @@ namespace Smake.io.Spiel
 
                 Thread.Sleep(Spielvalues.zeit); // Spieltempo regulieren
 
-                player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
+                Player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
                 if (Spielvalues.multiplayer)
                 {
-                    player2.Aenderung = true;
+                    Player2.Aenderung = true;
                 }
 
             }
@@ -149,7 +151,7 @@ namespace Smake.io.Spiel
 
             {
                 // Update Player 1
-                var (spielerTot, Maxpunkte) = player.Update();
+                var (spielerTot, Maxpunkte) = Player.Update();
                 spieler1Tot |= spielerTot;
                 spieler2Tot |= Maxpunkte;  // Falls MaxPunkte
             }
@@ -157,7 +159,7 @@ namespace Smake.io.Spiel
             // Update Player 2
             if (Spielvalues.multiplayer)
             {
-                var (spielerTot, Maxpunkte) = player2.Update();
+                var (spielerTot, Maxpunkte) = Player2.Update();
                 spieler2Tot |= spielerTot;
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
@@ -172,17 +174,17 @@ namespace Smake.io.Spiel
             if (spieler1Tot && spieler2Tot)
             {
                 unentschieden = true;
-                spiel = false;
+                Spiel = false;
             }
             else if (spieler1Tot)
             {
                 gameover = 1;
-                spiel = false;
+                Spiel = false;
             }
             else if (spieler2Tot)
             {
                 gameover = 2;
-                spiel = false;
+                Spiel = false;
             }
 
         }
@@ -201,24 +203,24 @@ namespace Smake.io.Spiel
                 {
                     Console.WriteLine();
                     Console.WriteLine("Unentschieden!");
-                    Console.WriteLine($"{player.Name} hat {player.Punkte} Punkte erreicht.");
-                    Console.WriteLine($"{player2.Name} hat {player2.Punkte} Punkte erreicht.");
+                    Console.WriteLine($"{Player.Name} hat {Player   .Punkte} Punkte erreicht.");
+                    Console.WriteLine($"{Player2.Name} hat {Player2.Punkte} Punkte erreicht.");
                     Console.WriteLine();
                 }
                 else if (gameover == 1)
                 {
                     Console.WriteLine();
-                    Console.WriteLine($"{player2.Name} gewinnt!");
-                    Console.WriteLine($"Punkte: {player2.Punkte}");
-                    Console.WriteLine($"{player.Name} hat {player.Punkte} Punkte erreicht.");
+                    Console.WriteLine($"{Player2.Name} gewinnt!");
+                    Console.WriteLine($"Punkte: {Player2.Punkte}");
+                    Console.WriteLine($"{Player.Name} hat {Player.Punkte} Punkte erreicht.");
                     Console.WriteLine();
                 }
                 else if (gameover == 2)
                 {
                     Console.WriteLine();
-                    Console.WriteLine($"{player.Name} gewinnt!");
-                    Console.WriteLine($"Punkte: {player.Punkte}");
-                    Console.WriteLine($"{player2.Name} hat {player2.Punkte} Punkte erreicht.");
+                    Console.WriteLine($"{Player.Name} gewinnt!");
+                    Console.WriteLine($"Punkte: {Player.Punkte}");
+                    Console.WriteLine($"{Player2.Name} hat {Player2.Punkte} Punkte erreicht.");
                     Console.WriteLine();
                 }
             }
@@ -228,14 +230,14 @@ namespace Smake.io.Spiel
                 {
                     Console.WriteLine();
                     Console.WriteLine("Leider verloren – versuch's noch einmal!");
-                    Console.WriteLine($"Du hast {player.Punkte} Punkte erreicht.");
+                    Console.WriteLine($"Du hast {Player.Punkte} Punkte erreicht.");
                     Console.WriteLine();
                 }
                 else if (gameover == 2)
                 {
                     Console.WriteLine();
                     Console.WriteLine("Glückwunsch! Du hast gewonnen!");
-                    Console.WriteLine($"Deine Punktzahl: {player.Punkte}");
+                    Console.WriteLine($"Deine Punktzahl: {Player.Punkte}");
                     Console.WriteLine();
                 }
             }
@@ -271,31 +273,31 @@ namespace Smake.io.Spiel
         {
             if (Spielvalues.gamemode != "Babymode")
             {
-                if (Menüsvalues.highscore < player.Punkte)
-                { Menüsvalues.highscore = player.Punkte; }
-                else if (Menüsvalues.highscore < player2.Punkte)
-                { Menüsvalues.highscore = player2.Punkte; }
+                if (Menüsvalues.highscore < Player.Punkte)
+                { Menüsvalues.highscore = Player.Punkte; }
+                else if (Menüsvalues.highscore < Player2.Punkte)
+                { Menüsvalues.highscore = Player2.Punkte; }
 
                 Menüsvalues.spieleGesamt++;
 
                 switch (Spielvalues.difficulty)
                 {
                     case "Langsam":
-                        Menüsvalues.gesamtcoins = player.Punkte + player2.Punkte + Menüsvalues.gesamtcoins;
-                        Spielstatus.coins = player.Punkte + player2.Punkte + Spielstatus.coins;
-                        Spielstatus.xp = player.Punkte + player2.Punkte + Spielstatus.xp;
+                        Menüsvalues.gesamtcoins = Player.Punkte + Player2.Punkte + Menüsvalues.gesamtcoins;
+                        Spielstatus.coins = Player.Punkte + Player2.Punkte + Spielstatus.coins;
+                        Spielstatus.xp = Player.Punkte + Player2.Punkte + Spielstatus.xp;
                         break;
 
                     case "Mittel":
-                        Menüsvalues.gesamtcoins = 2 * (player.Punkte + player2.Punkte) + Menüsvalues.gesamtcoins;
-                        Spielstatus.coins = 2 * (player.Punkte + player2.Punkte) + Spielstatus.coins;
-                        Spielstatus.xp = 2 * (player.Punkte + player2.Punkte) + Spielstatus.xp;
+                        Menüsvalues.gesamtcoins = 2 * (Player.Punkte + Player2.Punkte) + Menüsvalues.gesamtcoins;
+                        Spielstatus.coins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.coins;
+                        Spielstatus.xp = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.xp;
                         break;
 
                     case "Schnell":
-                        Menüsvalues.gesamtcoins = 3 * (player.Punkte + player2.Punkte) + Menüsvalues.gesamtcoins;
-                        Spielstatus.coins = 3 * (player.Punkte + player2.Punkte) + Spielstatus.coins;
-                        Spielstatus.xp = 3 * (player.Punkte + player2.Punkte) + Spielstatus.xp;
+                        Menüsvalues.gesamtcoins = 3 * (Player.Punkte + Player2.Punkte) + Menüsvalues.gesamtcoins;
+                        Spielstatus.coins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.coins;
+                        Spielstatus.xp = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.xp;
                         break;
                 }
             }

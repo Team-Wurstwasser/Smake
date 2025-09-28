@@ -2,14 +2,13 @@
 using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spiel;
-using System.Drawing;
 
 namespace Smake.io.Menues
 {
     public class Skin_Farben : RendernMenue
     {
         
-        string[] skin_farben = [
+        readonly string[] skin_farben = [
                 ($"Player 1 Tailskin ändern    [Aktuell: "),
                 ($"Player 2 Tailskin ändern    [Aktuell: "),
                 ($"Foodskin ändern             [Aktuell: "),
@@ -23,7 +22,7 @@ namespace Smake.io.Menues
                 ("Zurück zum Hauptmenü")
         ];
 
-        bool[] Color =
+        readonly bool[] Color =
         [
             false,
             false,
@@ -98,6 +97,9 @@ namespace Smake.io.Menues
 
         public Skin_Farben()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
+
             Title = "Skin_Farben";
             Display = skin_farben;
             IsColor = Color;
@@ -111,14 +113,14 @@ namespace Smake.io.Menues
         {
             switch (MenuTracker)
             {
-                case 1: WechselSkin(ref Spiellogik.player.TailSkin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player2.TailSkin); break;
-                case 2: WechselSkin(ref Spiellogik.player2.TailSkin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player.TailSkin); break;
+                case 1: WechselSkin(ref Spiellogik.Player.TailSkin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.Player2.TailSkin); break;
+                case 2: WechselSkin(ref Spiellogik.Player2.TailSkin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.Player.TailSkin); break;
                 case 3: WechselSkin(ref Skinvalues.food, GameData.FoodSkins, Menüsvalues.freigeschaltetFood); break;
                 case 4: WechselSkin(ref Skinvalues.rand, GameData.RandSkins, Menüsvalues.freigeschaltetRand); break;
-                case 5: WechselFarbe(ref Spiellogik.player.HeadFarbe); break;
-                case 6: WechselFarbe(ref Spiellogik.player2.HeadFarbe); break;
-                case 7: WechselFarbe(ref Spiellogik.player.TailFarbe); break;
-                case 8: WechselFarbe(ref Spiellogik.player2.TailFarbe); break;
+                case 5: WechselFarbe(ref Spiellogik.Player.HeadFarbe); break;
+                case 6: WechselFarbe(ref Spiellogik.Player2.HeadFarbe); break;
+                case 7: WechselFarbe(ref Spiellogik.Player.TailFarbe); break;
+                case 8: WechselFarbe(ref Spiellogik.Player2.TailFarbe); break;
                 case 9: WechselFarbe(ref Skinvalues.foodfarbe, true); break;
                 case 10: WechselFarbe(ref Skinvalues.randfarbe); break;
                 case 11:
@@ -134,14 +136,14 @@ namespace Smake.io.Menues
         private static object?[] BuildMenu()
         {
             return [
-                Spiellogik.player.TailSkin,
-                Spiellogik.player2.TailSkin,
+                Spiellogik.Player.TailSkin,
+                Spiellogik.Player2.TailSkin,
                 Skinvalues.food,
                 Skinvalues.rand,
-                Spiellogik.player.HeadFarbe,
-                Spiellogik.player2.HeadFarbe,
-                Spiellogik.player.TailFarbe,
-                Spiellogik.player2.TailFarbe,
+                Spiellogik.Player.HeadFarbe,
+                Spiellogik.Player2.HeadFarbe,
+                Spiellogik.Player.TailFarbe,
+                Spiellogik.Player2.TailFarbe,
                 Skinvalues.foodfarbeRandom ? "Random" : (object?)Skinvalues.foodfarbe,
                 Skinvalues.randfarbe,
                 null

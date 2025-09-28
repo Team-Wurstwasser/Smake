@@ -5,14 +5,14 @@ namespace Smake.io.Render
 {
     public class RendernMenue
     {
-        public string[] Display { private get; set; }
+        public string[] Display { private get; set; } = [];
         public int Selected { private get; set; }
-        public string Title { private get; set; }
-        public object?[] GameValue { private get; set; }
-        public bool[] IsColor { private get; set; }
+        public string? Title { private get; set; }
+        public object?[] GameValue { private get; set; } = [];
+        public bool[] IsColor { private get; set; } = [];
         public virtual ConsoleKey Input { get; set; }
         bool DoReadInput = true;
-        Thread InputThread;
+        Thread? InputThread;
 
         public void InitialRender()
         {
@@ -109,7 +109,7 @@ namespace Smake.io.Render
 
                 if (GameValue[i] != null)
                 {
-                    if (IsColor[i] && !RendernSpielfeld.performancemode)
+                    if (IsColor[i] && !RendernSpielfeld.Performancemode)
                     {
                         if (GameValue[i] is ConsoleColor color)
                         {
@@ -124,7 +124,7 @@ namespace Smake.io.Render
                     }
                     else
                     {
-                        Console.Write(RendernSpielfeld.performancemode ? "Performance Mode AN" : GameValue[i]);
+                        Console.Write(RendernSpielfeld.Performancemode ? "Performance Mode AN" : GameValue[i]);
                     }
 
                     Console.Write("]".PadRight(13));
@@ -208,7 +208,7 @@ namespace Smake.io.Render
         public void StopInputstream()
         {
             DoReadInput = false;
-            InputThread.Join();
+            InputThread?.Join();
         }
 
         private void Readinput()

@@ -32,8 +32,8 @@ namespace Smake.io.Spiel
 
                 FutterY = rand.Next(1, Spielvalues.hoehe - 2);
             }
-            while (Spiellogik.grid[FutterY, FutterX] != ' '); // Stelle muss wirklich leer sein
-            Spiellogik.grid[FutterY, FutterX] = Food; // Setze Futter an die berechnete Position
+            while (Spiellogik.Grid[FutterY, FutterX] != ' '); // Stelle muss wirklich leer sein
+            Spiellogik.Grid[FutterY, FutterX] = Food; // Setze Futter an die berechnete Position
 
         }
 
@@ -44,7 +44,7 @@ namespace Smake.io.Spiel
             {
                 p.TailLaenge++;
                 p.Punkte++;
-                if (Musik.soundplay)
+                if (Musik.Soundplay)
                 {
                     Console.Beep(700, 100);
                 }
