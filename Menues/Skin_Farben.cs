@@ -4,7 +4,7 @@ using Smake.io.Speicher;
 using Smake.io.Spiel;
 using System.Drawing;
 
-namespace Smake.io.Menus
+namespace Smake.io.Menues
 {
     public class Skin_Farben : RendernMenue
     {

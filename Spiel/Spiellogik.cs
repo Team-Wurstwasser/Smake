@@ -1,5 +1,5 @@
 ﻿using Smake.io.Values;
-using Smake.io.Menus;
+using Smake.io.Menues;
 using Smake.io.Render;
 using Smake.io.Speicher;
 using Smake.io.Spieler;
