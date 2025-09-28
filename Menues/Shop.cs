@@ -1,7 +1,6 @@
 ﻿using Smake.io.Values;
 using Smake.io.Render;
 using Smake.io.Speicher;
-using Smake.io.Spiel;
 
 namespace Smake.io.Menues
 {
@@ -70,6 +69,9 @@ namespace Smake.io.Menues
 
         public Shop()
         {
+            // Zuweisung an dein Musiksystem
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Shop;
+
             gesamtOptionenSkins = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
             gesamtOptionenFarben = GameData.Farben.Length;
 

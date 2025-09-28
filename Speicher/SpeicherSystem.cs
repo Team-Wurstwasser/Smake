@@ -139,8 +139,8 @@ namespace Smake.io.Speicher
 
         private static void SetzeStandardwerte()
         {
-            Musik.musikplay = true;
-            Musik.soundplay = true;
+            Musik.Musikplay = true;
+            Musik.Soundplay = true;
 
             // Erst alle auf false setzen
             Array.Clear(Menüsvalues.freigeschaltetTail);
@@ -154,7 +154,7 @@ namespace Smake.io.Speicher
             Menüsvalues.freigeschaltetRand[0] = true;
             Menüsvalues.freigeschaltetFarben[0] = true;
 
-            RendernSpielfeld.performancemode = false;
+            RendernSpielfeld.Performancemode = false;
 
             Spielstatus.coins = 0;
             Spielstatus.xp = 0;
@@ -169,23 +169,23 @@ namespace Smake.io.Speicher
 
             Skinvalues.rand = GameData.RandSkins[0];
             Skinvalues.food = GameData.FoodSkins[0];
-            Spiellogik.player.TailSkin = GameData.TailSkins[0];
-            Spiellogik.player2.TailSkin = GameData.TailSkins[1];
+            Spiellogik.Player.TailSkin = GameData.TailSkins[0];
+            Spiellogik.Player2.TailSkin = GameData.TailSkins[1];
 
             Skinvalues.randfarbe = GameData.Farben[0];
             Skinvalues.foodfarbe = GameData.Farben[0];
             Skinvalues.foodfarbeRandom = false;
-            Spiellogik.player.TailFarbe = GameData.Farben[0];
-            Spiellogik.player2.TailFarbe = GameData.Farben[0];
-            Spiellogik.player.HeadFarbe = GameData.Farben[0];
-            Spiellogik.player2.HeadFarbe = GameData.Farben[0];
+            Spiellogik.Player.TailFarbe = GameData.Farben[0];
+            Spiellogik.Player2.TailFarbe = GameData.Farben[0];
+            Spiellogik.Player.HeadFarbe = GameData.Farben[0];
+            Spiellogik.Player2.HeadFarbe = GameData.Farben[0];
         }
 
         private static void Speichern()
         {
             var zeilen = new List<string>
             {
-                $"performancemode={RendernSpielfeld.performancemode}",
+                $"performancemode={RendernSpielfeld.Performancemode}",
                 $"coins={Spielstatus.coins}",
                 $"xp={Spielstatus.xp}",
                 $"spieleGesamt={Menüsvalues.spieleGesamt}",
@@ -197,17 +197,17 @@ namespace Smake.io.Speicher
                 $"multiplayer={Spielvalues.multiplayer}",
                 $"rand={Skinvalues.rand}",
                 $"food={Skinvalues.food}",
-                $"player1.TailSkin={Spiellogik.player.TailSkin}",
-                $"player2.TailSkin={Spiellogik.player2.TailSkin}",
+                $"Player1.TailSkin={Spiellogik.Player.TailSkin}",
+                $"Player2.TailSkin={Spiellogik.Player2.TailSkin}",
                 $"randfarbe={Skinvalues.randfarbe}",
                 $"foodfarbe={Skinvalues.foodfarbe}",
                 $"foodfarbeRandom={Skinvalues.foodfarbeRandom}",
-                $"player1.TailFarbe={Spiellogik.player.TailFarbe}",
-                $"player2.TailFarbe={Spiellogik.player2.TailFarbe}",
-                $"player1.HeadFarbe={Spiellogik.player.HeadFarbe}",
-                $"player2.HeadFarbe={Spiellogik.player2.HeadFarbe}",
-                $"Musik={Musik.musikplay}",
-                $"Sound={Musik.soundplay}"
+                $"Player1.TailFarbe={Spiellogik.Player.TailFarbe}",
+                $"Player2.TailFarbe={Spiellogik.Player2.TailFarbe}",
+                $"Player1.HeadFarbe={Spiellogik.Player.HeadFarbe}",
+                $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}",
+                $"Musik={Musik.Musikplay}",
+                $"Sound={Musik.Soundplay}"
             };
 
             for (int i = 0; i < Menüsvalues.freigeschaltetTail.Length; i++)
@@ -255,7 +255,7 @@ namespace Smake.io.Speicher
                 {
                     switch (name)
                     {
-                        case "performancemode": RendernSpielfeld.performancemode = bool.Parse(wert); break;
+                        case "performancemode": RendernSpielfeld.Performancemode = bool.Parse(wert); break;
                         case "coins": Spielstatus.coins = int.Parse(wert); break;
                         case "xp": Spielstatus.xp = int.Parse(wert); break;
                         case "gesamtcoins": Menüsvalues.gesamtcoins = int.Parse(wert); break;
@@ -269,18 +269,18 @@ namespace Smake.io.Speicher
 
                         case "rand": Skinvalues.rand = wert[0]; break;
                         case "food": Skinvalues.food = wert[0]; break;
-                        case "player1.TailSkin": Spiellogik.player.TailSkin = wert[0]; break;
-                        case "player2.TailSkin": Spiellogik.player2.TailSkin = wert[0]; break;
+                        case "Player1.TailSkin": Spiellogik.Player.TailSkin = wert[0]; break;
+                        case "Player2.TailSkin": Spiellogik.Player2.TailSkin = wert[0]; break;
 
                         case "randfarbe": Skinvalues.randfarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "foodfarbe": Skinvalues.foodfarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "foodfarbeRandom": Skinvalues.foodfarbeRandom = bool.Parse(wert); break;
-                        case "player1.TailFarbe": Spiellogik.player.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "player2.TailFarbe": Spiellogik.player2.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "player1.HeadFarbe": Spiellogik.player.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "player2.HeadFarbe": Spiellogik.player2.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "Sound": Musik.soundplay = bool.Parse(wert); break;
-                        case "Musik": Musik.musikplay = bool.Parse(wert); break;
+                        case "Player1.TailFarbe": Spiellogik.Player.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "Player2.TailFarbe": Spiellogik.Player2.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "Player1.HeadFarbe": Spiellogik.Player.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "Player2.HeadFarbe": Spiellogik.Player2.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "Sound": Musik.Soundplay = bool.Parse(wert); break;
+                        case "Musik": Musik.Musikplay = bool.Parse(wert); break;
                         default:
                             if (name.StartsWith("freigeschaltetTail"))
                                 Menüsvalues.freigeschaltetTail[int.Parse(name.Replace("freigeschaltetTail", ""))] = bool.Parse(wert);
