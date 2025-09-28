@@ -15,9 +15,9 @@ namespace Smake.io.Spieler
         public bool Aenderung;
 
         // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX;
+        public int[] PlayerX { get; private set; }
 
-        public int[] PlayerY;
+        public int[] PlayerY { get; private set; }
 
         // Kollisionsvariablen
         bool KollisionRand;
