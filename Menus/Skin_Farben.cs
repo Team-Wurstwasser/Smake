@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Smake.io.Menus
 {
-    public class Skin_Farben : Screen
+    public class Skin_Farben : RendernMenue
     {
         
         string[] skin_farben = [
@@ -55,7 +55,7 @@ namespace Smake.io.Menus
                         MenuTracker++;
                         break;
                     case ConsoleKey.Escape:
-                        _ = new Menu();
+                        _ = new Menue();
                         StopInputstream();
                         Thread.Sleep(5);
                         break;
@@ -111,18 +111,18 @@ namespace Smake.io.Menus
         {
             switch (MenuTracker)
             {
-                case 1: WechselSkin(ref Spiellogik.player.Skin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player2.Skin); break;
-                case 2: WechselSkin(ref Spiellogik.player2.Skin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player.Skin); break;
+                case 1: WechselSkin(ref Spiellogik.player.TailSkin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player2.TailSkin); break;
+                case 2: WechselSkin(ref Spiellogik.player2.TailSkin, GameData.TailSkins, Menüsvalues.freigeschaltetTail, Spiellogik.player.TailSkin); break;
                 case 3: WechselSkin(ref Skinvalues.food, GameData.FoodSkins, Menüsvalues.freigeschaltetFood); break;
                 case 4: WechselSkin(ref Skinvalues.rand, GameData.RandSkins, Menüsvalues.freigeschaltetRand); break;
-                case 5: WechselFarbe(ref Spiellogik.player.Headfarbe); break;
-                case 6: WechselFarbe(ref Spiellogik.player2.Headfarbe); break;
-                case 7: WechselFarbe(ref Spiellogik.player.Farbe); break;
-                case 8: WechselFarbe(ref Spiellogik.player2.Farbe); break;
+                case 5: WechselFarbe(ref Spiellogik.player.HeadFarbe); break;
+                case 6: WechselFarbe(ref Spiellogik.player2.HeadFarbe); break;
+                case 7: WechselFarbe(ref Spiellogik.player.TailFarbe); break;
+                case 8: WechselFarbe(ref Spiellogik.player2.TailFarbe); break;
                 case 9: WechselFarbe(ref Skinvalues.foodfarbe, true); break;
                 case 10: WechselFarbe(ref Skinvalues.randfarbe); break;
                 case 11:
-                    _ = new Menu();
+                    _ = new Menue();
                     StopInputstream();
                     Thread.Sleep(5);
                     break;
@@ -134,14 +134,14 @@ namespace Smake.io.Menus
         private static object?[] BuildMenu()
         {
             return [
-                Spiellogik.player.Skin,
-                Spiellogik.player2.Skin,
+                Spiellogik.player.TailSkin,
+                Spiellogik.player2.TailSkin,
                 Skinvalues.food,
                 Skinvalues.rand,
-                Spiellogik.player.Headfarbe,
-                Spiellogik.player2.Headfarbe,
-                Spiellogik.player.Farbe,
-                Spiellogik.player2.Farbe,
+                Spiellogik.player.HeadFarbe,
+                Spiellogik.player2.HeadFarbe,
+                Spiellogik.player.TailFarbe,
+                Spiellogik.player2.TailFarbe,
                 Skinvalues.foodfarbeRandom ? "Random" : (object?)Skinvalues.foodfarbe,
                 Skinvalues.randfarbe,
                 null

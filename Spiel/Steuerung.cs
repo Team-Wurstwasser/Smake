@@ -1,4 +1,5 @@
 ﻿using Smake.io.Values;
+using Smake.io.Spieler;
 
 namespace Smake.io.Spiel
 {
@@ -58,7 +59,6 @@ namespace Smake.io.Spiel
                         // Spiel beenden
                         case ConsoleKey.Escape:
                             Spiellogik.spiel = false;
-                            Spiellogik.gameover = 3;
                             break;
                     }
                 }
@@ -70,14 +70,14 @@ namespace Smake.io.Spiel
         }
 
         // Hilfsmethode zum Setzen der neuen Richtung eines Spielers
-        private static void UpdatePlayerDirection(Spieler p, int newX, int newY, char head)
+        private static void UpdatePlayerDirection(Player p, int newX, int newY, char head)
         {
             // Verhindert Rückwärtsbewegung und doppelte Änderungen pro Tick
             if (p.Aenderung && (p.InputX != -newX || p.InputY != -newY))
             {
                 p.InputX = newX;
                 p.InputY = newY;
-                p.Head = head;
+                p.HeadSkin = head;
                 p.Aenderung = false;
             }
         }

@@ -17,11 +17,11 @@ namespace Smake.io
             Console.CursorVisible = false;
             GameData.LoadAllConfigs();
 
-            SpeicherSystem.Speichern_Laden("Laden");
-
             Eingaben();
 
-            _ = new Menu();
+            SpeicherSystem.Speichern_Laden("Laden");
+
+            _ = new Menue();
         }
 
         // Eingaben für Spielernamen
@@ -34,12 +34,12 @@ namespace Smake.io
             Console.Clear();
 
             Console.Write("Spieler 1, gib deinen Namen ein: ");
-            Spiellogik.player.Name = Console.ReadLine();
+            Spiellogik.player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, Console.ReadLine());
 
             Console.Clear();
 
             Console.Write("Spieler 2, gib deinen Namen ein: ");
-            Spiellogik.player2.Name = Console.ReadLine();
+            Spiellogik.player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, Console.ReadLine());
 
             Console.Clear();
         }
