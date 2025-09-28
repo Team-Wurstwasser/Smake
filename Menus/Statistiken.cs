@@ -4,13 +4,13 @@ using Smake.io.Spiel;
 
 namespace Smake.io.Menus
 {
-    public class Statistiken : Screen
+    public class Statistiken : RendernMenue
     {
         public Statistiken()
         {
             RenderStatistiken();
             Console.ReadKey();
-            _ = new Menu();
+            _ = new Menue();
             Thread.Sleep(5);
         }
         static void RenderStatistiken()

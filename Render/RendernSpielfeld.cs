@@ -8,19 +8,59 @@ namespace Smake.io.Render
     {
         public static bool performancemode;
 
+        // Das Spielfeld als zweidimensionales Zeichen-Array
+        public static char[,] grid = new char[Spielvalues.hoehe, Spielvalues.weite];
+
+        // Initialisiert das Spielfeld: Rahmen, leere Fläche
+        public static void InitialisiereSpielfeld()
+        {
+            Console.Clear();
+
+            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
+
+            {
+
+                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
+
+                {
+
+                    // Rand des Spielfelds mit RandSkin markieren
+
+                    if (reihe == 0 || reihe == grid.GetLength(0) - 1 || symbol == 0 || symbol == grid.GetLength(1) - 1)
+
+                    {
+
+                        grid[reihe, symbol] = Skinvalues.rand;
+
+                    }
+
+                    else
+
+                    {
+
+                        grid[reihe, symbol] = ' ';
+
+                    }
+
+                }
+
+            }
+
+        }
+
         public static void Render()
         {
             Console.SetCursorPosition(0, 0);
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
-            int rows = Spiellogik.grid.GetLength(0);
-            int cols = Spiellogik.grid.GetLength(1);
+            int rows = grid.GetLength(0);
+            int cols = grid.GetLength(1);
 
             for (int y = 0; y < rows; y++)
             {
                 for (int x = 0; x < cols; x++)
                 {
-                    char zeichen = Spiellogik.grid[y, x];
+                    char zeichen = grid[y, x];
 
                     if (!performancemode)
                     {
@@ -59,13 +99,13 @@ namespace Smake.io.Render
         {
             if (zeichen == ' ') return ConsoleColor.White;
             if (x == Spiellogik.player.PlayerX[0] && y == Spiellogik.player.PlayerY[0])
-                return Spiellogik.player.Headfarbe;
+                return Spiellogik.player.HeadFarbe;
             if (Spielvalues.multiplayer && x == Spiellogik.player2.PlayerX[0] && y == Spiellogik.player2.PlayerY[0])
-                return Spiellogik.player2.Headfarbe;
-            if (zeichen == Spiellogik.player.Skin)
-                return Spiellogik.player.Farbe;
-            if (zeichen == Spiellogik.player2.Skin)
-                return Spiellogik.player2.Farbe;
+                return Spiellogik.player2.HeadFarbe;
+            if (zeichen == Spiellogik.player.TailSkin)
+                return Spiellogik.player.TailFarbe;
+            if (zeichen == Spiellogik.player2.TailSkin)
+                return Spiellogik.player2.TailFarbe;
             if (zeichen == Skinvalues.rand)
                 return Skinvalues.randfarbe;
             // Alle Futter durchgehen
@@ -144,7 +184,7 @@ namespace Smake.io.Render
                     Console.Write("  ══════════════════════════════");
                     break;
                 case 4:
-                    SetFarbe(Spiellogik.player.Headfarbe);
+                    SetFarbe(Spiellogik.player.HeadFarbe);
                     string maxpunkte = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                     Console.Write($"  {Spiellogik.player.Name}: {Spiellogik.player.Punkte}/{maxpunkte}");
                     break;
@@ -155,7 +195,7 @@ namespace Smake.io.Render
                 case 6:
                     if (Spielvalues.multiplayer)
                     {
-                        SetFarbe(Spiellogik.player2.Headfarbe);
+                        SetFarbe(Spiellogik.player2.HeadFarbe);
                         string maxpunkte2 = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                         Console.Write($"  {Spiellogik.player2.Name}: {Spiellogik.player2.Punkte}/{maxpunkte2}");
                     }

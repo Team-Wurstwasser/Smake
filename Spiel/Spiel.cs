@@ -2,21 +2,19 @@
 using Smake.io.Menus;
 using Smake.io.Render;
 using Smake.io.Speicher;
+using Smake.io.Spieler;
 
 namespace Smake.io.Spiel
 {
     public class Spiellogik : RendernSpielfeld
     {
         public static bool spiel;
-        public static int gameover;
-        public static bool unentschieden;
+        int gameover;
+        bool unentschieden;
 
-        // Das Spielfeld als zweidimensionales Zeichen-Array
-        public static char[,] grid = new char[Spielvalues.hoehe, Spielvalues.weite];
+        public static Player player;
 
-        public static Spieler player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y);
-
-        public static Spieler player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y);
+        public static Player player2;
 
         public static List<Futter> Essen;
 
@@ -26,7 +24,7 @@ namespace Smake.io.Spiel
         }
 
         // Allen Variablen den Startwert geben
-        static void Neustart()
+        void Neustart()
         {
             int currentMusik = 0;
 
@@ -66,7 +64,7 @@ namespace Smake.io.Spiel
             else Spielvalues.zeit = GameData.SpielSchwierigkeit.Schnell;
 
             // Initialisiere das Spielfeld mit Rahmen
-            InitialisiereSpiel();
+            InitialisiereSpielfeld();
 
             player.Neustart();
 
@@ -103,7 +101,7 @@ namespace Smake.io.Spiel
         }
 
         // Spielablauf
-        static void Spiel()
+        void Spiel()
         {
             Essen = [];
 
@@ -144,34 +142,36 @@ namespace Smake.io.Spiel
         }
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
-        static void Update()
+        void Update()
         {
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
-            (var gegnerTot1, var spielerTot1) = player.Update();
-            spieler1Tot |= gegnerTot1;
-            spieler2Tot |= spielerTot1;
+            {
+                // Update Player 1
+                var (spielerTot, Maxpunkte) = player.Update();
+                spieler1Tot |= spielerTot;
+                spieler2Tot |= Maxpunkte;  // Falls MaxPunkte
+            }
 
+            // Update Player 2
             if (Spielvalues.multiplayer)
             {
-                (var gegnerTot2, var spielerTot2) = player2.Update();
-                spieler1Tot |= gegnerTot2;
-                spieler2Tot |= spielerTot2;
+                var (spielerTot, Maxpunkte) = player2.Update();
+                spieler2Tot |= spielerTot;
+                spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
 
             GameoverCheck(spieler1Tot, spieler2Tot);
-            if (!spiel) return;
         }
 
         // Prüft, ob das Spiel vorbei ist
-        static void GameoverCheck(bool spieler1Tot, bool spieler2Tot)
+        void GameoverCheck(bool spieler1Tot, bool spieler2Tot)
         {
 
             if (spieler1Tot && spieler2Tot)
             {
                 unentschieden = true;
-                gameover = 0;
                 spiel = false;
             }
             else if (spieler1Tot)
@@ -188,7 +188,7 @@ namespace Smake.io.Spiel
         }
 
         // Zeigt den Game-Over-Screen an
-        static void ShowGameOverScreen()
+        void ShowGameOverScreen()
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
@@ -257,7 +257,7 @@ namespace Smake.io.Spiel
 
                     case ConsoleKey.Escape:
                         check = true;
-                        _ = new Menu();
+                        _ = new Menue();
                         break;
 
                 }
@@ -303,43 +303,6 @@ namespace Smake.io.Spiel
             {
                 Menüsvalues.gesamtcoins = (GameData.MaxPunkte) / 2 + Menüsvalues.gesamtcoins;
                 Spielstatus.coins = (GameData.MaxPunkte) / 2 + Spielstatus.coins;
-            }
-
-        }
-
-        // Initialisiert das Spielfeld: Rahmen, leere Fläche
-        static void InitialisiereSpiel()
-        {
-            Console.Clear();
-
-            for (int reihe = 0; reihe < grid.GetLength(0); reihe++)
-
-            {
-
-                for (int symbol = 0; symbol < grid.GetLength(1); symbol++)
-
-                {
-
-                    // Rand des Spielfelds mit RandSkin markieren
-
-                    if (reihe == 0 || reihe == grid.GetLength(0) - 1 || symbol == 0 || symbol == grid.GetLength(1) - 1)
-
-                    {
-
-                        grid[reihe, symbol] = Skinvalues.rand;
-
-                    }
-
-                    else
-
-                    {
-
-                        grid[reihe, symbol] = ' ';
-
-                    }
-
-                }
-
             }
 
         }
