@@ -102,6 +102,7 @@ namespace Smake.io.Menues
                     break;
                 case 7:
                     Musik.Soundplay = !Musik.Soundplay;
+                    Musik.Melodie();
                     break;
                 case 8:
                     ResetSpielstand();
