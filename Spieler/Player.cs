@@ -90,16 +90,14 @@ namespace Smake.io.Spieler
             InitialisiereSpieler();
         }
 
-        public (bool spielerTot, bool Maxpunkte) Update()
+        public (bool spielerTot, bool Maxpunkte) Update(Player p)
         {
-
             // Neue Zielkoordinaten berechnen
-
             int newPlayerX = PlayerX[0] + 2 * InputX;
             int newPlayerY = PlayerY[0] + InputY;
 
-            Kollision(newPlayerX, newPlayerY);
-            if(!KollisionPlayer && !KollisionRand || Spielvalues.gamemode == "Babymode")
+            Kollision(newPlayerX, newPlayerY,p);
+            if (!KollisionPlayer && !KollisionRand || Spielvalues.gamemode == "Babymode")
             {
                 TailShift(this);
                 TailBewegung(this);
@@ -115,18 +113,18 @@ namespace Smake.io.Spieler
 
         (bool spielerTot, bool Maxpunkte) GameoverChecker()
         {
-            bool spielerTot = false;
+            bool SpielerTot = false;
             bool Maxpunkte = false;
 
             if (Spielvalues.gamemode == "Unendlich")
             {
                 if (KollisionPlayer || KollisionRand)
-                    spielerTot = true;
+                    SpielerTot = true;
             }
             else if (Spielvalues.gamemode == "Normal")
             {
                 if (KollisionPlayer || KollisionRand)
-                    spielerTot = true;
+                    SpielerTot = true;
                 else if (Punkte >= GameData.MaxPunkte)
                     Maxpunkte = true;
             }
@@ -137,18 +135,33 @@ namespace Smake.io.Spieler
                     Maxpunkte = true;
                 }
             }
-            return (spielerTot, Maxpunkte);
+            return (SpielerTot, Maxpunkte);
 
         }
 
         // Prüft die Kollision
-        void Kollision(int x, int y)
+        void Kollision(int newPlayerX, int newPlayerY, Player p)
         {
-            if (Spiellogik.Grid[y, x] == ' ' || Spiellogik.Grid[y, x] == Skinvalues.food || x == PlayerX[0] && y == PlayerY[0])
+            if(Spielvalues.multiplayer && Spielvalues.gamemode != "Babymode")
             {
-                return;
+                int newPlayer2X = p.PlayerX[0] + 2 * p.InputX;
+                int newPlayer2Y = p.PlayerY[0] + p.InputY;
+
+                if(newPlayerX == newPlayer2X && newPlayerY == newPlayer2Y)
+                {
+                    KollisionPlayer = true;
+                    return;
+                }
+
             }
-            else if (Spiellogik.Grid[y, x] == Skinvalues.rand)
+            
+            
+            if (Spiellogik.Grid[newPlayerY, newPlayerX] == ' ' || Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.food || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0])
+            {
+                KollisionRand = false;
+                KollisionPlayer = false;
+            }
+            else if (Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.rand)
             {
                 KollisionRand = true;
             }
@@ -161,26 +174,26 @@ namespace Smake.io.Spieler
         }
 
         // Bewegt die Spieler
-        void Bewegung(int x, int y)
+        void Bewegung(int newPlayerX, int newPlayerY)
         {
             // Babymode Wrap-around
             if (Spielvalues.gamemode == "Babymode")
             {
                 if (KollisionRand)
                 {
-                    if (InputX == 1) x = 2;
-                    else if (InputX == -1) x = Spielvalues.weite - 3;
-                    else if (InputY == -1) y = Spielvalues.hoehe - 2;
-                    else if (InputY == 1) y = 1;
+                    if (InputX == 1) newPlayerX = 2;
+                    else if (InputX == -1) newPlayerX = Spielvalues.weite - 3;
+                    else if (InputY == -1) newPlayerY = Spielvalues.hoehe - 2;
+                    else if (InputY == 1) newPlayerY = 1;
                 }
             }
 
             // Kopf setzen
-            Spiellogik.Grid[y, x] = HeadSkin;
+            Spiellogik.Grid[newPlayerY, newPlayerX] = HeadSkin;
 
             // Spieler-Koordinaten aktualisieren
-            PlayerX[0] = x;
-            PlayerY[0] = y;
+            PlayerX[0] = newPlayerX;
+            PlayerY[0] = newPlayerY;
 
         }
     }
