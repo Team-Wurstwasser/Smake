@@ -59,7 +59,7 @@ namespace Smake.io.Spieler
             Punkte = 0;
 
             // Maximale Länge einstellen
-            if (Spielvalues.gamemode == "Normal" || Spielvalues.gamemode == "Babymode")
+            if (Spielvalues.Gamemode == "Normal" || Spielvalues.Gamemode == "Babymode")
             {
                 PlayerX = new int[GameData.MaxPunkte + TailLaenge + 2];
                 PlayerY = new int[GameData.MaxPunkte + TailLaenge + 2];
@@ -97,7 +97,7 @@ namespace Smake.io.Spieler
             int newPlayerY = PlayerY[0] + InputY;
 
             Kollision(newPlayerX, newPlayerY,p);
-            if (!KollisionPlayer && !KollisionRand || Spielvalues.gamemode == "Babymode")
+            if (!KollisionPlayer && !KollisionRand || Spielvalues.Gamemode == "Babymode")
             {
                 TailShift(this);
                 TailBewegung(this);
@@ -116,19 +116,19 @@ namespace Smake.io.Spieler
             bool SpielerTot = false;
             bool Maxpunkte = false;
 
-            if (Spielvalues.gamemode == "Unendlich")
+            if (Spielvalues.Gamemode == "Unendlich")
             {
                 if (KollisionPlayer || KollisionRand)
                     SpielerTot = true;
             }
-            else if (Spielvalues.gamemode == "Normal")
+            else if (Spielvalues.Gamemode == "Normal")
             {
                 if (KollisionPlayer || KollisionRand)
                     SpielerTot = true;
                 else if (Punkte >= GameData.MaxPunkte)
                     Maxpunkte = true;
             }
-            else if (Spielvalues.gamemode == "Babymode")
+            else if (Spielvalues.Gamemode == "Babymode")
             {
                 if (Punkte >= GameData.MaxPunkte)
                 {
@@ -142,7 +142,7 @@ namespace Smake.io.Spieler
         // Prüft die Kollision
         void Kollision(int newPlayerX, int newPlayerY, Player p)
         {
-            if(Spielvalues.multiplayer && Spielvalues.gamemode != "Babymode")
+            if(Spielvalues.Multiplayer && Spielvalues.Gamemode != "Babymode")
             {
                 int newPlayer2X = p.PlayerX[0] + 2 * p.InputX;
                 int newPlayer2Y = p.PlayerY[0] + p.InputY;
@@ -156,12 +156,12 @@ namespace Smake.io.Spieler
             }
             
             
-            if (Spiellogik.Grid[newPlayerY, newPlayerX] == ' ' || Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.food || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0])
+            if (Spiellogik.Grid[newPlayerY, newPlayerX] == ' ' || Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0])
             {
                 KollisionRand = false;
                 KollisionPlayer = false;
             }
-            else if (Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.rand)
+            else if (Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
             {
                 KollisionRand = true;
             }
@@ -177,7 +177,7 @@ namespace Smake.io.Spieler
         void Bewegung(int newPlayerX, int newPlayerY)
         {
             // Babymode Wrap-around
-            if (Spielvalues.gamemode == "Babymode")
+            if (Spielvalues.Gamemode == "Babymode")
             {
                 if (KollisionRand)
                 {

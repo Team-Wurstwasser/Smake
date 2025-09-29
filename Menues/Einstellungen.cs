@@ -85,7 +85,7 @@ namespace Smake.io.Menues
                     ChangeDifficulty();
                     break;
                 case 2:
-                    Spielvalues.multiplayer = !Spielvalues.multiplayer;
+                    Spielvalues.Multiplayer = !Spielvalues.Multiplayer;
                     break;
                 case 3:
                     ChangeGamemode();
@@ -121,10 +121,10 @@ namespace Smake.io.Menues
         {
             return
             [
-        $"Schwierigkeit ändern   [Aktuell: {Spielvalues.difficulty}]",
-        $"Multiplayer            [Aktuell: {(Spielvalues.multiplayer ? "An" : "Aus")}]",
-        $"Gamemode ändern        [Aktuell: {Spielvalues.gamemode}]",
-        $"MaxFutter ändern       [Aktuell: {Spielvalues.maxfutter}]",
+        $"Schwierigkeit ändern   [Aktuell: {Spielvalues.Difficulty}]",
+        $"Multiplayer            [Aktuell: {(Spielvalues.Multiplayer ? "An" : "Aus")}]",
+        $"Gamemode ändern        [Aktuell: {Spielvalues.Gamemode}]",
+        $"MaxFutter ändern       [Aktuell: {Spielvalues.Maxfutter}]",
         $"Performance mode       [Aktuell: {(RendernSpielfeld.Performancemode ? "An" : "Aus")}]",
         $"Musik AN/AUS           [Aktuell: {(Musik.Musikplay ? "An" : "Aus")}]",
         $"Sounds AN/AUS          [Aktuell: {(Musik.Soundplay ? "An" : "Aus")}]",
@@ -137,17 +137,17 @@ namespace Smake.io.Menues
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
         {
-            if (Spielvalues.difficulty == "Langsam") Spielvalues.difficulty = "Mittel";
-            else if (Spielvalues.difficulty == "Mittel") Spielvalues.difficulty = "Schnell";
-            else Spielvalues.difficulty = "Langsam";
+            if (Spielvalues.Difficulty == "Langsam") Spielvalues.Difficulty = "Mittel";
+            else if (Spielvalues.Difficulty == "Mittel") Spielvalues.Difficulty = "Schnell";
+            else Spielvalues.Difficulty = "Langsam";
         }
 
         // Auswahl der Verschiedenen Modi
         static void ChangeGamemode()
         {
-            if (Spielvalues.gamemode == "Normal") Spielvalues.gamemode = "Unendlich";
-            else if (Spielvalues.gamemode == "Unendlich") Spielvalues.gamemode = "Babymode";
-            else Spielvalues.gamemode = "Normal";
+            if (Spielvalues.Gamemode == "Normal") Spielvalues.Gamemode = "Unendlich";
+            else if (Spielvalues.Gamemode == "Unendlich") Spielvalues.Gamemode = "Babymode";
+            else Spielvalues.Gamemode = "Normal";
         }
 
         static void ChangeMaxFutter()
@@ -179,7 +179,7 @@ namespace Smake.io.Menues
                     }
                     else
                     {
-                        Spielvalues.maxfutter = wert;
+                        Spielvalues.Maxfutter = wert;
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"\n✔ MaxFutter wurde auf {wert} gesetzt!");
                         Console.ResetColor();

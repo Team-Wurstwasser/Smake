@@ -32,25 +32,25 @@ namespace Smake.io.Spiel
 
                         // Player 2 Steuerung (WASD) im Multiplayer
                         case ConsoleKey.W:
-                            if (Spielvalues.multiplayer)
+                            if (Spielvalues.Multiplayer)
                                 UpdatePlayerDirection(Spiellogik.Player2, 0, -1, '^');
                             else
                                 UpdatePlayerDirection(Spiellogik.Player, 0, -1, '^');
                             break;
                         case ConsoleKey.S:
-                            if (Spielvalues.multiplayer)
+                            if (Spielvalues.Multiplayer)
                                 UpdatePlayerDirection(Spiellogik.Player2, 0, 1, 'v');
                             else
                                 UpdatePlayerDirection(Spiellogik.Player, 0, 1, 'v');
                             break;
                         case ConsoleKey.A:
-                            if (Spielvalues.multiplayer)
+                            if (Spielvalues.Multiplayer)
                                 UpdatePlayerDirection(Spiellogik.Player2, -1, 0, '<');
                             else
                                 UpdatePlayerDirection(Spiellogik.Player, -1, 0, '<');
                             break;
                         case ConsoleKey.D:
-                            if (Spielvalues.multiplayer)
+                            if (Spielvalues.Multiplayer)
                                 UpdatePlayerDirection(Spiellogik.Player2, 1, 0, '>');
                             else
                                 UpdatePlayerDirection(Spiellogik.Player, 1, 0, '>');
