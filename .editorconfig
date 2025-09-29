@@ -5,3 +5,6 @@ dotnet_diagnostic.CA1416.severity = none
 
 # CS8602: Dereferenzierung eines möglichen Nullverweises.
 dotnet_diagnostic.CS8602.severity = none
+
+# CA2211: Nicht konstante Felder dürfen nicht sichtbar sein
+dotnet_diagnostic.CA2211.severity = none

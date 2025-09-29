@@ -45,7 +45,7 @@ namespace Smake.io.Spieler
             }
 
             // Altes Tail-Feld leeren (nicht Rand)
-            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.Grid[oldTailY, oldTailX] != Skinvalues.rand)
+            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin)
             {
                 Spiellogik.Grid[oldTailY, oldTailX] = ' ';
             }
