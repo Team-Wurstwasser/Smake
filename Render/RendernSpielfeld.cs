@@ -30,7 +30,7 @@ namespace Smake.io.Render
 
                     {
 
-                        Grid[reihe, symbol] = Skinvalues.rand;
+                        Grid[reihe, symbol] = Skinvalues.RandSkin;
 
                     }
 
@@ -100,14 +100,14 @@ namespace Smake.io.Render
             if (zeichen == ' ') return ConsoleColor.White;
             if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
                 return Spiellogik.Player.HeadFarbe;
-            if (Spielvalues.multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0])
+            if (Spielvalues.Multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0])
                 return Spiellogik.Player2.HeadFarbe;
             if (zeichen == Spiellogik.Player.TailSkin)
                 return Spiellogik.Player.TailFarbe;
             if (zeichen == Spiellogik.Player2.TailSkin)
                 return Spiellogik.Player2.TailFarbe;
-            if (zeichen == Skinvalues.rand)
-                return Skinvalues.randfarbe;
+            if (zeichen == Skinvalues.RandSkin)
+                return Skinvalues.RandFarbe;
             // Alle Futter durchgehen
             foreach (var f in Spiellogik.Essen)
             {
@@ -134,21 +134,21 @@ namespace Smake.io.Render
                         Console.Write("  ══════════════════════════════");
                         break;
                     case 4:
-                        string maxpunkte = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
+                        string maxpunkte = Spielvalues.Gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                         Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
                         break;
                     case 5:
                         Console.Write("  ══════════════════════════════");
                         break;
                     case 6:
-                        if (Spielvalues.multiplayer)
+                        if (Spielvalues.Multiplayer)
                         {
-                            string maxpunkte2 = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
+                            string maxpunkte2 = Spielvalues.Gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                             Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
                         }
                         break;
                     case 7:
-                        if (Spielvalues.multiplayer)
+                        if (Spielvalues.Multiplayer)
                         {
                             Console.Write("  ══════════════════════════════");
                         }
@@ -172,7 +172,7 @@ namespace Smake.io.Render
             switch (y)
             {
                 case 1:
-                    SetFarbe(Skinvalues.randfarbe);
+                    SetFarbe(Skinvalues.RandFarbe);
                     Console.Write("  ══════════════════════════════");
                     break;
                 case 2:
@@ -180,30 +180,30 @@ namespace Smake.io.Render
                     Console.Write("  Punkte:");
                     break;
                 case 3:
-                    SetFarbe(Skinvalues.randfarbe);
+                    SetFarbe(Skinvalues.RandFarbe);
                     Console.Write("  ══════════════════════════════");
                     break;
                 case 4:
                     SetFarbe(Spiellogik.Player.HeadFarbe);
-                    string maxpunkte = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
+                    string maxpunkte = Spielvalues.Gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                     Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
                     break;
                 case 5:
-                    SetFarbe(Skinvalues.randfarbe);
+                    SetFarbe(Skinvalues.RandFarbe);
                     Console.Write("  ══════════════════════════════");
                     break;
                 case 6:
-                    if (Spielvalues.multiplayer)
+                    if (Spielvalues.Multiplayer)
                     {
                         SetFarbe(Spiellogik.Player2.HeadFarbe);
-                        string maxpunkte2 = Spielvalues.gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
+                        string maxpunkte2 = Spielvalues.Gamemode != "Unendlich" ? GameData.MaxPunkte.ToString() : "∞";
                         Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
                     }
                     break;
                 case 7:
-                    if (Spielvalues.multiplayer)
+                    if (Spielvalues.Multiplayer)
                     {
-                        SetFarbe(Skinvalues.randfarbe);
+                        SetFarbe(Skinvalues.RandFarbe);
                         Console.Write("  ══════════════════════════════");
                     }
                     break;
