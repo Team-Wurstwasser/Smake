@@ -3,10 +3,10 @@
     public class Skinvalues
     {
         //Weitere Skins
-        public static char rand;
-        public static ConsoleColor randfarbe;
-        public static char food;
-        public static ConsoleColor foodfarbe;
-        public static bool foodfarbeRandom;
+        public static char RandSkin { get; set; }
+        public static ConsoleColor RandFarbe { get; set; }
+        public static char FoodSkin { get; set; }
+        public static ConsoleColor FoodFarbe { get; set; }
+        public static bool FoodfarbeRandom { get; set; }
     }
 }
