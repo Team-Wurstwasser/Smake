@@ -139,8 +139,8 @@ namespace Smake.io.Render
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {Spielstatus.coins,-50}");
-            Console.WriteLine($"Level: {Spielstatus.level,-50}");
+            Console.WriteLine($"Coins: {Spielstatus.Coins,-50}");
+            Console.WriteLine($"Level: {Spielstatus.Level,-50}");
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine("←  Wechsle die Shopseite  →");
         }
@@ -152,7 +152,7 @@ namespace Smake.io.Render
             {
                 int shopItemIndex = i - startIndex;
 
-                string shoptext = Spielstatus.level < levels[shopItemIndex]
+                string shoptext = Spielstatus.Level < levels[shopItemIndex]
                     ? $"[Benötigtes Level: {levels[shopItemIndex]}]"
                     : unlocked[i] ? "[Freigeschaltet]" : $"[{prices[shopItemIndex]} Coins]";
 
@@ -168,9 +168,9 @@ namespace Smake.io.Render
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("Tail Skins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.freigeschaltetTail, GameData.TailPreis, 2);
-            option = RenderShopSection("Food Skins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.freigeschaltetFood, GameData.FoodPreis);
-            option = RenderShopSection("Rand Skins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.freigeschaltetRand, GameData.RandPreis);
+            option = RenderShopSection("Tail Skins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.FreigeschaltetTail, GameData.TailPreis, 2);
+            option = RenderShopSection("Food Skins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.FreigeschaltetFood, GameData.FoodPreis);
+            option = RenderShopSection("Rand Skins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.FreigeschaltetRand, GameData.RandPreis);
 
             string zeiger = option + 1 == Selected ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger} Zurück zum Hauptmenü");
@@ -184,9 +184,9 @@ namespace Smake.io.Render
             int option = 0;
             for (int i = 1; i < GameData.Farben.Length; i++, option++)
             {
-                string shoptext = Spielstatus.level < GameData.FarbenLevel[i - 1]
+                string shoptext = Spielstatus.Level < GameData.FarbenLevel[i - 1]
                     ? $"[Benötigtes Level: {GameData.FarbenLevel[i - 1]}]"
-                    : Menüsvalues.freigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
+                    : Menüsvalues.FreigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];

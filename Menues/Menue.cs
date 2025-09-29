@@ -79,13 +79,13 @@ namespace Smake.io.Menues
             SpeicherSystem.Speichern_Laden("Speichern");
 
             // Level-Berechnung (1 Level pro 100 XP)
-            Spielstatus.level = Spielstatus.xp / 100 + 1;
+            Spielstatus.Level = Spielstatus.Xp / 100 + 1;
 
             if (RendernSpielfeld.Performancemode)
             {
-                Skinvalues.foodfarbe = GameData.Farben[0];
-                Skinvalues.foodfarbeRandom = false;
-                Skinvalues.randfarbe = GameData.Farben[0];
+                Skinvalues.FoodFarbe = GameData.Farben[0];
+                Skinvalues.FoodfarbeRandom = false;
+                Skinvalues.RandFarbe = GameData.Farben[0];
                 Spiellogik.Player.TailFarbe = GameData.Farben[0];
                 Spiellogik.Player.HeadFarbe = GameData.Farben[0];
                 Spiellogik.Player2.TailFarbe = GameData.Farben[0];

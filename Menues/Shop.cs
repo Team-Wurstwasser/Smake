@@ -95,36 +95,36 @@ namespace Smake.io.Menues
                 // Kauflogik Skins
                 if (MenuTracker + 1 < GameData.TailSkins.Length)
                 {
-                    if (!Menüsvalues.freigeschaltetTail[MenuTracker + 1] &&
-                        Spielstatus.coins >= GameData.TailPreis[MenuTracker - 1] &&
-                        Spielstatus.level >= GameData.TailLevel[MenuTracker - 1])
+                    if (!Menüsvalues.FreigeschaltetTail[MenuTracker + 1] &&
+                        Spielstatus.Coins >= GameData.TailPreis[MenuTracker - 1] &&
+                        Spielstatus.Level >= GameData.TailLevel[MenuTracker - 1])
                     {
-                        Menüsvalues.freigeschaltetTail[MenuTracker + 1] = true;
-                        Spielstatus.coins -= GameData.TailPreis[MenuTracker - 1];
+                        Menüsvalues.FreigeschaltetTail[MenuTracker + 1] = true;
+                        Spielstatus.Coins -= GameData.TailPreis[MenuTracker - 1];
                     }
                 }
                 else if (MenuTracker + 2 < GameData.TailSkins.Length + GameData.FoodSkins.Length)
                 {
                     int i = MenuTracker + 2 - GameData.TailSkins.Length;
                     int b = MenuTracker + 1 - GameData.TailSkins.Length;
-                    if (!Menüsvalues.freigeschaltetFood[i] &&
-                        Spielstatus.coins >= GameData.FoodPreis[b] &&
-                        Spielstatus.level >= GameData.FoodLevel[b])
+                    if (!Menüsvalues.FreigeschaltetFood[i] &&
+                        Spielstatus.Coins >= GameData.FoodPreis[b] &&
+                        Spielstatus.Level >= GameData.FoodLevel[b])
                     {
-                        Menüsvalues.freigeschaltetFood[i] = true;
-                        Spielstatus.coins -= GameData.FoodPreis[b];
+                        Menüsvalues.FreigeschaltetFood[i] = true;
+                        Spielstatus.Coins -= GameData.FoodPreis[b];
                     }
                 }
                 else if (MenuTracker + 3 < GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length)
                 {
                     int i = MenuTracker + 3 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
                     int b = MenuTracker + 2 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
-                    if (!Menüsvalues.freigeschaltetRand[i] &&
-                        Spielstatus.coins >= GameData.RandPreis[b] &&
-                        Spielstatus.level >= GameData.RandLevel[b])
+                    if (!Menüsvalues.FreigeschaltetRand[i] &&
+                        Spielstatus.Coins >= GameData.RandPreis[b] &&
+                        Spielstatus.Level >= GameData.RandLevel[b])
                     {
-                        Menüsvalues.freigeschaltetRand[i] = true;
-                        Spielstatus.coins -= GameData.RandPreis[b];
+                        Menüsvalues.FreigeschaltetRand[i] = true;
+                        Spielstatus.Coins -= GameData.RandPreis[b];
                     }
                 }
             }
@@ -138,12 +138,12 @@ namespace Smake.io.Menues
                 }
 
                 // Kauflogik Farben
-                if (!Menüsvalues.freigeschaltetFarben[MenuTracker] &&
-                    Spielstatus.coins >= GameData.FarbenPreis[MenuTracker - 1] &&
-                    Spielstatus.level >= GameData.FarbenLevel[MenuTracker - 1])
+                if (!Menüsvalues.FreigeschaltetFarben[MenuTracker] &&
+                    Spielstatus.Coins >= GameData.FarbenPreis[MenuTracker - 1] &&
+                    Spielstatus.Level >= GameData.FarbenLevel[MenuTracker - 1])
                 {
-                    Menüsvalues.freigeschaltetFarben[MenuTracker] = true;
-                    Spielstatus.coins -= GameData.FarbenPreis[MenuTracker - 1];
+                    Menüsvalues.FreigeschaltetFarben[MenuTracker] = true;
+                    Spielstatus.Coins -= GameData.FarbenPreis[MenuTracker - 1];
                 }
             }
         }
