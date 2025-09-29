@@ -15,8 +15,15 @@ namespace Smake.io
 
         public static void Melodie()
         {
+            if(!Musikplay && !Soundplay)
+            {
+                currentPlayer?.Stop();
+                lastPlayState = false;
+                return;
+            }
+            
             // Prüfen, ob sich Musik oder der Status geändert hat
-            if (Currentmusik != lastmusik || Musikplay != lastPlayState)
+            if (Currentmusik != lastmusik || Musikplay != lastPlayState || Soundplay)
             {
                 // Stoppe vorherige Musik
                 currentPlayer?.Stop();
@@ -44,8 +51,6 @@ namespace Smake.io
                 lastmusik = Currentmusik;
                 lastPlayState = Musikplay;
             }
-
-            Thread.Sleep(50); // CPU schonen
         }
     }
 }
