@@ -105,21 +105,27 @@ namespace Smake.io.Menues
             {
                 case 1:
                     _ = new Spiellogik();
+                    StopInputstream();
                     break;
                 case 2:
                     _ = new Einstellungen();
+                    StopInputstream();
                     break;
                 case 3:
                     _ = new Shop();
+                    StopInputstream();
                     break;
                 case 4:
                     _ = new Skin_Farben();
+                    StopInputstream();
                     break;
                 case 5:
                     _ = new Statistiken();
+                    StopInputstream();
                     break;
                 case 6:
                     _ = new Anleitung();
+                    StopInputstream();
                     break;
                 case 7:
                     Environment.Exit(0);
@@ -127,7 +133,6 @@ namespace Smake.io.Menues
                 default:
                     break;
             }
-            StopInputstream();
         }
     }
 }

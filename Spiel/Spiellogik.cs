@@ -151,7 +151,7 @@ namespace Smake.io.Spiel
 
             {
                 // Update Player 1
-                var (spielerTot, Maxpunkte) = Player.Update();
+                var (spielerTot, Maxpunkte) = Player.Update(Player2);
                 spieler1Tot |= spielerTot;
                 spieler2Tot |= Maxpunkte;  // Falls MaxPunkte
             }
@@ -159,7 +159,7 @@ namespace Smake.io.Spiel
             // Update Player 2
             if (Spielvalues.multiplayer)
             {
-                var (spielerTot, Maxpunkte) = Player2.Update();
+                var (spielerTot, Maxpunkte) = Player2.Update(Player);
                 spieler2Tot |= spielerTot;
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
