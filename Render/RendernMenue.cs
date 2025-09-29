@@ -58,7 +58,7 @@ namespace Smake.io.Render
             for (int i = 0; i < Display.Length; i++)
             {
                 string zeiger = i + 1 == Selected ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {Display[i],-25}");
+                Console.WriteLine($"{zeiger} {Display[i],25}");
             }
 
             Console.WriteLine("══════════════════════════════");
@@ -91,7 +91,7 @@ namespace Smake.io.Render
             for (int i = 0; i < Display.Length; i++)
             {
                 string zeiger = i + 1 == Selected ? ">>" : "  ";
-                Console.WriteLine($"║  {zeiger} {Display[i],-25}║");
+                Console.WriteLine($"║  {zeiger} {Display[i],-50}║");
             }
 
             Console.WriteLine("╚══════════════════════════════╝");
@@ -139,8 +139,8 @@ namespace Smake.io.Render
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {Spielstatus.coins,-25}");
-            Console.WriteLine($"Level: {Spielstatus.level,-25}");
+            Console.WriteLine($"Coins: {Spielstatus.coins,-50}");
+            Console.WriteLine($"Level: {Spielstatus.level,-50}");
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine("←  Wechsle die Shopseite  →");
         }
@@ -157,7 +157,7 @@ namespace Smake.io.Render
                     : unlocked[i] ? "[Freigeschaltet]" : $"[{prices[shopItemIndex]} Coins]";
 
                 string zeiger = optionCounter + 1 == selected1 ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {items[i]} {shoptext,-25}");
+                Console.WriteLine($"{zeiger} {items[i]} {shoptext,-50}");
                 optionCounter++;
             }
             return optionCounter;
@@ -190,7 +190,7 @@ namespace Smake.io.Render
 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
-                Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext,-25}");
+                Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext,-50}");
                 Console.ResetColor();
             }
 
