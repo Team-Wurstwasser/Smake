@@ -154,8 +154,7 @@ namespace Smake.io.Spieler
                 }
 
             }
-            
-            
+
             if (Spiellogik.Grid[newPlayerY, newPlayerX] == ' ' || Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0])
             {
                 KollisionRand = false;
