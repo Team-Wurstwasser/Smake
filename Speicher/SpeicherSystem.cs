@@ -143,38 +143,38 @@ namespace Smake.io.Speicher
             Musik.Soundplay = true;
 
             // Erst alle auf false setzen
-            Array.Clear(Menüsvalues.freigeschaltetTail);
-            Array.Clear(Menüsvalues.freigeschaltetFood);
-            Array.Clear(Menüsvalues.freigeschaltetRand);
-            Array.Clear(Menüsvalues.freigeschaltetFarben);
+            Array.Clear(Menüsvalues.FreigeschaltetTail);
+            Array.Clear(Menüsvalues.FreigeschaltetFood);
+            Array.Clear(Menüsvalues.FreigeschaltetRand);
+            Array.Clear(Menüsvalues.FreigeschaltetFarben);
 
-            Menüsvalues.freigeschaltetTail[0] = true;
-            Menüsvalues.freigeschaltetTail[1] = true;
-            Menüsvalues.freigeschaltetFood[0] = true;
-            Menüsvalues.freigeschaltetRand[0] = true;
-            Menüsvalues.freigeschaltetFarben[0] = true;
+            Menüsvalues.FreigeschaltetTail[0] = true;
+            Menüsvalues.FreigeschaltetTail[1] = true;
+            Menüsvalues.FreigeschaltetFood[0] = true;
+            Menüsvalues.FreigeschaltetRand[0] = true;
+            Menüsvalues.FreigeschaltetFarben[0] = true;
 
             RendernSpielfeld.Performancemode = false;
 
-            Spielstatus.coins = 0;
-            Spielstatus.xp = 0;
-            Menüsvalues.gesamtcoins = 0;
-            Menüsvalues.highscore = 0;
-            Menüsvalues.spieleGesamt = 0;
-            Spielvalues.maxfutter = 1;
+            Spielstatus.Coins = 0;
+            Spielstatus.Xp = 0;
+            Spielstatus.Gesamtcoins = 0;
+            Spielstatus.Highscore = 0;
+            Spielstatus.SpieleGesamt = 0;
+            Spielvalues.Maxfutter = 1;
 
-            Spielvalues.difficulty = "Mittel";
-            Spielvalues.gamemode = "Normal";
-            Spielvalues.multiplayer = false;
+            Spielvalues.Difficulty = "Mittel";
+            Spielvalues.Gamemode = "Normal";
+            Spielvalues.Multiplayer = false;
 
-            Skinvalues.rand = GameData.RandSkins[0];
-            Skinvalues.food = GameData.FoodSkins[0];
+            Skinvalues.RandSkin = GameData.RandSkins[0];
+            Skinvalues.FoodSkin  = GameData.FoodSkins[0];
             Spiellogik.Player.TailSkin = GameData.TailSkins[0];
             Spiellogik.Player2.TailSkin = GameData.TailSkins[1];
 
-            Skinvalues.randfarbe = GameData.Farben[0];
-            Skinvalues.foodfarbe = GameData.Farben[0];
-            Skinvalues.foodfarbeRandom = false;
+            Skinvalues.RandFarbe = GameData.Farben[0];
+            Skinvalues.FoodFarbe = GameData.Farben[0];
+            Skinvalues.FoodfarbeRandom = false;
             Spiellogik.Player.TailFarbe = GameData.Farben[0];
             Spiellogik.Player2.TailFarbe = GameData.Farben[0];
             Spiellogik.Player.HeadFarbe = GameData.Farben[0];
@@ -185,39 +185,39 @@ namespace Smake.io.Speicher
         {
             var zeilen = new List<string>
             {
-                $"performancemode={RendernSpielfeld.Performancemode}",
-                $"coins={Spielstatus.coins}",
-                $"xp={Spielstatus.xp}",
-                $"spieleGesamt={Menüsvalues.spieleGesamt}",
-                $"maxfutter={Spielvalues.maxfutter}",
-                $"highscore={Menüsvalues.highscore}",
-                $"gesamtcoins={Menüsvalues.gesamtcoins}",
-                $"difficulty={Spielvalues.difficulty}",
-                $"gamemode={Spielvalues.gamemode}",
-                $"multiplayer={Spielvalues.multiplayer}",
-                $"rand={Skinvalues.rand}",
-                $"food={Skinvalues.food}",
+                $"Performancemode={RendernSpielfeld.Performancemode}",
+                $"Coins={Spielstatus.Coins}",
+                $"Xp={Spielstatus.Xp}",
+                $"SpieleGesamt={Spielstatus.SpieleGesamt}",
+                $"Maxfutter={Spielvalues.Maxfutter}",
+                $"Highscore={Spielstatus.Highscore}",
+                $"Gesamtcoins={Spielstatus.Gesamtcoins}",
+                $"Difficulty={Spielvalues.Difficulty}",
+                $"Gamemode={Spielvalues.Gamemode}",
+                $"Multiplayer={Spielvalues.Multiplayer}",
+                $"RandSkin={Skinvalues.RandSkin}",
+                $"FoodSkin={Skinvalues.FoodSkin}",
                 $"Player1.TailSkin={Spiellogik.Player.TailSkin}",
                 $"Player2.TailSkin={Spiellogik.Player2.TailSkin}",
-                $"randfarbe={Skinvalues.randfarbe}",
-                $"foodfarbe={Skinvalues.foodfarbe}",
-                $"foodfarbeRandom={Skinvalues.foodfarbeRandom}",
+                $"RandFarbe={Skinvalues.RandFarbe}",
+                $"FoodFarbe={Skinvalues.FoodFarbe}",
+                $"FoodfarbeRandom={Skinvalues.FoodfarbeRandom}",
                 $"Player1.TailFarbe={Spiellogik.Player.TailFarbe}",
                 $"Player2.TailFarbe={Spiellogik.Player2.TailFarbe}",
                 $"Player1.HeadFarbe={Spiellogik.Player.HeadFarbe}",
                 $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}",
-                $"Musik={Musik.Musikplay}",
-                $"Sound={Musik.Soundplay}"
+                $"Musikplay={Musik.Musikplay}",
+                $"Soundplay={Musik.Soundplay}"
             };
 
-            for (int i = 0; i < Menüsvalues.freigeschaltetTail.Length; i++)
-                zeilen.Add($"freigeschaltetTail{i}={Menüsvalues.freigeschaltetTail[i]}");
-            for (int i = 0; i < Menüsvalues.freigeschaltetFood.Length; i++)
-                zeilen.Add($"freigeschaltetFood{i}={Menüsvalues.freigeschaltetFood[i]}");
-            for (int i = 0; i < Menüsvalues.freigeschaltetRand.Length; i++)
-                zeilen.Add($"freigeschaltetRand{i}={Menüsvalues.freigeschaltetRand[i]}");
-            for (int i = 0; i < Menüsvalues.freigeschaltetFarben.Length; i++)
-                zeilen.Add($"freigeschaltetFarben{i}={Menüsvalues.freigeschaltetFarben[i]}");
+            for (int i = 0; i < Menüsvalues.FreigeschaltetTail.Length; i++)
+                zeilen.Add($"FreigeschaltetTail{i}={Menüsvalues.FreigeschaltetTail[i]}");
+            for (int i = 0; i < Menüsvalues.FreigeschaltetFood.Length; i++)
+                zeilen.Add($"FreigeschaltetFood{i}={Menüsvalues.FreigeschaltetFood[i]}");
+            for (int i = 0; i < Menüsvalues.FreigeschaltetRand.Length; i++)
+                zeilen.Add($"FreigeschaltetRand{i}={Menüsvalues.FreigeschaltetRand[i]}");
+            for (int i = 0; i < Menüsvalues.FreigeschaltetFarben.Length; i++)
+                zeilen.Add($"FreigeschaltetFarben{i}={Menüsvalues.FreigeschaltetFarben[i]}");
 
             string plainText = string.Join(Environment.NewLine, zeilen);
             byte[] encrypted = CryptoHelper.Encrypt(plainText);
@@ -255,41 +255,41 @@ namespace Smake.io.Speicher
                 {
                     switch (name)
                     {
-                        case "performancemode": RendernSpielfeld.Performancemode = bool.Parse(wert); break;
-                        case "coins": Spielstatus.coins = int.Parse(wert); break;
-                        case "xp": Spielstatus.xp = int.Parse(wert); break;
-                        case "gesamtcoins": Menüsvalues.gesamtcoins = int.Parse(wert); break;
-                        case "highscore": Menüsvalues.highscore = int.Parse(wert); break;
-                        case "spieleGesamt": Menüsvalues.spieleGesamt = int.Parse(wert); break;
-                        case "maxfutter": Spielvalues.maxfutter = int.Parse(wert); break;
+                        case "Performancemode": RendernSpielfeld.Performancemode = bool.Parse(wert); break;
+                        case "Coins": Spielstatus.Coins = int.Parse(wert); break;
+                        case "Xp": Spielstatus.Xp = int.Parse(wert); break;
+                        case "Gesamtcoins": Spielstatus.Gesamtcoins = int.Parse(wert); break;
+                        case "Highscore": Spielstatus.Highscore = int.Parse(wert); break;
+                        case "SpieleGesamt": Spielstatus.SpieleGesamt = int.Parse(wert); break;
+                        case "Maxfutter": Spielvalues.Maxfutter = int.Parse(wert); break;
 
-                        case "difficulty": Spielvalues.difficulty = wert; break;
-                        case "gamemode": Spielvalues.gamemode = wert; break;
-                        case "multiplayer": Spielvalues.multiplayer = bool.Parse(wert); break;
+                        case "Difficulty": Spielvalues.Difficulty = wert; break;
+                        case "Gamemode": Spielvalues.Gamemode = wert; break;
+                        case "Multiplayer": Spielvalues.Multiplayer = bool.Parse(wert); break;
 
-                        case "rand": Skinvalues.rand = wert[0]; break;
-                        case "food": Skinvalues.food = wert[0]; break;
+                        case "RandSkin": Skinvalues.RandSkin = wert[0]; break;
+                        case "FoodSkin": Skinvalues.FoodSkin = wert[0]; break;
                         case "Player1.TailSkin": Spiellogik.Player.TailSkin = wert[0]; break;
                         case "Player2.TailSkin": Spiellogik.Player2.TailSkin = wert[0]; break;
 
-                        case "randfarbe": Skinvalues.randfarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "foodfarbe": Skinvalues.foodfarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "foodfarbeRandom": Skinvalues.foodfarbeRandom = bool.Parse(wert); break;
+                        case "RandFarbe": Skinvalues.RandFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "FoodFarbe": Skinvalues.FoodFarbe = Enum.Parse<ConsoleColor>(wert); break;
+                        case "FoodfarbeRandom": Skinvalues.FoodfarbeRandom = bool.Parse(wert); break;
                         case "Player1.TailFarbe": Spiellogik.Player.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "Player2.TailFarbe": Spiellogik.Player2.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "Player1.HeadFarbe": Spiellogik.Player.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "Player2.HeadFarbe": Spiellogik.Player2.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "Sound": Musik.Soundplay = bool.Parse(wert); break;
-                        case "Musik": Musik.Musikplay = bool.Parse(wert); break;
+                        case "Soundplay": Musik.Soundplay = bool.Parse(wert); break;
+                        case "Musikplay": Musik.Musikplay = bool.Parse(wert); break;
                         default:
-                            if (name.StartsWith("freigeschaltetTail"))
-                                Menüsvalues.freigeschaltetTail[int.Parse(name.Replace("freigeschaltetTail", ""))] = bool.Parse(wert);
-                            else if (name.StartsWith("freigeschaltetFood"))
-                                Menüsvalues.freigeschaltetFood[int.Parse(name.Replace("freigeschaltetFood", ""))] = bool.Parse(wert);
-                            else if (name.StartsWith("freigeschaltetRand"))
-                                Menüsvalues.freigeschaltetRand[int.Parse(name.Replace("freigeschaltetRand", ""))] = bool.Parse(wert);
-                            else if (name.StartsWith("freigeschaltetFarben"))
-                                Menüsvalues.freigeschaltetFarben[int.Parse(name.Replace("freigeschaltetFarben", ""))] = bool.Parse(wert);
+                            if (name.StartsWith("FreigeschaltetTail"))
+                                Menüsvalues.FreigeschaltetTail[int.Parse(name.Replace("FreigeschaltetTail", ""))] = bool.Parse(wert);
+                            else if (name.StartsWith("FreigeschaltetFood"))
+                                Menüsvalues.FreigeschaltetFood[int.Parse(name.Replace("FreigeschaltetFood", ""))] = bool.Parse(wert);
+                            else if (name.StartsWith("FreigeschaltetRand"))
+                                Menüsvalues.FreigeschaltetRand[int.Parse(name.Replace("FreigeschaltetRand", ""))] = bool.Parse(wert);
+                            else if (name.StartsWith("FreigeschaltetFarben"))
+                                Menüsvalues.FreigeschaltetFarben[int.Parse(name.Replace("FreigeschaltetFarben", ""))] = bool.Parse(wert);
                             break;
                     }
                 }
