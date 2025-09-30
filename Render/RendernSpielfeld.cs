@@ -109,10 +109,10 @@ namespace Smake.io.Render
             if (zeichen == Skinvalues.RandSkin)
                 return Skinvalues.RandFarbe;
             // Alle Futter durchgehen
-            foreach (var f in Spiellogik.Essen)
+            foreach (var Essen in Spiellogik.Essen)
             {
-                if (x == f.FutterX && y == f.FutterY && zeichen == f.Food)
-                    return f.Foodfarbe;
+                if (x == Essen.FutterX && y == Essen.FutterY)
+                    return Essen.Foodfarbe;
             }
 
             return ConsoleColor.White;
