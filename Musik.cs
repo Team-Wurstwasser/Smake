@@ -23,7 +23,7 @@ namespace Smake.io
             }
             
             // Prüfen, ob sich Musik oder der Status geändert hat
-            if (Currentmusik != lastmusik || Musikplay != lastPlayState || Soundplay)
+            if (Currentmusik != lastmusik || Musikplay != lastPlayState)
             {
                 // Stoppe vorherige Musik
                 currentPlayer?.Stop();
