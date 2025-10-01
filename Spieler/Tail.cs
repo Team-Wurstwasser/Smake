@@ -1,10 +1,5 @@
 ﻿using Smake.io.Spiel;
 using Smake.io.Values;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Smake.io.Spieler
 {
