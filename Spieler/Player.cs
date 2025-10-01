@@ -1,8 +1,8 @@
-using Smake.io.Speicher;
-using Smake.io.Spiel;
-using Smake.io.Values;
+using Smake.Speicher;
+using Smake.Spiel;
+using Smake.Values;
 
-namespace Smake.io.Spieler
+namespace Smake.Spieler
 {
     public class Player(int xstart, int ystart, string? Name) : Tail
     {
@@ -14,9 +14,9 @@ namespace Smake.io.Spieler
         public bool Aenderung;
 
         // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX { get; private set; } = [];
+        public int[] PlayerX { get; private set; } = new int[Spielvalues.weite * Spielvalues.hoehe];
 
-        public int[] PlayerY { get; private set; } = [];
+        public int[] PlayerY { get; private set; } = new int[Spielvalues.weite * Spielvalues.hoehe];
 
         // Kollisionsvariablen
         bool KollisionRand;
@@ -53,21 +53,7 @@ namespace Smake.io.Spieler
             TailLaenge = 3;
 
             // Punkte zurücksetzen
-
             Punkte = 0;
-
-            // Maximale Länge einstellen
-            if (Spielvalues.Gamemode == "Normal" || Spielvalues.Gamemode == "Babymode")
-            {
-                PlayerX = new int[GameData.MaxPunkte + TailLaenge + 2];
-                PlayerY = new int[GameData.MaxPunkte + TailLaenge + 2];
-            }
-            else
-            {
-                PlayerX = new int[Spielvalues.weite * Spielvalues.hoehe];
-                PlayerY = new int[Spielvalues.weite * Spielvalues.hoehe];
-            }
-
 
             // Arrays zurücksetzen
             Array.Fill(PlayerX, -1);

@@ -1,9 +1,9 @@
-﻿using Smake.io.Values;
-using Smake.io.Render;
-using Smake.io.Speicher;
-using Smake.io.Spiel;
+﻿using Smake.Values;
+using Smake.Render;
+using Smake.Speicher;
+using Smake.Spiel;
 
-namespace Smake.io.Menues
+namespace Smake.Menues
 {
     public class Menue : RendernMenue
     {
@@ -73,7 +73,6 @@ namespace Smake.io.Menues
 
         public Menue()
         {
-            // Zuweisung an dein Musiksystem
             Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
 
             SpeicherSystem.Speichern_Laden("Speichern");

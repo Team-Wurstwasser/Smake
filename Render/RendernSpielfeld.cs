@@ -1,8 +1,8 @@
-﻿using Smake.io.Values;
-using Smake.io.Speicher;
-using Smake.io.Spiel;
+﻿using Smake.Values;
+using Smake.Speicher;
+using Smake.Spiel;
 
-namespace Smake.io.Render
+namespace Smake.Render
 {
     public class RendernSpielfeld
     {
@@ -203,7 +203,7 @@ namespace Smake.io.Render
             return ConsoleColor.White;
         }
 
-        // Alte RenderLegende mit Farben bleibt unverändert für den Full-Mode
+        // Alte RenderLegende mit Farben für den Full-Mode
         private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
         {
             void SetFarbe(ConsoleColor farbe)

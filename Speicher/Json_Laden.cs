@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Smake.io.Speicher
+namespace Smake.Speicher
 {
     public static class GameData
     {

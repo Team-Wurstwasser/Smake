@@ -1,7 +1,7 @@
-using Smake.io.Speicher;
+using Smake.Speicher;
 using System.Media;
 
-namespace Smake.io
+namespace Smake
 {
     public class Musik
     {
