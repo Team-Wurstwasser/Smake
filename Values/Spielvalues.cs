@@ -1,6 +1,6 @@
-﻿using Smake.io.Speicher;
+﻿using Smake.Speicher;
 
-namespace Smake.io.Values
+namespace Smake.Values
 {
     public class Spielvalues
     {

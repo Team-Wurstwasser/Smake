@@ -1,10 +1,10 @@
-﻿using Smake.io.Values;
-using Smake.io.Menues;
-using Smake.io.Render;
-using Smake.io.Speicher;
-using Smake.io.Spieler;
+﻿using Smake.Values;
+using Smake.Menues;
+using Smake.Render;
+using Smake.Speicher;
+using Smake.Spieler;
 
-namespace Smake.io.Spiel
+namespace Smake.Spiel
 {
     public class Spiellogik : RendernSpielfeld
     {
@@ -49,7 +49,6 @@ namespace Smake.io.Spiel
                 else if (Spielvalues.Difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Babymode.Schnell;
             }
 
-            // Zuweisung an dein Musiksystem
             Musik.Currentmusik = currentMusik;
             Musik.Melodie();
             SpeicherSystem.Speichern_Laden("Speichern");

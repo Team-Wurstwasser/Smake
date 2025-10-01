@@ -1,8 +1,8 @@
-﻿using Smake.io.Spiel;
-using Smake.io.Speicher;
-using Smake.io.Render;
+﻿using Smake.Spiel;
+using Smake.Speicher;
+using Smake.Render;
 
-namespace Smake.io.Values
+namespace Smake.Values
 {
     public class Menüsvalues
     {

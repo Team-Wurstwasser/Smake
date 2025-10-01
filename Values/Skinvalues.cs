@@ -1,4 +1,4 @@
-﻿namespace Smake.io.Values
+﻿namespace Smake.Values
 {
     public class Skinvalues
     {
