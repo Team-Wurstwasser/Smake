@@ -12,42 +12,52 @@ namespace Smake.io.Spiel
         public char Food { get; private set; }
         public ConsoleColor Foodfarbe { get; private set; }
 
-        public Futter(char Food, ConsoleColor Foodfarbe)
+        private static Random Rand = new();
+
+        public Futter(char food, ConsoleColor foodfarbe)
         {
-            this.Food = Food;
-            this.Foodfarbe = Foodfarbe;
+            this.Food = food;
+            this.Foodfarbe = foodfarbe;
             SetzeFutter();
         }
 
-        // Setzt das Futter an eine Zufällige Position
+        // Setzt das Futter an eine zufällige, freie Position
         void SetzeFutter()
         {
-            Random rand = new();
+            int x, y;
 
-            // Futter nur auf X-Positionen spawnen lassen, die durch 2 teilbar sind
             do
             {
-                FutterX = rand.Next(1, Spielvalues.weite - 2);
-                if (FutterX % 2 != 0) FutterX++; // Auf gerade X-Position korrigieren
+                // Zufalls-X (immer gerade Zahl, damit zur Snake passt)
+                x = Rand.Next(1, Spielvalues.weite - 2);
+                if (x % 2 != 0 && x < Spielvalues.weite - 2)
+                    x++;
 
-                FutterY = rand.Next(1, Spielvalues.hoehe - 2);
-            }
-            while (Spiellogik.Grid[FutterY, FutterX] != ' '); // Stelle muss wirklich leer sein
-            Spiellogik.Grid[FutterY, FutterX] = Food; // Setze Futter an die berechnete Position
+                // Zufalls-Y
+                y = Rand.Next(1, Spielvalues.hoehe - 2);
 
+                // Wiederholen solange die Stelle nicht frei ist
+            } while (Spiellogik.Grid[y, x] != ' ');
+
+            // Setze Position
+            FutterX = x;
+            FutterY = y;
+
+            // Futter ins Spielfeld einzeichnen
+            Spiellogik.Grid[FutterY, FutterX] = Food;
         }
 
         public void EsseFutter(Player p)
         {
-            // Spieler frisst Futter
+            // Spieler frisst Futter (Kopf-Kollision)
             if (p.PlayerX[0] == FutterX && p.PlayerY[0] == FutterY)
             {
                 p.TailLaenge++;
                 p.Punkte++;
+
                 if (Musik.Soundplay)
-                {
                     Console.Beep(700, 100);
-                }
+
                 SetzeFutter();
             }
         }
