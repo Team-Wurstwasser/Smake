@@ -13,14 +13,14 @@ namespace Smake.Spieler
         public ConsoleColor TailFarbe;
 
         // Tailkoordinaten berechnen
-        public static void TailShift(Player p)
+        public void TailShift(Player p)
         {
-            for (int i = p.PlayerX.Length-1; i > 0; i--)
+            for (int i = TailLaenge + 1; i > 0; i--)
             {
                 p.PlayerX[i] = p.PlayerX[i - 1];
             }
 
-            for (int i = p.PlayerY.Length-1; i > 0; i--)
+            for (int i = TailLaenge + 1; i > 0; i--)
             {
                 p.PlayerY[i] = p.PlayerY[i - 1];
             }
