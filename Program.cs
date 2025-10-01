@@ -27,7 +27,6 @@ namespace Smake
         // Eingaben für Spielernamen
         public static void Eingaben()
         {
-            // Zuweisung an dein Musiksystem
             Musik.Currentmusik = GameData.MusikDaten.Menue.Eingabe;
             Musik.Melodie();
 
