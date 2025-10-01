@@ -1,7 +1,7 @@
-﻿using Smake.io.Spiel;
-using Smake.io.Values;
+﻿using Smake.Spiel;
+using Smake.Values;
 
-namespace Smake.io.Spieler
+namespace Smake.Spieler
 {
     public class Tail
     {

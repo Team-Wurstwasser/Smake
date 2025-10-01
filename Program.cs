@@ -1,8 +1,8 @@
-using Smake.io.Spiel;
-using Smake.io.Speicher;
-using Smake.io.Menues;
+using Smake.Spiel;
+using Smake.Speicher;
+using Smake.Menues;
 
-namespace Smake.io
+namespace Smake
 {
     public class Program
     {
@@ -11,7 +11,7 @@ namespace Smake.io
         {
             
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            Console.Title = "Smake.io";
+            Console.Title = "Smake";
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;

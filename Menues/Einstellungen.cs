@@ -1,8 +1,8 @@
-﻿using Smake.io.Values;
-using Smake.io.Render;
-using Smake.io.Speicher;
+﻿using Smake.Values;
+using Smake.Render;
+using Smake.Speicher;
 
-namespace Smake.io.Menues
+namespace Smake.Menues
 {
     public class Einstellungen : RendernMenue
     {
@@ -67,7 +67,6 @@ namespace Smake.io.Menues
 
         public Einstellungen()
         {
-            // Zuweisung an dein Musiksystem
             Musik.Currentmusik = GameData.MusikDaten.Menue.Einstellungen;
 
             Title = "Einstellungen";
