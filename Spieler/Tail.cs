@@ -15,12 +15,12 @@ namespace Smake.Spieler
         // Tailkoordinaten berechnen
         public static void TailShift(Player p)
         {
-            for (int i = p.PlayerX.Length - 1; i > 0; i--)
+            for (int i = p.PlayerX.Length-1; i > 1; i--)
             {
                 p.PlayerX[i] = p.PlayerX[i - 1];
             }
 
-            for (int i = p.PlayerY.Length - 1; i > 0; i--)
+            for (int i = p.PlayerY.Length-1; i > 1; i--)
             {
                 p.PlayerY[i] = p.PlayerY[i - 1];
             }
