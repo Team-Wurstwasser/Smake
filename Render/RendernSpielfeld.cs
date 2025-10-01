@@ -193,8 +193,6 @@ namespace Smake.Render
                 return Spiellogik.Player.TailFarbe;
             if (zeichen == Spiellogik.Player2.TailSkin)
                 return Spiellogik.Player2.TailFarbe;
-            if (zeichen == Skinvalues.RandSkin)
-                return Skinvalues.RandFarbe;
             foreach (var Essen in Spiellogik.Essen)
             {
                 if (x == Essen.FutterX && y == Essen.FutterY)
