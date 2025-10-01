@@ -63,7 +63,7 @@ namespace Smake.io.Menues
             }
         }
 
-        private bool ShopSkins = true;
+        private bool ShopSkins;
         private readonly int gesamtOptionenSkins;
         private readonly int gesamtOptionenFarben;
 
