@@ -17,9 +17,9 @@ namespace Smake
             Console.CursorVisible = false;
             GameData.LoadAllConfigs();
 
-            Eingaben();
-
             SpeicherSystem.Speichern_Laden("Laden");
+
+            Eingaben();
 
             _ = new Menue();
         }
@@ -34,12 +34,12 @@ namespace Smake
             Console.Clear();
 
             Console.Write("Spieler 1, gib deinen Namen ein: ");
-            Spiellogik.Player = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, Console.ReadLine());
+            Spiellogik.Player.Name = Console.ReadLine();
 
             Console.Clear();
 
             Console.Write("Spieler 2, gib deinen Namen ein: ");
-            Spiellogik.Player2 = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, Console.ReadLine());
+            Spiellogik.Player2.Name = Console.ReadLine(); 
 
             Console.Clear();
         }
