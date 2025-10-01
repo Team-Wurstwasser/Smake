@@ -1,9 +1,9 @@
-﻿using Smake.io.Values;
-using Smake.io.Render;
-using Smake.io.Spiel;
+﻿using Smake.Values;
+using Smake.Render;
+using Smake.Spiel;
 using System.Security.Cryptography;
 
-namespace Smake.io.Speicher
+namespace Smake.Speicher
 {
     public static class CryptoHelper
     {

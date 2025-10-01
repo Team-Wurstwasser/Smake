@@ -1,7 +1,7 @@
-﻿using Smake.io.Values;
-using Smake.io.Speicher;
+﻿using Smake.Values;
+using Smake.Speicher;
 
-namespace Smake.io.Render
+namespace Smake.Render
 {
     public class RendernMenue
     {

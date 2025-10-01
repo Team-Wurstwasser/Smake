@@ -1,7 +1,7 @@
-﻿using Smake.io.Values;
-using Smake.io.Spieler;
+﻿using Smake.Values;
+using Smake.Spieler;
 
-namespace Smake.io.Spiel
+namespace Smake.Spiel
 {
     public class Steuerung 
     {

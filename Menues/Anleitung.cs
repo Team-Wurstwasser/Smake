@@ -1,14 +1,13 @@
-﻿using Smake.io.Render;
-using Smake.io.Speicher;
-using Smake.io.Values;
+﻿using Smake.Render;
+using Smake.Speicher;
+using Smake.Values;
 
-namespace Smake.io.Menues
+namespace Smake.Menues
 {
     public class Anleitung : RendernMenue
     {
         public Anleitung()
         {
-            // Zuweisung an dein Musiksystem
             Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
             Musik.Melodie();
 
