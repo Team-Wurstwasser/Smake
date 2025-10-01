@@ -1,8 +1,6 @@
 using Smake.io.Speicher;
 using Smake.io.Spiel;
 using Smake.io.Values;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Smake.io.Spieler
 {
