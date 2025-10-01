@@ -43,23 +43,35 @@ namespace Smake.Spiel
             FutterX = x;
             FutterY = y;
 
+            ZeichneFutter();
+        }
+
+        public void ZeichneFutter()
+        {
             // Futter ins Spielfeld einzeichnen
             Spiellogik.Grid[FutterY, FutterX] = Food;
         }
 
         public void EsseFutter(Player p)
         {
-            // Spieler frisst Futter (Kopf-Kollision)
-            if (p.PlayerX[0] == FutterX && p.PlayerY[0] == FutterY)
+            // Überprüfe jedes Segment des Spielers
+            for (int i = 0; i < p.TailLaenge; i++)
             {
-                p.TailLaenge++;
-                p.Punkte++;
+                if (p.PlayerX[i] == FutterX && p.PlayerY[i] == FutterY)
+                {
+                    p.TailLaenge++;
+                    p.Punkte++;
 
-                if (Musik.Soundplay)
-                    Console.Beep(700, 100);
+                    if (Musik.Soundplay)
+                        Console.Beep(700, 100);
 
-                SetzeFutter();
+                    SetzeFutter();
+
+                    // Wenn Futter gefunden, können wir die Schleife abbrechen
+                    break;
+                }
             }
+            ZeichneFutter();
         }
     }
 }
