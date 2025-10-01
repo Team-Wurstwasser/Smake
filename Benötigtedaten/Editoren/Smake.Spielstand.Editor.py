@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from pathlib import Path
@@ -9,12 +8,11 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
-# --- Konfiguration ---
 PASSWORD = b"djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh"
 ITERATIONS = 100_000
 KEY_LEN = 32
 IV_LEN = 16
-SALT_LEN = 16  # Zufälliger Salt Länge
+SALT_LEN = 16
 
 
 def derive_key_iv(password: bytes, salt: bytes):
@@ -60,7 +58,6 @@ def aes_decrypt(data: bytes) -> bytes:
     return unpadder.update(padded_plain) + unpadder.finalize()
 
 
-# --- GUI ---
 class CryptoGUI(tk.Tk):
     def __init__(self):
         super().__init__()
