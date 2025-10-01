@@ -14,7 +14,7 @@ namespace Smake.Render
         bool DoReadInput = true;
         Thread? InputThread;
 
-        public void InitialRender()
+        public void InitialRender() 
         {
             Musik.Melodie();
             Console.Clear();
