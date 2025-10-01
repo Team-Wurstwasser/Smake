@@ -4,7 +4,7 @@ using Smake.Values;
 
 namespace Smake.Spieler
 {
-    public class Player(int xstart, int ystart, string? Name) : Tail
+    public class Player(int xstart, int ystart) : Tail
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
@@ -27,7 +27,7 @@ namespace Smake.Spieler
         public int Punkte { get; set; }
 
         // Namen der Spieler
-        public readonly string? Name = Name;
+        public string? Name;
 
         // Aussehen des Spielers
         public char HeadSkin;
