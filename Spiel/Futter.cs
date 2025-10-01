@@ -19,6 +19,7 @@ namespace Smake.Spiel
             this.Food = food;
             this.Foodfarbe = foodfarbe;
             SetzeFutter();
+            ZeichneFutter();
         }
 
         // Setzt das Futter an eine zufällige, freie Position
@@ -42,8 +43,6 @@ namespace Smake.Spiel
             // Setze Position
             FutterX = x;
             FutterY = y;
-
-            ZeichneFutter();
         }
 
         public void ZeichneFutter()
