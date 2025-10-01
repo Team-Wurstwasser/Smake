@@ -14,9 +14,9 @@ namespace Smake.Spieler
         public bool Aenderung;
 
         // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX { get; private set; } = new int[Spielvalues.weite * Spielvalues.hoehe];
+        public int[] PlayerX { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
 
-        public int[] PlayerY { get; private set; } = new int[Spielvalues.weite * Spielvalues.hoehe];
+        public int[] PlayerY { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
 
         // Kollisionsvariablen
         bool Kollision;
