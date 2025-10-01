@@ -109,7 +109,7 @@ namespace Smake.io.Render
 
                 if (GameValue[i] != null)
                 {
-                    if (IsColor[i] && !RendernSpielfeld.Performancemode)
+                    if (IsColor[i] && !RendernSpielfeld.Performancemode || !IsColor[i])
                     {
                         if (GameValue[i] is ConsoleColor color)
                         {
