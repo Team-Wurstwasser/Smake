@@ -49,7 +49,7 @@ namespace Smake.Spieler
             TailLaenge = 3;
 
             // Punkte zurücksetzen
-            Punkte = 818;
+            Punkte = 0;
 
             // Arrays zurücksetzen
             Array.Fill(PlayerX, -1);
