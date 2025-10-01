@@ -12,10 +12,10 @@ namespace Smake.io.Render
         public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Vorheriges Frame für Performance-Rendering
-        private static char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
+        private char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
-        public static void InitialisiereSpielfeld()
+        public void InitialisiereSpielfeld()
         {
             Console.Clear();
 
@@ -34,7 +34,7 @@ namespace Smake.io.Render
             }
         }
 
-        public static void Render()
+        public void Render()
         {
             if (Performancemode)
             {
@@ -47,7 +47,7 @@ namespace Smake.io.Render
         }
 
         // Normaler Modus: komplette Ausgabe mit Farben + Legende
-        private static void RenderFull()
+        private void RenderFull()
         {
             Console.SetCursorPosition(0, 0);
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
@@ -79,7 +79,7 @@ namespace Smake.io.Render
         }
 
         // Performance-Modus: nur geänderte Zeichen zeichnen
-        private static void RenderPerformance()
+        private void RenderPerformance()
         {
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
@@ -107,7 +107,7 @@ namespace Smake.io.Render
         }
 
         // Hilfsfunktion für Legende im Performance-Modus (nur Text)
-        private static string RenderLegendeText(int y)
+        private string RenderLegendeText(int y)
         {
             switch (y)
             {
@@ -134,7 +134,7 @@ namespace Smake.io.Render
         }
 
         // Farb-Bestimmung (nur für normalen Modus gebraucht)
-        private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
+        private ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
             if (zeichen == ' ') return ConsoleColor.White;
             if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
@@ -156,7 +156,7 @@ namespace Smake.io.Render
         }
 
         // Alte RenderLegende mit Farben bleibt unverändert für den Full-Mode
-        private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
+        private ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
         {
             void SetFarbe(ConsoleColor farbe)
             {
