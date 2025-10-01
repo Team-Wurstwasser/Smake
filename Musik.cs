@@ -15,39 +15,36 @@ namespace Smake.io
 
         public static void Melodie()
         {
-            if(!Musikplay && !Soundplay)
+            if (!Musikplay && !Soundplay)
             {
                 currentPlayer?.Stop();
                 lastPlayState = false;
                 return;
             }
-            
-            // Prüfen, ob sich Musik oder der Status geändert hat
+
             if (Currentmusik != lastmusik || Musikplay != lastPlayState)
             {
-                // Stoppe vorherige Musik
                 currentPlayer?.Stop();
                 currentPlayer = null;
 
-                // Dateipfad bestimmen
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string dateipfad;
+
                 if (Musikplay)
                 {
-                    dateipfad = Path.Combine("Sounds", GameData.Filenames[Currentmusik ?? 0]);
+                    dateipfad = Path.Combine(basePath, "Sounds", GameData.Filenames[Currentmusik ?? 0]);
                 }
                 else
                 {
-                    dateipfad = Path.Combine("Sounds", GameData.NoMusikFile);
+                    dateipfad = Path.Combine(basePath, "Sounds", GameData.NoMusikFile);
                 }
 
-                // Prüfen, ob Datei existiert
                 if (File.Exists(dateipfad))
                 {
                     currentPlayer = new SoundPlayer(dateipfad);
                     currentPlayer.PlayLooping();
                 }
 
-                // Status merken
                 lastmusik = Currentmusik;
                 lastPlayState = Musikplay;
             }
