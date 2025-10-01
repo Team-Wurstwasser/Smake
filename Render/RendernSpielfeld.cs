@@ -32,6 +32,50 @@ namespace Smake.io.Render
                     PrevGrid[reihe, symbol] = '\0'; // Initial: alles als "anders" markieren
                 }
             }
+            RenderRand();
+        }
+
+        private void RenderRand()
+        {
+            int rows = Grid.GetLength(0);
+            int cols = Grid.GetLength(1);
+
+            if (!Performancemode)
+            {
+                Console.ForegroundColor = Skinvalues.RandFarbe;
+            }
+            else
+            { 
+                Console.ResetColor();
+            }
+
+            // Obere und untere Randlinie
+            for (int x = 0; x < cols; x++)
+            {
+                // Oben
+                Console.SetCursorPosition(x, 0);
+                Console.Write(Skinvalues.RandSkin);
+                PrevGrid[0, x] = Skinvalues.RandSkin;
+
+                // Unten
+                Console.SetCursorPosition(x, rows - 1);
+                Console.Write(Skinvalues.RandSkin);
+                PrevGrid[rows - 1, x] = Skinvalues.RandSkin;
+            }
+
+            // Linke und rechte Randlinie
+            for (int y = 1; y < rows - 1; y++)
+            {
+                // Links
+                Console.SetCursorPosition(0, y);
+                Console.Write(Skinvalues.RandSkin);
+                PrevGrid[y, 0] = Skinvalues.RandSkin;
+
+                // Rechts
+                Console.SetCursorPosition(cols - 1, y);
+                Console.Write(Skinvalues.RandSkin);
+                PrevGrid[y, cols - 1] = Skinvalues.RandSkin;
+            }
         }
 
         public void Render()
@@ -51,12 +95,12 @@ namespace Smake.io.Render
         {
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
-            int rows = Grid.GetLength(0);
-            int cols = Grid.GetLength(1);
+            int rows = Grid.GetLength(0)-1;
+            int cols = Grid.GetLength(1)-1;
 
-            for (int y = 0; y < rows; y++)
+            for (int y = 1; y < rows; y++)
             {
-                for (int x = 0; x < cols; x++)
+                for (int x = 1; x < cols; x++)
                 {
 
                     if (Grid[y, x] != PrevGrid[y, x])
@@ -88,9 +132,9 @@ namespace Smake.io.Render
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
 
-            for (int y = 0; y < rows; y++)
+            for (int y = 1; y < rows; y++)
             {
-                for (int x = 0; x < cols; x++)
+                for (int x = 1; x < cols; x++)
                 {
                     if (Grid[y, x] != PrevGrid[y, x])
                     {
