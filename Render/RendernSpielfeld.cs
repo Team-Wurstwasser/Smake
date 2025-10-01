@@ -1,6 +1,7 @@
-﻿using Smake.Values;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 using Smake.Spiel;
+using Smake.Spieler;
+using Smake.Values;
 
 namespace Smake.Render
 {
@@ -102,8 +103,9 @@ namespace Smake.Render
             {
                 for (int x = 1; x < cols; x++)
                 {
+                    bool IstStartposition =(x == Spiellogik.Player.xstart && y == Spiellogik.Player.ystart) || (x == Spiellogik.Player2.xstart && y == Spiellogik.Player2.ystart);
 
-                    if (Grid[y, x] != PrevGrid[y, x])
+                    if (Grid[y, x] != PrevGrid[y, x] || IstStartposition)
                     {
                         char zeichen = Grid[y, x];
                         ConsoleColor neueFarbe = BestimmeFarbe(x, y, zeichen);

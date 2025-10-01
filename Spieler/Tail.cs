@@ -15,12 +15,12 @@ namespace Smake.Spieler
         // Tailkoordinaten berechnen
         public static void TailShift(Player p)
         {
-            for (int i = p.PlayerX.Length-1; i > 1; i--)
+            for (int i = p.PlayerX.Length-1; i > 0; i--)
             {
                 p.PlayerX[i] = p.PlayerX[i - 1];
             }
 
-            for (int i = p.PlayerY.Length-1; i > 1; i--)
+            for (int i = p.PlayerY.Length-1; i > 0; i--)
             {
                 p.PlayerY[i] = p.PlayerY[i - 1];
             }
@@ -39,8 +39,21 @@ namespace Smake.Spieler
                     Spiellogik.Grid[p.PlayerY[i], p.PlayerX[i]] = TailSkin;
             }
 
-            // Altes Tail-Feld leeren (nicht Rand)
-            if (oldTailX >= 0 && oldTailY >= 0 && Spiellogik.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin)
+            // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt
+            bool isOnPlayer = false;
+            for (int i = 0; i <=TailLaenge; i++)
+            {
+                if (p.PlayerX[i] == oldTailX && p.PlayerY[i] == oldTailY)
+                {
+                    isOnPlayer = true;
+                    break;
+                }
+            }
+
+            // Altes Tail-Feld nur leeren, wenn es kein Rand und nicht auf einem Spielersegment ist
+            if (oldTailX >= 0 && oldTailY >= 0
+                && Spiellogik.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin
+                && !isOnPlayer)
             {
                 Spiellogik.Grid[oldTailY, oldTailX] = ' ';
             }
