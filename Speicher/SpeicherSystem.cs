@@ -245,7 +245,7 @@ namespace Smake.Speicher
 
             foreach (var zeile in zeilen)
             {
-                var teil = zeile.Split('=');
+                var teil = zeile.Split('=',2);
                 if (teil.Length != 2) continue;
 
                 string name = teil[0];
