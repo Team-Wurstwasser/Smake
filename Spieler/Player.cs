@@ -100,9 +100,9 @@ namespace Smake.Spieler
             {
                 if (Kollision)
                     SpielerTot = true;
-                else if(Punkte >= GameData.Hoehe * GameData.Weite - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
+                else if(TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
                     Maxpunkte = true;
-                else if(Punkte + p.Punkte >= GameData.Hoehe * GameData.Weite - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
+                else if(TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
             else if (Spielvalues.Gamemode == "Normal")
