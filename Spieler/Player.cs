@@ -32,8 +32,8 @@ namespace Smake.Spieler
 
         public ConsoleColor HeadFarbe;
 
-        readonly int xstart = xstart;
-        readonly int ystart = ystart;
+        public readonly int xstart = xstart;
+        public readonly int ystart = ystart;
 
         void InitialisiereSpieler()
         {
