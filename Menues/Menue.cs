@@ -71,7 +71,7 @@ namespace Smake.Menues
             }
         }
 
-        public Menue()
+        public Menue() 
         {
             Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
 
