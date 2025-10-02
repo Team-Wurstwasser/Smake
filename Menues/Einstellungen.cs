@@ -1,6 +1,8 @@
-﻿using Smake.Values;
-using Smake.Render;
+﻿using Smake.Render;
 using Smake.Speicher;
+using Smake.Values;
+using System.Diagnostics.Metrics;
+using System.Reflection;
 
 namespace Smake.Menues
 {
@@ -146,6 +148,7 @@ namespace Smake.Menues
         {
             if (Spielvalues.Gamemode == "Normal") Spielvalues.Gamemode = "Unendlich";
             else if (Spielvalues.Gamemode == "Unendlich") Spielvalues.Gamemode = "Babymode";
+            else if (Spielvalues.Gamemode == "Babymode") Spielvalues.Gamemode = "Mauer-Modus";
             else Spielvalues.Gamemode = "Normal";
         }
 
