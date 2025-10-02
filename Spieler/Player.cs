@@ -105,7 +105,7 @@ namespace Smake.Spieler
                 else if(TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
-            else if (Spielvalues.Gamemode == "Normal")
+            else if (Spielvalues.Gamemode == "Normal" || Spielvalues.Gamemode == "Mauer-Modus")
             {
                 if (Kollision)
                     SpielerTot = true;

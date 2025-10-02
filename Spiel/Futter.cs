@@ -1,5 +1,8 @@
-﻿using Smake.Values;
+﻿using Smake.Gegenstaende;
+using Smake.Speicher;
 using Smake.Spieler;
+using Smake.Values;
+using System.Reflection;
 
 namespace Smake.Spiel
 {
@@ -62,7 +65,14 @@ namespace Smake.Spiel
                     p.Punkte++;
 
                     if (Musik.Soundplay)
+                    {
                         Console.Beep(700, 100);
+                    }
+
+                    if( Spielvalues.Gamemode == "Mauer-Modus")
+                    {
+                        Spiellogik.Mauer.Add(new());
+                    }
 
                     SetzeFutter();
 
