@@ -13,7 +13,7 @@ namespace Smake.Render
         public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Vorheriges Frame für Performance-Rendering
-        private char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
+        private readonly char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
         public void InitialisiereSpielfeld()
@@ -208,14 +208,14 @@ namespace Smake.Render
         {
             void SetFarbe(ConsoleColor farbe)
             {
+                Console.SetCursorPosition(GameData.Weite, y);
+
                 if (farbe != aktuelleFarbe)
                 {
                     Console.ForegroundColor = farbe;
                     aktuelleFarbe = farbe;
                 }
             }
-
-            Console.SetCursorPosition(GameData.Weite, y);
 
             switch (y)
             {
