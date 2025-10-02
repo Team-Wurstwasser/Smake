@@ -25,10 +25,17 @@ namespace Smake.Render
                 for (int symbol = 0; symbol < Grid.GetLength(1); symbol++)
                 {
                     // Rand des Spielfelds mit RandSkin markieren
-                    if (reihe == 0 || reihe == Grid.GetLength(0) - 1 || symbol == 0 || symbol == Grid.GetLength(1) - 1)
+                    // Oben/unten: 1 Zeile
+                    if (reihe == 0 || reihe == Grid.GetLength(0) - 1 ||
+                        // Links/rechts: 2 Spalten
+                        symbol < 2 || symbol >= Grid.GetLength(1) - 2)
+                    {
                         Grid[reihe, symbol] = Skinvalues.RandSkin;
+                    }
                     else
+                    {
                         Grid[reihe, symbol] = ' ';
+                    }
 
                     PrevGrid[reihe, symbol] = '\0'; // Initial: alles als "anders" markieren
                 }
@@ -69,13 +76,15 @@ namespace Smake.Render
             {
                 // Links
                 Console.SetCursorPosition(0, y);
-                Console.Write(Skinvalues.RandSkin);
+                Console.Write(new string(Skinvalues.RandSkin, 2)); // "██"
                 PrevGrid[y, 0] = Skinvalues.RandSkin;
+                PrevGrid[y, 1] = Skinvalues.RandSkin;
 
                 // Rechts
-                Console.SetCursorPosition(cols - 1, y);
-                Console.Write(Skinvalues.RandSkin);
+                Console.SetCursorPosition(cols - 2, y);
+                Console.Write(new string(Skinvalues.RandSkin, 2)); // "██"
                 PrevGrid[y, cols - 1] = Skinvalues.RandSkin;
+                PrevGrid[y, cols - 2] = Skinvalues.RandSkin;
             }
         }
 
@@ -101,7 +110,7 @@ namespace Smake.Render
 
             for (int y = 1; y < rows; y++)
             {
-                for (int x = 1; x < cols; x++)
+                for (int x = 2; x < cols-1; x++)
                 {
                     bool IstStartposition =(x == Spiellogik.Player.xstart && y == Spiellogik.Player.ystart) || (x == Spiellogik.Player2.xstart && y == Spiellogik.Player2.ystart);
 
@@ -136,7 +145,7 @@ namespace Smake.Render
 
             for (int y = 1; y < rows; y++)
             {
-                for (int x = 1; x < cols; x++)
+                for (int x = 2; x < cols-1; x++)
                 {
                     if (Grid[y, x] != PrevGrid[y, x])
                     {
@@ -200,6 +209,8 @@ namespace Smake.Render
                 if (x == Essen.FutterX && y == Essen.FutterY)
                     return Essen.Foodfarbe;
             }
+            if (zeichen == Skinvalues.RandSkin)
+                return Skinvalues.RandFarbe;
             return ConsoleColor.White;
         }
 
