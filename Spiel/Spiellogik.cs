@@ -3,6 +3,7 @@ using Smake.Menues;
 using Smake.Render;
 using Smake.Speicher;
 using Smake.Spieler;
+using Smake.Gegenstaende;
 
 namespace Smake.Spiel
 {
@@ -17,6 +18,8 @@ namespace Smake.Spiel
         public static Player Player2 { get; set; } = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y);
 
         public static List<Futter> Essen { get; private set; } = [];
+
+        public static List<Mauer> Mauer { get; private set; } = [];
 
         public Spiellogik()
         {
@@ -104,6 +107,8 @@ namespace Smake.Spiel
         {
             Essen = [];
 
+            Mauer = [];
+
             Neustart();
             Render();
 
@@ -159,6 +164,14 @@ namespace Smake.Spiel
                 var (spielerTot, Maxpunkte) = Player2.Update(Player);
                 spieler2Tot |= spielerTot;
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
+            }
+
+            if (Spielvalues.Gamemode == "Mauer - Modus")
+            {
+                foreach (var Mauer in Mauer)
+                {
+                    Mauer.ZeichneMauer();
+                }
             }
 
             GameoverCheck(spieler1Tot, spieler2Tot);
