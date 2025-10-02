@@ -43,8 +43,6 @@ def xor_process(data: bytearray) -> bytearray:
             data[i] ^= key[k]
     return data
 
-
-# --- GUI ---
 class XorGUI(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -76,8 +74,6 @@ class XorGUI(tk.Tk):
             in_path = Path(self.file_path.get())
             data = bytearray(in_path.read_bytes())
             processed = xor_process(data)
-
-            # überschreibe dieselbe Datei
             in_path.write_bytes(processed)
             messagebox.showinfo("Fertig", f"Datei überschrieben:\n{in_path}")
         except Exception as e:
