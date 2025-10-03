@@ -1,4 +1,4 @@
-using Smake.Spiel;
+using Smake.Render;
 using Smake.Values;
 
 namespace Smake.Gegenstaende
@@ -33,7 +33,7 @@ namespace Smake.Gegenstaende
                 y = Rand.Next(1, Spielvalues.hoehe - 2);
 
                 // Wiederholen solange die Stelle nicht frei ist
-            } while (Spiellogik.Grid[y, x] != ' ');
+            } while (RendernSpielfeld.Grid[y, x] != ' ');
 
             // Setze Position
             MauerX = x;
@@ -43,7 +43,7 @@ namespace Smake.Gegenstaende
         public void ZeichneMauer()
         {
             // Mauer ins Spielfeld einzeichnen
-            Spiellogik.Grid[MauerY, MauerX] = Skinvalues.RandSkin;
+            RendernSpielfeld.Grid[MauerY, MauerX] = Skinvalues.MauerSkin;
         }
     }
 }

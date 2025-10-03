@@ -1,3 +1,4 @@
+using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Values;
@@ -38,7 +39,7 @@ namespace Smake.Spieler
         void InitialisiereSpieler()
         {
             // Spielerzeichen auf Startposition setzen
-            Spiellogik.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
+            RendernSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
         }
 
         public void Neustart()
@@ -105,13 +106,6 @@ namespace Smake.Spieler
                 else if(TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
-            else if (Spielvalues.Gamemode == "Normal" || Spielvalues.Gamemode == "Mauer-Modus")
-            {
-                if (Kollision)
-                    SpielerTot = true;
-                else if (Punkte >= GameData.MaxPunkte)
-                    Maxpunkte = true;
-            }
             else if (Spielvalues.Gamemode == "Babymode")
             {
                 if (Punkte >= GameData.MaxPunkte)
@@ -119,6 +113,14 @@ namespace Smake.Spieler
                     Maxpunkte = true;
                 }
             }
+            else
+            {
+                if (Kollision)
+                    SpielerTot = true;
+                else if (Punkte >= GameData.MaxPunkte)
+                    Maxpunkte = true;
+            }
+
             return (SpielerTot, Maxpunkte);
 
         }
@@ -128,7 +130,7 @@ namespace Smake.Spieler
         {
             if (Spielvalues.Gamemode == "Babymode")
             {
-                if (Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
+                if (RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
                 {
                     Kollision = true;
                 }
@@ -153,13 +155,13 @@ namespace Smake.Spieler
 
                 }
 
-                if (Spiellogik.Grid[newPlayerY, newPlayerX] == ' ' || Spiellogik.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0])
+                if (RendernSpielfeld.Grid[newPlayerY, newPlayerX] == ' ' || RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0] || RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.SchluesselSkin)
                 {
                     Kollision = false;
                 }
                 else
                 {
-                    // Wenn das Feld nicht leer, nicht Food, nicht Head, nicht Rand
+                    // Wenn das Feld nicht leer, nicht Food, nicht Schlüssel, nicht Head, nicht Rand
                     Kollision = true;
 
                 }
@@ -179,7 +181,7 @@ namespace Smake.Spieler
             }
 
             // Kopf setzen
-            Spiellogik.Grid[newPlayerY, newPlayerX] = HeadSkin;
+            RendernSpielfeld.Grid[newPlayerY, newPlayerX] = HeadSkin;
 
             // Spieler-Koordinaten aktualisieren
             PlayerX[0] = newPlayerX;

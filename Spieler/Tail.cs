@@ -1,4 +1,5 @@
-﻿using Smake.Spiel;
+﻿using Smake.Render;
+using Smake.Spiel;
 using Smake.Values;
 
 namespace Smake.Spieler
@@ -36,7 +37,7 @@ namespace Smake.Spieler
             for (int i = 0; i <= TailLaenge; i++)
             {
                 if (p.PlayerX[i] >= 0 && p.PlayerY[i] >= 0)
-                    Spiellogik.Grid[p.PlayerY[i], p.PlayerX[i]] = TailSkin;
+                    RendernSpielfeld.Grid[p.PlayerY[i], p.PlayerX[i]] = TailSkin;
             }
 
             // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt
@@ -52,10 +53,10 @@ namespace Smake.Spieler
 
             // Altes Tail-Feld nur leeren, wenn es kein Rand und nicht auf einem Spielersegment ist
             if (oldTailX >= 0 && oldTailY >= 0
-                && Spiellogik.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin
+                && RendernSpielfeld.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin
                 && !isOnPlayer)
             {
-                Spiellogik.Grid[oldTailY, oldTailX] = ' ';
+                RendernSpielfeld.Grid[oldTailY, oldTailX] = ' ';
             }
         }
 
