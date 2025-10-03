@@ -72,6 +72,19 @@ namespace Smake.Spiel
         // Hilfsmethode zum Setzen der neuen Richtung eines Spielers
         private static void UpdatePlayerDirection(Player p, int newX, int newY, char head)
         {
+            // Gespiegelte Steuerung bei Chaos-Steuerung
+            if (Spielvalues.Gamemode == "Chaos-Steuerung")
+            {
+                newX = -newX;
+                newY = -newY;
+
+                // Kopf-Symbol anpassen
+                if (newX == 1) head = '>';
+                else if (newX == -1) head = '<';
+                else if (newY == 1) head = 'v';
+                else if (newY == -1) head = '^';
+            }
+
             // Verhindert Rückwärtsbewegung und doppelte Änderungen pro Tick
             if (p.Aenderung && (p.InputX != -newX || p.InputY != -newY))
             {
