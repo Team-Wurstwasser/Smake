@@ -58,7 +58,7 @@ namespace Smake.Render
             for (int i = 0; i < Display.Length; i++)
             {
                 string zeiger = i + 1 == Selected ? ">>" : "  ";
-                Console.WriteLine($"{zeiger} {Display[i],-50}");
+                Console.WriteLine($"{zeiger} {Display[i],-70}");
             }
 
             Console.WriteLine("══════════════════════════════");

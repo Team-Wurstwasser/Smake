@@ -150,6 +150,8 @@ namespace Smake.Menues
             else if (Spielvalues.Gamemode == "Unendlich") Spielvalues.Gamemode = "Babymode";
             else if (Spielvalues.Gamemode == "Babymode") Spielvalues.Gamemode = "Mauer-Modus";
             else if (Spielvalues.Gamemode == "Mauer-Modus") Spielvalues.Gamemode = "Schlüssel-Modus";
+            else if (Spielvalues.Gamemode == "Schlüssel-Modus") Spielvalues.Gamemode = "Sprungfutter-Modus";
+            else if (Spielvalues.Gamemode == "Sprungfutter-Modus") Spielvalues.Gamemode = "Chaos-Steuerung";
             else Spielvalues.Gamemode = "Normal";
         }
 
