@@ -166,7 +166,7 @@ namespace Smake.Spiel
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
 
-            if (Spielvalues.Gamemode == "Mauer - Modus")
+            if (Spielvalues.Gamemode == "Mauer-Modus")
             {
                 foreach (var Mauer in Mauer)
                 {

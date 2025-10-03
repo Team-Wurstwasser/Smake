@@ -195,7 +195,6 @@ namespace Smake.Render
         // Farb-Bestimmung (nur für normalen Modus gebraucht)
         private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
-            if (zeichen == ' ') return ConsoleColor.White;
             if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
                 return Spiellogik.Player.HeadFarbe;
             if (Spielvalues.Multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0])
@@ -204,17 +203,19 @@ namespace Smake.Render
                 return Spiellogik.Player.TailFarbe;
             if (zeichen == Spiellogik.Player2.TailSkin)
                 return Spiellogik.Player2.TailFarbe;
+            if (zeichen == Skinvalues.MauerSkin)
+                return Skinvalues.MauerFarbe;
+            if (zeichen == Skinvalues.SchluesselSkin)
+                return Skinvalues.SchluesselFarbe;
             foreach (var Essen in Spiellogik.Essen)
             {
                 if (x == Essen.FutterX && y == Essen.FutterY)
-                    return Essen.Foodfarbe;
+                    return Essen.FoodFarbe;
             }
-            if (zeichen == Skinvalues.RandSkin)
-                return Skinvalues.RandFarbe;
             return ConsoleColor.White;
         }
 
-        // Alte RenderLegende mit Farben für den Full-Mode
+        // RenderLegende mit Farben für den Full-Mode
         private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
         {
             void SetFarbe(ConsoleColor farbe)
