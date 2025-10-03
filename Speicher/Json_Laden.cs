@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Smake.Helpers;
+using Smake.Helper  ;
 
 
 namespace Smake.Speicher
@@ -138,7 +138,11 @@ namespace Smake.Speicher
             public MusikSpeed? Normal { get; set; }
             public MusikSpeed? Unendlich { get; set; }
             public MusikSpeed? Babymode { get; set; }
-        }
+            public MusikSpeed? Mauer_Modus { get; set; }
+            public MusikSpeed? Schluessel_Modus { get; set; }
+            public MusikSpeed? Sprungfutter_Modus { get; set; }
+            public MusikSpeed? Chaos_Steuerung { get; set; }
+        } 
 
         public class MusikSpeed
         {

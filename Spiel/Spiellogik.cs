@@ -1,9 +1,11 @@
-﻿using Smake.Values;
+﻿using Smake.Gegenstaende;
+using Smake.Helper;
 using Smake.Menues;
 using Smake.Render;
 using Smake.Speicher;
 using Smake.Spieler;
-using Smake.Gegenstaende;
+using Smake.Values;
+using Smake.Enums;
 
 namespace Smake.Spiel
 {
@@ -29,29 +31,17 @@ namespace Smake.Spiel
         // Allen Variablen den Startwert geben
         void Neustart()
         {
-            int? currentMusik = 0;
 
-            if (Spielvalues.Gamemode == "Normal")
+            if (Enum.TryParse<Difficulty>(Spielvalues.Difficulty, out Difficulty diff))
             {
-                if (Spielvalues.Difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Normal.Langsam;
-                else if (Spielvalues.Difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Normal.Mittel;
-                else if (Spielvalues.Difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Normal.Schnell;
-            }
-            else if (Spielvalues.Gamemode == "Unendlich")
-            {
-                if (Spielvalues.Difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Unendlich.Langsam;
-                else if (Spielvalues.Difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Unendlich.Mittel;
-                else if (Spielvalues.Difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Unendlich.Schnell;
-            }
-            else if (Spielvalues.Gamemode == "Babymode")
-            {
-                if (Spielvalues.Difficulty == "Langsam") currentMusik = GameData.MusikDaten.Game.Babymode.Langsam;
-                else if (Spielvalues.Difficulty == "Mittel") currentMusik = GameData.MusikDaten.Game.Babymode.Mittel;
-                else if (Spielvalues.Difficulty == "Schnell") currentMusik = GameData.MusikDaten.Game.Babymode.Schnell;
+                if (MusikSelector.MusikMap.TryGetValue(Spielvalues.Gamemode!, out var difficultyDict)
+                    && difficultyDict.TryGetValue(diff, out var currentMusik))
+                {
+                    Musik.Currentmusik = currentMusik;
+                    Musik.Melodie();
+                }
             }
 
-            Musik.Currentmusik = currentMusik;
-            Musik.Melodie();
             SpeicherSystem.Speichern_Laden("Speichern");
 
             Spiel = true;
