@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Smake.Helpers
+namespace Smake.Helper
 {
     public class CryptoHelper
     {
