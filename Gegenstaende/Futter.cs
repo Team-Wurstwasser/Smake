@@ -16,6 +16,10 @@ namespace Smake.Gegenstaende
 
         private static Random Rand = new();
         private Schluessel? Schluessel;
+
+        // Für Sprungfutter-Modus
+        private int TeleportCounter = 0;
+        private readonly int TeleportInterval = 25;
         public Futter(char food, ConsoleColor foodfarbe)
         {
             FoodSkin = food;
@@ -51,6 +55,12 @@ namespace Smake.Gegenstaende
             {
                 Schluessel = new();
             }
+
+            if (Spielvalues.Gamemode == "Sprungfutter-Modus")
+            {
+                TeleportCounter = 0;
+            }
+
         }
 
         public void ZeichneFutter()
@@ -107,8 +117,22 @@ namespace Smake.Gegenstaende
                     }
                 }
             }
-
+            Tick();
             ZeichneFutter();
+        }
+
+        private void Tick()
+        {
+            if (Spielvalues.Gamemode == "Sprungfutter-Modus")
+            {
+                TeleportCounter++;
+                if (TeleportCounter >= TeleportInterval)
+                {
+                    // Alte Position löschen
+                    RendernSpielfeld.Grid[FutterY, FutterX] = ' ';
+                    SetzeFutter();
+                }
+            }
         }
     }
 }
