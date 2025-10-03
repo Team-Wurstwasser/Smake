@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Smake.Helpers
+namespace Smake.Helper
 {
     // XOR-Entschlüsselung
     public class XorCryptoHelper

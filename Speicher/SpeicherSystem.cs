@@ -1,7 +1,7 @@
 ﻿using Smake.Values;
 using Smake.Render;
 using Smake.Spiel;
-using Smake.Helpers;
+using Smake.Helper;
 using System.Security.Cryptography;
 
 namespace Smake.Speicher
