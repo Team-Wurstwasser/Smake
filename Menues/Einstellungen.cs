@@ -149,6 +149,7 @@ namespace Smake.Menues
             if (Spielvalues.Gamemode == "Normal") Spielvalues.Gamemode = "Unendlich";
             else if (Spielvalues.Gamemode == "Unendlich") Spielvalues.Gamemode = "Babymode";
             else if (Spielvalues.Gamemode == "Babymode") Spielvalues.Gamemode = "Mauer-Modus";
+            else if (Spielvalues.Gamemode == "Mauer-Modus") Spielvalues.Gamemode = "Schlüssel-Modus";
             else Spielvalues.Gamemode = "Normal";
         }
 
