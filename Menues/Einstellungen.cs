@@ -20,7 +20,6 @@ namespace Smake.Menues
                     break;
                 case ConsoleKey.Escape:
                     StopInputstream();
-                    _ = new Menue();
                     break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
@@ -77,6 +76,7 @@ namespace Smake.Menues
                 ProcessInput();
                 Thread.Sleep(5); // kleine Pause, CPU schonen
             }
+            _ = new Menue();
         }
 
         private void SelectMenu()
@@ -111,7 +111,6 @@ namespace Smake.Menues
                     break;
                 case 9:
                     StopInputstream();
-                    _ = new Menue();
                     break;
             }
         }
