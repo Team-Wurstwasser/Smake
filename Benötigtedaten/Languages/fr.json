@@ -1,7 +1,7 @@
 {
     "jsonload": {
-        "fileNotFound": "Fichier JSON introuvable : {path}",
-        "loadError": "Erreur lors du chargement du fichier {path} : {message}"
+        "fileNotFound": "Fichier JSON introuvable: {path}",
+        "loadError": "Erreur lors du chargement du fichier {path}: {message}"
     },
     "saveLoad": {
         "mainMissing": "Main file missing, loading backup...",
@@ -10,8 +10,8 @@
         "backupAlsoCorrupt": "❌ Backup also corrupted – default values will be set."
     },
     "input": {
-        "player1": "Joueur 1, entrez votre nom : ",
-        "player2": "Joueur 2, entrez votre nom : "
+        "player1": "Joueur 1, entrez votre nom: ",
+        "player2": "Joueur 2, entrez votre nom: "
     },
     "menu": {
         "items": [
@@ -34,14 +34,14 @@
             "fast": "Rapide"
         },
         "items": [
-            "Changer la difficulté  [Actuel : {difficulty}]",
-            "Multijoueur            [Actuel : {multiplayer}]",
-            "Changer le mode de jeu [Actuel : {gamemode}]",
-            "Changer MaxFood        [Actuel : {maxfutter}]",
-            "Mode performance       [Actuel : {performance}]",
-            "Musique ON/OFF         [Actuel : {music}]",
-            "Sons ON/OFF            [Actuel : {sounds}]",
-            "Changer la langue      [Actuel : {language}]",
+            "Changer la difficulté  [Actuel: {difficulty}]",
+            "Multijoueur            [Actuel: {multiplayer}]",
+            "Changer le mode de jeu [Actuel: {gamemode}]",
+            "Changer MaxFood        [Actuel: {maxfutter}]",
+            "Mode performance       [Actuel: {performance}]",
+            "Musique ON/OFF         [Actuel: {music}]",
+            "Sons ON/OFF            [Actuel: {sounds}]",
+            "Changer la langue      [Actuel: {language}]",
             "Réinitialiser la sauvegarde",
             "Retour au menu principal"
         ],
@@ -57,16 +57,16 @@
             "Contrôle Chaos"
         ],
         "gamemodeHeaderTitle": "║             Sélectionner le mode de jeu    ║",
-        "gamemodePrompt": "Choix : ",
-        "gamemodeChanged": "Mode de jeu changé :",
+        "gamemodePrompt": "Choix: ",
+        "gamemodeChanged": "Mode de jeu changé:",
         "current": "actuel",
         "maxFoodHeaderTitle": "║ Définir la quantité maximale de nourriture ║",
-        "maxFoodLimit": "║ Maximum autorisé : {limit}       ║",
-        "maxFoodPrompt": "Entrée : ",
+        "maxFoodLimit": "║ Maximum autorisé: {limit}       ║",
+        "maxFoodPrompt": "Entrée: ",
         "maxFoodTooHigh": "⚠ La valeur ne peut pas dépasser {limit}.",
         "maxFoodChanged": "✔ MaxFood a été défini sur {value} !",
         "languageMenuTitle": "║         Sélectionner la langue             ║",
-        "languageMenuPrompt": "Choix : ",
+        "languageMenuPrompt": "Choix: ",
         "languageChanged": "Langue changée avec succès en {lang} !",
         "invalidSelection": "⚠ Sélection invalide !",
         "invalidInput": "⚠ Entrée invalide. Veuillez entrer un nombre positif valide.",
@@ -78,10 +78,10 @@
     },
     "shop": {
         "title": "Boutique",
-        "coins": "Pièces : {coins}",
-        "level": "Niveau : {level}",
+        "coins": "Pièces: {coins}",
+        "level": "Niveau: {level}",
         "switchPage": "←  Changer de page de boutique  →",
-        "requiredLevel": "[Niveau requis : {level}]",
+        "requiredLevel": "[Niveau requis: {level}]",
         "unlocked": "[Débloqué]",
         "price": "[{price} Pièces]",
         "back": "Retour au menu principal",
@@ -94,49 +94,48 @@
         "title": "Skins / Couleurs",
         "performancemode": "Mode performance ACTIVÉ",
         "items": [
-            "Changer le skin de queue du Joueur 1         [Actuel : ",
-            "Changer le skin de queue du Joueur 2         [Actuel : ",
-            "Changer le skin de nourriture                [Actuel : ",
-            "Changer le skin de bord                      [Actuel : ",
-            "Changer la couleur du Joueur 1               [Actuel : ",
-            "Changer la couleur du Joueur 2               [Actuel : ",
-            "Changer la couleur de la queue du Joueur 1   [Actuel : ",
-            "Changer la couleur de la queue du Joueur 2   [Actuel : ",
-            "Changer la couleur de la nourriture          [Actuel : ",
-            "Changer la couleur du bord                   [Actuel : ",
+            "Changer le skin de queue du Joueur 1         [Actuel: ",
+            "Changer le skin de queue du Joueur 2         [Actuel: ",
+            "Changer le skin de nourriture                [Actuel: ",
+            "Changer le skin de bord                      [Actuel: ",
+            "Changer la couleur du Joueur 1               [Actuel: ",
+            "Changer la couleur du Joueur 2               [Actuel: ",
+            "Changer la couleur de la queue du Joueur 1   [Actuel: ",
+            "Changer la couleur de la queue du Joueur 2   [Actuel: ",
+            "Changer la couleur de la nourriture          [Actuel: ",
+            "Changer la couleur du bord                   [Actuel: ",
             "Retour au menu principal"
         ]
     },
     "stats": {
         "title": "Statistiques",
-        "level": "Niveau :                  {level}",
-        "progress": "Progression :             [{bar}] {points}/100",
-        "totalGames": "Jeux totaux :             {games}",
-        "highscore": "Meilleur score :          {highscore}",
-        "avgXp": "XP moyen :                {avgxp}",
-        "totalCoins": "Pièces totales :          {totalcoins}",
-        "currentCoins": "Pièces actuelles :        {coins}",
+        "level": "Niveau:                  {level}",
+        "progress": "Progression:             [{bar}] {points}/100",
+        "totalGames": "Jeux totaux:             {games}",
+        "highscore": "Meilleur score:          {highscore}",
+        "avgXp": "XP moyen:                {avgxp}",
+        "totalCoins": "Pièces totales:          {totalcoins}",
+        "currentCoins": "Pièces actuelles:        {coins}",
         "back": "Appuyez sur une touche pour revenir au menu..."
     },
-    "legende": "  Points : ",
+    "legende": "  Points: ",
     "gameover": {
-        "title": "              GAME OVER",
         "draw": "Égalité !",
         "playerWins": "{player} gagne !",
         "playerPoints": "{player} a atteint {points} points.",
         "lose": "Perdu – essayez encore !",
         "losePoints": "Vous avez obtenu {points} points.",
         "win": "Félicitations ! Vous avez gagné !",
-        "winPoints": "Votre score : {points}",
+        "winPoints": "Votre score: {points}",
         "backToMenu": "Appuyez sur [Esc] pour revenir au menu",
         "restart": "ou [Entrée] pour démarrer une nouvelle partie"
     },
     "anleitung": {
         "title": "INSTRUCTIONS",
-        "goal": "Objectif : Mangez autant de {food} que possible !",
-        "controls": "Contrôles :",
-        "player1": "Joueur 1 :\n  ↑ - Haut\n  ← - Gauche\n  ↓ - Bas\n  → - Droite\n",
-        "player2": "Joueur 2 :\n  W - Haut\n  A - Gauche\n  S - Bas\n  D - Droite\n",
+        "goal": "Objectif: Mangez autant de {food} que possible !",
+        "controls": "Contrôles:",
+        "player1": "Joueur 1:\n  ↑ - Haut\n  ← - Gauche\n  ↓ - Bas\n  → - Droite\n",
+        "player2": "Joueur 2:\n  W - Haut\n  A - Gauche\n  S - Bas\n  D - Droite\n",
         "collision": "Évitez les collisions avec vous-même ou le bord !",
         "back": "Appuyez sur une touche pour revenir au menu..."
     }
