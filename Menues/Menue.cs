@@ -134,8 +134,6 @@ namespace Smake.Menues
                 case 7:
                     Environment.Exit(0);
                     break;
-                default:
-                    break;
             }
         }
     }
