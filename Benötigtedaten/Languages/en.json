@@ -120,7 +120,6 @@
     },
     "legende": "  Points: ",
     "gameover": {
-        "title": "              GAME OVER",
         "draw": "Draw!",
         "playerWins": "{player} wins!",
         "playerPoints": "{player} reached {points} points.",
