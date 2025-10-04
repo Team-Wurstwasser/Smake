@@ -5,8 +5,6 @@ using Smake.Render;
 using Smake.Speicher;
 using Smake.Spieler;
 using Smake.Values;
-using Smake.Enums;
-
 namespace Smake.Spiel
 {
     public class Spiellogik : RendernSpielfeld
@@ -31,17 +29,6 @@ namespace Smake.Spiel
         // Allen Variablen den Startwert geben
         void Neustart()
         {
-
-            if (Enum.TryParse<Difficulty>(Spielvalues.Difficulty, out Difficulty diff))
-            {
-                if (MusikSelector.MusikMap.TryGetValue(Spielvalues.Gamemode!, out var difficultyDict)
-                    && difficultyDict.TryGetValue(diff, out var currentMusik))
-                {
-                    Musik.Currentmusik = currentMusik;
-                    Musik.Melodie();
-                }
-            }
-
             SpeicherSystem.Speichern_Laden("Speichern");
 
             Spiel = true;
@@ -104,9 +91,7 @@ namespace Smake.Spiel
 
             Thread.Sleep(5);
 
-            Thread inputThread = new(Steuerung.ReadInput);
-
-            inputThread.Start();
+            Steuerung Input = new();
 
             // Game Loop 
             while (Spiel)
@@ -129,7 +114,7 @@ namespace Smake.Spiel
 
             Coins();
 
-            inputThread.Join(); // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
+            Input.StopInputStream(); // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
             ShowGameOverScreen(); // Spielende-Bildschirm
 
