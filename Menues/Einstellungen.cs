@@ -60,6 +60,11 @@ namespace Smake.Menues
 
         public Einstellungen()
         {
+            Menueloop();
+        }
+
+        private void Menueloop()
+        {
             Musik.Currentmusik = GameData.MusikDaten.Menue.Einstellungen;
 
             Title = "Einstellungen";
