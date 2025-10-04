@@ -5,10 +5,30 @@ namespace Smake.Spiel
 {
     public class Steuerung 
     {
-        // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und speichert diese
-        public static void ReadInput()
+        bool DoReadInput = true;
+        Thread? InputThread;
+
+        public Steuerung()
         {
-            while (Spiellogik.Spiel)
+            StartInputStream();
+        }
+        
+        private void StartInputStream()
+        {
+            InputThread = new(ReadInput);
+            InputThread.Start();
+        }
+
+        public void StopInputStream()
+        {
+            DoReadInput = false;
+            InputThread?.Join();
+        }
+
+        // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und speichert diese
+        private void ReadInput()
+        {
+            while (DoReadInput)
             {
                 if (Console.KeyAvailable)
                 {

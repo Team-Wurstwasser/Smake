@@ -1,7 +1,9 @@
-﻿using Smake.Values;
+﻿using Smake.Helper;
 using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
+using Smake.Values;
+using System.Diagnostics;
 
 namespace Smake.Menues
 {
@@ -17,32 +19,24 @@ namespace Smake.Menues
                 "Beenden"
         ];
 
-
-        private ConsoleKey input;
-        public override ConsoleKey Input
+        public void ProcessInput()
         {
-            get { return input; }
-            set
+            switch (Input)
             {
-                input = value;
-
-                switch (Input)
-                {
-                    case ConsoleKey.UpArrow:
-                        MenuTracker--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        MenuTracker++;
-                        break;
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                        Console.Clear();
-                        SelectMenu();
-                        break;
-                    default:
-                        break;
-                }
+                case ConsoleKey.UpArrow:
+                    MenuTracker--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    MenuTracker++;
+                    break;
+                case ConsoleKey.Enter:
+                case ConsoleKey.Spacebar:
+                    SelectMenu();
+                    break;
             }
+
+            Input = 0;
+            Render();
         }
 
         private int menuTracker;
@@ -66,7 +60,6 @@ namespace Smake.Menues
                         menuTracker = value;
                     }
                     Selected = MenuTracker;
-                    Render();
                 }
             }
         }
@@ -96,6 +89,11 @@ namespace Smake.Menues
             MenuTracker = 1;
             InitialRender();
             StartInputstream();
+            while (DoReadInput)
+            {
+                ProcessInput();
+                Thread.Sleep(5); // kleine Pause, CPU schonen
+            }
         }
 
         private void SelectMenu()
@@ -103,28 +101,30 @@ namespace Smake.Menues
             switch (MenuTracker)
             {
                 case 1:
-                    _ = new Spiellogik();
+                    Musik.Currentmusik = MusikSelector.Selector();
+                    Musik.Melodie();
                     StopInputstream();
+                    _ = new Spiellogik();
                     break;
                 case 2:
-                    _ = new Einstellungen();
                     StopInputstream();
+                    _ = new Einstellungen();
                     break;
                 case 3:
-                    _ = new Shop();
                     StopInputstream();
+                    _ = new Shop();
                     break;
                 case 4:
-                    _ = new Skin_Farben();
                     StopInputstream();
+                    _ = new Skin_Farben();
                     break;
                 case 5:
-                    _ = new Statistiken();
                     StopInputstream();
+                    _ = new Statistiken();
                     break;
                 case 6:
-                    _ = new Anleitung();
                     StopInputstream();
+                    _ = new Anleitung();
                     break;
                 case 7:
                     Environment.Exit(0);

@@ -1,5 +1,6 @@
 ﻿using Smake.Values;
 using Smake.Speicher;
+using System.Diagnostics;
 
 namespace Smake.Render
 {
@@ -10,8 +11,8 @@ namespace Smake.Render
         public string? Title { private get; set; }
         public object?[] GameValue { private get; set; } = [];
         public bool[] IsColor { private get; set; } = [];
-        public virtual ConsoleKey Input { get; set; }
-        bool DoReadInput = true;
+        public volatile bool DoReadInput = true;
+        public ConsoleKey Input { get; set; }
         Thread? InputThread;
 
         public void InitialRender() 
@@ -201,7 +202,7 @@ namespace Smake.Render
 
         public void StartInputstream()
         {
-            InputThread = new(Readinput);
+            InputThread = new(ReadInput);
             InputThread.Start();
         }
 
@@ -211,13 +212,17 @@ namespace Smake.Render
             InputThread?.Join();
         }
 
-        private void Readinput()
+        private void ReadInput()
         {
             while (DoReadInput)
             {
                 if (Console.KeyAvailable)
                 {
                     Input = Console.ReadKey(true).Key;
+                }
+                else
+                {
+                    Thread.Sleep(10); // CPU schonen
                 }
             }
         }

@@ -14,7 +14,6 @@ namespace Smake.Menues
             RenderAnleitung();
             Console.ReadKey();
             _ = new Menue();
-            Thread.Sleep(5);
         }
         static void RenderAnleitung()
         {
