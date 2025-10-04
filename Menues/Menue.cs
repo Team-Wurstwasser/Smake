@@ -109,30 +109,31 @@ namespace Smake.Menues
                     Musik.Currentmusik = MusikSelector.Selector();
                     Musik.Melodie();
                     StopInputstream();
-                    _ = new Spiellogik();
+                    Program.CurrentView = 1;
                     break;
                 case 2:
                     StopInputstream();
-                    _ = new Einstellungen();
+                    Program.CurrentView = 2;
                     break;
                 case 3:
                     StopInputstream();
-                    _ = new Shop();
+                    Program.CurrentView = 3;
                     break;
                 case 4:
                     StopInputstream();
-                    _ = new Skin_Farben();
+                    Program.CurrentView = 4;
                     break;
                 case 5:
                     StopInputstream();
-                    _ = new Statistiken();
+                    Program.CurrentView = 5;
                     break;
                 case 6:
                     StopInputstream();
-                    _ = new Anleitung();
+                    Program.CurrentView = 6;
                     break;
                 case 7:
-                    Environment.Exit(0);
+                    StopInputstream();
+                    Program.CurrentView = 0;
                     break;
             }
         }

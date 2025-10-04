@@ -13,7 +13,7 @@ namespace Smake.Menues
 
             RenderAnleitung();
             Console.ReadKey();
-            _ = new Menue();
+            Program.CurrentView = 7;
         }
         static void RenderAnleitung()
         {
