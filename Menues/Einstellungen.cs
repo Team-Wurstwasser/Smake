@@ -76,7 +76,8 @@ namespace Smake.Menues
                 ProcessInput();
                 Thread.Sleep(5); // kleine Pause, CPU schonen
             }
-            _ = new Menue();
+
+            Program.CurrentView = 7;
         }
 
         private void SelectMenu()
