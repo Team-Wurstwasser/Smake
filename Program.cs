@@ -25,20 +25,35 @@ namespace Smake
 
             do
             {
-                _ = CurrentView switch
+                switch (CurrentView)
                 {
-                    1 => (object)new Spiellogik(),
-                    2 => (object)new Einstellungen(),
-                    3 => (object)new Shop(),
-                    4 => (object)new Skin_Farben(),
-                    5 => (object)new Statistiken(),
-                    6 => (object)new Anleitung(),
-                    7 => (object)new Menue(),
-                    _ => Exit = true,
-                };
+                    case 1:
+                        _ = new Spiellogik();
+                        break;
+                    case 2:
+                        _ = new Einstellungen();
+                        break;
+                    case 3:
+                        _ = new Shop();
+                        break;
+                    case 4:
+                        _ = new Skin_Farben();
+                        break;
+                    case 5:
+                        _ = new Statistiken();
+                        break;
+                    case 6:
+                        _ = new Anleitung();
+                        break;
+                    case 7:
+                        _ = new Menue();
+                        break;
+                    default:
+                        Exit = true;
+                        break;
+                }
+            } while (!Exit);
 
-            }
-            while (!Exit);
         }
 
         // Eingaben für Spielernamen
