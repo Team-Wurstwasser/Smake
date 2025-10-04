@@ -1,0 +1,147 @@
+{
+    "jsonload": {
+        "fileNotFound": "JSON-Datei nicht gefunden: {path}",
+        "loadError": "Fehler beim Laden der Datei {path}: {message}"
+    },
+    "saveLoad": {
+        "mainMissing": "Hauptdatei fehlt, lade Backup...",
+        "backupCorrupt": "❌ Backup beschädigt – Standardwerte werden gesetzt.",
+        "loadError": "⚠ Fehler beim Laden, versuche Backup...",
+        "backupAlsoCorrupt": "❌ Backup auch beschädigt – Standardwerte werden gesetzt."
+    },
+    "input": {
+        "player1": "Spieler 1, gib deinen Namen ein: ",
+        "player2": "Spieler 1, gib deinen Namen ein: "
+    },
+    "menu": {
+        "items": [
+            "Spiel starten",
+            "Einstellungen",
+            "Shop",
+            "Skins/Farben",
+            "Statistiken",
+            "Anleitung",
+            "Beenden"
+        ]
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "on": "An",
+        "off": "Aus",
+        "difficulty": {
+            "slow": "Langsam",
+            "medium": "Mittel",
+            "fast": "Schnell"
+        },
+        "items": [
+            "Schwierigkeit ändern   [Aktuell: {difficulty}]",
+            "Multiplayer            [Aktuell: {multiplayer}]",
+            "Gamemode ändern        [Aktuell: {gamemode}]",
+            "MaxFutter ändern       [Aktuell: {maxfutter}]",
+            "Performance mode       [Aktuell: {performance}]",
+            "Musik AN/AUS           [Aktuell: {music}]",
+            "Sounds AN/AUS          [Aktuell: {sounds}]",
+            "Spielstand zurücksetzen",
+            "Zurück zum Hauptmenü"
+        ],
+        "gamemodes": [
+            "Normal",
+            "Unendlich",
+            "Babymode",
+            "Babymode-Unendlich",
+            "Mauer-Modus",
+            "Schlüssel-Modus",
+            "Sprungfutter-Modus",
+            "Bomben-Modus",
+            "Chaos-Steuerung"
+        ],
+        "gamemodeHeaderTop": "╔════════════════════════════════════════════╗",
+        "gamemodeHeaderTitle": "║             Spielmodus auswählen           ║",
+        "gamemodeHeaderLine": "╠════════════════════════════════════════════╣",
+        "gamemodeFooter": "╚════════════════════════════════════════════╝",
+        "gamemodePrompt": "Auswahl: ",
+        "gamemodeChanged": "Spielmodus gewechselt:",
+        "current": "aktuell",
+        "maxFoodHeaderTop": "╔════════════════════════════════════════════╗",
+        "maxFoodHeaderTitle": "║          Maximal Futter einstellen         ║",
+        "maxFoodHeaderLine": "╠════════════════════════════════════════════╣",
+        "maxFoodLimit": "║ Maximal erlaubte Anzahl: {limit} ║",
+        "maxFoodFooter": "╚════════════════════════════════════════════╝",
+        "maxFoodPrompt": "Eingabe: ",
+        "maxFoodTooHigh": "⚠ Der Wert darf maximal {limit} sein.",
+        "maxFoodChanged": "✔ MaxFutter wurde auf {value} gesetzt!",
+        "invalidSelection": "⚠ Ungültige Auswahl!",
+        "invalidInput": "⚠ Ungültige Eingabe. Bitte eine gültige positive Zahl eingeben.",
+        "pressAnyKey": "Drücke eine beliebige Taste, um fortzufahren...",
+        "resetPrompt": "⚠ Willst du wirklich den Spielstand zurücksetzen? ({count}/3) [ja/nein]",
+        "resetConfirm": "ja",
+        "resetCancelled": "✔ Zurücksetzen abgebrochen.",
+        "resetDone": "✔ Spielstand erfolgreich zurückgesetzt!"
+    },
+    "shop": {
+        "title": "Shop",
+        "coins": "Coins: {coins}",
+        "level": "Level: {level}",
+        "switchPage": "←  Wechsle die Shopseite  →",
+        "requiredLevel": "[Benötigtes Level: {level}]",
+        "unlocked": "[Freigeschaltet]",
+        "price": "[{price} Coins]",
+        "back": "Zurück zum Hauptmenü",
+        "tailSkins": "Tail Skins",
+        "foodSkins": "Food Skins",
+        "randSkins": "Rand Skins",
+        "colors": "Farben"
+    },
+    "skins": {
+        "title": "Skins / Farben",
+        "performancemode": "Performance Mode AN",
+        "items": [
+            "Player 1 Tailskin ändern    [Aktuell: ",
+            "Player 2 Tailskin ändern    [Aktuell: ",
+            "Foodskin ändern             [Aktuell: ",
+            "Randskin ändern             [Aktuell: ",
+            "Player 1 Farbe ändern       [Aktuell: ",
+            "Player 2 Farbe ändern       [Aktuell: ",
+            "Player 1 Tailfarbe ändern   [Aktuell: ",
+            "Player 2 Tailfarbe ändern   [Aktuell: ",
+            "Foodfarbe ändern            [Aktuell: ",
+            "Randfarbe ändern            [Aktuell: ",
+            "Zurück zum Hauptmenü"
+        ]
+    },
+    "stats": {
+        "title": "Statistiken",
+        "line": "══════════════════════════════",
+        "level": "Level:                    {level}",
+        "progress": "Fortschritt:              [{bar}] {points}/100",
+        "totalGames": "Gesamte Spiele:           {games}",
+        "highscore": "Höchste Punktzahl:        {highscore}",
+        "avgXp": "Durchschnittliche XP:     {avgxp}",
+        "totalCoins": "Gesamte Coins:            {totalcoins}",
+        "currentCoins": "Aktuelle Coins:           {coins}",
+        "back": "Drücke eine beliebige Taste, um zum Menü zurückzukehren..."
+    },
+    "legende": "  Punkte: ",
+    "gameover": {
+        "title": "              GAME OVER",
+        "draw": "Unentschieden!",
+        "playerWins": "{player} gewinnt!",
+        "playerPoints": "{player} hat {points} Punkte erreicht.",
+        "lose": "Leider verloren – versuch's noch einmal!",
+        "losePoints": "Du hast {points} Punkte erreicht.",
+        "win": "Glückwunsch! Du hast gewonnen!",
+        "winPoints": "Deine Punktzahl: {points}",
+        "backToMenu": "Drücke [Esc],   um zum Menü zurückzukehren",
+        "restart": "oder   [Enter], um ein neues Spiel zu starten"
+    },
+    "anleitung": {
+        "title": "ANLEITUNG",
+        "line": "══════════════════════════════",
+        "goal": "Ziel: Iss so viele {food} wie möglich!",
+        "controls": "Steuerung:",
+        "player1": "Spieler 1:\n  ↑ - Hoch\n  ← - Links\n  ↓ - Runter\n  → - Rechts\n",
+        "player2": "Spieler 2:\n  W - Hoch\n  A - Links\n  S - Runter\n  D - Rechts\n",
+        "collision": "Vermeide Kollisionen mit dir selbst oder dem Rand!",
+        "back": "Drücke eine beliebige Taste, um zum Menü zurückzukehren..."
+    }
+}

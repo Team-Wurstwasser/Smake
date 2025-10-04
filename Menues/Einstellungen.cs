@@ -236,7 +236,6 @@ namespace Smake.Menues
             Console.Clear();
         }
 
-
         static void ResetSpielstand()
         {
             Console.Clear();
@@ -245,7 +244,7 @@ namespace Smake.Menues
                 Console.WriteLine(LanguageManager.Get("settings.resetPrompt").Replace("{count}", i.ToString()));
                 string? input = Console.ReadLine()?.Trim().ToLower();
                 Console.Clear();
-                if (input != "ja")
+                if (input != LanguageManager.Get("settings.resetConfirm"))
                 {
                     Console.WriteLine(LanguageManager.Get("settings.resetCancelled"));
                     Console.ReadKey(true);

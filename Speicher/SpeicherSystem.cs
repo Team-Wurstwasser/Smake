@@ -15,11 +15,11 @@ namespace Smake.Speicher
             // Wenn die Hauptdatei fehlt, aber ein Backup existiert, lade das Backup
             if (!File.Exists(SpeicherDatei) && File.Exists(BackupDatei))
             {
-                Console.WriteLine("Hauptdatei fehlt, lade Backup...");
+                Console.WriteLine(LanguageManager.Get("saveLoad.mainMissing"));
                 Console.ReadKey();
                 if (!Laden(BackupDatei))
                 {
-                    Console.WriteLine("❌ Backup beschädigt – Standardwerte werden gesetzt.");
+                    Console.WriteLine(LanguageManager.Get("saveLoad.backupCorrupt"));
                     Console.ReadKey();
                     SetzeStandardwerte();
                     Speichern();
@@ -51,11 +51,11 @@ namespace Smake.Speicher
                 case "Laden":
                     if (!Laden(SpeicherDatei))
                     {
-                        Console.WriteLine("⚠ Fehler beim Laden, versuche Backup...");
+                        Console.WriteLine(LanguageManager.Get("saveLoad.loadError"));
                         Console.ReadKey();
                         if (!Laden(BackupDatei))
                         {
-                            Console.WriteLine("❌ Backup auch beschädigt – Standardwerte werden gesetzt.");
+                            Console.WriteLine(LanguageManager.Get("saveLoad.backupAlsoCorrupt"));
                             Console.ReadKey();
                             SetzeStandardwerte();
                             Speichern();
@@ -101,8 +101,19 @@ namespace Smake.Speicher
             Spielstatus.SpieleGesamt = 0;
             Spielvalues.Maxfutter = 1;
 
-            Spielvalues.Difficulty = "Mittel";
-            Spielvalues.Gamemode = "Normal";
+            Spielvalues.DifficultyInt = 2;
+
+            Spielvalues.Difficulty = Spielvalues.DifficultyInt switch
+            {
+                1 => LanguageManager.Get("settings.difficulty.slow"),
+                2 => LanguageManager.Get("settings.difficulty.medium"),
+                3 => LanguageManager.Get("settings.difficulty.fast"),
+                _ => LanguageManager.Get("settings.difficulty.medium") // Standardwert
+            };
+
+            Spielvalues.GamemodeInt = 1;
+            var modes = LanguageManager.GetArray("settings.gamemodes");
+            Spielvalues.Gamemode = modes[(int)Spielvalues.GamemodeInt - 1];
             Spielvalues.Multiplayer = false;
 
             Skinvalues.RandSkin = GameData.RandSkins[0];
@@ -130,8 +141,8 @@ namespace Smake.Speicher
                 $"Maxfutter={Spielvalues.Maxfutter}",
                 $"Highscore={Spielstatus.Highscore}",
                 $"Gesamtcoins={Spielstatus.Gesamtcoins}",
-                $"Difficulty={Spielvalues.Difficulty}",
-                $"Gamemode={Spielvalues.Gamemode}",
+                $"Difficulty={Spielvalues.DifficultyInt}",
+                $"Gamemode={Spielvalues.GamemodeInt}",
                 $"Multiplayer={Spielvalues.Multiplayer}",
                 $"RandSkin={Skinvalues.RandSkin}",
                 $"FoodSkin={Skinvalues.FoodSkin}",
@@ -201,8 +212,8 @@ namespace Smake.Speicher
                         case "SpieleGesamt": Spielstatus.SpieleGesamt = int.Parse(wert); break;
                         case "Maxfutter": Spielvalues.Maxfutter = int.Parse(wert); break;
 
-                        case "Difficulty": Spielvalues.Difficulty = wert; break;
-                        case "Gamemode": Spielvalues.Gamemode = wert; break;
+                        case "Difficulty": Spielvalues.DifficultyInt = int.Parse(wert); break;
+                        case "Gamemode": Spielvalues.GamemodeInt = int.Parse(wert); break;
                         case "Multiplayer": Spielvalues.Multiplayer = bool.Parse(wert); break;
 
                         case "RandSkin": Skinvalues.RandSkin = wert[0]; break;
@@ -236,6 +247,17 @@ namespace Smake.Speicher
                     return false;
                 }
             }
+            Spielvalues.GamemodeInt ??= 1;
+            var modes = LanguageManager.GetArray("settings.gamemodes");
+            Spielvalues.Gamemode = modes[(int)Spielvalues.GamemodeInt - 1];
+
+            Spielvalues.Difficulty = Spielvalues.DifficultyInt switch
+            {
+                1 => LanguageManager.Get("settings.difficulty.slow"),
+                2 => LanguageManager.Get("settings.difficulty.medium"),
+                3 => LanguageManager.Get("settings.difficulty.fast"),
+                _ => LanguageManager.Get("settings.difficulty.medium") // Standardwert
+            };
 
             return true;
         }
