@@ -239,7 +239,7 @@ namespace Smake.Spiel
                 {
                     case ConsoleKey.Enter:
                         check = true;
-                        Program.CurrentView = 6;
+                        Program.CurrentView = 1;
                         break;
 
                     case ConsoleKey.Escape:
