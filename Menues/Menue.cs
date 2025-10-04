@@ -8,16 +8,6 @@ namespace Smake.Menues
 {
     public class Menue : RendernMenue
     {
-        readonly string[] menu = [
-                "Spiel starten",
-                "Einstellungen",
-                "Shop",
-                "Skins/Farben",
-                "Statistiken",
-                "Anleitung",
-                "Beenden"
-        ];
-
         void ProcessInput()
         {
             switch (Input)
@@ -89,7 +79,7 @@ namespace Smake.Menues
             }
 
             Title = "Menü";
-            Display = menu;
+            Display = LanguageManager.GetArray("menu.items"); ;
             MenuTracker = 1;
             InitialRender();
             StartInputstream();
