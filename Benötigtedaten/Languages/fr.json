@@ -41,7 +41,7 @@
             "Mode performance       [Actuel : {performance}]",
             "Musique ON/OFF         [Actuel : {music}]",
             "Sons ON/OFF            [Actuel : {sounds}]",
-            "Changer la langue      [Actuel: {language}]",
+            "Changer la langue      [Actuel : {language}]",
             "Réinitialiser la sauvegarde",
             "Retour au menu principal"
         ],
@@ -65,6 +65,9 @@
         "maxFoodPrompt": "Entrée : ",
         "maxFoodTooHigh": "⚠ La valeur ne peut pas dépasser {limit}.",
         "maxFoodChanged": "✔ MaxFood a été défini sur {value} !",
+        "languageMenuTitle": "║         Sélectionner la langue             ║",
+        "languageMenuPrompt": "Choix : ",
+        "languageChanged": "Langue changée avec succès en {lang} !",
         "invalidSelection": "⚠ Sélection invalide !",
         "invalidInput": "⚠ Entrée invalide. Veuillez entrer un nombre positif valide.",
         "pressAnyKey": "Appuyez sur une touche pour continuer...",
