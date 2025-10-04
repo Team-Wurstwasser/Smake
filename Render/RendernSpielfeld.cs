@@ -174,7 +174,7 @@ namespace Smake.Render
                 case 2: return LanguageManager.Get("legende");
                 case 3: return "  ══════════════════════════════";
                 case 4:
-                    string maxpunkte = (Spielvalues.Gamemode != "Unendlich" && Spielvalues.Gamemode != "Babymode-Unendlich")
+                    string maxpunkte = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
                     ? GameData.MaxPunkte.ToString()
                     : "∞";
                     return $"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}";
@@ -182,7 +182,7 @@ namespace Smake.Render
                 case 6:
                     if (Spielvalues.Multiplayer)
                     {
-                        string maxpunkte2 = (Spielvalues.Gamemode != "Unendlich" && Spielvalues.Gamemode != "Babymode-Unendlich")
+                        string maxpunkte2 = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
                    ? GameData.MaxPunkte.ToString()
                    : "∞";
                         return $"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}";
@@ -251,7 +251,7 @@ namespace Smake.Render
                     break;
                 case 4:
                     SetFarbe(Spiellogik.Player.HeadFarbe);
-                    string maxpunkte = (Spielvalues.Gamemode != "Unendlich" && Spielvalues.Gamemode != "Babymode-Unendlich")
+                    string maxpunkte = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
                    ? GameData.MaxPunkte.ToString()
                    : "∞";
                     Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
@@ -264,7 +264,7 @@ namespace Smake.Render
                     if (Spielvalues.Multiplayer)
                     {
                         SetFarbe(Spiellogik.Player2.HeadFarbe);
-                        string maxpunkte2 = (Spielvalues.Gamemode != "Unendlich" && Spielvalues.Gamemode != "Babymode-Unendlich")
+                        string maxpunkte2 = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
                    ? GameData.MaxPunkte.ToString()
                    : "∞";
                         Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
