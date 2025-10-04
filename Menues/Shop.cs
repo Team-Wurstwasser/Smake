@@ -23,7 +23,6 @@ namespace Smake.Menues
                     break;
                 case ConsoleKey.Escape:
                     StopInputstream();
-                    _ = new Menue();
                     break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
@@ -81,7 +80,8 @@ namespace Smake.Menues
                 ProcessInput();
                 Thread.Sleep(5); // kleine Pause, CPU schonen
             }
-}
+            _ = new Menue();
+        }
 
         private void SelectMenu()
         {
@@ -89,7 +89,6 @@ namespace Smake.Menues
             {
                 if (MenuTracker == gesamtOptionenSkins)
                 {
-                    _ = new Menue();
                     StopInputstream();
                 }
 
@@ -133,9 +132,7 @@ namespace Smake.Menues
             {
                 if (MenuTracker == gesamtOptionenFarben)
                 {
-                    _ = new Menue();
                     StopInputstream();
-                    Thread.Sleep(5);
                 }
 
                 // Kauflogik Farben
