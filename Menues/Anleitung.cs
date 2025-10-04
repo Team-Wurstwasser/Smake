@@ -19,7 +19,7 @@ namespace Smake.Menues
         {
             Console.Clear();
             Console.WriteLine(LanguageManager.Get("anleitung.title"));
-            Console.WriteLine(LanguageManager.Get("anleitung.line"));
+            Console.WriteLine("══════════════════════════════");
             Console.WriteLine(LanguageManager.Get("anleitung.goal").Replace("{food}", Skinvalues.FoodSkin.ToString()));
             Console.WriteLine();
             Console.WriteLine(LanguageManager.Get("anleitung.controls"));
@@ -27,7 +27,7 @@ namespace Smake.Menues
             Console.WriteLine(LanguageManager.Get("anleitung.player1"));
             Console.WriteLine(LanguageManager.Get("anleitung.player2"));
             Console.WriteLine(LanguageManager.Get("anleitung.collision"));
-            Console.WriteLine(LanguageManager.Get("anleitung.line"));
+            Console.WriteLine("══════════════════════════════");
             Console.WriteLine(LanguageManager.Get("anleitung.back"));
         }
     }
