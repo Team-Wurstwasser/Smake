@@ -177,7 +177,7 @@ namespace Smake.Spiel
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine(LanguageManager.Get("gameover.title"));
+            Console.WriteLine("              GAME OVER              ");
             Console.WriteLine("═════════════════════════════════════");
 
             if (Spielvalues.Multiplayer)
