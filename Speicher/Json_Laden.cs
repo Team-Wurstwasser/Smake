@@ -34,6 +34,7 @@ namespace Smake.Speicher
         public static int Hoehe { get; private set; }
         public static int MaxPunkte { get; private set; }
         public static int MaxFutterconfig { get; private set; }
+        public static int TeleportInterval { get; private set; }
         public static int TailStartLaenge { get; private set; }
         public static Positionen Startpositionen { get; private set; } = new();
         public static Difficulty SpielSchwierigkeit { get; private set; } = new();
@@ -87,6 +88,7 @@ namespace Smake.Speicher
                 Hoehe = data?.Hoehe ?? 0;
                 MaxPunkte = data?.MaxPunkte ?? 0;
                 MaxFutterconfig = data?.MaxFutterconfig ?? 0;
+                TeleportInterval = data?.TeleportInterval ?? 0;
                 TailStartLaenge = data?.TailStartLaenge ?? 0;
                 Startpositionen = data?.Startpositionen ?? new Positionen();
                 SpielSchwierigkeit = data?.Difficulty ?? new Difficulty();
@@ -190,6 +192,7 @@ namespace Smake.Speicher
             public int Hoehe { get; set; }
             public int MaxPunkte { get; set; }
             public int MaxFutterconfig { get; set; }
+            public int TeleportInterval { get; set; }
             public int TailStartLaenge { get; set; }
             public Positionen? Startpositionen { get; set; }
             public Difficulty? Difficulty { get; set; }
