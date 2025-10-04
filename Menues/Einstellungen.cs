@@ -132,9 +132,9 @@ namespace Smake.Menues
             do
             {
                 Console.Clear();
-                Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderTop"));
+                Console.WriteLine("╔════════════════════════════════════════════╗");
                 Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderTitle"));
-                Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderLine"));
+                Console.WriteLine("╠════════════════════════════════════════════╣");
 
                 for (int i = 0; i < modes.Length; i++)
                 {
@@ -152,7 +152,7 @@ namespace Smake.Menues
                     Console.WriteLine("║");
                 }
 
-                Console.WriteLine(LanguageManager.Get("settings.gamemodeFooter"));
+                Console.WriteLine("╚════════════════════════════════════════════╝");
                 Console.Write(LanguageManager.Get("settings.gamemodePrompt"));
 
                 string eingabe = Console.ReadLine()!;
@@ -192,11 +192,11 @@ namespace Smake.Menues
             {
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderTop"));
+                Console.WriteLine("╔════════════════════════════════════════════╗");
                 Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderTitle"));
-                Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderLine"));
+                Console.WriteLine("╠════════════════════════════════════════════╣");
                 Console.WriteLine(LanguageManager.Get("settings.maxFoodLimit").Replace("{limit}", GameData.MaxFutterconfig.ToString().PadRight(17)));
-                Console.WriteLine(LanguageManager.Get("settings.maxFoodFooter"));
+                Console.WriteLine("╚════════════════════════════════════════════╝");
                 Console.Write(LanguageManager.Get("settings.maxFoodPrompt"));
                 string input = Console.ReadLine()!;
                 if (int.TryParse(input, out int wert) && wert > 0)
