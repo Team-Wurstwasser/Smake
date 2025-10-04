@@ -18,24 +18,35 @@ namespace Smake.Menues
         static void RenderStatistiken()
         {
             Console.Clear();
-            Console.WriteLine("Statistiken\n ");
-            Console.WriteLine("══════════════════════════════\n ");
+            Console.WriteLine(LanguageManager.Get("stats.title") + "\n ");
+            Console.WriteLine(LanguageManager.Get("stats.line") + "\n ");
 
             int punktefürLevel = Spielstatus.Xp % 100;
             int balkenLänge = 20;
             int gefüllt = (punktefürLevel * balkenLänge) / 100;
             string bar = new string('█', gefüllt).PadRight(balkenLänge, '-');
 
-            Console.WriteLine($"Level:                    {Spielstatus.Level}");
-            Console.WriteLine($"Fortschritt:              [{bar}] {punktefürLevel}/100\n");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine($"Gesamte Spiele:           {Spielstatus.SpieleGesamt}");
-            Console.WriteLine($"Höchste Punktzahl:        {Spielstatus.Highscore}");
-            Console.WriteLine($"Durchschnittliche XP:     {(Spielstatus.SpieleGesamt > 0 ? Spielstatus.Xp / Spielstatus.SpieleGesamt : 0)}");
-            Console.WriteLine($"Gesamte Coins:            {Spielstatus.Gesamtcoins}");
-            Console.WriteLine($"Aktuelle Coins:           {Spielstatus.Coins}");
-            Console.WriteLine("══════════════════════════════");
-            Console.WriteLine("Drücke eine beliebige Taste, um zum Menü zurückzukehren...");
+            Console.WriteLine(LanguageManager.Get("stats.level")
+                .Replace("{level}", Spielstatus.Level.ToString()));
+            Console.WriteLine(LanguageManager.Get("stats.progress")
+                .Replace("{bar}", bar)
+                .Replace("{points}", punktefürLevel.ToString()));
+            Console.WriteLine();
+            Console.WriteLine(LanguageManager.Get("stats.line"));
+            Console.WriteLine(LanguageManager.Get("stats.totalGames")
+                .Replace("{games}", Spielstatus.SpieleGesamt.ToString()));
+            Console.WriteLine(LanguageManager.Get("stats.highscore")
+                .Replace("{highscore}", Spielstatus.Highscore.ToString()));
+            Console.WriteLine(LanguageManager.Get("stats.avgXp")
+                .Replace("{avgxp}", (Spielstatus.SpieleGesamt > 0
+                    ? (Spielstatus.Xp / Spielstatus.SpieleGesamt).ToString()
+                    : "0")));
+            Console.WriteLine(LanguageManager.Get("stats.totalCoins")
+                .Replace("{totalcoins}", Spielstatus.Gesamtcoins.ToString()));
+            Console.WriteLine(LanguageManager.Get("stats.currentCoins")
+                .Replace("{coins}", Spielstatus.Coins.ToString()));
+            Console.WriteLine(LanguageManager.Get("stats.line"));
+            Console.WriteLine(LanguageManager.Get("stats.back"));
         }
     }
 }

@@ -36,8 +36,8 @@ namespace Smake.Spiel
             unentschieden = false;
 
             // Zeit einstellen
-            if (Spielvalues.Difficulty == "Langsam") Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
-            else if (Spielvalues.Difficulty == "Mittel") Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
+            if (Spielvalues.DifficultyInt == 1) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
+            else if (Spielvalues.DifficultyInt == 2) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
             else Spielvalues.Zeit = GameData.SpielSchwierigkeit.Schnell;
 
             // Initialisiere das Spielfeld mit Rahmen
@@ -139,7 +139,7 @@ namespace Smake.Spiel
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
 
-            if (Spielvalues.Gamemode == "Mauer-Modus")
+            if (Spielvalues.GamemodeInt == 5)
             {
                 foreach (var Mauer in Mauer)
                 {
@@ -177,7 +177,7 @@ namespace Smake.Spiel
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("              GAME OVER              ");
+            Console.WriteLine(LanguageManager.Get("gameover.title"));
             Console.WriteLine("═════════════════════════════════════");
 
             if (Spielvalues.Multiplayer)
@@ -185,25 +185,35 @@ namespace Smake.Spiel
                 if (unentschieden)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Unentschieden!");
-                    Console.WriteLine($"{Player.Name} hat {Player.Punkte} Punkte erreicht.");
-                    Console.WriteLine($"{Player2.Name} hat {Player2.Punkte} Punkte erreicht.");
+                    Console.WriteLine(LanguageManager.Get("gameover.draw"));
+                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
+                        .Replace("{player}", Player.Name)
+                        .Replace("{points}", Player.Punkte.ToString()));
+                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
+                        .Replace("{player}", Player2.Name)
+                        .Replace("{points}", Player2.Punkte.ToString()));
                     Console.WriteLine();
                 }
                 else if (gameover == 1)
                 {
                     Console.WriteLine();
-                    Console.WriteLine($"{Player2.Name} gewinnt!");
+                    Console.WriteLine(LanguageManager.Get("gameover.playerWins")
+                        .Replace("{player}", Player2.Name));
                     Console.WriteLine($"Punkte: {Player2.Punkte}");
-                    Console.WriteLine($"{Player.Name} hat {Player.Punkte} Punkte erreicht.");
+                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
+                        .Replace("{player}", Player.Name)
+                        .Replace("{points}", Player.Punkte.ToString()));
                     Console.WriteLine();
                 }
                 else if (gameover == 2)
                 {
                     Console.WriteLine();
-                    Console.WriteLine($"{Player.Name} gewinnt!");
+                    Console.WriteLine(LanguageManager.Get("gameover.playerWins")
+                        .Replace("{player}", Player.Name));
                     Console.WriteLine($"Punkte: {Player.Punkte}");
-                    Console.WriteLine($"{Player2.Name} hat {Player2.Punkte} Punkte erreicht.");
+                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
+                        .Replace("{player}", Player2.Name)
+                        .Replace("{points}", Player2.Punkte.ToString()));
                     Console.WriteLine();
                 }
             }
@@ -212,22 +222,25 @@ namespace Smake.Spiel
                 if (gameover == 1)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Leider verloren – versuch's noch einmal!");
-                    Console.WriteLine($"Du hast {Player.Punkte} Punkte erreicht.");
+                    Console.WriteLine(LanguageManager.Get("gameover.lose"));
+                    Console.WriteLine(LanguageManager.Get("gameover.losePoints")
+                        .Replace("{points}", Player.Punkte.ToString()));
                     Console.WriteLine();
                 }
                 else if (gameover == 2)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Glückwunsch! Du hast gewonnen!");
-                    Console.WriteLine($"Deine Punktzahl: {Player.Punkte}");
+                    Console.WriteLine(LanguageManager.Get("gameover.win"));
+                    Console.WriteLine(LanguageManager.Get("gameover.winPoints")
+                        .Replace("{points}", Player.Punkte.ToString()));
                     Console.WriteLine();
                 }
             }
 
             Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("Drücke [Esc],   um zum Menü zurückzukehren\n" +
-                              "oder   [Enter], um ein neues Spiel zu starten ");
+            Console.WriteLine(LanguageManager.Get("gameover.backToMenu"));
+            Console.WriteLine(LanguageManager.Get("gameover.restart"));
+
             bool check = false;
             do
             {
@@ -244,17 +257,16 @@ namespace Smake.Spiel
                         check = true;
                         Program.CurrentView = 7;
                         break;
-
                 }
             }
             while (!check);
-            while (Console.KeyAvailable) Console.ReadKey(true);   // Leere Eingabepuffer vollständig
+            while (Console.KeyAvailable) Console.ReadKey(true); // Eingabepuffer leeren
         }
 
         // Coins und xp hinzufügen
         static void Coins()
         {
-            if (Spielvalues.Gamemode != "Babymode")
+            if (Spielvalues.GamemodeInt != 3 && Spielvalues.GamemodeInt != 4)
             {
                 if (Spielstatus.Highscore < Player.Punkte)
                 { Spielstatus.Highscore = Player.Punkte; }
@@ -263,21 +275,21 @@ namespace Smake.Spiel
 
                 Spielstatus.SpieleGesamt++;
 
-                switch (Spielvalues.Difficulty)
+                switch (Spielvalues.DifficultyInt)
                 {
-                    case "Langsam":
+                    case 1:
                         Spielstatus.Gesamtcoins = Player.Punkte + Player2.Punkte + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = Player.Punkte + Player2.Punkte + Spielstatus.Coins;
                         Spielstatus.Xp = Player.Punkte + Player2.Punkte + Spielstatus.Xp;
                         break;
 
-                    case "Mittel":
+                    case 2:
                         Spielstatus.Gesamtcoins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
                         Spielstatus.Xp = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
                         break;
 
-                    case "Schnell":
+                    case 3:
                         Spielstatus.Gesamtcoins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
                         Spielstatus.Xp = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;

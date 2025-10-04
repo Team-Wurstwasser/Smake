@@ -14,6 +14,7 @@ namespace Smake
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.Title = "Smake";
+            LanguageManager.Load("de");
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
@@ -65,12 +66,12 @@ namespace Smake
 
             Console.Clear();
 
-            Console.Write("Spieler 1, gib deinen Namen ein: ");
+            Console.Write(LanguageManager.Get("input.player1"));
             Spiellogik.Player.Name = Console.ReadLine();
 
             Console.Clear();
 
-            Console.Write("Spieler 2, gib deinen Namen ein: ");
+            Console.Write(LanguageManager.Get("input.player2"));
             Spiellogik.Player2.Name = Console.ReadLine();
 
             Console.Clear();
