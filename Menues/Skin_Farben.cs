@@ -90,6 +90,11 @@ namespace Smake.Menues
 
         public Skin_Farben()
         {
+            Menueloop();
+        }
+
+        private void Menueloop()
+        {
             Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
 
             Title = "Skin_Farben";
