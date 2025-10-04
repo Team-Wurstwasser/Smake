@@ -41,6 +41,7 @@
             "Performance Mode    [Current: {performance}]",
             "Music ON/OFF        [Current: {music}]",
             "Sounds ON/OFF       [Current: {sounds}]",
+            "Change language     [Current: {language}]",
             "Reset Save          ",
             "Back to Main Menu"
         ],

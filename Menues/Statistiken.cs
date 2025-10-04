@@ -32,7 +32,7 @@ namespace Smake.Menues
                 .Replace("{bar}", bar)
                 .Replace("{points}", punktefürLevel.ToString()));
             Console.WriteLine();
-            Console.WriteLine(LanguageManager.Get("stats.line"));
+            Console.WriteLine("══════════════════════════════");
             Console.WriteLine(LanguageManager.Get("stats.totalGames")
                 .Replace("{games}", Spielstatus.SpieleGesamt.ToString()));
             Console.WriteLine(LanguageManager.Get("stats.highscore")
