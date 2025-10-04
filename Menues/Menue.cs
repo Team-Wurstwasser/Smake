@@ -108,34 +108,28 @@ namespace Smake.Menues
                 case 1:
                     Musik.Currentmusik = MusikSelector.Selector();
                     Musik.Melodie();
-                    StopInputstream();
                     Program.CurrentView = 1;
                     break;
                 case 2:
-                    StopInputstream();
                     Program.CurrentView = 2;
                     break;
                 case 3:
-                    StopInputstream();
                     Program.CurrentView = 3;
                     break;
                 case 4:
-                    StopInputstream();
                     Program.CurrentView = 4;
                     break;
                 case 5:
-                    StopInputstream();
                     Program.CurrentView = 5;
                     break;
                 case 6:
-                    StopInputstream();
                     Program.CurrentView = 6;
                     break;
                 case 7:
-                    StopInputstream();
                     Program.CurrentView = 0;
                     break;
             }
+            StopInputstream();
         }
     }
 }
