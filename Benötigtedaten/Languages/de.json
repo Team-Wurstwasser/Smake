@@ -105,7 +105,6 @@
     },
     "stats": {
         "title": "Statistiken",
-        "line": "══════════════════════════════",
         "level": "Level:                    {level}",
         "progress": "Fortschritt:              [{bar}] {points}/100",
         "totalGames": "Gesamte Spiele:           {games}",
@@ -130,7 +129,6 @@
     },
     "anleitung": {
         "title": "ANLEITUNG",
-        "line": "══════════════════════════════",
         "goal": "Ziel: Iss so viele {food} wie möglich!",
         "controls": "Steuerung:",
         "player1": "Spieler 1:\n  ↑ - Hoch\n  ← - Links\n  ↓ - Runter\n  → - Rechts\n",

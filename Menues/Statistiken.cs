@@ -19,7 +19,7 @@ namespace Smake.Menues
         {
             Console.Clear();
             Console.WriteLine(LanguageManager.Get("stats.title") + "\n ");
-            Console.WriteLine(LanguageManager.Get("stats.line") + "\n ");
+            Console.WriteLine("══════════════════════════════" + "\n ");
 
             int punktefürLevel = Spielstatus.Xp % 100;
             int balkenLänge = 20;
@@ -45,7 +45,7 @@ namespace Smake.Menues
                 .Replace("{totalcoins}", Spielstatus.Gesamtcoins.ToString()));
             Console.WriteLine(LanguageManager.Get("stats.currentCoins")
                 .Replace("{coins}", Spielstatus.Coins.ToString()));
-            Console.WriteLine(LanguageManager.Get("stats.line"));
+            Console.WriteLine("══════════════════════════════");
             Console.WriteLine(LanguageManager.Get("stats.back"));
         }
     }
