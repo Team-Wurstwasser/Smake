@@ -208,6 +208,8 @@ namespace Smake.Render
                 return Spiellogik.Player2.TailFarbe;
             if (zeichen == Skinvalues.MauerSkin)
                 return Skinvalues.MauerFarbe;
+            if (zeichen == Skinvalues.BombenSkin)
+                return Skinvalues.BombenFarbe;
             if (zeichen == Skinvalues.SchluesselSkin)
                 return Skinvalues.SchluesselFarbe;
             foreach (var Essen in Spiellogik.Essen)

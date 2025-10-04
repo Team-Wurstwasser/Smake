@@ -11,7 +11,7 @@ namespace Smake.Gegenstaende
         int SchluesselY;
         public bool Collected = false;
 
-        private static Random Rand = new();
+        private static readonly Random Rand = new();
 
         public Schluessel()
         {
@@ -42,9 +42,9 @@ namespace Smake.Gegenstaende
             SchluesselY = y;
         }
 
-        public void ZeichneSchluessel()
+        void ZeichneSchluessel()
         {
-            // Mauer ins Spielfeld einzeichnen
+            // Schluessel ins Spielfeld einzeichnen
             RendernSpielfeld.Grid[SchluesselY, SchluesselX] = Skinvalues.SchluesselSkin;
         }
 
