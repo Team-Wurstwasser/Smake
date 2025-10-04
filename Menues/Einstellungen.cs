@@ -1,9 +1,6 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
 using Smake.Values;
-using System;
-using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Smake.Menues
 {
