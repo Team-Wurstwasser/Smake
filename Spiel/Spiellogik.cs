@@ -23,7 +23,7 @@ namespace Smake.Spiel
 
         public Spiellogik()
         {
-            Task.Run(() => Spielloop());
+            Spielloop();
         }
 
         // Allen Variablen den Startwert geben
