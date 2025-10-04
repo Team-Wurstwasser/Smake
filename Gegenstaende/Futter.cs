@@ -1,4 +1,5 @@
 ﻿using Smake.Render;
+using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Spieler;
 using Smake.Values;
@@ -19,7 +20,7 @@ namespace Smake.Gegenstaende
 
         // Für Sprungfutter-Modus
         private int TeleportCounter = 0;
-        private readonly int TeleportInterval = 25;
+        private readonly int TeleportInterval = GameData.TeleportInterval;
         public Futter(char food, ConsoleColor foodfarbe)
         {
             FoodSkin = food;
