@@ -39,9 +39,6 @@ namespace Smake.Helper
 
         public static string Decrypt(byte[] cipherWithSalt)
         {
-            if (cipherWithSalt.Length < SaltLength)
-                throw new ArgumentException("Ungültige verschlüsselte Daten");
-
             // Salt aus den ersten Bytes auslesen
             byte[] salt = new byte[SaltLength];
             Array.Copy(cipherWithSalt, 0, salt, 0, SaltLength);

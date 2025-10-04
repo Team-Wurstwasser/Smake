@@ -100,7 +100,7 @@ namespace Smake.Speicher
             try
             {
                 if (!File.Exists(path))
-                    throw new FileNotFoundException($"JSON-Datei nicht gefunden: {path}");
+                    throw new FileNotFoundException(LanguageManager.Get("load.fileNotFound").Replace("{path}", path));
 
                 string json = XorCryptoHelper.DecryptJsonFileToString(path);
                 var data = JsonSerializer.Deserialize<T>(json, JsonOptions);
@@ -108,11 +108,14 @@ namespace Smake.Speicher
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Fehler beim Laden der Datei {path}: {ex.Message}");
+                Console.WriteLine(LanguageManager.Get("load.loadError")
+                    .Replace("{path}", path)
+                    .Replace("{message}", ex.Message));
                 Console.ReadKey();
                 setData(default);
             }
         }
+
 
         // Hilfsklassen für JSON-Struktur
         public class Positionen
