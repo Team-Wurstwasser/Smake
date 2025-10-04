@@ -6,40 +6,34 @@ namespace Smake.Menues
 {
     public class Shop : RendernMenue
     {
-        private ConsoleKey input;
-        public override ConsoleKey Input
+        public void ProcessInput()
         {
-            get { return input; }
-            set
+            switch (Input)
             {
-                input = value;
-
-                switch (Input)
-                {
-                    case ConsoleKey.UpArrow:
-                        MenuTracker--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        MenuTracker++;
-                        break;
-                    case ConsoleKey.RightArrow:
-                    case ConsoleKey.LeftArrow:
-                        Console.Clear();
-                        ShopSkins = !ShopSkins; // Seitenwechsel
-                        break;
-                    case ConsoleKey.Escape:
-                        _ = new Menue();
-                        StopInputstream();
-                        Thread.Sleep(5);
-                        break;
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                        SelectMenu();
-                        break;
-                }
-                BuildMenu();
-                Render();
+                case ConsoleKey.UpArrow:
+                    MenuTracker--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    MenuTracker++;
+                    break;
+                case ConsoleKey.RightArrow:
+                case ConsoleKey.LeftArrow:
+                    Console.Clear();
+                    ShopSkins = !ShopSkins; // Seitenwechsel
+                    break;
+                case ConsoleKey.Escape:
+                    StopInputstream();
+                    _ = new Menue();
+                    break;
+                case ConsoleKey.Enter:
+                case ConsoleKey.Spacebar:
+                    SelectMenu();
+                    break;
             }
+
+            Input = 0;
+            BuildMenu();
+            Render();
         }
 
         private int menuTracker;
@@ -78,6 +72,11 @@ namespace Smake.Menues
             BuildMenu();
             InitialRender();
             StartInputstream();
+            while (DoReadInput)
+            {
+                ProcessInput();
+                Thread.Sleep(5); // kleine Pause, CPU schonen
+            }
         }
 
         private void SelectMenu()
@@ -88,7 +87,6 @@ namespace Smake.Menues
                 {
                     _ = new Menue();
                     StopInputstream();
-                    Thread.Sleep(5);
                 }
 
                 // Kauflogik Skins

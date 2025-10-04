@@ -8,38 +8,29 @@ namespace Smake.Menues
 {
     public class Einstellungen : RendernMenue
     {
-
-        private ConsoleKey input;
-        public override ConsoleKey Input
+        public void ProcessInput()
         {
-            get { return input; }
-            set
+            switch (Input)
             {
-                input = value;
-
-                switch (Input)
-                {
-                    case ConsoleKey.UpArrow:
-                        MenuTracker--;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        MenuTracker++;
-                        break;
-                    case ConsoleKey.Escape:
-                        _ = new Menue();
-                        StopInputstream();
-                        Thread.Sleep(5);
-                        break;
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
-                        SelectMenu();
-                        break;
-                    default:
-                        break;
-                }
-                Display = BuildMenu();
-                Render();
+                case ConsoleKey.UpArrow:
+                    MenuTracker--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    MenuTracker++;
+                    break;
+                case ConsoleKey.Escape:
+                    StopInputstream();
+                    _ = new Menue();
+                    break;
+                case ConsoleKey.Enter:
+                case ConsoleKey.Spacebar:
+                    SelectMenu();
+                    break;
             }
+
+            Input = 0;
+            Display = BuildMenu();
+            Render();
         }
 
         private int menuTracker;
@@ -76,6 +67,11 @@ namespace Smake.Menues
             MenuTracker = 1;
             InitialRender();
             StartInputstream();
+            while (DoReadInput)
+            {
+                ProcessInput();
+                Thread.Sleep(5); // kleine Pause, CPU schonen
+            }
         }
 
         private void SelectMenu()
@@ -109,11 +105,8 @@ namespace Smake.Menues
                     ResetSpielstand();
                     break;
                 case 9:
-                    _ = new Menue();
                     StopInputstream();
-                    Thread.Sleep(5);
-                    break;
-                default:
+                    _ = new Menue();
                     break;
             }
         }
