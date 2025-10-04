@@ -98,7 +98,7 @@ namespace Smake.Gegenstaende
                     if (p.PlayerX[i] == FutterX && p.PlayerY[i] == FutterY)
                     {
 
-                        p.Punkte+=20;
+                        p.Punkte++;
 
                         if (Musik.Soundplay)
                         {
