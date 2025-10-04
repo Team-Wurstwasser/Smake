@@ -19,6 +19,7 @@ namespace Smake.Menues
                 case ConsoleKey.RightArrow:
                 case ConsoleKey.LeftArrow:
                     Console.Clear();
+                    MenuTracker = 1;
                     ShopSkins = !ShopSkins; // Seitenwechsel
                     break;
                 case ConsoleKey.Escape:

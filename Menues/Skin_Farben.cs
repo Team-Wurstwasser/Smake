@@ -7,21 +7,6 @@ namespace Smake.Menues
 {
     public class Skin_Farben : RendernMenue
     {
-
-        readonly string[] skin_farben = [
-                ($"Player 1 Tailskin ändern    [Aktuell: "),
-                ($"Player 2 Tailskin ändern    [Aktuell: "),
-                ($"Foodskin ändern             [Aktuell: "),
-                ($"Randskin ändern             [Aktuell: "),
-                ($"Player 1 Farbe ändern       [Aktuell: "),
-                ($"Player 2 Farbe ändern       [Aktuell: "),
-                ($"Player 1 Tailfarbe ändern   [Aktuell: "),
-                ($"Player 2 Tailfarbe ändern   [Aktuell: "),
-                ($"Foodfarbe ändern            [Aktuell: "),
-                ($"Randfarbe ändern            [Aktuell: "),
-                ("Zurück zum Hauptmenü")
-        ];
-
         readonly bool[] Color =
         [
             false,
@@ -97,7 +82,7 @@ namespace Smake.Menues
             Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
 
             Title = "Skin_Farben";
-            Display = skin_farben;
+            Display = LanguageManager.GetArray("skins.items");
             IsColor = Color;
             GameValue = BuildMenu();
             MenuTracker = 1;
