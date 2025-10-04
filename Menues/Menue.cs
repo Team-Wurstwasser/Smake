@@ -66,6 +66,11 @@ namespace Smake.Menues
 
         public Menue() 
         {
+            Menueloop();
+        }
+
+        private void Menueloop()
+        {
             Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
 
             SpeicherSystem.Speichern_Laden("Speichern");

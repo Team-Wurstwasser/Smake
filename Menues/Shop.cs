@@ -63,11 +63,15 @@ namespace Smake.Menues
 
         public Shop()
         {
-            Musik.Currentmusik = GameData.MusikDaten.Menue.Shop;
-
             gesamtOptionenSkins = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
             gesamtOptionenFarben = GameData.Farben.Length;
 
+            Menueloop();
+        }
+
+        private void Menueloop()
+        {
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Shop;
             MenuTracker = 1;
             BuildMenu();
             InitialRender();
@@ -77,7 +81,7 @@ namespace Smake.Menues
                 ProcessInput();
                 Thread.Sleep(5); // kleine Pause, CPU schonen
             }
-        }
+}
 
         private void SelectMenu()
         {

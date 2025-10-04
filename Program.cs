@@ -22,6 +22,7 @@ namespace Smake
             Eingaben();
 
             _ = new Menue();
+
         }
 
         // Eingaben für Spielernamen
