@@ -1,6 +1,4 @@
 ﻿using Smake.Gegenstaende;
-using Smake.Helper;
-using Smake.Menues;
 using Smake.Render;
 using Smake.Speicher;
 using Smake.Spieler;
@@ -54,7 +52,7 @@ namespace Smake.Spiel
 
             for (int i = 0; i < Spielvalues.Maxfutter; i++)
             {
-                if(!Skinvalues.FoodfarbeRandom)
+                if (!Skinvalues.FoodfarbeRandom)
                 {
                     Essen.Add(new Futter(Skinvalues.FoodSkin, Skinvalues.FoodFarbe));
                 }
@@ -188,7 +186,7 @@ namespace Smake.Spiel
                 {
                     Console.WriteLine();
                     Console.WriteLine("Unentschieden!");
-                    Console.WriteLine($"{Player.Name} hat {Player   .Punkte} Punkte erreicht.");
+                    Console.WriteLine($"{Player.Name} hat {Player.Punkte} Punkte erreicht.");
                     Console.WriteLine($"{Player2.Name} hat {Player2.Punkte} Punkte erreicht.");
                     Console.WriteLine();
                 }

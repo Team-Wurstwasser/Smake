@@ -1,8 +1,7 @@
-﻿using Smake.Values;
+﻿using Smake.Helper;
 using Smake.Render;
 using Smake.Spiel;
-using Smake.Helper;
-using System.Security.Cryptography;
+using Smake.Values;
 
 namespace Smake.Speicher
 {
@@ -107,7 +106,7 @@ namespace Smake.Speicher
             Spielvalues.Multiplayer = false;
 
             Skinvalues.RandSkin = GameData.RandSkins[0];
-            Skinvalues.FoodSkin  = GameData.FoodSkins[0];
+            Skinvalues.FoodSkin = GameData.FoodSkins[0];
             Spiellogik.Player.TailSkin = GameData.TailSkins[0];
             Spiellogik.Player2.TailSkin = GameData.TailSkins[1];
 
@@ -184,7 +183,7 @@ namespace Smake.Speicher
 
             foreach (var zeile in zeilen)
             {
-                var teil = zeile.Split('=',2);
+                var teil = zeile.Split('=', 2);
                 if (teil.Length != 2) continue;
 
                 string name = teil[0];
