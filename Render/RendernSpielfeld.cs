@@ -1,6 +1,5 @@
 ﻿using Smake.Speicher;
 using Smake.Spiel;
-using Smake.Spieler;
 using Smake.Values;
 
 namespace Smake.Render
@@ -53,7 +52,7 @@ namespace Smake.Render
                 Console.ForegroundColor = Skinvalues.RandFarbe;
             }
             else
-            { 
+            {
                 Console.ResetColor();
             }
 
@@ -105,14 +104,14 @@ namespace Smake.Render
         {
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
-            int rows = Grid.GetLength(0)-1;
-            int cols = Grid.GetLength(1)-1;
+            int rows = Grid.GetLength(0) - 1;
+            int cols = Grid.GetLength(1) - 1;
 
             for (int y = 1; y < rows; y++)
             {
-                for (int x = 2; x < cols-1; x++)
+                for (int x = 2; x < cols - 1; x++)
                 {
-                    bool IstStartposition =(x == Spiellogik.Player.xstart && y == Spiellogik.Player.ystart) || (x == Spiellogik.Player2.xstart && y == Spiellogik.Player2.ystart);
+                    bool IstStartposition = (x == Spiellogik.Player.xstart && y == Spiellogik.Player.ystart) || (x == Spiellogik.Player2.xstart && y == Spiellogik.Player2.ystart);
 
                     if (Grid[y, x] != PrevGrid[y, x] || IstStartposition)
                     {
@@ -145,7 +144,7 @@ namespace Smake.Render
 
             for (int y = 1; y < rows; y++)
             {
-                for (int x = 2; x < cols-1; x++)
+                for (int x = 2; x < cols - 1; x++)
                 {
                     if (Grid[y, x] != PrevGrid[y, x])
                     {

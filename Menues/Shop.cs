@@ -1,12 +1,12 @@
-﻿using Smake.Values;
-using Smake.Render;
+﻿using Smake.Render;
 using Smake.Speicher;
+using Smake.Values;
 
 namespace Smake.Menues
 {
     public class Shop : RendernMenue
     {
-        public void ProcessInput()
+        void ProcessInput()
         {
             switch (Input)
             {
@@ -146,15 +146,15 @@ namespace Smake.Menues
             }
         }
 
-        private  void BuildMenu()
+        private void BuildMenu()
         {
             if (ShopSkins)
             {
-                 Title = "Shop_Skins";
+                Title = "Shop_Skins";
             }
             else
             {
-                 Title = "Shop_Farben";
+                Title = "Shop_Farben";
             }
         }
 

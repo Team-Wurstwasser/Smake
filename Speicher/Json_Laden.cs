@@ -1,5 +1,5 @@
+using Smake.Helper;
 using System.Text.Json;
-using Smake.Helper  ;
 
 
 namespace Smake.Speicher
@@ -34,6 +34,7 @@ namespace Smake.Speicher
         public static int Hoehe { get; private set; }
         public static int MaxPunkte { get; private set; }
         public static int MaxFutterconfig { get; private set; }
+        public static int TailStartLaenge { get; private set; }
         public static Positionen Startpositionen { get; private set; } = new();
         public static Difficulty SpielSchwierigkeit { get; private set; } = new();
 
@@ -86,6 +87,7 @@ namespace Smake.Speicher
                 Hoehe = data?.Hoehe ?? 0;
                 MaxPunkte = data?.MaxPunkte ?? 0;
                 MaxFutterconfig = data?.MaxFutterconfig ?? 0;
+                TailStartLaenge = data?.TailStartLaenge ?? 0;
                 Startpositionen = data?.Startpositionen ?? new Positionen();
                 SpielSchwierigkeit = data?.Difficulty ?? new Difficulty();
             });
@@ -105,7 +107,7 @@ namespace Smake.Speicher
             catch (Exception ex)
             {
                 Console.WriteLine($"Fehler beim Laden der Datei {path}: {ex.Message}");
-                Console.ReadKey();  
+                Console.ReadKey();
                 setData(default);
             }
         }
@@ -142,7 +144,7 @@ namespace Smake.Speicher
             public MusikSpeed? Schluessel_Modus { get; set; }
             public MusikSpeed? Sprungfutter_Modus { get; set; }
             public MusikSpeed? Chaos_Steuerung { get; set; }
-        } 
+        }
 
         public class MusikSpeed
         {
@@ -188,6 +190,7 @@ namespace Smake.Speicher
             public int Hoehe { get; set; }
             public int MaxPunkte { get; set; }
             public int MaxFutterconfig { get; set; }
+            public int TailStartLaenge { get; set; }
             public Positionen? Startpositionen { get; set; }
             public Difficulty? Difficulty { get; set; }
         }

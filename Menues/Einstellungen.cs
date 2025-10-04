@@ -1,14 +1,12 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
 using Smake.Values;
-using System.Diagnostics.Metrics;
-using System.Reflection;
 
 namespace Smake.Menues
 {
     public class Einstellungen : RendernMenue
     {
-        public void ProcessInput()
+        void ProcessInput()
         {
             switch (Input)
             {
@@ -141,21 +139,96 @@ namespace Smake.Menues
             else Spielvalues.Difficulty = "Langsam";
         }
 
-        // Auswahl der Verschiedenen Modi
+        // Liste aller Modi
+        static readonly string[] Modi =
+        [
+            "Normal",
+            "Unendlich",
+            "Babymode",
+            "Babymode-Unendlich",
+            "Mauer-Modus",
+            "Schlüssel-Modus",
+            "Sprungfutter-Modus",
+            "Chaos-Steuerung"
+        ];
+
         static void ChangeGamemode()
         {
-            if (Spielvalues.Gamemode == "Normal") Spielvalues.Gamemode = "Unendlich";
-            else if (Spielvalues.Gamemode == "Unendlich") Spielvalues.Gamemode = "Babymode";
-            else if (Spielvalues.Gamemode == "Babymode") Spielvalues.Gamemode = "Mauer-Modus";
-            else if (Spielvalues.Gamemode == "Mauer-Modus") Spielvalues.Gamemode = "Schlüssel-Modus";
-            else if (Spielvalues.Gamemode == "Schlüssel-Modus") Spielvalues.Gamemode = "Sprungfutter-Modus";
-            else if (Spielvalues.Gamemode == "Sprungfutter-Modus") Spielvalues.Gamemode = "Chaos-Steuerung";
-            else Spielvalues.Gamemode = "Normal";
+            bool gueltig = false;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════════╗");
+                Console.WriteLine("║             Spielmodus auswählen           ║");
+                Console.WriteLine("╠════════════════════════════════════════════╣");
+
+                // Alle Modi anzeigen, aktueller Modus wird markiert
+                for (int i = 0; i < Modi.Length; i++)
+                {
+                    Console.Write($"║ ");
+                    if (Spielvalues.Gamemode == Modi[i])
+                    {
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"[{i + 1}] {Modi[i],-25} ← aktuell".PadRight(43));
+                        Console.ResetColor();
+
+                    }
+                    else
+                    {
+                        Console.Write($"[{i + 1}] {Modi[i],-39}");
+                    }
+                    Console.WriteLine("║");
+                }
+
+                Console.WriteLine("╚════════════════════════════════════════════╝");
+                Console.Write("Auswahl: ");
+
+                string eingabe = Console.ReadLine()!;
+
+                if (int.TryParse(eingabe, out int auswahl))
+                {
+                    if (auswahl >= 1 && auswahl <= Modi.Length)
+                    {
+                        Spielvalues.Gamemode = Modi[auswahl - 1];
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"\n✔ Spielmodus gewechselt: {Spielvalues.Gamemode}");
+                        Console.ResetColor();
+                        gueltig = true;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n⚠ Ungültige Auswahl!");
+                        Console.ResetColor();
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n⚠ Bitte eine Zahl eingeben!");
+                    Console.ResetColor();
+                }
+
+                if (!gueltig)
+                {
+                    Console.WriteLine("\nDrücke eine beliebige Taste, um es erneut zu versuchen...");
+                    Console.ReadKey(true);
+                }
+            }
+            while (!gueltig);
+
+            Console.WriteLine("\nDrücke eine beliebige Taste, um zurückzukehren...");
+            Console.ReadKey(true);
+            Console.Clear();
         }
+
 
         static void ChangeMaxFutter()
         {
-            bool gültig = false;
+            bool gueltig = false;
 
             do
             {
@@ -186,7 +259,7 @@ namespace Smake.Menues
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"\n✔ MaxFutter wurde auf {wert} gesetzt!");
                         Console.ResetColor();
-                        gültig = true;
+                        gueltig = true;
                     }
                 }
                 else
@@ -196,16 +269,16 @@ namespace Smake.Menues
                     Console.ResetColor();
                 }
 
-                if (!gültig)
+                if (!gueltig)
                 {
                     Console.WriteLine("\nDrücke eine beliebige Taste, um es erneut zu versuchen...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
 
-            } while (!gültig);
+            } while (!gueltig);
 
             Console.WriteLine("\nDrücke eine beliebige Taste, um zurückzukehren...");
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.Clear();
         }
 
@@ -220,7 +293,7 @@ namespace Smake.Menues
                 if (eingabe != "ja")
                 {
                     Console.WriteLine("Zurücksetzen abgebrochen.");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                     Console.Clear();
                     return;
                 }
@@ -230,7 +303,7 @@ namespace Smake.Menues
             SpeicherSystem.Speichern_Laden("Zurücksetzen");
             Console.WriteLine("Dein Spielstand wurde zurückgesetzt!");
             Console.WriteLine("Drücke eine Taste, um zurückzukehren...");
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.Clear();
         }
     }
