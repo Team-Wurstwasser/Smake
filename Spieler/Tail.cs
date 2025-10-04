@@ -1,5 +1,5 @@
 ﻿using Smake.Render;
-using Smake.Spiel;
+using Smake.Speicher;
 using Smake.Values;
 
 namespace Smake.Spieler
@@ -8,6 +8,7 @@ namespace Smake.Spieler
     {
         // Länge des Spielers
         public int TailLaenge;
+        public int TailStartLaenge = GameData.TailStartLaenge;
 
         public char TailSkin;
 
@@ -16,6 +17,8 @@ namespace Smake.Spieler
         // Tailkoordinaten berechnen
         public void TailShift(Player p)
         {
+            p.TailLaenge = p.Punkte + p.TailStartLaenge;
+
             for (int i = TailLaenge + 1; i > 0; i--)
             {
                 p.PlayerX[i] = p.PlayerX[i - 1];
@@ -42,7 +45,7 @@ namespace Smake.Spieler
 
             // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt
             bool isOnPlayer = false;
-            for (int i = 0; i <=TailLaenge; i++)
+            for (int i = 0; i <= TailLaenge; i++)
             {
                 if (p.PlayerX[i] == oldTailX && p.PlayerY[i] == oldTailY)
                 {

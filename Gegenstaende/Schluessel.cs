@@ -1,5 +1,4 @@
 ﻿using Smake.Render;
-using Smake.Spiel;
 using Smake.Spieler;
 using Smake.Values;
 

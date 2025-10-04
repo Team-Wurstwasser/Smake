@@ -1,7 +1,7 @@
-﻿using Smake.Spiel;
+﻿using Smake.Render;
+using Smake.Spiel;
 using Smake.Spieler;
 using Smake.Values;
-using Smake.Render;
 
 namespace Smake.Gegenstaende
 {
@@ -63,12 +63,12 @@ namespace Smake.Gegenstaende
 
         }
 
-        public void ZeichneFutter()
+        private void ZeichneFutter()
         {
             // Futter ins Spielfeld einzeichnen
-            if(Spielvalues.Gamemode == "Schlüssel-Modus")
+            if (Spielvalues.Gamemode == "Schlüssel-Modus")
             {
-                if(!Schluessel.Collected)
+                if (!Schluessel.Collected)
                 {
                     RendernSpielfeld.Grid[FutterY, FutterX] = Skinvalues.MauerSkin;
                 }
@@ -97,8 +97,8 @@ namespace Smake.Gegenstaende
                 {
                     if (p.PlayerX[i] == FutterX && p.PlayerY[i] == FutterY)
                     {
-                        p.TailLaenge++;
-                        p.Punkte++;
+
+                        p.Punkte+=20;
 
                         if (Musik.Soundplay)
                         {

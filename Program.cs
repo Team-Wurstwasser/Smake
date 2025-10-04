@@ -1,17 +1,17 @@
-using Smake.Spiel;
-using Smake.Speicher;
 using Smake.Menues;
+using Smake.Speicher;
+using Smake.Spiel;
 
 namespace Smake
 {
     public class Program
     {
         public static int CurrentView = 7;
-        public static bool Exit = false;
+
         // Main
         static void Main()
         {
-            
+
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.Title = "Smake";
 
@@ -22,7 +22,7 @@ namespace Smake
             SpeicherSystem.Speichern_Laden("Laden");
 
             Eingaben();
-
+            bool Exit = false;
             do
             {
                 switch (CurrentView)
@@ -52,6 +52,7 @@ namespace Smake
                         Exit = true;
                         break;
                 }
+
             } while (!Exit);
 
         }
@@ -70,7 +71,7 @@ namespace Smake
             Console.Clear();
 
             Console.Write("Spieler 2, gib deinen Namen ein: ");
-            Spiellogik.Player2.Name = Console.ReadLine(); 
+            Spiellogik.Player2.Name = Console.ReadLine();
 
             Console.Clear();
         }

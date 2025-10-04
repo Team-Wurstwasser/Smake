@@ -1,6 +1,5 @@
-﻿using Smake.Values;
-using Smake.Speicher;
-using System.Diagnostics;
+﻿using Smake.Speicher;
+using Smake.Values;
 
 namespace Smake.Render
 {
@@ -15,7 +14,7 @@ namespace Smake.Render
         public ConsoleKey Input { get; set; }
         Thread? InputThread;
 
-        public void InitialRender() 
+        public void InitialRender()
         {
             Musik.Melodie();
             Console.Clear();
