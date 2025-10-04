@@ -16,8 +16,8 @@ namespace Smake.Menues
             {
                 if (value != menuTracker)
                 {
-                    if (value > 9) menuTracker = 1;
-                    else if (value < 1) menuTracker = 9;
+                    if (value > 10) menuTracker = 1;
+                    else if (value < 1) menuTracker = 10;
                     else menuTracker = value;
                     Selected = MenuTracker;
                 }
@@ -82,10 +82,12 @@ namespace Smake.Menues
                 case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
                 case 6: Musik.Musikplay = !Musik.Musikplay; Musik.Melodie(); break;
                 case 7: Musik.Soundplay = !Musik.Soundplay; Musik.Melodie(); break;
-                case 8: ResetSpielstand(); break;
-                case 9: StopInputstream(); break;
+                case 8: ChangeLanguage(); break;
+                case 9: ResetSpielstand(); break;
+                case 10: StopInputstream(); break;
             }
         }
+
 
         private static string[] BuildMenu()
         {
@@ -99,10 +101,52 @@ namespace Smake.Menues
                 items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[5].Replace("{music}", Musik.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[6].Replace("{sounds}", Musik.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[7],
-                items[8]
+                items[7].Replace("{language}", ConfigManager.Language.ToUpper()),
+                items[8],
+                items[9]
             ];
         }
+
+        static void ChangeLanguage()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║           Sprache auswählen                ║");
+            Console.WriteLine("╠════════════════════════════════════════════╣");
+            Console.WriteLine("║ 1 - Deutsch (de)                           ║");
+            Console.WriteLine("║ 2 - Englisch (en)                          ║");
+            Console.WriteLine("║ 3 - Französisch (fr)                       ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.Write("Auswahl: ");
+
+            string? input = Console.ReadLine()?.Trim();
+            string newLang = input switch
+            {
+                "1" => "de",
+                "2" => "en",
+                "3" => "fr",
+                _ => ConfigManager.Language
+            };
+
+            if (newLang == ConfigManager.Language)
+            {
+                Console.WriteLine("\n" + LanguageManager.Get("settings.invalidSelection"));
+            }
+            else
+            {
+                ConfigManager.SetLanguage(newLang);
+                LanguageManager.Load(newLang);
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\n✔ Sprache geändert auf: {newLang.ToUpper()}");
+                Console.ResetColor();
+            }
+
+            Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+            Console.ReadKey(true);
+            Console.Clear();
+        }
+
 
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
