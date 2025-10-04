@@ -15,8 +15,9 @@ namespace Smake.Gegenstaende
         public char FoodSkin { get; private set; }
         public ConsoleColor FoodFarbe { get; private set; }
 
-        private static Random Rand = new();
+        private static readonly Random Rand = new();
         private Schluessel? Schluessel;
+        private Bombe? Bombe;
 
         // Für Sprungfutter-Modus
         private int TeleportCounter = 0;
@@ -57,6 +58,11 @@ namespace Smake.Gegenstaende
                 Schluessel = new();
             }
 
+            if (Spielvalues.Gamemode == "Bomben-Modus")
+            {
+                Bombe = new();
+            }
+
             if (Spielvalues.Gamemode == "Sprungfutter-Modus")
             {
                 TeleportCounter = 0;
@@ -87,6 +93,11 @@ namespace Smake.Gegenstaende
 
         public void EsseFutter(Player p)
         {
+            if (Spielvalues.Gamemode == "Bomben-Modus")
+            {
+                Bombe.ZeichneBombe();
+            }
+
             if (Spielvalues.Gamemode == "Schlüssel-Modus" && !Schluessel.Collected)
             {
                 Schluessel.EsseSchluessel(p);
@@ -109,6 +120,11 @@ namespace Smake.Gegenstaende
                         if (Spielvalues.Gamemode == "Mauer-Modus")
                         {
                             Spiellogik.Mauer.Add(new());
+                        }
+
+                        if(Spielvalues.Gamemode == "Bomben-Modus")
+                        {
+                            Bombe.LöscheBombe();
                         }
 
                         SetzeFutter();
