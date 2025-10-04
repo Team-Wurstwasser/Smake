@@ -12,5 +12,7 @@
         public static ConsoleColor MauerFarbe = ConsoleColor.Red;
         public static char SchluesselSkin = 'Q';
         public static ConsoleColor SchluesselFarbe = ConsoleColor.Yellow;
+        public static char BombenSkin = 'o';
+        public static ConsoleColor BombenFarbe = ConsoleColor.Red;
     }
 }

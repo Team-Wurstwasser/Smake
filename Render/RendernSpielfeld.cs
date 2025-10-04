@@ -200,7 +200,7 @@ namespace Smake.Render
         {
             if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
                 return Spiellogik.Player.HeadFarbe;
-            if (Spielvalues.Multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0])
+            if (Spielvalues.Multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0]) 
                 return Spiellogik.Player2.HeadFarbe;
             if (zeichen == Spiellogik.Player.TailSkin)
                 return Spiellogik.Player.TailFarbe;
@@ -208,6 +208,8 @@ namespace Smake.Render
                 return Spiellogik.Player2.TailFarbe;
             if (zeichen == Skinvalues.MauerSkin)
                 return Skinvalues.MauerFarbe;
+            if (zeichen == Skinvalues.BombenSkin)
+                return Skinvalues.BombenFarbe;
             if (zeichen == Skinvalues.SchluesselSkin)
                 return Skinvalues.SchluesselFarbe;
             foreach (var Essen in Spiellogik.Essen)

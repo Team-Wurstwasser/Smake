@@ -1,6 +1,7 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
 using Smake.Values;
+using System.Reflection;
 
 namespace Smake.Menues
 {
@@ -149,6 +150,7 @@ namespace Smake.Menues
             "Mauer-Modus",
             "Schlüssel-Modus",
             "Sprungfutter-Modus",
+            "Bomben-Modus",
             "Chaos-Steuerung"
         ];
 
