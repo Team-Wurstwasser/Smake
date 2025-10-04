@@ -247,17 +247,6 @@ namespace Smake.Speicher
                     return false;
                 }
             }
-            Spielvalues.GamemodeInt ??= 1;
-            var modes = LanguageManager.GetArray("settings.gamemodes");
-            Spielvalues.Gamemode = modes[(int)Spielvalues.GamemodeInt - 1];
-
-            Spielvalues.Difficulty = Spielvalues.DifficultyInt switch
-            {
-                1 => LanguageManager.Get("settings.difficulty.slow"),
-                2 => LanguageManager.Get("settings.difficulty.medium"),
-                3 => LanguageManager.Get("settings.difficulty.fast"),
-                _ => LanguageManager.Get("settings.difficulty.medium") // Standardwert
-            };
 
             return true;
         }
