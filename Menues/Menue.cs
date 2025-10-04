@@ -3,7 +3,6 @@ using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Values;
-using System.Diagnostics;
 
 namespace Smake.Menues
 {
@@ -19,7 +18,7 @@ namespace Smake.Menues
                 "Beenden"
         ];
 
-        public void ProcessInput()
+        void ProcessInput()
         {
             switch (Input)
             {
@@ -64,7 +63,7 @@ namespace Smake.Menues
             }
         }
 
-        public Menue() 
+        public Menue()
         {
             Menueloop();
         }

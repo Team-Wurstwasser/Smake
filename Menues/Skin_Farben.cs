@@ -1,13 +1,13 @@
-﻿using Smake.Values;
-using Smake.Render;
+﻿using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
+using Smake.Values;
 
 namespace Smake.Menues
 {
     public class Skin_Farben : RendernMenue
     {
-        
+
         readonly string[] skin_farben = [
                 ($"Player 1 Tailskin ändern    [Aktuell: "),
                 ($"Player 2 Tailskin ändern    [Aktuell: "),
@@ -37,7 +37,7 @@ namespace Smake.Menues
             false,
         ];
 
-        public void ProcessInput()
+        void ProcessInput()
         {
             switch (Input)
             {

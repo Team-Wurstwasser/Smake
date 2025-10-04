@@ -1,9 +1,9 @@
-﻿using Smake.Values;
-using Smake.Spieler;
+﻿using Smake.Spieler;
+using Smake.Values;
 
 namespace Smake.Spiel
 {
-    public class Steuerung 
+    public class Steuerung
     {
         bool DoReadInput = true;
         Thread? InputThread;
@@ -12,7 +12,7 @@ namespace Smake.Spiel
         {
             StartInputStream();
         }
-        
+
         private void StartInputStream()
         {
             InputThread = new(ReadInput);

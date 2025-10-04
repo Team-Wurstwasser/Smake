@@ -1,6 +1,4 @@
-﻿using Smake.Spiel;
-using Smake.Speicher;
-using Smake.Render;
+﻿using Smake.Speicher;
 
 namespace Smake.Values
 {
