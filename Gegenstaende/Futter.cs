@@ -53,17 +53,17 @@ namespace Smake.Gegenstaende
             FutterX = x;
             FutterY = y;
 
-            if (Spielvalues.Gamemode == "Schlüssel-Modus")
+            if (Spielvalues.GamemodeInt == 6)
             {
                 Schluessel = new();
             }
 
-            if (Spielvalues.Gamemode == "Bomben-Modus")
+            if (Spielvalues.GamemodeInt == 8)
             {
                 Bombe = new();
             }
 
-            if (Spielvalues.Gamemode == "Sprungfutter-Modus")
+            if (Spielvalues.GamemodeInt == 7)
             {
                 TeleportCounter = 0;
             }
@@ -73,7 +73,7 @@ namespace Smake.Gegenstaende
         private void ZeichneFutter()
         {
             // Futter ins Spielfeld einzeichnen
-            if (Spielvalues.Gamemode == "Schlüssel-Modus")
+            if (Spielvalues.GamemodeInt == 6)
             {
                 if (!Schluessel.Collected)
                 {
@@ -93,12 +93,12 @@ namespace Smake.Gegenstaende
 
         public void EsseFutter(Player p)
         {
-            if (Spielvalues.Gamemode == "Bomben-Modus")
+            if (Spielvalues.GamemodeInt == 8)
             {
                 Bombe.ZeichneBombe();
             }
 
-            if (Spielvalues.Gamemode == "Schlüssel-Modus" && !Schluessel.Collected)
+            if (Spielvalues.GamemodeInt == 6 && !Schluessel.Collected)
             {
                 Schluessel.EsseSchluessel(p);
             }
@@ -117,12 +117,12 @@ namespace Smake.Gegenstaende
                             Console.Beep(700, 100);
                         }
 
-                        if (Spielvalues.Gamemode == "Mauer-Modus")
+                        if (Spielvalues.GamemodeInt == 5)
                         {
                             Spiellogik.Mauer.Add(new());
                         }
 
-                        if(Spielvalues.Gamemode == "Bomben-Modus")
+                        if(Spielvalues.GamemodeInt == 8)
                         {
                             Bombe.LöscheBombe();
                         }
@@ -140,7 +140,7 @@ namespace Smake.Gegenstaende
 
         private void Tick()
         {
-            if (Spielvalues.Gamemode == "Sprungfutter-Modus")
+            if (Spielvalues.GamemodeInt == 7)
             {
                 TeleportCounter++;
                 if (TeleportCounter >= TeleportInterval)

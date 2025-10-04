@@ -99,7 +99,7 @@ namespace Smake.Render
 
         private void RenderSkinFarbenLayout()
         {
-            Console.WriteLine("Skins/Farben");
+            Console.WriteLine(LanguageManager.Get("skins.title"));
             Console.WriteLine("══════════════════════════════");
 
             for (int i = 0; i < Display.Length; i++)
@@ -124,7 +124,7 @@ namespace Smake.Render
                     }
                     else
                     {
-                        Console.Write(RendernSpielfeld.Performancemode ? "Performance Mode AN" : GameValue[i]);
+                        Console.Write(RendernSpielfeld.Performancemode ? LanguageManager.Get("skins.performancemode") : GameValue[i]);
                     }
 
                     Console.Write("]".PadRight(13));
@@ -138,23 +138,24 @@ namespace Smake.Render
         private static void RenderShopHeader()
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine("           Shop           ");
-            Console.WriteLine($"Coins: {Spielstatus.Coins,-50}");
-            Console.WriteLine($"Level: {Spielstatus.Level,-50}");
+            Console.WriteLine(LanguageManager.Get("shop.title").PadLeft(14));
+            Console.WriteLine(LanguageManager.Format("shop.coins", new() { { "coins", Spielstatus.Coins.ToString() } }).PadRight(50));
+            Console.WriteLine(LanguageManager.Format("shop.level", new() { { "level", Spielstatus.Level.ToString() } }).PadRight(50));
             Console.WriteLine("═══════════════════════════");
-            Console.WriteLine("←  Wechsle die Shopseite  →");
+            Console.WriteLine(LanguageManager.Get("shop.switchPage"));
         }
 
-        private static int RenderShopSection(string title1, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
+        private static int RenderShopSection(string titleKey, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
         {
-            Console.WriteLine($"\n{title1}:");
+            Console.WriteLine($"\n{LanguageManager.Get("shop." + titleKey)}:");
             for (int i = startIndex; i < items.Length; i++)
             {
                 int shopItemIndex = i - startIndex;
 
                 string shoptext = Spielstatus.Level < levels[shopItemIndex]
-                    ? $"[Benötigtes Level: {levels[shopItemIndex]}]"
-                    : unlocked[i] ? "[Freigeschaltet]" : $"[{prices[shopItemIndex]} Coins]";
+                    ? LanguageManager.Format("shop.requiredLevel", new() { { "level", levels[shopItemIndex].ToString() } })
+                    : unlocked[i] ? LanguageManager.Get("shop.unlocked")
+                    : LanguageManager.Format("shop.price", new() { { "price", prices[shopItemIndex].ToString() } });
 
                 string zeiger = optionCounter + 1 == selected1 ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {items[i]} {shoptext}".PadRight(50));
@@ -163,30 +164,33 @@ namespace Smake.Render
             return optionCounter;
         }
 
+
         private void RenderShopSkinsLayout()
         {
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("Tail Skins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.FreigeschaltetTail, GameData.TailPreis, 2);
-            option = RenderShopSection("Food Skins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.FreigeschaltetFood, GameData.FoodPreis);
-            option = RenderShopSection("Rand Skins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.FreigeschaltetRand, GameData.RandPreis);
+            option = RenderShopSection("tailSkins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.FreigeschaltetTail, GameData.TailPreis, 2);
+            option = RenderShopSection("foodSkins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.FreigeschaltetFood, GameData.FoodPreis);
+            option = RenderShopSection("randSkins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.FreigeschaltetRand, GameData.RandPreis);
 
             string zeiger = option + 1 == Selected ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger} Zurück zum Hauptmenü");
+            Console.WriteLine($"\n{zeiger} {LanguageManager.Get("shop.back")}");
             Console.WriteLine("══════════════════════════");
         }
 
         private void RenderShopFarbenLayout()
         {
             RenderShopHeader();
-            Console.WriteLine("\nFarben:");
+            Console.WriteLine($"\n{LanguageManager.Get("shop.colors")}:");
             int option = 0;
+
             for (int i = 1; i < GameData.Farben.Length; i++, option++)
             {
                 string shoptext = Spielstatus.Level < GameData.FarbenLevel[i - 1]
-                    ? $"[Benötigtes Level: {GameData.FarbenLevel[i - 1]}]"
-                    : Menüsvalues.FreigeschaltetFarben[i] ? "[Freigeschaltet]" : $"[{GameData.FarbenPreis[i - 1]} Coins]";
+                    ? LanguageManager.Format("shop.requiredLevel", new() { { "level", GameData.FarbenLevel[i - 1].ToString() } })
+                    : Menüsvalues.FreigeschaltetFarben[i] ? LanguageManager.Get("shop.unlocked")
+                    : LanguageManager.Format("shop.price", new() { { "price", GameData.FarbenPreis[i - 1].ToString() } });
 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
@@ -195,9 +199,10 @@ namespace Smake.Render
             }
 
             string zeiger2 = option + 1 == Selected ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger2} Zurück zum Hauptmenü");
+            Console.WriteLine($"\n{zeiger2} {LanguageManager.Get("shop.back")}");
             Console.WriteLine("══════════════════════════");
         }
+
 
         public void StartInputstream()
         {

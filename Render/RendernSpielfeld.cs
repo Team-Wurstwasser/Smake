@@ -1,4 +1,5 @@
-﻿using Smake.Speicher;
+﻿using Smake.Menues;
+using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Values;
 
@@ -170,7 +171,7 @@ namespace Smake.Render
             switch (y)
             {
                 case 1: return "  ══════════════════════════════";
-                case 2: return "  Punkte:";
+                case 2: return LanguageManager.Get("legende");
                 case 3: return "  ══════════════════════════════";
                 case 4:
                     string maxpunkte = (Spielvalues.Gamemode != "Unendlich" && Spielvalues.Gamemode != "Babymode-Unendlich")
@@ -242,7 +243,7 @@ namespace Smake.Render
                     break;
                 case 2:
                     SetFarbe(ConsoleColor.White);
-                    Console.Write("  Punkte:");
+                    Console.Write(LanguageManager.Get("legende"));
                     break;
                 case 3:
                     SetFarbe(Skinvalues.RandFarbe);

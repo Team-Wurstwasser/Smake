@@ -1,12 +1,52 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
 using Smake.Values;
+using System;
 using System.Reflection;
 
 namespace Smake.Menues
 {
     public class Einstellungen : RendernMenue
     {
+        private int menuTracker;
+        public int MenuTracker
+        {
+            get { return menuTracker; }
+            set
+            {
+                if (value != menuTracker)
+                {
+                    if (value > 9) menuTracker = 1;
+                    else if (value < 1) menuTracker = 9;
+                    else menuTracker = value;
+                    Selected = MenuTracker;
+                }
+            }
+        }
+
+        public Einstellungen()
+        {
+            Menueloop();
+        }
+
+        private void Menueloop()
+        {
+            Musik.Currentmusik = GameData.MusikDaten.Menue.Einstellungen;
+            Title = LanguageManager.Get("settings.title");
+            Display = BuildMenu();
+            MenuTracker = 1;
+            InitialRender();
+            StartInputstream();
+
+            while (DoReadInput)
+            {
+                ProcessInput();
+                Thread.Sleep(5);
+            }
+
+            Program.CurrentView = 7;
+        }
+
         void ProcessInput()
         {
             switch (Input)
@@ -31,280 +71,192 @@ namespace Smake.Menues
             Render();
         }
 
-        private int menuTracker;
-        public int MenuTracker
-        {
-            get { return menuTracker; }
-            set
-            {
-                if (value != menuTracker) // loop index
-                {
-                    if (value > 9)
-                    {
-                        menuTracker = 1;
-                    }
-                    else if (value < 1)
-                    {
-                        menuTracker = 9;
-                    }
-                    else
-                    {
-                        menuTracker = value;
-                    }
-                    Selected = MenuTracker;
-                }
-            }
-        }
-
-        public Einstellungen()
-        {
-            Menueloop();
-        }
-
-        private void Menueloop()
-        {
-            Musik.Currentmusik = GameData.MusikDaten.Menue.Einstellungen;
-
-            Title = "Einstellungen";
-            Display = BuildMenu();
-            MenuTracker = 1;
-            InitialRender();
-            StartInputstream();
-            while (DoReadInput)
-            {
-                ProcessInput();
-                Thread.Sleep(5); // kleine Pause, CPU schonen
-            }
-
-            Program.CurrentView = 7;
-        }
-
         private void SelectMenu()
         {
             switch (MenuTracker)
             {
-                case 1:
-                    ChangeDifficulty();
-                    break;
-                case 2:
-                    Spielvalues.Multiplayer = !Spielvalues.Multiplayer;
-                    break;
-                case 3:
-                    ChangeGamemode();
-                    break;
-                case 4:
-                    ChangeMaxFutter();
-                    break;
-                case 5:
-                    RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode;
-                    break;
-                case 6:
-                    Musik.Musikplay = !Musik.Musikplay;
-                    Musik.Melodie();
-                    break;
-                case 7:
-                    Musik.Soundplay = !Musik.Soundplay;
-                    Musik.Melodie();
-                    break;
-                case 8:
-                    ResetSpielstand();
-                    break;
-                case 9:
-                    StopInputstream();
-                    break;
+                case 1: ChangeDifficulty(); break;
+                case 2: Spielvalues.Multiplayer = !Spielvalues.Multiplayer; break;
+                case 3: ChangeGamemode(); break;
+                case 4: ChangeMaxFutter(); break;
+                case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
+                case 6: Musik.Musikplay = !Musik.Musikplay; Musik.Melodie(); break;
+                case 7: Musik.Soundplay = !Musik.Soundplay; Musik.Melodie(); break;
+                case 8: ResetSpielstand(); break;
+                case 9: StopInputstream(); break;
             }
         }
 
         private static string[] BuildMenu()
         {
+            var items = LanguageManager.GetArray("settings.items");
             return
             [
-        $"Schwierigkeit ändern   [Aktuell: {Spielvalues.Difficulty}]",
-        $"Multiplayer            [Aktuell: {(Spielvalues.Multiplayer ? "An" : "Aus")}]",
-        $"Gamemode ändern        [Aktuell: {Spielvalues.Gamemode}]",
-        $"MaxFutter ändern       [Aktuell: {Spielvalues.Maxfutter}]",
-        $"Performance mode       [Aktuell: {(RendernSpielfeld.Performancemode ? "An" : "Aus")}]",
-        $"Musik AN/AUS           [Aktuell: {(Musik.Musikplay ? "An" : "Aus")}]",
-        $"Sounds AN/AUS          [Aktuell: {(Musik.Soundplay ? "An" : "Aus")}]",
-        "Spielstand zurücksetzen",
-        "Zurück zum Hauptmenü"
+                items[0].Replace("{difficulty}", Spielvalues.Difficulty),
+                items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[2].Replace("{gamemode}", Spielvalues.Gamemode),
+                items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
+                items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[5].Replace("{music}", Musik.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[6].Replace("{sounds}", Musik.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[7],
+                items[8]
             ];
         }
-
 
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
         {
-            if (Spielvalues.Difficulty == "Langsam") Spielvalues.Difficulty = "Mittel";
-            else if (Spielvalues.Difficulty == "Mittel") Spielvalues.Difficulty = "Schnell";
-            else Spielvalues.Difficulty = "Langsam";
+            if (Spielvalues.DifficultyInt == 1)
+            {
+                Spielvalues.Difficulty = LanguageManager.Get("settings.difficulty.medium");
+                Spielvalues.DifficultyInt = 2;
+            }
+            else if (Spielvalues.DifficultyInt == 2)
+            {
+                Spielvalues.Difficulty = LanguageManager.Get("settings.difficulty.fast");
+                Spielvalues.DifficultyInt = 3;
+            }
+            else
+            {
+                Spielvalues.Difficulty = LanguageManager.Get("settings.difficulty.slow");
+                Spielvalues.DifficultyInt = 1;
+            } 
         }
-
-        // Liste aller Modi
-        static readonly string[] Modi =
-        [
-            "Normal",
-            "Unendlich",
-            "Babymode",
-            "Babymode-Unendlich",
-            "Mauer-Modus",
-            "Schlüssel-Modus",
-            "Sprungfutter-Modus",
-            "Bomben-Modus",
-            "Chaos-Steuerung"
-        ];
 
         static void ChangeGamemode()
         {
-            bool gueltig = false;
+            var modes = LanguageManager.GetArray("settings.gamemodes");
+            bool valid = false;
 
             do
             {
                 Console.Clear();
-                Console.WriteLine("╔════════════════════════════════════════════╗");
-                Console.WriteLine("║             Spielmodus auswählen           ║");
-                Console.WriteLine("╠════════════════════════════════════════════╣");
+                Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderTop"));
+                Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderTitle"));
+                Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderLine"));
 
-                // Alle Modi anzeigen, aktueller Modus wird markiert
-                for (int i = 0; i < Modi.Length; i++)
+                for (int i = 0; i < modes.Length; i++)
                 {
                     Console.Write($"║ ");
-                    if (Spielvalues.Gamemode == Modi[i])
+                    if (Spielvalues.Gamemode == modes[i])
                     {
-
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"[{i + 1}] {Modi[i],-25} ← aktuell".PadRight(43));
+                        Console.Write($"[{i + 1}] {modes[i],-25} ← {LanguageManager.Get("settings.current")}".PadRight(43));
                         Console.ResetColor();
-
                     }
                     else
                     {
-                        Console.Write($"[{i + 1}] {Modi[i],-39}");
+                        Console.Write($"[{i + 1}] {modes[i],-39}");
                     }
                     Console.WriteLine("║");
                 }
 
-                Console.WriteLine("╚════════════════════════════════════════════╝");
-                Console.Write("Auswahl: ");
+                Console.WriteLine(LanguageManager.Get("settings.gamemodeFooter"));
+                Console.Write(LanguageManager.Get("settings.gamemodePrompt"));
 
                 string eingabe = Console.ReadLine()!;
-
-                if (int.TryParse(eingabe, out int auswahl))
+                if (int.TryParse(eingabe, out int auswahl) && auswahl >= 1 && auswahl <= modes.Length)
                 {
-                    if (auswahl >= 1 && auswahl <= Modi.Length)
-                    {
-                        Spielvalues.Gamemode = Modi[auswahl - 1];
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"\n✔ Spielmodus gewechselt: {Spielvalues.Gamemode}");
-                        Console.ResetColor();
-                        gueltig = true;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n⚠ Ungültige Auswahl!");
-                        Console.ResetColor();
-                    }
+                    Spielvalues.Gamemode = modes[auswahl - 1];
+                    Spielvalues.GamemodeInt = auswahl;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\n✔ {LanguageManager.Get("settings.gamemodeChanged")} {Spielvalues.Gamemode}");
+                    Console.ResetColor();
+                    valid = true;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n⚠ Bitte eine Zahl eingeben!");
+                    Console.WriteLine("\n" + LanguageManager.Get("settings.invalidSelection"));
                     Console.ResetColor();
                 }
 
-                if (!gueltig)
+                if (!valid)
                 {
-                    Console.WriteLine("\nDrücke eine beliebige Taste, um es erneut zu versuchen...");
+                    Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
                     Console.ReadKey(true);
                 }
-            }
-            while (!gueltig);
 
-            Console.WriteLine("\nDrücke eine beliebige Taste, um zurückzukehren...");
+            } while (!valid);
+
+            Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
 
-
         static void ChangeMaxFutter()
         {
-            bool gueltig = false;
-
+            bool valid = false;
             do
             {
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
-
-                // Box anzeigen
-                Console.WriteLine("╔════════════════════════════════════════════╗");
-                Console.WriteLine("║          Maximal Futter einstellen         ║");
-                Console.WriteLine("╠════════════════════════════════════════════╣");
-                Console.WriteLine($"║ Maximal erlaubte Anzahl: {GameData.MaxFutterconfig,-18}║");
-                Console.WriteLine("╚════════════════════════════════════════════╝");
-                Console.Write("Eingabe: ");
-
+                Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderTop"));
+                Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderTitle"));
+                Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderLine"));
+                Console.WriteLine(LanguageManager.Get("settings.maxFoodLimit").Replace("{limit}", GameData.MaxFutterconfig.ToString().PadRight(17)));
+                Console.WriteLine(LanguageManager.Get("settings.maxFoodFooter"));
+                Console.Write(LanguageManager.Get("settings.maxFoodPrompt"));
                 string input = Console.ReadLine()!;
-
                 if (int.TryParse(input, out int wert) && wert > 0)
                 {
                     if (wert > GameData.MaxFutterconfig)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"\n⚠ Der Wert darf maximal {GameData.MaxFutterconfig} sein.");
+                        Console.WriteLine("\n" + LanguageManager.Get("settings.maxFoodTooHigh").Replace("{limit}", GameData.MaxFutterconfig.ToString()));
                         Console.ResetColor();
                     }
                     else
                     {
                         Spielvalues.Maxfutter = wert;
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"\n✔ MaxFutter wurde auf {wert} gesetzt!");
+                        Console.WriteLine("\n" + LanguageManager.Get("settings.maxFoodChanged").Replace("{value}", wert.ToString()));
                         Console.ResetColor();
-                        gueltig = true;
+                        valid = true;
                     }
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n⚠ Ungültige Eingabe. Bitte eine gültige positive Zahl eingeben.");
+                    Console.WriteLine("\n" + LanguageManager.Get("settings.invalidInput"));
                     Console.ResetColor();
                 }
 
-                if (!gueltig)
+                if (!valid)
                 {
-                    Console.WriteLine("\nDrücke eine beliebige Taste, um es erneut zu versuchen...");
+                    Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
                     Console.ReadKey(true);
                 }
 
-            } while (!gueltig);
+            } while (!valid);
 
-            Console.WriteLine("\nDrücke eine beliebige Taste, um zurückzukehren...");
+            Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
+
 
         static void ResetSpielstand()
         {
             Console.Clear();
             for (int i = 1; i <= 3; i++)
             {
-                Console.WriteLine($"Willst du deinen Spielstand wirklich zurücksetzen? ({i}/3) [ja/nein]");
-                string? eingabe = Console.ReadLine()?.Trim().ToLower();
+                Console.WriteLine(LanguageManager.Get("settings.resetPrompt").Replace("{count}", i.ToString()));
+                string? input = Console.ReadLine()?.Trim().ToLower();
                 Console.Clear();
-                if (eingabe != "ja")
+                if (input != "ja")
                 {
-                    Console.WriteLine("Zurücksetzen abgebrochen.");
+                    Console.WriteLine(LanguageManager.Get("settings.resetCancelled"));
                     Console.ReadKey(true);
                     Console.Clear();
                     return;
                 }
             }
 
-            // Wenn alle drei Bestätigungen "ja" waren:
             SpeicherSystem.Speichern_Laden("Zurücksetzen");
-            Console.WriteLine("Dein Spielstand wurde zurückgesetzt!");
-            Console.WriteLine("Drücke eine Taste, um zurückzukehren...");
+            Console.WriteLine(LanguageManager.Get("settings.resetDone"));
+            Console.WriteLine(LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
