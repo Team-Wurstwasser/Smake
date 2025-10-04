@@ -13,8 +13,7 @@ namespace Smake.Menues
 
             RenderStatistiken();
             Console.ReadKey();
-            _ = new Menue();
-            Thread.Sleep(5);
+            Program.CurrentView = 7;
         }
         static void RenderStatistiken()
         {

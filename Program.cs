@@ -6,6 +6,8 @@ namespace Smake
 {
     public class Program
     {
+        public static int CurrentView = 7;
+        public static bool Exit = false;
         // Main
         static void Main()
         {
@@ -21,8 +23,22 @@ namespace Smake
 
             Eingaben();
 
-            _ = new Menue();
+            do
+            {
+                _ = CurrentView switch
+                {
+                    1 => (object)new Spiellogik(),
+                    2 => (object)new Einstellungen(),
+                    3 => (object)new Shop(),
+                    4 => (object)new Skin_Farben(),
+                    5 => (object)new Statistiken(),
+                    6 => (object)new Anleitung(),
+                    7 => (object)new Menue(),
+                    _ => Exit = true,
+                };
 
+            }
+            while (!Exit);
         }
 
         // Eingaben für Spielernamen
