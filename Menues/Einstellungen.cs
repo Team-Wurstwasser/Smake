@@ -3,6 +3,7 @@ using Smake.Speicher;
 using Smake.Values;
 using System;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Smake.Menues
 {
@@ -40,6 +41,18 @@ namespace Smake.Menues
 
             while (DoReadInput)
             {
+                Spielvalues.GamemodeInt ??= 1;
+                var modes = LanguageManager.GetArray("settings.gamemodes");
+                Spielvalues.Gamemode = modes[(int)Spielvalues.GamemodeInt - 1];
+
+                Spielvalues.Difficulty = Spielvalues.DifficultyInt switch
+                {
+                    1 => LanguageManager.Get("settings.difficulty.slow"),
+                    2 => LanguageManager.Get("settings.difficulty.medium"),
+                    3 => LanguageManager.Get("settings.difficulty.fast"),
+                    _ => LanguageManager.Get("settings.difficulty.medium") // Standardwert
+                };
+
                 ProcessInput();
                 Thread.Sleep(5);
             }
@@ -109,43 +122,93 @@ namespace Smake.Menues
 
         static void ChangeLanguage()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════════╗");
-            Console.WriteLine("║           Sprache auswählen                ║");
-            Console.WriteLine("╠════════════════════════════════════════════╣");
-            Console.WriteLine("║ 1 - Deutsch (de)                           ║");
-            Console.WriteLine("║ 2 - Englisch (en)                          ║");
-            Console.WriteLine("║ 3 - Französisch (fr)                       ║");
-            Console.WriteLine("╚════════════════════════════════════════════╝");
-            Console.Write("Auswahl: ");
+            bool valid = false;
 
-            string? input = Console.ReadLine()?.Trim();
-            string newLang = input switch
+            var languages = new Dictionary<int, string>
             {
-                "1" => "de",
-                "2" => "en",
-                "3" => "fr",
-                _ => ConfigManager.Language
+                { 1, "de" },
+                { 2, "en" },
+                { 3, "fr" }
             };
 
-            if (newLang == ConfigManager.Language)
+            do
             {
-                Console.WriteLine("\n" + LanguageManager.Get("settings.invalidSelection"));
-            }
-            else
-            {
-                ConfigManager.SetLanguage(newLang);
-                LanguageManager.Load(newLang);
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════════╗");
+                Console.WriteLine(LanguageManager.Get("settings.languageMenuTitle"));
+                Console.WriteLine("╠════════════════════════════════════════════╣");
 
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n✔ Sprache geändert auf: {newLang.ToUpper()}");
-                Console.ResetColor();
-            }
+                // Sprachen ausgeben und aktuelle markieren
+                foreach (var kvp in languages)
+                {
+                    string langCode = kvp.Value;
+                    string displayName = langCode switch
+                    {
+                        "de" => "Deutsch",
+                        "en" => "English",
+                        "fr" => "Français",
+                        _ => langCode
+                    };
+
+                    Console.Write("║ ");
+                    if (ConfigManager.Language == langCode) // aktuelle Sprache markieren
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"[{kvp.Key}] {displayName,-10} ({langCode}) ← {LanguageManager.Get("settings.current")}".PadRight(43));
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.Write($"[{kvp.Key}] {displayName,-10} ({langCode})".PadRight(43));
+                    }
+                    Console.WriteLine("║");
+                }
+
+                Console.WriteLine("╚════════════════════════════════════════════╝");
+                Console.Write(LanguageManager.Get("settings.languageMenuPrompt"));
+
+                string eingabe = Console.ReadLine()!.Trim().ToLower();
+                string? newLang = null;
+
+                // Prüfen, ob Zahl eingegeben wurde
+                if (int.TryParse(eingabe, out int auswahl) && languages.TryGetValue(auswahl, out string? value))
+                {
+                    newLang = value;
+                }
+                // Prüfen, ob Kürzel eingegeben wurde
+                else if (languages.ContainsValue(eingabe))
+                {
+                    newLang = eingabe;
+                }
+
+                if (newLang != null)
+                {
+                    ConfigManager.SetLanguage(newLang);
+                    LanguageManager.Load(newLang);
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\n✔ {LanguageManager.Format("settings.languageChanged", new() { ["lang"] = newLang.ToUpper() })}");
+                    Console.ResetColor();
+                    valid = true;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n" + LanguageManager.Get("settings.invalidSelection"));
+                    Console.ResetColor();
+
+                    Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+                    Console.ReadKey(true);
+                }
+
+            } while (!valid);
 
             Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
+
+
 
 
         // Auswahl der Spielgeschwindigkeit
