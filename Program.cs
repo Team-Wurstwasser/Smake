@@ -14,7 +14,10 @@ namespace Smake
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.Title = "Smake";
-            LanguageManager.Load("de");
+
+            // Sprache aus config.json laden
+            ConfigManager.Load();
+            LanguageManager.Load(ConfigManager.Language);
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
