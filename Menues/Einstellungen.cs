@@ -121,12 +121,8 @@ namespace Smake.Menues
         {
             bool valid = false;
 
-            var languages = new Dictionary<int, string>
-            {
-                { 1, "de" },
-                { 2, "en" },
-                { 3, "fr" }
-            };
+            // Dynamisch verfügbare Sprachen (Code + Anzeigename)
+            var languages = LanguageManager.GetAvailableLanguages().ToList();
 
             do
             {
@@ -135,28 +131,22 @@ namespace Smake.Menues
                 Console.WriteLine(LanguageManager.Get("settings.languageMenuTitle"));
                 Console.WriteLine("╠════════════════════════════════════════════╣");
 
-                // Sprachen ausgeben und aktuelle markieren
-                foreach (var kvp in languages)
+                // Sprachen dynamisch auflisten
+                for (int i = 0; i < languages.Count; i++)
                 {
-                    string langCode = kvp.Value;
-                    string displayName = langCode switch
-                    {
-                        "de" => "Deutsch",
-                        "en" => "English",
-                        "fr" => "Français",
-                        _ => langCode
-                    };
+                    string langCode = languages[i].Key;
+                    string displayName = languages[i].Value;
 
                     Console.Write("║ ");
-                    if (ConfigManager.Language == langCode) // aktuelle Sprache markieren
+                    if (ConfigManager.Language == langCode)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"[{kvp.Key}] {displayName,-10} ({langCode}) ← {LanguageManager.Get("settings.current")}".PadRight(43));
+                        Console.Write($"[{i + 1}] {displayName,-10} ({langCode}) ← {LanguageManager.Get("settings.current")}".PadRight(43));
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.Write($"[{kvp.Key}] {displayName,-10} ({langCode})".PadRight(43));
+                        Console.Write($"[{i + 1}] {displayName,-10} ({langCode})".PadRight(43));
                     }
                     Console.WriteLine("║");
                 }
@@ -167,15 +157,17 @@ namespace Smake.Menues
                 string eingabe = Console.ReadLine()!.Trim().ToLower();
                 string? newLang = null;
 
-                // Prüfen, ob Zahl eingegeben wurde
-                if (int.TryParse(eingabe, out int auswahl) && languages.TryGetValue(auswahl, out string? value))
+                // Eingabe prüfen (Index oder Sprachcode)
+                if (int.TryParse(eingabe, out int auswahl) &&
+                    auswahl >= 1 && auswahl <= languages.Count)
                 {
-                    newLang = value;
+                    newLang = languages[auswahl - 1].Key;
                 }
-                // Prüfen, ob Kürzel eingegeben wurde
-                else if (languages.ContainsValue(eingabe))
+                else
                 {
-                    newLang = eingabe;
+                    var match = languages.FirstOrDefault(l => l.Key.Equals(eingabe, StringComparison.OrdinalIgnoreCase));
+                    if (!string.IsNullOrEmpty(match.Key))
+                        newLang = match.Key;
                 }
 
                 if (newLang != null)
@@ -204,9 +196,6 @@ namespace Smake.Menues
             Console.ReadKey(true);
             Console.Clear();
         }
-
-
-
 
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()

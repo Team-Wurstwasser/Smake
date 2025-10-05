@@ -1,4 +1,5 @@
 {
+    "languageName": "English",
     "jsonload": {
         "fileNotFound": "JSON file not found: {path}",
         "loadError": "Error loading file {path}: {message}"
@@ -65,7 +66,7 @@
         "maxFoodPrompt": "Input: ",
         "maxFoodTooHigh": "⚠ The value cannot exceed {limit}.",
         "maxFoodChanged": "✔ MaxFood has been set to {value}!",
-        "languageMenuTitle": "║              Select Language               ║",      
+        "languageMenuTitle": "║              Select Language               ║",
         "languageMenuPrompt": "Choice: ",
         "languageChanged": "Language successfully changed to {lang}!",
         "invalidSelection": "⚠ Invalid selection!",
