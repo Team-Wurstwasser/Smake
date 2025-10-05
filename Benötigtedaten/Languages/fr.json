@@ -1,4 +1,5 @@
 {
+    "languageName": "Français",
     "jsonload": {
         "fileNotFound": "Fichier JSON introuvable: {path}",
         "loadError": "Erreur lors du chargement du fichier {path}: {message}"
