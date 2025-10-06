@@ -21,8 +21,6 @@ namespace Smake.Speicher
             // 1️⃣ Config laden oder Standard anlegen
             if (!File.Exists(ConfigPath))
             {
-                Console.WriteLine("ℹ Keine Konfigurationsdatei gefunden – Standard wird erstellt.");
-                Console.ReadKey(true);
                 Save();
             }
 
