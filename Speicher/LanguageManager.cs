@@ -18,13 +18,13 @@ namespace Smake.Speicher
 
         public static void Load()
         {
-            // 1️⃣ Config laden oder Standard anlegen
+            // 1️. Config laden oder Standard anlegen
             if (!File.Exists(ConfigPath))
             {
                 Save();
             }
 
-            // 2️⃣ Sprache aus config.json lesen
+            // 2️. Sprache aus config.json lesen
             try
             {
                 var configJson = File.ReadAllText(ConfigPath);
@@ -48,7 +48,7 @@ namespace Smake.Speicher
                 SetLanguage(DefaultLanguage);
             }
 
-            // 3️⃣ Sprachdatei laden (mit Fallback auf 'de')
+            // 3️. Sprachdatei laden (mit Fallback auf 'de')
             string langPath = $"Languages/{Language}.json";
             if (!File.Exists(langPath))
             {
