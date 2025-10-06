@@ -6,7 +6,7 @@ namespace Smake.Speicher
     {
         private static Dictionary<string, object> _data = [];
 
-        public static string Language { get; private set; } = "de"; // Standard
+        public static string Language { get; private set; }
 
         private static readonly string ConfigPath = "config.json";
         private static readonly string DefaultLanguage = "de";
