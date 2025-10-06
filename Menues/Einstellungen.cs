@@ -111,7 +111,7 @@ namespace Smake.Menues
                 items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[5].Replace("{music}", Musik.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[6].Replace("{sounds}", Musik.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[7].Replace("{language}", ConfigManager.Language.ToUpper()),
+                items[7].Replace("{language}", LanguageManager.Language.ToUpper()),
                 items[8],
                 items[9]
             ];
@@ -138,7 +138,7 @@ namespace Smake.Menues
                     string displayName = languages[i].Value;
 
                     Console.Write("║ ");
-                    if (ConfigManager.Language == langCode)
+                    if (LanguageManager.Language == langCode)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write($"[{i + 1}] {displayName,-10} ({langCode}) ← {LanguageManager.Get("settings.current")}".PadRight(43));
@@ -172,8 +172,7 @@ namespace Smake.Menues
 
                 if (newLang != null)
                 {
-                    ConfigManager.SetLanguage(newLang);
-                    LanguageManager.Load(newLang);
+                    LanguageManager.SetLanguage(newLang);
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\n✔ {LanguageManager.Format("settings.languageChanged", new() { ["lang"] = newLang.ToUpper() })}");
