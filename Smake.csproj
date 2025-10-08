@@ -1,19 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <ApplicationIcon>titel.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<ApplicationIcon>titel.ico</ApplicationIcon>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="titel.ico" />
-  </ItemGroup>
+	<!-- Kopieren der Unterordner beim Debug-Build -->
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<!-- Json -->
+		<Content Include="Benoetigtedaten\Json\**\*.*">
+			<Link>Json\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 
-  <ItemGroup>
-    <PackageReference Include="System.Windows.Extensions" Version="9.0.9" />
-  </ItemGroup>
+		<!-- Languages -->
+		<Content Include="Benoetigtedaten\Languages\**\*.*">
+			<Link>Languages\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+
+		<!-- Sounds -->
+		<Content Include="Benoetigtedaten\Sounds\**\*.*">
+			<Link>Sounds\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<!-- Icon -->
+	<ItemGroup>
+		<Content Include="titel.ico" />
+	</ItemGroup>
+
+	<!-- Pakete -->
+	<ItemGroup>
+		<PackageReference Include="System.Windows.Extensions" Version="9.0.9" />
+	</ItemGroup>
 
 </Project>

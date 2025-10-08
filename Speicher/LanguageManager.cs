@@ -21,6 +21,7 @@ namespace Smake.Speicher
             // 1️. Config laden oder Standard anlegen
             if (!File.Exists(ConfigPath))
             {
+                Language = DefaultLanguage;
                 Save();
             }
 
