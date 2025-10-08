@@ -20,30 +20,28 @@ namespace Smake.Render
         {
             Console.Clear();
 
-            for (int reihe = 0; reihe < Grid.GetLength(0); reihe++)
+            for (int y = 0; y < Grid.GetLength(0); y++)
             {
-                for (int symbol = 0; symbol < Grid.GetLength(1); symbol++)
+                for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    // Rand des Spielfelds mit RandSkin markieren
-                    // Oben/unten: 1 Zeile
-                    if (reihe == 0 || reihe == Grid.GetLength(0) - 1 ||
-                        // Links/rechts: 2 Spalten
-                        symbol < 2 || symbol >= Grid.GetLength(1) - 2)
+
+                    if (y == 0 || y == Grid.GetLength(0) - 1 || x == 0 || x >= Grid.GetLength(1) - 1)
                     {
-                        Grid[reihe, symbol] = Skinvalues.RandSkin;
+                        Grid[y, x] = Skinvalues.RandSkin;
+                        PrevGrid[y, x] = Skinvalues.RandSkin;
                     }
                     else
                     {
-                        Grid[reihe, symbol] = ' ';
+                        Grid[y, x] = ' ';
+                        PrevGrid[y, x] = '\0';
                     }
 
-                    PrevGrid[reihe, symbol] = '\0'; // Initial: alles als "anders" markieren
                 }
             }
             RenderRand();
         }
 
-        private void RenderRand()
+        private static void RenderRand()
         {
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
@@ -63,28 +61,23 @@ namespace Smake.Render
                 // Oben
                 Console.SetCursorPosition(x, 0);
                 Console.Write(Skinvalues.RandSkin);
-                PrevGrid[0, x] = Skinvalues.RandSkin;
 
                 // Unten
                 Console.SetCursorPosition(x, rows - 1);
                 Console.Write(Skinvalues.RandSkin);
-                PrevGrid[rows - 1, x] = Skinvalues.RandSkin;
             }
 
             // Linke und rechte Randlinie
             for (int y = 1; y < rows - 1; y++)
             {
+                int dicke = 1;
                 // Links
                 Console.SetCursorPosition(0, y);
-                Console.Write(new string(Skinvalues.RandSkin, 2)); // "██"
-                PrevGrid[y, 0] = Skinvalues.RandSkin;
-                PrevGrid[y, 1] = Skinvalues.RandSkin;
+                Console.Write(new string(Skinvalues.RandSkin, dicke)); // "██"
 
                 // Rechts
-                Console.SetCursorPosition(cols - 2, y);
-                Console.Write(new string(Skinvalues.RandSkin, 2)); // "██"
-                PrevGrid[y, cols - 1] = Skinvalues.RandSkin;
-                PrevGrid[y, cols - 2] = Skinvalues.RandSkin;
+                Console.SetCursorPosition(cols - dicke, y);
+                Console.Write(new string(Skinvalues.RandSkin, dicke)); // "██"
             }
         }
 
