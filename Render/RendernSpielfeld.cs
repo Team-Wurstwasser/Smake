@@ -7,7 +7,7 @@ namespace Smake.Render
 {
     public class RendernSpielfeld
     {
-        public static bool Performancemode { get; set; }
+        public static bool Performancemode { get; set; } 
 
         // Das Spielfeld als zweidimensionales Zeichen-Array
         public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];

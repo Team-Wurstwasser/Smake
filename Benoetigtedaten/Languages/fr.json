@@ -5,10 +5,10 @@
         "loadError": "Erreur lors du chargement du fichier {path}: {message}"
     },
     "saveLoad": {
-        "mainMissing": "Main file missing, loading backup...",
-        "backupCorrupt": "❌ Backup corrupted – default values will be set.",
-        "loadError": "⚠ Error loading, trying backup...",
-        "backupAlsoCorrupt": "❌ Backup also corrupted – default values will be set."
+        "mainMissing": "Fichier principal manquant, chargement de la sauvegarde...",
+        "backupCorrupt": "❌ Sauvegarde corrompue – les valeurs par défaut seront définies.",
+        "loadError": "⚠ Erreur de chargement, tentative de sauvegarde...",
+        "backupAlsoCorrupt": "❌ La sauvegarde est également corrompue – les valeurs par défaut seront définies."
     },
     "input": {
         "player1": "Joueur 1, entrez votre nom: ",
