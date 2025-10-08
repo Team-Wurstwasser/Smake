@@ -6,7 +6,7 @@ namespace Smake.Speicher
     {
         private static Dictionary<string, object> _data = [];
 
-        public static string Language { get; private set; }
+        public static string? Language { get; private set; }
 
         private static readonly string ConfigPath = "config.json";
         private static readonly string DefaultLanguage = "de";
@@ -87,7 +87,7 @@ namespace Smake.Speicher
 
         private static void Save()
         {
-            var config = new Dictionary<string, string>
+            var config = new Dictionary<string, string?>
             {
                 { "language", Language }
             };
@@ -100,11 +100,7 @@ namespace Smake.Speicher
         {
             Language = newLang;
             Save();
-
-            // Hier kein rekursiver Aufruf von Load(), wenn die Sprache bereits identisch ist
-            // → verhindert unbeabsichtigte Endlosschleifen bei Fallbacks
-            if (!string.Equals(Language, newLang, StringComparison.OrdinalIgnoreCase))
-                Load();
+            Load();
         }
 
         public static Dictionary<string, string> GetAvailableLanguages()
