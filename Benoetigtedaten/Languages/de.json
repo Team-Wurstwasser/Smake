@@ -12,7 +12,7 @@
     },
     "input": {
         "player1": "Spieler 1, gib deinen Namen ein: ",
-        "player2": "Spieler 1, gib deinen Namen ein: "
+        "player2": "Spieler 2, gib deinen Namen ein: "
     },
     "menu": {
         "items": [
