@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<ApplicationIcon>titel.ico</ApplicationIcon>
@@ -36,7 +36,7 @@
 
 	<!-- Pakete -->
 	<ItemGroup>
-		<PackageReference Include="System.Windows.Extensions" Version="9.0.9" />
+		<PackageReference Include="System.Windows.Extensions" Version="10.0.0" />
 	</ItemGroup>
 
 </Project>
