@@ -1,63 +1,79 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Smake.Helper
 {
     public class CryptoHelper
     {
         private static readonly string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
-
-        // Länge des Salts in Bytes
         private const int SaltLength = 16;
+        private const int NonceLength = 12;
+        private const int TagLength = 16;
+        private const int Iterations = 100_000;
 
         public static byte[] Encrypt(string plainText)
         {
-            // Zufälligen Salt erzeugen
             byte[] salt = RandomNumberGenerator.GetBytes(SaltLength);
+            byte[] nonce = RandomNumberGenerator.GetBytes(NonceLength);
 
-            using var aes = Aes.Create();
-            using var key = new Rfc2898DeriveBytes(Passwort, salt, 100_000, HashAlgorithmName.SHA256);
+            byte[] key = Rfc2898DeriveBytes.Pbkdf2(
+                Passwort,
+                salt,
+                Iterations,
+                HashAlgorithmName.SHA256,
+                32);
 
-            aes.Key = key.GetBytes(32);
-            aes.IV = key.GetBytes(16);
+            byte[] plaintextBytes = Encoding.UTF8.GetBytes(plainText);
+            byte[] ciphertext = new byte[plaintextBytes.Length];
+            byte[] tag = new byte[TagLength];
+
+            using var aesGcm = new AesGcm(key, TagLength);
+
+            aesGcm.Encrypt(nonce, plaintextBytes, ciphertext, tag, null);
 
             using var ms = new MemoryStream();
-            using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
-            using (var sw = new StreamWriter(cs))
-            {
-                sw.Write(plainText);
-            }
+            ms.Write(salt, 0, salt.Length);
+            ms.Write(nonce, 0, nonce.Length);
+            ms.Write(ciphertext, 0, ciphertext.Length);
+            ms.Write(tag, 0, tag.Length);
 
-            byte[] encryptedData = ms.ToArray();
-
-            // Salt vorne anfügen, damit es beim Entschlüsseln verfügbar ist
-            byte[] result = new byte[SaltLength + encryptedData.Length];
-            Array.Copy(salt, 0, result, 0, SaltLength);
-            Array.Copy(encryptedData, 0, result, SaltLength, encryptedData.Length);
-
-            return result;
+            return ms.ToArray();
         }
 
-        public static string Decrypt(byte[] cipherWithSalt)
+        public static string Decrypt(byte[] payload)
         {
-            // Salt aus den ersten Bytes auslesen
             byte[] salt = new byte[SaltLength];
-            Array.Copy(cipherWithSalt, 0, salt, 0, SaltLength);
+            Array.Copy(payload, 0, salt, 0, SaltLength);
 
-            // Restliche Daten = verschlüsselter Text
-            byte[] cipherText = new byte[cipherWithSalt.Length - SaltLength];
-            Array.Copy(cipherWithSalt, SaltLength, cipherText, 0, cipherText.Length);
+            byte[] nonce = new byte[NonceLength];
+            Array.Copy(payload, SaltLength, nonce, 0, NonceLength);
 
-            using var aes = Aes.Create();
-            using var key = new Rfc2898DeriveBytes(Passwort, salt, 100_000, HashAlgorithmName.SHA256);
+            int tagStart = payload.Length - TagLength;
+            int cipherStart = SaltLength + NonceLength;
+            int cipherLength = tagStart - cipherStart;
 
-            aes.Key = key.GetBytes(32);
-            aes.IV = key.GetBytes(16);
+            byte[] ciphertext = new byte[cipherLength];
+            Array.Copy(payload, cipherStart, ciphertext, 0, cipherLength);
 
-            using var ms = new MemoryStream(cipherText);
-            using var cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
-            using var sr = new StreamReader(cs);
+            byte[] tag = new byte[TagLength];
+            Array.Copy(payload, tagStart, tag, 0, TagLength);
 
-            return sr.ReadToEnd();
+            byte[] key = Rfc2898DeriveBytes.Pbkdf2(
+                Passwort,
+                salt,
+                Iterations,
+                HashAlgorithmName.SHA256,
+                32);
+
+            byte[] plaintextBytes = new byte[ciphertext.Length];
+
+            using var aesGcm = new AesGcm(key, TagLength);
+
+            aesGcm.Decrypt(nonce, ciphertext, tag, plaintextBytes, null);
+
+            return Encoding.UTF8.GetString(plaintextBytes);
         }
     }
 }
