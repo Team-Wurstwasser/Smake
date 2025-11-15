@@ -12,20 +12,21 @@
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<!-- Json -->
 		<Content Include="Benoetigtedaten\Json\**\*.*">
-			<Link>Json\%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<TargetPath>Json\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 
 		<!-- Languages -->
 		<Content Include="Benoetigtedaten\Languages\**\*.*">
-			<Link>Languages\%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>Languages\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 
 		<!-- Sounds -->
 		<Content Include="Benoetigtedaten\Sounds\**\*.*">
-			<Link>Sounds\%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>Sounds\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 	</ItemGroup>
 
