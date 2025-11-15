@@ -3,61 +3,70 @@ from tkinter import filedialog, messagebox
 from pathlib import Path
 import os
 
-from cryptography.hazmat.primitives import hashes, padding
+from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.backends import default_backend
 
 PASSWORD = b"djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh"
 ITERATIONS = 100_000
 KEY_LEN = 32
-IV_LEN = 16
 SALT_LEN = 16
+NONCE_LEN = 12
+TAG_LEN = 16
 
 
-def derive_key_iv(password: bytes, salt: bytes):
-    total_len = KEY_LEN + IV_LEN
+def derive_key(password: bytes, salt: bytes) -> bytes:
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
-        length=total_len,
+        length=KEY_LEN,
         salt=salt,
         iterations=ITERATIONS,
         backend=default_backend()
     )
-    okm = kdf.derive(password)
-    return okm[:KEY_LEN], okm[KEY_LEN:]
+    return kdf.derive(password)
 
 
 def aes_encrypt(plaintext: bytes) -> bytes:
     salt = os.urandom(SALT_LEN)
-    key, iv = derive_key_iv(PASSWORD, salt)
+    nonce = os.urandom(NONCE_LEN)
+    key = derive_key(PASSWORD, salt)
 
-    padder = padding.PKCS7(algorithms.AES.block_size).padder()
-    padded = padder.update(plaintext) + padder.finalize()
+    aesgcm = AESGCM(key)
 
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
-    encryptor = cipher.encryptor()
-    ciphertext = encryptor.update(padded) + encryptor.finalize()
+    ciphertext_with_tag = aesgcm.encrypt(
+        nonce,
+        plaintext,
+        None
+    )
 
-    return salt + ciphertext
+    ciphertext = ciphertext_with_tag[:-TAG_LEN]
+    tag = ciphertext_with_tag[-TAG_LEN:]
+
+    return salt + nonce + ciphertext + tag
 
 
 def aes_decrypt(data: bytes) -> bytes:
-    if len(data) < SALT_LEN:
-        raise ValueError("Ungültige verschlüsselte Datei")
+    if len(data) < SALT_LEN + NONCE_LEN + TAG_LEN:
+        raise ValueError("Invalid encrypted data")
 
     salt = data[:SALT_LEN]
-    ciphertext = data[SALT_LEN:]
-    key, iv = derive_key_iv(PASSWORD, salt)
+    nonce = data[SALT_LEN:SALT_LEN + NONCE_LEN]
 
-    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
-    decryptor = cipher.decryptor()
-    padded_plain = decryptor.update(ciphertext) + decryptor.finalize()
+    tag = data[-TAG_LEN:]
+    ciphertext = data[SALT_LEN + NONCE_LEN:-TAG_LEN]
 
-    unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
-    return unpadder.update(padded_plain) + unpadder.finalize()
+    key = derive_key(PASSWORD, salt)
+    aesgcm = AESGCM(key)
 
+    ciphertext_with_tag = ciphertext + tag
 
+    return aesgcm.decrypt(
+        nonce,
+        ciphertext_with_tag,
+        None
+    )
+    
 class CryptoGUI(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -92,9 +101,8 @@ class CryptoGUI(tk.Tk):
             encrypted = aes_encrypt(data)
 
             if in_path.suffix == ".dec":
-                # "save.bin.dec" -> "save.bin.enc"
                 out_path = in_path.with_name(in_path.stem + ".enc")
-                in_path.unlink()  # alte .dec löschen
+                in_path.unlink()
             else:
                 out_path = in_path.with_suffix(in_path.suffix + ".enc")
 
@@ -113,9 +121,8 @@ class CryptoGUI(tk.Tk):
             decrypted = aes_decrypt(data)
 
             if in_path.suffix == ".enc":
-                # "save.bin.enc" -> "save.bin.dec"
                 out_path = in_path.with_name(in_path.stem + ".dec")
-                in_path.unlink()  # alte .enc löschen
+                in_path.unlink()
             else:
                 out_path = in_path.with_suffix(in_path.suffix + ".dec")
 
