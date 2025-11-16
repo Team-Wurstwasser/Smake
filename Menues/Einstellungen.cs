@@ -29,7 +29,7 @@ namespace Smake.Menues
 
         private void Menueloop()
         {
-            Musik.Currentmusik = GameData.MusikDaten.Menue?.Einstellungen ?? 0;
+            Sounds.Currentmusik = GameData.MusikDaten.Menue?.Einstellungen ?? 0;
             Title = LanguageManager.Get("settings.title");
             Display = BuildMenu();
             MenuTracker = 1;
@@ -90,8 +90,8 @@ namespace Smake.Menues
                 case 3: ChangeGamemode(); break;
                 case 4: ChangeMaxFutter(); break;
                 case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
-                case 6: Musik.Musikplay = !Musik.Musikplay; Musik.Melodie(); break;
-                case 7: Musik.Soundplay = !Musik.Soundplay; Musik.Melodie(); break;
+                case 6: Sounds.Musikplay = !Sounds.Musikplay; Sounds.Melodie(); break;
+                case 7: Sounds.Soundplay = !Sounds.Soundplay; Sounds.Melodie(); break;
                 case 8: ChangeLanguage(); break;
                 case 9: ResetSpielstand(); break;
                 case 10: StopInputstream(); break;
@@ -109,8 +109,8 @@ namespace Smake.Menues
                 items[2].Replace("{gamemode}", Spielvalues.Gamemode),
                 items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
                 items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[5].Replace("{music}", Musik.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[6].Replace("{sounds}", Musik.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[5].Replace("{music}", Sounds.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[7].Replace("{language}", LanguageManager.Language?.ToUpper()),
                 items[8],
                 items[9]
@@ -346,7 +346,7 @@ namespace Smake.Menues
             }
 
             SpeicherSystem.Speichern_Laden("Zurücksetzen");
-            Musik.Melodie();
+            Sounds.Melodie();
             Console.WriteLine(LanguageManager.Get("settings.resetDone"));
             Console.WriteLine(LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);

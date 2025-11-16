@@ -117,10 +117,7 @@ namespace Smake.Gegenstaende
 
                         p.Punkte++;
 
-                        if (Musik.Soundplay)
-                        {
-                            Console.Beep(700, 100);
-                        }
+                        Sounds.Playbeep();
 
                         if (Spielvalues.GamemodeInt == 5)
                         {
