@@ -14,9 +14,9 @@ namespace Smake.Helper
                 case 1:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Normal.Langsam,
-                        2 => GameData.MusikDaten.Game.Normal.Mittel,
-                        3 => GameData.MusikDaten.Game.Normal.Schnell,
+                        1 => GameData.MusikDaten.Game?.Normal?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Normal?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Normal?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -24,9 +24,9 @@ namespace Smake.Helper
                 case 2:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Unendlich.Langsam,
-                        2 => GameData.MusikDaten.Game.Unendlich.Mittel,
-                        3 => GameData.MusikDaten.Game.Unendlich.Schnell,
+                        1 => GameData.MusikDaten.Game?.Unendlich?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Unendlich?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Unendlich?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -34,9 +34,9 @@ namespace Smake.Helper
                 case 3:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Babymode.Langsam,
-                        2 => GameData.MusikDaten.Game.Babymode.Mittel,
-                        3 => GameData.MusikDaten.Game.Babymode.Schnell,
+                        1 => GameData.MusikDaten.Game?.Babymode?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Babymode?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Babymode?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -44,9 +44,9 @@ namespace Smake.Helper
                 case 4:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Babymode_Unendlich.Langsam,
-                        2 => GameData.MusikDaten.Game.Babymode_Unendlich.Mittel,
-                        3 => GameData.MusikDaten.Game.Babymode_Unendlich.Schnell,
+                        1 => GameData.MusikDaten.Game?.Babymode_Unendlich?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Babymode_Unendlich?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Babymode_Unendlich?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -54,9 +54,9 @@ namespace Smake.Helper
                 case 5:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Mauer_Modus.Langsam,
-                        2 => GameData.MusikDaten.Game.Mauer_Modus.Mittel,
-                        3 => GameData.MusikDaten.Game.Mauer_Modus.Schnell,
+                        1 => GameData.MusikDaten.Game?.Mauer_Modus?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Mauer_Modus?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Mauer_Modus?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -64,9 +64,9 @@ namespace Smake.Helper
                 case 6:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Schluessel_Modus.Langsam,
-                        2 => GameData.MusikDaten.Game.Schluessel_Modus.Mittel,
-                        3 => GameData.MusikDaten.Game.Schluessel_Modus.Schnell,
+                        1 => GameData.MusikDaten.Game?.Schluessel_Modus?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Schluessel_Modus?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Schluessel_Modus?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -74,18 +74,18 @@ namespace Smake.Helper
                 case 7:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Sprungfutter_Modus.Langsam,
-                        2 => GameData.MusikDaten.Game.Sprungfutter_Modus.Mittel,
-                        3 => GameData.MusikDaten.Game.Sprungfutter_Modus.Schnell,
+                        1 => GameData.MusikDaten.Game?.Sprungfutter_Modus?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Sprungfutter_Modus?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Sprungfutter_Modus?.Schnell ?? 1,
                         _ => null
                     };
                     break;
                 case 8:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Bomben_Modus.Langsam,
-                        2 => GameData.MusikDaten.Game.Bomben_Modus.Mittel,
-                        3 => GameData.MusikDaten.Game.Bomben_Modus.Schnell,
+                        1 => GameData.MusikDaten.Game?.Bomben_Modus?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Bomben_Modus?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Bomben_Modus?.Schnell ?? 1,
                         _ => null
                     };
                     break;
@@ -93,9 +93,9 @@ namespace Smake.Helper
                 case 9:
                     currentMusik = Spielvalues.DifficultyInt switch
                     {
-                        1 => GameData.MusikDaten.Game.Chaos_Steuerung.Langsam,
-                        2 => GameData.MusikDaten.Game.Chaos_Steuerung.Mittel,
-                        3 => GameData.MusikDaten.Game.Chaos_Steuerung.Schnell,
+                        1 => GameData.MusikDaten.Game?.Chaos_Steuerung?.Langsam ?? 1,
+                        2 => GameData.MusikDaten.Game?.Chaos_Steuerung?.Mittel ?? 1,
+                        3 => GameData.MusikDaten.Game?.Chaos_Steuerung?.Schnell ?? 1,
                         _ => null
                     };
                     break;

@@ -29,7 +29,7 @@ namespace Smake.Menues
 
         private void Menueloop()
         {
-            Musik.Currentmusik = GameData.MusikDaten.Menue.Einstellungen;
+            Musik.Currentmusik = GameData.MusikDaten.Menue?.Einstellungen ?? 0;
             Title = LanguageManager.Get("settings.title");
             Display = BuildMenu();
             MenuTracker = 1;
@@ -111,7 +111,7 @@ namespace Smake.Menues
                 items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[5].Replace("{music}", Musik.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[6].Replace("{sounds}", Musik.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[7].Replace("{language}", LanguageManager.Language.ToUpper()),
+                items[7].Replace("{language}", LanguageManager.Language?.ToUpper()),
                 items[8],
                 items[9]
             ];
