@@ -8,8 +8,8 @@ namespace Smake.Menues
     {
         public Statistiken()
         {
-            Musik.Currentmusik = GameData.MusikDaten.Menue?.Statistiken ?? 0;
-            Musik.Melodie();
+            Sounds.Currentmusik = GameData.MusikDaten.Menue?.Statistiken ?? 0;
+            Sounds.Melodie();
 
             RenderStatistiken();
             Console.ReadKey();

@@ -77,8 +77,8 @@ namespace Smake.Speicher
 
         private static void SetzeStandardwerte()
         {
-            Musik.Musikplay = true;
-            Musik.Soundplay = true;
+            Sounds.Musikplay = true;
+            Sounds.Soundplay = true;
 
             // Erst alle auf false setzen
             Array.Clear(Menüsvalues.FreigeschaltetTail);
@@ -155,8 +155,8 @@ namespace Smake.Speicher
                 $"Player2.TailFarbe={Spiellogik.Player2.TailFarbe}",
                 $"Player1.HeadFarbe={Spiellogik.Player.HeadFarbe}",
                 $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}",
-                $"Musikplay={Musik.Musikplay}",
-                $"Soundplay={Musik.Soundplay}"
+                $"Musikplay={Sounds.Musikplay}",
+                $"Soundplay={Sounds.Soundplay}"
             };
 
             for (int i = 0; i < Menüsvalues.FreigeschaltetTail.Length; i++)
@@ -228,8 +228,8 @@ namespace Smake.Speicher
                         case "Player2.TailFarbe": Spiellogik.Player2.TailFarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "Player1.HeadFarbe": Spiellogik.Player.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
                         case "Player2.HeadFarbe": Spiellogik.Player2.HeadFarbe = Enum.Parse<ConsoleColor>(wert); break;
-                        case "Soundplay": Musik.Soundplay = bool.Parse(wert); break;
-                        case "Musikplay": Musik.Musikplay = bool.Parse(wert); break;
+                        case "Soundplay": Sounds.Soundplay = bool.Parse(wert); break;
+                        case "Musikplay": Sounds.Musikplay = bool.Parse(wert); break;
                         default:
                             if (name.StartsWith("FreigeschaltetTail"))
                                 Menüsvalues.FreigeschaltetTail[int.Parse(name.Replace("FreigeschaltetTail", ""))] = bool.Parse(wert);

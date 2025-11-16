@@ -3,8 +3,11 @@ using System.Media;
 
 namespace Smake
 {
-    public class Musik
+    public class Sounds
     {
+        
+        #pragma warning disable CA1416 // Plattformkompatibilität überprüfen
+
         public static bool Musikplay { get; set; }
         public static int? Currentmusik { private get; set; } = 0;
         public static bool Soundplay { get; set; }
@@ -49,5 +52,17 @@ namespace Smake
                 lastPlayState = Musikplay;
             }
         }
+
+        public static void Playbeep()
+        {
+            if (!Soundplay)
+            {
+                return;
+            }
+            Console.Beep(700, 100);
+        }
+
+        #pragma warning restore CA1416 // Plattformkompatibilität überprüfen
+
     }
 }
