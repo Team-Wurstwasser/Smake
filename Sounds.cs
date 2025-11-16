@@ -55,11 +55,11 @@ namespace Smake
 
         public static void Playbeep()
         {
-            if (!Soundplay)
+            if(Soundplay)
             {
-                return;
+                Console.Beep(700, 100);
             }
-            Console.Beep(700, 100);
+
         }
 
         #pragma warning restore CA1416 // Plattformkompatibilität überprüfen
