@@ -6,9 +6,9 @@
     },
     "saveLoad": {
         "mainMissing": "Fichier principal manquant, chargement de la sauvegarde...",
-        "backupCorrupt": "❌ Sauvegarde corrompue – les valeurs par défaut seront définies.",
+        "backupCorrupt": "❌ Sauvegarde corrompue - les valeurs par défaut seront définies.",
         "loadError": "⚠ Erreur de chargement, tentative de sauvegarde...",
-        "backupAlsoCorrupt": "❌ La sauvegarde est également corrompue – les valeurs par défaut seront définies."
+        "backupAlsoCorrupt": "❌ La sauvegarde est également corrompue - les valeurs par défaut seront définies."
     },
     "input": {
         "player1": "Joueur 1, entrez votre nom: ",
@@ -124,7 +124,7 @@
         "draw": "Égalité !",
         "playerWins": "{player} gagne !",
         "playerPoints": "{player} a atteint {points} points.",
-        "lose": "Perdu – essayez encore !",
+        "lose": "Perdu - essayez encore !",
         "losePoints": "Vous avez obtenu {points} points.",
         "win": "Félicitations ! Vous avez gagné !",
         "winPoints": "Votre score: {points}",

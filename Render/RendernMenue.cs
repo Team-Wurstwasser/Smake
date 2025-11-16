@@ -139,8 +139,8 @@ namespace Smake.Render
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(LanguageManager.Get("shop.title").PadLeft(14));
-            Console.WriteLine(LanguageManager.Format("shop.coins", new() { { "coins", Spielstatus.Coins.ToString() } }).PadRight(50));
-            Console.WriteLine(LanguageManager.Format("shop.level", new() { { "level", Spielstatus.Level.ToString() } }).PadRight(50));
+            Console.WriteLine(LanguageManager.Get("shop.coins").Replace("{coins}", Spielstatus.Coins.ToString()).PadRight(50));
+            Console.WriteLine(LanguageManager.Get("shop.level").Replace("{coins}", Spielstatus.Level.ToString()).PadRight(50));
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine(LanguageManager.Get("shop.switchPage"));
         }
@@ -153,9 +153,9 @@ namespace Smake.Render
                 int shopItemIndex = i - startIndex;
 
                 string shoptext = Spielstatus.Level < levels[shopItemIndex]
-                    ? LanguageManager.Format("shop.requiredLevel", new() { { "level", levels[shopItemIndex].ToString() } })
+                    ? LanguageManager.Get("shop.requiredLevel").Replace("{level}", levels[shopItemIndex].ToString())
                     : unlocked[i] ? LanguageManager.Get("shop.unlocked")
-                    : LanguageManager.Format("shop.price", new() { { "price", prices[shopItemIndex].ToString() } });
+                    : LanguageManager.Get("shop.price").Replace("{price}", prices[shopItemIndex].ToString());
 
                 string zeiger = optionCounter + 1 == selected1 ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {items[i]} {shoptext}".PadRight(50));
@@ -188,9 +188,9 @@ namespace Smake.Render
             for (int i = 1; i < GameData.Farben.Length; i++, option++)
             {
                 string shoptext = Spielstatus.Level < GameData.FarbenLevel[i - 1]
-                    ? LanguageManager.Format("shop.requiredLevel", new() { { "level", GameData.FarbenLevel[i - 1].ToString() } })
+                    ? LanguageManager.Get("shop.requiredLevel").Replace("{level}", GameData.FarbenLevel[i - 1].ToString())
                     : Menüsvalues.FreigeschaltetFarben[i] ? LanguageManager.Get("shop.unlocked")
-                    : LanguageManager.Format("shop.price", new() { { "price", GameData.FarbenPreis[i - 1].ToString() } });
+                    : LanguageManager.Get("shop.price").Replace("{price}", GameData.FarbenPreis[i - 1].ToString());
 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
