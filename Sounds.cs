@@ -59,7 +59,6 @@ namespace Smake
             {
                 Console.Beep(700, 100);
             }
-
         }
 
         #pragma warning restore CA1416 // Plattformkompatibilität überprüfen
