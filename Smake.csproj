@@ -13,7 +13,6 @@
 		<!-- Json -->
 		<Content Include="Benoetigtedaten\Json\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<TargetPath>Json\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 

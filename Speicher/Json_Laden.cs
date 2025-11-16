@@ -108,9 +108,7 @@ namespace Smake.Speicher
             }
             catch (Exception ex)
             {
-                Console.WriteLine(LanguageManager.Get("jsonload.loadError")
-                    .Replace("{path}", path)
-                    .Replace("{message}", ex.Message));
+                Console.WriteLine(LanguageManager.Get("jsonload.loadError").Replace("{path}", path).Replace("{message}", ex.Message));
                 Console.ReadKey();
                 setData(default);
             }
@@ -145,9 +143,11 @@ namespace Smake.Speicher
             public MusikSpeed? Normal { get; set; }
             public MusikSpeed? Unendlich { get; set; }
             public MusikSpeed? Babymode { get; set; }
+            public MusikSpeed? Babymode_Unendlich { get; set; }
             public MusikSpeed? Mauer_Modus { get; set; }
             public MusikSpeed? Schluessel_Modus { get; set; }
             public MusikSpeed? Sprungfutter_Modus { get; set; }
+            public MusikSpeed? Bomben_Modus { get; set; }
             public MusikSpeed? Chaos_Steuerung { get; set; }
         }
 

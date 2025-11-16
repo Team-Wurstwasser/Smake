@@ -6,9 +6,9 @@
     },
     "saveLoad": {
         "mainMissing": "Main file missing, loading backup...",
-        "backupCorrupt": "❌ Backup corrupted – default values will be set.",
+        "backupCorrupt": "❌ Backup corrupted - default values will be set.",
         "loadError": "⚠ Error loading, trying backup...",
-        "backupAlsoCorrupt": "❌ Backup also corrupted – default values will be set."
+        "backupAlsoCorrupt": "❌ Backup also corrupted - default values will be set."
     },
     "input": {
         "player1": "Player 1, enter your name: ",
@@ -124,7 +124,7 @@
         "draw": "Draw!",
         "playerWins": "{player} wins!",
         "playerPoints": "{player} reached {points} points.",
-        "lose": "Unfortunately lost – try again!",
+        "lose": "Unfortunately lost - try again!",
         "losePoints": "You scored {points} points.",
         "win": "Congratulations! You won!",
         "winPoints": "Your score: {points}",
