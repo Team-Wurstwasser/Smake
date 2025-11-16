@@ -8,8 +8,8 @@ namespace Smake.Speicher
 
         public static string? Language { get; private set; }
 
-        private static readonly string ConfigPath = "config.json";
-        private static readonly string DefaultLanguage = "de";
+        private const string ConfigPath = "config.json";
+        private const string DefaultLanguage = "de";
 
         private static readonly JsonSerializerOptions JsonOptions = new()
         {
@@ -42,9 +42,9 @@ namespace Smake.Speicher
                     SetLanguage(DefaultLanguage);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine($"⚠ Fehler beim Laden der Konfigurationsdatei: {ex.Message}");
+                Console.WriteLine($"⚠ Fehler beim Laden der Konfigurationsdatei.");
                 Console.ReadKey(true);
                 SetLanguage(DefaultLanguage);
             }
@@ -75,14 +75,10 @@ namespace Smake.Speicher
                     _data = data;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine($"⚠ Fehler beim Laden der Sprachdatei ({ex.Message}).");
+                Console.WriteLine($"⚠ Fehler beim Laden der Sprachdatei.");
                 Console.ReadKey(true);
-                _data = new Dictionary<string, object>
-                {
-                    ["fallback"] = "Language data unavailable."
-                };
             }
         }
 
@@ -175,14 +171,6 @@ namespace Smake.Speicher
                 return [.. elem.EnumerateArray().Select(x => x.GetString() ?? "")];
             }
             return [];
-        }
-
-        public static string Format(string key, Dictionary<string, string> values)
-        {
-            string text = Get(key);
-            foreach (var kv in values)
-                text = text.Replace("{" + kv.Key + "}", kv.Value);
-            return text;
         }
     }
 }

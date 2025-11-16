@@ -1,13 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace Smake.Helper
 {
     public class CryptoHelper
     {
-        private static readonly string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
+        private const string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
         private const int SaltLength = 16;
         private const int NonceLength = 12;
         private const int TagLength = 16;
@@ -18,12 +16,7 @@ namespace Smake.Helper
             byte[] salt = RandomNumberGenerator.GetBytes(SaltLength);
             byte[] nonce = RandomNumberGenerator.GetBytes(NonceLength);
 
-            byte[] key = Rfc2898DeriveBytes.Pbkdf2(
-                Passwort,
-                salt,
-                Iterations,
-                HashAlgorithmName.SHA256,
-                32);
+            byte[] key = Rfc2898DeriveBytes.Pbkdf2(Passwort, salt, Iterations, HashAlgorithmName.SHA256, 32);
 
             byte[] plaintextBytes = Encoding.UTF8.GetBytes(plainText);
             byte[] ciphertext = new byte[plaintextBytes.Length];
@@ -60,12 +53,7 @@ namespace Smake.Helper
             byte[] tag = new byte[TagLength];
             Array.Copy(payload, tagStart, tag, 0, TagLength);
 
-            byte[] key = Rfc2898DeriveBytes.Pbkdf2(
-                Passwort,
-                salt,
-                Iterations,
-                HashAlgorithmName.SHA256,
-                32);
+            byte[] key = Rfc2898DeriveBytes.Pbkdf2(Passwort, salt, Iterations, HashAlgorithmName.SHA256, 32);
 
             byte[] plaintextBytes = new byte[ciphertext.Length];
 
