@@ -175,7 +175,7 @@ namespace Smake.Menues
                     LanguageManager.SetLanguage(newLang);
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\n✔ {LanguageManager.Format("settings.languageChanged", new() { ["lang"] = newLang.ToUpper() })}");
+                    Console.WriteLine($"\n✔ {LanguageManager.Get("settings.languageChanged").Replace("{lang}", newLang.ToUpper())}");
                     Console.ResetColor();
                     valid = true;
                 }

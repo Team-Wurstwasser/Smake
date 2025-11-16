@@ -6,9 +6,9 @@
     },
     "saveLoad": {
         "mainMissing": "Hauptdatei fehlt, lade Backup...",
-        "backupCorrupt": "❌ Backup beschädigt – Standardwerte werden gesetzt.",
+        "backupCorrupt": "❌ Backup beschädigt - Standardwerte werden gesetzt.",
         "loadError": "⚠ Fehler beim Laden, versuche Backup...",
-        "backupAlsoCorrupt": "❌ Backup auch beschädigt – Standardwerte werden gesetzt."
+        "backupAlsoCorrupt": "❌ Backup auch beschädigt - Standardwerte werden gesetzt."
     },
     "input": {
         "player1": "Spieler 1, gib deinen Namen ein: ",
@@ -124,7 +124,7 @@
         "draw": "Unentschieden!",
         "playerWins": "{player} gewinnt!",
         "playerPoints": "{player} hat {points} Punkte erreicht.",
-        "lose": "Leider verloren – versuch's noch einmal!",
+        "lose": "Leider verloren - versuch's noch einmal!",
         "losePoints": "Du hast {points} Punkte erreicht.",
         "win": "Glückwunsch! Du hast gewonnen!",
         "winPoints": "Deine Punktzahl: {points}",
