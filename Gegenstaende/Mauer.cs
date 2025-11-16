@@ -9,7 +9,7 @@ namespace Smake.Gegenstaende
         int MauerX;
         int MauerY;
 
-        private static Random Rand = new();
+        private static readonly Random Rand = new();
 
         public Mauer()
         {

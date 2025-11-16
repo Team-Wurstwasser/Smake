@@ -75,15 +75,17 @@ namespace Smake.Gegenstaende
             // Futter ins Spielfeld einzeichnen
             if (Spielvalues.GamemodeInt == 6)
             {
-                if (!Schluessel.Collected)
+                if (Schluessel != null && !Schluessel.Collected)
                 {
-                    RendernSpielfeld.Grid[FutterY, FutterX] = Skinvalues.MauerSkin;
+                    if (!Schluessel.Collected)
+                    {
+                        RendernSpielfeld.Grid[FutterY, FutterX] = Skinvalues.MauerSkin;
+                    }
+                    else
+                    {
+                        RendernSpielfeld.Grid[FutterY, FutterX] = FoodSkin;
+                    }
                 }
-                else
-                {
-                    RendernSpielfeld.Grid[FutterY, FutterX] = FoodSkin;
-                }
-
             }
             else
             {
@@ -95,12 +97,15 @@ namespace Smake.Gegenstaende
         {
             if (Spielvalues.GamemodeInt == 8)
             {
-                Bombe.ZeichneBombe();
+                Bombe?.ZeichneBombe();
             }
 
-            if (Spielvalues.GamemodeInt == 6 && !Schluessel.Collected)
+            if (Spielvalues.GamemodeInt == 6)
             {
-                Schluessel.EsseSchluessel(p);
+                if (Schluessel != null && !Schluessel.Collected)
+                {
+                    Schluessel.EsseSchluessel(p);
+                }
             }
             else
             {
@@ -124,7 +129,7 @@ namespace Smake.Gegenstaende
 
                         if(Spielvalues.GamemodeInt == 8)
                         {
-                            Bombe.LöscheBombe();
+                            Bombe?.LöscheBombe();
                         }
 
                         SetzeFutter();
