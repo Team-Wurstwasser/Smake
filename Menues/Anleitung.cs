@@ -8,7 +8,7 @@ namespace Smake.Menues
     {
         public Anleitung()
         {
-            Musik.Currentmusik = GameData.MusikDaten.Menue.Main;
+            Musik.Currentmusik = GameData.MusikDaten.Menue?.Anleitung ?? 0;
             Musik.Melodie();
 
             RenderAnleitung();
