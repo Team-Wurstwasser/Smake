@@ -60,7 +60,7 @@ namespace Smake.Menues
 
         private void Menueloop()
         {
-            Musik.Currentmusik = GameData.MusikDaten.Menue?.Main ?? 0;
+            Sounds.Currentmusik = GameData.MusikDaten.Menue?.Main ?? 0;
 
             SpeicherSystem.Speichern_Laden("Speichern");
 
@@ -95,8 +95,8 @@ namespace Smake.Menues
             switch (MenuTracker)
             {
                 case 1:
-                    Musik.Currentmusik = MusikSelector.Selector();
-                    Musik.Melodie();
+                    Sounds.Currentmusik = MusikSelector.Selector();
+                    Sounds.Melodie();
                     Program.CurrentView = 1;
                     break;
                 case 2:
