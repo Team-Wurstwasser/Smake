@@ -16,7 +16,7 @@ namespace Smake.Render
 
         public void InitialRender()
         {
-            Musik.Melodie();
+            Sounds.Melodie();
             Console.Clear();
             Render();
         }

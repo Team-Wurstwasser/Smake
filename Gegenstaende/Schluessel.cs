@@ -59,10 +59,7 @@ namespace Smake.Gegenstaende
                     {
                         Collected = true;
 
-                        if (Musik.Soundplay)
-                        {
-                            Console.Beep(700, 100);
-                        }
+                        Sounds.Playbeep();
 
                         // Wenn Schlussel gefunden, können wir die Schleife abbrechen
                         break;
