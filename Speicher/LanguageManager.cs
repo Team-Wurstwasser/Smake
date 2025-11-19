@@ -1,11 +1,10 @@
 ﻿using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Smake.Speicher
 {
     public static class LanguageManager
     {
-        private static Dictionary<string, object> _data = [];
+        private static Dictionary<string, object> data = [];
 
         public static string? Language { get; private set; }
 
@@ -34,15 +33,36 @@ namespace Smake.Speicher
         static void Speichern(string newLang)
         {
             File.WriteAllText(Config, newLang);
+            Laden();
         }
 
-        static void Laden()
+        static bool Laden()
         {
-            Language = File.ReadAllText(Config);
+            string configContent = File.ReadAllText(Config);
             string langPath = $"Languages/{Language}.json";
+
+            Language = configContent.Trim();
+
+            if (string.IsNullOrEmpty(Language) || !File.Exists(langPath))
+            {
+                return false;
+            }
+
             string json = File.ReadAllText(langPath);
-            var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-            _data = data;
+
+            try
+            {
+                var deserializedData = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+
+                data = deserializedData ?? [];
+
+                return true;
+            }
+            catch 
+            {
+                data = [];
+                return false;
+            }
         }
 
         public static List<(string, string)> GetAvailableLanguages()
@@ -77,7 +97,7 @@ namespace Smake.Speicher
         private static object? ResolveKey(string key)
         {
             string[] parts = key.Split('.');
-            object? current = _data;
+            object? current = data;
             foreach (var part in parts)
             {
                 if (current is JsonElement elem)

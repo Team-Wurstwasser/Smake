@@ -173,7 +173,6 @@ namespace Smake.Menues
                 if (newLang != null)
                 {
                     LanguageManager.Speichern_Laden("Speichern", newLang);
-                    LanguageManager.Speichern_Laden("Laden");
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\n✔ {LanguageManager.Get("settings.languageChanged").Replace("{lang}", newLang.ToUpper())}");
