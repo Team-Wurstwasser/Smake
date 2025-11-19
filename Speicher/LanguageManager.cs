@@ -8,7 +8,7 @@ namespace Smake.Speicher
 
         public static string? Language { get; private set; }
 
-        private const string Config = "config.json";
+        private const string Config = "config.config";
         private const string DefaultLanguage = "de";
 
         public static void Speichern_Laden(string aktion, string newLang = "")
@@ -56,11 +56,17 @@ namespace Smake.Speicher
         static bool Laden()
         {
             string configContent = File.ReadAllText(Config);
-            string langPath = $"Languages/{Language}.json";
+
+            if (string.IsNullOrEmpty(configContent))
+            {
+                return false;
+            }
 
             Language = configContent.Trim();
 
-            if (string.IsNullOrEmpty(Language) || !File.Exists(langPath))
+            string langPath = $"Languages/{Language}.json";
+
+            if (!File.Exists(langPath))
             {
                 return false;
             }
