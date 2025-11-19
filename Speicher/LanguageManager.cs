@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Smake.Speicher
 {
@@ -8,104 +9,48 @@ namespace Smake.Speicher
 
         public static string? Language { get; private set; }
 
-        private const string ConfigPath = "config.json";
+        private const string Config = "config.json";
         private const string DefaultLanguage = "de";
 
-        private static readonly JsonSerializerOptions JsonOptions = new()
+        public static void Speichern_Laden(string aktion, string newLang = "")
         {
-            WriteIndented = true
-        };
+            if (!File.Exists(Config))
+            {
+                newLang = DefaultLanguage;
+                Speichern(newLang);
+            }
 
-        public static void Load()
+            switch (aktion)
+            {
+                case "Speichern":
+                    Speichern(newLang);
+                    break;
+                case "Laden":
+                    Laden();
+                    break;
+            }
+        }
+
+        static void Speichern(string newLang)
         {
-            // 1️. Config laden oder Standard anlegen
-            if (!File.Exists(ConfigPath))
-            {
-                Language = DefaultLanguage;
-                Save();
-            }
+            File.WriteAllText(Config, newLang);
+        }
 
-            // 2️. Sprache aus config.json lesen
-            try
-            {
-                var configJson = File.ReadAllText(ConfigPath);
-                var config = JsonSerializer.Deserialize<Dictionary<string, string>>(configJson);
-
-                if (config is { } && config.TryGetValue("language", out var lang) && !string.IsNullOrWhiteSpace(lang))
-                {
-                    Language = lang;
-                }
-                else
-                {
-                    Console.WriteLine("⚠ Ungültiger Spracheintrag – Standard 'de' wird verwendet.");
-                    Console.ReadKey(true);
-                    SetLanguage(DefaultLanguage);
-                }
-            }
-            catch
-            {
-                Console.WriteLine($"⚠ Fehler beim Laden der Konfigurationsdatei.");
-                Console.ReadKey(true);
-                SetLanguage(DefaultLanguage);
-            }
-
-            // 3️. Sprachdatei laden (mit Fallback auf 'de')
+        static void Laden()
+        {
+            Language = File.ReadAllText(Config);
             string langPath = $"Languages/{Language}.json";
-            if (!File.Exists(langPath))
-            {
-                Console.WriteLine($"⚠ Sprachdatei '{Language}.json' nicht gefunden – Fallback auf '{DefaultLanguage}.json'.");
-                Console.ReadKey(true);
-                SetLanguage(DefaultLanguage);
-                langPath = $"Languages/{DefaultLanguage}.json";
-            }
-
-            try
-            {
-                string json = File.ReadAllText(langPath);
-                var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-
-                if (data is null || data.Count == 0)
-                {
-                    Console.WriteLine($"⚠ Sprachdatei '{Language}.json' ist leer oder ungültig.");
-                    Console.ReadKey(true);
-                    _data = new Dictionary<string, object> { ["error"] = "Invalid language file" };
-                }
-                else
-                {
-                    _data = data;
-                }
-            }
-            catch
-            {
-                Console.WriteLine($"⚠ Fehler beim Laden der Sprachdatei.");
-                Console.ReadKey(true);
-            }
+            string json = File.ReadAllText(langPath);
+            var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+            _data = data;
         }
 
-        private static void Save()
+        public static List<(string, string)> GetAvailableLanguages()
         {
-            var config = new Dictionary<string, string?>
-            {
-                { "language", Language }
-            };
-
-            string json = JsonSerializer.Serialize(config, JsonOptions);
-            File.WriteAllText(ConfigPath, json);
-        }
-
-        public static void SetLanguage(string newLang)
-        {
-            Language = newLang;
-            Save();
-            Load();
-        }
-
-        public static Dictionary<string, string> GetAvailableLanguages()
-        {
-            var result = new Dictionary<string, string>();
+            List<(string, string)> results = [];
 
             if (!Directory.Exists("Languages"))
-                return result;
+                return results;
 
             foreach (var file in Directory.GetFiles("Languages", "*.json"))
             {
@@ -116,19 +61,17 @@ namespace Smake.Speicher
                     string json = File.ReadAllText(file);
                     using var doc = JsonDocument.Parse(json);
 
-                    string displayName = doc.RootElement.TryGetProperty("languageName", out var prop)
-                        ? prop.GetString() ?? code.ToUpper()
-                        : code.ToUpper();
+                    string displayName = doc.RootElement.TryGetProperty("languageName", out var prop) ? prop.GetString() ?? code.ToUpper() : code.ToUpper();
 
-                    result[code] = displayName;
+                    results.Add((code, displayName));
                 }
                 catch
                 {
-                    result[code] = code.ToUpper();
+                    results.Add((code, code.ToUpper()));
                 }
             }
 
-            return result;
+            return results;
         }
 
         private static object? ResolveKey(string key)
