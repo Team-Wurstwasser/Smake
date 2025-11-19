@@ -25,7 +25,24 @@ namespace Smake.Speicher
                     Speichern(newLang);
                     break;
                 case "Laden":
-                    Laden();
+                    if (!Laden())
+                    {
+                        Console.WriteLine($"Fehler beim Laden der konfigurierten Sprache. Versuche Standard-Sprache: {DefaultLanguage.ToUpper()}");
+                        Console.ReadKey(true);
+
+                        Language = DefaultLanguage;
+                        if (!Laden())
+                        {
+                            Console.Error.WriteLine($"Fehler: Das Laden der Standard-Sprache '{DefaultLanguage.ToUpper()}' ist fehlgeschlagen. Das Programm wird beendet.");
+                            Console.ReadKey(true);
+                            Environment.Exit(1);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Standard-Sprache '{DefaultLanguage.ToUpper()}' erfolgreich geladen.");
+                            Console.ReadKey(true);
+                        }
+                    }
                     break;
             }
         }
