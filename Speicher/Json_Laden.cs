@@ -109,7 +109,7 @@ namespace Smake.Speicher
             catch (Exception ex)
             {
                 Console.WriteLine(LanguageManager.Get("jsonload.loadError").Replace("{path}", path).Replace("{message}", ex.Message));
-                Console.ReadKey();
+                Console.ReadKey(true);
                 setData(default);
             }
         }
