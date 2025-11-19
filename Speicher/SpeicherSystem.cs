@@ -52,11 +52,11 @@ namespace Smake.Speicher
                     if (!Laden(SpeicherDatei))
                     {
                         Console.WriteLine(LanguageManager.Get("saveLoad.loadError"));
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                         if (!Laden(BackupDatei))
                         {
                             Console.WriteLine(LanguageManager.Get("saveLoad.backupAlsoCorrupt"));
-                            Console.ReadKey();
+                            Console.ReadKey(true);
                             SetzeStandardwerte();
                             Speichern();
                         }
