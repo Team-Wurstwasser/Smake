@@ -18,7 +18,7 @@ namespace Smake
             Console.Title = "Smake";
 
             // Sprache aus config.json laden
-            LanguageManager.Load();
+            LanguageManager.Speichern_Laden("Laden");
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
