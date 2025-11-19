@@ -39,7 +39,7 @@ namespace Smake.Helper
                 0xF4, 0x32
         ];
 
-        public static string DecryptJsonFileToString(string path)
+        public static string Decrypt(string path)
         {
             var encrypted = File.ReadAllBytes(path);
             if (encrypted.Length <= 5) return string.Empty;

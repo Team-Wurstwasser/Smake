@@ -102,7 +102,7 @@ namespace Smake.Speicher
                 if (!File.Exists(path))
                     throw new FileNotFoundException(LanguageManager.Get("jsonload.fileNotFound").Replace("{path}", path));
 
-                string json = XorCryptoHelper.DecryptJsonFileToString(path);
+                string json = XorCryptoHelper.Decrypt(path);
                 var data = JsonSerializer.Deserialize<T>(json, JsonOptions);
                 setData(data);
             }
