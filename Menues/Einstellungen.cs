@@ -122,7 +122,7 @@ namespace Smake.Menues
             bool valid = false;
 
             // Dynamisch verfügbare Sprachen (Code + Anzeigename)
-            var languages = LanguageManager.GetAvailableLanguages().ToList();
+            List<(string, string)> languages = LanguageManager.GetAvailableLanguages();
 
             do
             {
@@ -134,8 +134,8 @@ namespace Smake.Menues
                 // Sprachen dynamisch auflisten
                 for (int i = 0; i < languages.Count; i++)
                 {
-                    string langCode = languages[i].Key;
-                    string displayName = languages[i].Value;
+                    
+                    var (langCode, displayName) = languages[i];
 
                     Console.Write("║ ");
                     if (LanguageManager.Language == langCode)
@@ -158,21 +158,22 @@ namespace Smake.Menues
                 string? newLang = null;
 
                 // Eingabe prüfen (Index oder Sprachcode)
-                if (int.TryParse(eingabe, out int auswahl) &&
-                    auswahl >= 1 && auswahl <= languages.Count)
+                if (int.TryParse(eingabe, out int auswahl) && auswahl >= 1 && auswahl <= languages.Count)
                 {
-                    newLang = languages[auswahl - 1].Key;
+                    var (langCode, _) = languages[auswahl - 1];
+                    newLang = langCode;
                 }
                 else
                 {
-                    var match = languages.FirstOrDefault(l => l.Key.Equals(eingabe, StringComparison.OrdinalIgnoreCase));
-                    if (!string.IsNullOrEmpty(match.Key))
-                        newLang = match.Key;
+                    var match = languages.FirstOrDefault(l => string.Equals(l.Item1, eingabe, StringComparison.OrdinalIgnoreCase));
+                    if (match != default)
+                        newLang = match.Item1;
                 }
 
                 if (newLang != null)
                 {
-                    LanguageManager.SetLanguage(newLang);
+                    LanguageManager.Speichern_Laden("Speichern", newLang);
+                    LanguageManager.Speichern_Laden("Laden");
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\n✔ {LanguageManager.Get("settings.languageChanged").Replace("{lang}", newLang.ToUpper())}");
