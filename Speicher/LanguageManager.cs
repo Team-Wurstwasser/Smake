@@ -142,9 +142,9 @@ namespace Smake.Speicher
         public static string Get(string key)
         {
             var val = ResolveKey(key);
-            if (val is JsonElement elem)
+            if (val is JsonElement elem && elem.ValueKind == JsonValueKind.String)
             {
-                if (elem.ValueKind == JsonValueKind.String) return elem.GetString() ?? $"[{key}]";
+                return elem.GetString() ?? $"[{key}]";
             }
             return $"[{key}]";
         }
@@ -154,7 +154,7 @@ namespace Smake.Speicher
             var val = ResolveKey(key);
             if (val is JsonElement elem && elem.ValueKind == JsonValueKind.Array)
             {
-                return [.. elem.EnumerateArray().Select(x => x.GetString() ?? "")];
+                return [.. elem.EnumerateArray().Select(elem => elem.GetString() ?? "")];
             }
             return [];
         }
