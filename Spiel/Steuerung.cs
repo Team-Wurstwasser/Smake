@@ -3,7 +3,7 @@ using Smake.Values;
 
 namespace Smake.Spiel
 {
-    public abstract class Steuerung
+    public class Steuerung
     {
         bool DoReadInput = true;
         Thread? InputThread;
@@ -93,7 +93,7 @@ namespace Smake.Spiel
         private static void UpdatePlayerDirection(Player p, int newX, int newY, char head)
         {
             // Gespiegelte Steuerung bei Chaos-Steuerung
-            if (Spielvalues.Gamemode == "Chaos-Steuerung")
+            if (Spielvalues.GamemodeInt == 9)
             {
                 newX = -newX;
                 newY = -newY;
