@@ -3,7 +3,7 @@ using Smake.Values;
 
 namespace Smake.Spiel
 {
-    public class Steuerung
+    public abstract class Steuerung
     {
         bool DoReadInput = true;
         Thread? InputThread;

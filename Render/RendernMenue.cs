@@ -3,25 +3,25 @@ using Smake.Values;
 
 namespace Smake.Render
 {
-    public class RendernMenue
+    public abstract class RendernMenue
     {
-        public string[] Display { private get; set; } = [];
-        public int Selected { private get; set; }
-        public string? Title { private get; set; }
-        public object?[] GameValue { private get; set; } = [];
-        public bool[] IsColor { private get; set; } = [];
-        public volatile bool DoReadInput = true;
-        public ConsoleKey Input { get; set; }
+        protected string[] Display { private get; set; } = [];
+        protected int Selected { private get; set; }
+        protected string? Title { private get; set; }
+        protected object?[] GameValue { private get; set; } = [];
+        protected  bool[] IsColor { private get; set; } = [];
+        protected volatile bool DoReadInput = true;
+        protected ConsoleKey Input { get; set; }
         Thread? InputThread;
 
-        public void InitialRender()
+        protected void InitialRender()
         {
             Sounds.Melodie();
             Console.Clear();
             Render();
         }
 
-        public void Render()
+        protected void Render()
         {
             Console.SetCursorPosition(0, 0);
 

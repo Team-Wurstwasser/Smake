@@ -4,18 +4,18 @@ using Smake.Values;
 
 namespace Smake.Spieler
 {
-    public class Tail
+    public abstract class Tail
     {
         // Länge des Spielers
         public int TailLaenge;
-        public int TailStartLaenge = GameData.TailStartLaenge;
+        protected int TailStartLaenge = GameData.TailStartLaenge;
 
         public char TailSkin;
 
         public ConsoleColor TailFarbe;
 
         // Tailkoordinaten berechnen
-        public void TailShift(Player p)
+        protected void TailShift(Player p)
         {
             p.TailLaenge = p.Punkte + p.TailStartLaenge;
 
@@ -31,7 +31,7 @@ namespace Smake.Spieler
 
         }
 
-        public void TailBewegung(Player p)
+        protected void TailBewegung(Player p)
         {
             int oldTailX = p.PlayerX[TailLaenge + 1];
             int oldTailY = p.PlayerY[TailLaenge + 1];
