@@ -9,7 +9,7 @@ namespace Smake.Gegenstaende
         // Position der Bombe
         int BombeX;
         int BombeY;
-
+ 
         private static readonly Random Rand = new();
 
         public Bombe()
