@@ -33,8 +33,9 @@
 	<ItemGroup>
 		<Content Include="titel.ico" />
 	</ItemGroup>
+	<!-- Workflows -->
 	<ItemGroup>
-	  <None Include=".github\release.yml" />
+	  <None Include=".github\workflows\release.yml" />
 	</ItemGroup>
 
 	<!-- Pakete -->
