@@ -30,8 +30,6 @@ jobs:
       - name: Copy required folders (Languages, Sounds, Jsons)
         shell: powershell
         run: |
-          $TargetDir = "${{ env.TARGET_DIR }}" 
-          
           Copy-Item -Path "Benoetigtedaten/Languages" -Destination ${{ env.TARGET_DIR }} -Recurse
           Copy-Item -Path "Benoetigtedaten/Sounds" -Destination ${{ env.TARGET_DIR }} -Recurse
           Copy-Item -Path "Benoetigtedaten/Jsons" -Destination ${{ env.TARGET_DIR }} -Recurse
