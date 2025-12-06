@@ -33,6 +33,7 @@
 	<ItemGroup>
 		<Content Include="titel.ico" />
 	</ItemGroup>
+	
 	<!-- Workflows -->
 	<ItemGroup>
 	  <None Include=".github\workflows\release.yml" />
