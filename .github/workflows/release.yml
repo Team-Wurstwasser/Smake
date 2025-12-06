@@ -5,7 +5,7 @@ on:
     tags:
       - "v*"
 
-jobs:
+jobs:s
   release:
     name: Release
     runs-on: windows-latest
