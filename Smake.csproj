@@ -10,7 +10,7 @@
 
 	<!-- Kopieren der Unterordner beim Debug-Build -->
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<!-- Json -->
+		<!-- Jsons -->
 		<Content Include="Benoetigtedaten\Json\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>Json\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
