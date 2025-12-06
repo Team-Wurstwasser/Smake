@@ -46,14 +46,14 @@ namespace Smake.Speicher
 
         public static void LoadAllConfigs()
         {
-            Load<Sounds>("Json/sounds.json", data =>
+            Load<Sounds>("Jsons/sounds.json", data =>
             {
                 Filenames = data?.Filenames ?? [];
                 NoMusikFile = data?.NoMusikFile ?? "";
                 MusikDaten = data?.Musik ?? new();
             });
 
-            Load<Preise>("Json/preise.json", data =>
+            Load<Preise>("Jsons/preise.json", data =>
             {
                 TailPreis = data?.TailPreis ?? [];
                 FoodPreis = data?.FoodPreis ?? [];
@@ -61,7 +61,7 @@ namespace Smake.Speicher
                 FarbenPreis = data?.FarbenPreis ?? [];
             });
 
-            Load<Level>("Json/level.json", data =>
+            Load<Level>("Jsons/level.json", data =>
             {
                 TailLevel = data?.TailLevel ?? [];
                 FoodLevel = data?.FoodLevel ?? [];
@@ -69,7 +69,7 @@ namespace Smake.Speicher
                 FarbenLevel = data?.FarbenLevel ?? [];
             });
 
-            Load<Skins>("Json/skins.json", data =>
+            Load<Skins>("Jsons/skins.json", data =>
             {
                 Farben = data?.Farben?
                     .Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? (ConsoleColor?)c : null)
@@ -82,7 +82,7 @@ namespace Smake.Speicher
                 RandSkins = data?.RandSkins ?? [];
             });
 
-            Load<GameConfig>("Json/game_config.json", data =>
+            Load<GameConfig>("Jsons/game_config.json", data =>
             {
                 Weite = data?.Weite ?? 0;
                 Hoehe = data?.Hoehe ?? 0;
