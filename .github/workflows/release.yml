@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     name: Release
-    runs-on: windows-latest
+    runs-on: windows-latests
     permissions:
       contents: write
     env:
