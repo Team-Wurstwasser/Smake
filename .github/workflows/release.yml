@@ -1,4 +1,4 @@
-name: Release
+name: Cross-Platform Release
 
 on:
   push:
@@ -6,11 +6,21 @@ on:
       - "v*"
 
 jobs:
-  release:
-    name: Release
-    runs-on: windows-latest
-    permissions:
-      contents: write
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            runtime: win-x64
+            executable_name: Smake.exe
+            zip_name: Smake-Windows
+          - os: ubuntu-latest
+            runtime: linux-x64
+            executable_name: Smake
+            zip_name: Smake-Linux
+
+    name: Build (${{ matrix.runtime }})
     env:
       TARGET_DIR: release-build
 
@@ -21,23 +31,49 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 10.0.x 
-          
+          dotnet-version: 10.0.x
+
       - name: Build and Publish
         run: |
-          dotnet publish Smake.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.TARGET_DIR }}
-      
+          dotnet publish Smake.csproj -c Release -r ${{ matrix.runtime }} --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.TARGET_DIR }}
+          
       - name: Copy required folders (Languages, Sounds, Jsons)
-        shell: powershell
         run: |
-          Copy-Item -Path "Benoetigtedaten/Languages" -Destination ${{ env.TARGET_DIR }} -Recurse
-          Copy-Item -Path "Benoetigtedaten/Sounds" -Destination ${{ env.TARGET_DIR }} -Recurse
-          Copy-Item -Path "Benoetigtedaten/Jsons" -Destination ${{ env.TARGET_DIR }} -Recurse
-        
+          mkdir -p ${{ env.TARGET_DIR }}
+          cp -r Benoetigtedaten/Languages ${{ env.TARGET_DIR }}/
+          cp -r Benoetigtedaten/Sounds ${{ env.TARGET_DIR }}/
+          cp -r Benoetigtedaten/Jsons ${{ env.TARGET_DIR }}/
+
       - name: Package Executable and Assets
         run: |
           cd ${{ env.TARGET_DIR }}
-          7z a -tzip Smake.zip Smake.exe Languages Sounds Jsons
+          7z a -tzip ${{ matrix.zip_name }}-${{ github.ref_name }}.zip ${{ matrix.executable_name }} Languages Sounds Jsons
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.zip_name }}-${{ github.ref_name }}
+          path: ${{ env.TARGET_DIR }}/${{ matrix.zip_name }}-${{ github.ref_name }}.zip
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: Move artifacts to root
+        run: |
+          find artifacts -name "*.zip" -exec mv {} . \;
+          
+      - name: List files for release check
+        run: ls -l
           
       - name: Create release
         id: create_release
@@ -45,8 +81,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Smake ${{ github.ref_name }}
+          name: Smake ${{ github.ref_name }} (Cross-Platform)
           draft: true
           generate_release_notes: true
           prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
-          files: ${{ env.TARGET_DIR }}/Smake.zip
+          files: |
+            Smake-Windows-${{ github.ref_name }}.zip
+            Smake-Linux-${{ github.ref_name }}.zip
