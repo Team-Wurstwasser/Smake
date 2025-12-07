@@ -80,8 +80,7 @@ namespace Smake.Menues
 
         private void Menueloop()
         {
-            Sounds.Currentmusik = GameData.MusikDaten.Menue?.Main ?? 0;
-
+            Sounds.Melodie(GameData.MusikDaten.Menue?.SkinFarben ?? 0);
             Title = "Skin_Farben";
             Display = LanguageManager.GetArray("skins.items");
             IsColor = Color;

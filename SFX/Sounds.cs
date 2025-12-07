@@ -5,9 +5,40 @@ namespace Smake.SFX
 {
     public class Sounds
     {
-        public static bool Musikplay { get; set; }
-        public static int? Currentmusik { private get; set; } = 0;
-        public static bool Soundplay { get; set; }
+        private static bool _musikplay;
+
+        public static bool Musikplay
+        {
+            get => _musikplay;
+            set
+            {
+                if (_musikplay == value)
+                {
+                    return;
+                }
+                _musikplay = value;
+
+                Melodie(lastmusik > -1 ? lastmusik.Value : 0);
+            }
+        }
+
+        private static bool _soundplay;
+
+        public static bool Soundplay
+        {
+            get => _soundplay;
+            set
+            {
+                if (_soundplay == value)
+                {
+                    return;
+                }
+                _soundplay = value;
+
+                Melodie(lastmusik > -1 ? lastmusik.Value : 0);
+            }
+        }
+
         private static int? lastmusik = -1;
         private static bool lastPlayState = false; // merkt sich, ob Musik an/aus war
 
@@ -15,7 +46,7 @@ namespace Smake.SFX
         private static AudioFileReader? audioFile;
         private static LoopStream? loopStream;
 
-        public static void Melodie()
+        public static void Melodie(int Currentmusik)
         {
             if (!Musikplay && !Soundplay)
             {
@@ -31,7 +62,7 @@ namespace Smake.SFX
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
                 string dateipfad = Musikplay
-                                    ? Path.Combine(basePath, "Sounds", GameData.Filenames[Currentmusik ?? 0])
+                                    ? Path.Combine(basePath, "Sounds", GameData.Filenames[Currentmusik])
                                     : Path.Combine(basePath, "Sounds", GameData.NoMusikFile);
 
                 if (File.Exists(dateipfad))

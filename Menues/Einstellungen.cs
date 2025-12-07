@@ -30,7 +30,7 @@ namespace Smake.Menues
 
         private void Menueloop()
         {
-            Sounds.Currentmusik = GameData.MusikDaten.Menue?.Einstellungen ?? 0;
+            Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0);
             Title = LanguageManager.Get("settings.title");
             Display = BuildMenu();
             MenuTracker = 1;
@@ -91,8 +91,8 @@ namespace Smake.Menues
                 case 3: ChangeGamemode(); break;
                 case 4: ChangeMaxFutter(); break;
                 case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
-                case 6: Sounds.Musikplay = !Sounds.Musikplay; Sounds.Melodie(); break;
-                case 7: Sounds.Soundplay = !Sounds.Soundplay; Sounds.Melodie(); break;
+                case 6: Sounds.Musikplay = !Sounds.Musikplay;break;
+                case 7: Sounds.Soundplay = !Sounds.Soundplay;break;
                 case 8: ChangeLanguage(); break;
                 case 9: ResetSpielstand(); break;
                 case 10: StopInputstream(); break;
@@ -347,7 +347,6 @@ namespace Smake.Menues
             }
 
             SpeicherSystem.Speichern_Laden("Zurücksetzen");
-            Sounds.Melodie();
             Console.WriteLine(LanguageManager.Get("settings.resetDone"));
             Console.WriteLine(LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
