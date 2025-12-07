@@ -1,4 +1,4 @@
-name: Cross-Platform Release
+name: Cross-Platform Release - Linux Only
 
 on:
   push:
@@ -12,9 +12,6 @@ jobs:
     permissions:
       contents: write
     env:
-      TARGET_DIR: release-build
-      WINDOWS_BUILD_DIR: ${{ runner.temp }}/Smake-Windows-Build
-      LINUX_BUILD_DIR: ${{ runner.temp }}/Smake-Linux-Build
       WINDOWS_ZIP: Smake-Windows-${{ github.ref_name }}.zip
       LINUX_ZIP: Smake-Linux-${{ github.ref_name }}.zip
       
@@ -30,6 +27,13 @@ jobs:
       - name: Install 7zip (for packaging)
         run: sudo apt-get update && sudo apt-get install -y p7zip-full
           
+      - name: Define Build Directories and Create Folders
+        run: |
+          echo "WINDOWS_BUILD_DIR=$GITHUB_WORKSPACE/Smake-Windows-Build" >> $GITHUB_ENV
+          echo "LINUX_BUILD_DIR=$GITHUB_WORKSPACE/Smake-Linux-Build" >> $GITHUB_ENV
+          mkdir -p $GITHUB_WORKSPACE/Smake-Windows-Build
+          mkdir -p $GITHUB_WORKSPACE/Smake-Linux-Build
+
       - name: Build and Publish for Linux (linux-x64)
         run: dotnet publish Smake.csproj -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.LINUX_BUILD_DIR }}
 
