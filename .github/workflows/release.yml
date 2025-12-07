@@ -50,9 +50,9 @@ jobs:
           7z a -tzip ${{ matrix.zip_name }}-${{ github.ref_name }}.zip ${{ matrix.executable_name }} Languages Sounds Jsons
           
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 
         with:
-          name: ${{ matrix.zip_name }}-${{ github.ref_name }}
+          name: ${{ matrix.zip_name }}-${{ github.ref_name }} 
           path: ${{ env.TARGET_DIR }}/${{ matrix.zip_name }}-${{ github.ref_name }}.zip
 
   release:
@@ -64,13 +64,13 @@ jobs:
       
     steps:
       - name: Download all build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 
         with:
-          path: artifacts
+          path: artifacts 
 
       - name: Move artifacts to root
         run: |
-          find artifacts -name "*.zip" -exec mv {} . \;
+          mv artifacts/*.zip .
           
       - name: List files for release check
         run: ls -l
