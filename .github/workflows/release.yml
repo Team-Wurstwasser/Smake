@@ -6,66 +6,64 @@ on:
       - "v*"
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-            runtime: win-x64
-            executable_name: Smake.exe
-            zip_name: Smake-Windows
-          - os: ubuntu-latest
-            runtime: linux-x64
-            executable_name: Smake
-            zip_name: Smake-Linux
-
-    name: Build (${{ matrix.runtime }})
-    env:
-      TARGET_DIR: release-build
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 10.0.x
-
-      - run: |
-          dotnet publish Smake.csproj -c Release -r ${{ matrix.runtime }} --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.TARGET_DIR }}
-          
-      - run: |
-          cp -r Benoetigtedaten/Languages ${{ env.TARGET_DIR }}/
-          cp -r Benoetigtedaten/Sounds ${{ env.TARGET_DIR }}/
-          cp -r Benoetigtedaten/Jsons ${{ env.TARGET_DIR }}/
-
-      - run: |
-          cd ${{ env.TARGET_DIR }}
-          7z a -tzip ${{ matrix.zip_name }}-${{ github.ref_name }}.zip ${{ matrix.executable_name }} Languages Sounds Jsons
-          
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.zip_name }}-${{ github.ref_name }}
-          path: ${{ env.TARGET_DIR }}/${{ matrix.zip_name }}-${{ github.ref_name }}.zip
-
   release:
-    name: Create GitHub Release
+    name: Build & Release
     runs-on: ubuntu-latest
-    needs: build
     permissions:
       contents: write
+    env:
+      WINDOWS_ZIP: Smake-Windows-${{ github.ref_name }}.zip
+      LINUX_ZIP: Smake-Linux-${{ github.ref_name }}.zip
       
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts 
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Move downloaded zips to root directory
-        run: find artifacts -type f -name "*.zip" -exec mv {} . \;
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 10.0.x
           
-      - run: ls -l
+      - name: Install 7zip (for packaging)
+        run: sudo apt-get update && sudo apt-get install -y p7zip-full
           
-      - id: create_release
+      - name: Define Build Directories and Create Folders
+        run: |
+          echo "WINDOWS_BUILD_DIR=$GITHUB_WORKSPACE/Smake-Windows-Build" >> $GITHUB_ENV
+          echo "LINUX_BUILD_DIR=$GITHUB_WORKSPACE/Smake-Linux-Build" >> $GITHUB_ENV
+          mkdir -p $GITHUB_WORKSPACE/Smake-Windows-Build
+          mkdir -p $GITHUB_WORKSPACE/Smake-Linux-Build
+
+      - name: Build and Publish for Linux
+        run: dotnet publish Smake.csproj -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.LINUX_BUILD_DIR }}
+
+      - name: Copy required folders to Linux Build
+        run: |
+          cp -r Benoetigtedaten/Languages ${{ env.LINUX_BUILD_DIR }}/
+          cp -r Benoetigtedaten/Sounds ${{ env.LINUX_BUILD_DIR }}/
+          cp -r Benoetigtedaten/Jsons ${{ env.LINUX_BUILD_DIR }}/
+
+      - name: Package Linux Executable and Assets
+        run: |
+          cd ${{ env.LINUX_BUILD_DIR }}
+          7z a -tzip $GITHUB_WORKSPACE/${{ env.LINUX_ZIP }} Smake Languages Sounds Jsons
+          
+      - name: Build and Publish for Windows
+        run: dotnet publish Smake.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.WINDOWS_BUILD_DIR }}
+
+      - name: Copy required folders to Windows Build
+        run: |
+          cp -r Benoetigtedaten/Languages ${{ env.WINDOWS_BUILD_DIR }}/
+          cp -r Benoetigtedaten/Sounds ${{ env.WINDOWS_BUILD_DIR }}/
+          cp -r Benoetigtedaten/Jsons ${{ env.WINDOWS_BUILD_DIR }}/
+
+      - name: Package Windows Executable and Assets
+        run: |
+          cd ${{ env.WINDOWS_BUILD_DIR }}
+          7z a -tzip $GITHUB_WORKSPACE/${{ env.WINDOWS_ZIP }} Smake.exe Languages Sounds Jsons
+
+      - name: Create release and Upload Assets
+        id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -75,5 +73,5 @@ jobs:
           generate_release_notes: true
           prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
           files: |
-            Smake-Windows-${{ github.ref_name }}.zip
-            Smake-Linux-${{ github.ref_name }}.zip
+            ${{ env.WINDOWS_ZIP }}
+            ${{ env.LINUX_ZIP }}
