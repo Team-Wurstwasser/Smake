@@ -25,34 +25,27 @@ jobs:
       TARGET_DIR: release-build
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 10.0.x
 
-      - name: Build and Publish
-        run: |
+      - run: |
           dotnet publish Smake.csproj -c Release -r ${{ matrix.runtime }} --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.TARGET_DIR }}
           
-      - name: Copy required folders (Languages, Sounds, Jsons)
-        run: |
-          mkdir -p ${{ env.TARGET_DIR }}
+      - run: |
           cp -r Benoetigtedaten/Languages ${{ env.TARGET_DIR }}/
           cp -r Benoetigtedaten/Sounds ${{ env.TARGET_DIR }}/
           cp -r Benoetigtedaten/Jsons ${{ env.TARGET_DIR }}/
 
-      - name: Package Executable and Assets
-        run: |
+      - run: |
           cd ${{ env.TARGET_DIR }}
           7z a -tzip ${{ matrix.zip_name }}-${{ github.ref_name }}.zip ${{ matrix.executable_name }} Languages Sounds Jsons
           
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4 
+      - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.zip_name }}-${{ github.ref_name }} 
+          name: ${{ matrix.zip_name }}-${{ github.ref_name }}
           path: ${{ env.TARGET_DIR }}/${{ matrix.zip_name }}-${{ github.ref_name }}.zip
 
   release:
@@ -63,20 +56,16 @@ jobs:
       contents: write
       
     steps:
-      - name: Download all build artifacts
-        uses: actions/download-artifact@v4 
+      - uses: actions/download-artifact@v4
         with:
           path: artifacts 
 
-      - name: Move artifacts to root
-        run: |
+      - run: |
           mv artifacts/*.zip .
           
-      - name: List files for release check
-        run: ls -l
+      - run: ls -l
           
-      - name: Create release
-        id: create_release
+      - id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
