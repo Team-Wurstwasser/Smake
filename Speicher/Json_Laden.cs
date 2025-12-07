@@ -9,6 +9,7 @@ namespace Smake.Speicher
         // Sounds
         public static string[] Filenames { get; private set; } = [];
         public static string NoMusikFile { get; private set; } = "";
+        public static string BeepFile { get; private set; } = "";
         public static Musik MusikDaten { get; private set; } = new();
 
         // Preise
@@ -50,6 +51,7 @@ namespace Smake.Speicher
             {
                 Filenames = data?.Filenames ?? [];
                 NoMusikFile = data?.NoMusikFile ?? "";
+                BeepFile = data?.BeepFile ?? "";
                 MusikDaten = data?.Musik ?? new();
             });
 
@@ -129,6 +131,7 @@ namespace Smake.Speicher
         {
             public string[]? Filenames { get; set; }
             public string? NoMusikFile { get; set; }
+            public string? BeepFile { get; set; }
             public Musik? Musik { get; set; }
         }
 
