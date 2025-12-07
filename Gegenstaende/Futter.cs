@@ -3,6 +3,7 @@ using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Spieler;
 using Smake.Values;
+using Smake.SFX;
 
 namespace Smake.Gegenstaende
 {
