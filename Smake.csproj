@@ -11,9 +11,9 @@
 	<!-- Kopieren der Unterordner beim Debug-Build -->
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<!-- Jsons -->
-		<Content Include="Benoetigtedaten\Json\**\*.*">
+		<Content Include="Benoetigtedaten\Jsons\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<TargetPath>Json\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+			<TargetPath>Jsons\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 
 		<!-- Languages -->
@@ -41,7 +41,7 @@
 
 	<!-- Pakete -->
 	<ItemGroup>
-		<PackageReference Include="System.Windows.Extensions" Version="10.0.0" />
+		<PackageReference Include="NAudio" Version="2.2.1" />
 	</ItemGroup>
 
 </Project>
