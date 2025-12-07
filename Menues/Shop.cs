@@ -72,7 +72,7 @@ namespace Smake.Menues
 
         private void Menueloop()
         {
-            Sounds.Currentmusik = GameData.MusikDaten.Menue?.Shop ?? 0;
+            Sounds.Melodie(GameData.MusikDaten.Menue?.Shop ?? 0);
             MenuTracker = 1;
             BuildMenu();
             InitialRender();

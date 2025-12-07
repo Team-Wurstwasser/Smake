@@ -1,5 +1,7 @@
 ﻿using Smake.Gegenstaende;
+using Smake.Helper;
 using Smake.Render;
+using Smake.SFX;
 using Smake.Speicher;
 using Smake.Spieler;
 using Smake.Values;
@@ -21,6 +23,7 @@ namespace Smake.Spiel
 
         public Spiellogik()
         {
+            Sounds.Melodie(MusikSelector.Selector() ?? 1);
             Spielloop();
         }
 
