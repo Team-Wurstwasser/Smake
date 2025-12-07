@@ -1,5 +1,4 @@
 ﻿using Smake.Render;
-using Smake.Spieler;
 using Smake.Values;
 
 namespace Smake.Gegenstaende
