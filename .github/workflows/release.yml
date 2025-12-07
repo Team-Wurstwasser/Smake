@@ -70,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Smake ${{ github.ref_name }} (Cross-Platform)
+          name: Smake ${{ github.ref_name }}
           draft: true
           generate_release_notes: true
           prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
