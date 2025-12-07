@@ -347,7 +347,6 @@ namespace Smake.Menues
             }
 
             SpeicherSystem.Speichern_Laden("Zurücksetzen");
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0);
             Console.WriteLine(LanguageManager.Get("settings.resetDone"));
             Console.WriteLine(LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
