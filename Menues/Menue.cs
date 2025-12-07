@@ -3,6 +3,7 @@ using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Values;
+using Smake.SFX;
 
 namespace Smake.Menues
 {
