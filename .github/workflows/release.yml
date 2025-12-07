@@ -60,8 +60,8 @@ jobs:
         with:
           path: artifacts 
 
-      - run: |
-          mv artifacts/*.zip .
+      - name: Move downloaded zips to root directory
+        run: find artifacts -type f -name "*.zip" -exec mv {} . \;
           
       - run: ls -l
           
