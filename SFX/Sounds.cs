@@ -1,6 +1,5 @@
 ﻿using NAudio.Wave;
 using Smake.Speicher;
-using System.Runtime.InteropServices;
 
 namespace Smake.SFX
 {
