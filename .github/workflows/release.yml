@@ -38,6 +38,12 @@ jobs:
         run: |
           cd ${{ env.TARGET_DIR }}
           7z a -tzip Smake.zip Smake.exe Languages Sounds Jsons
+
+      - name: Extract changelog
+        env:
+          REF: ${{ github.ref }}
+        run: |
+          sed -n "/^## ${REF:10}/,/^## /{/^## /b;p}" CHANGELOG.md > ./RELEASE_CHANGELOG
           
       - name: Create release
         id: create_release
@@ -48,5 +54,6 @@ jobs:
           name: Smake ${{ github.ref_name }}
           draft: true
           prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
+          body_path: ./RELEASE_CHANGELOG
           files: |
             ${{ env.TARGET_DIR }}/Smake.zip
