@@ -1,4 +1,4 @@
-name: Cross-Platform Release - Linux Only
+name: Cross-Platform Release
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   release:
-    name: Build & Release (Sequentiell)
+    name: Build & Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -34,7 +34,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/Smake-Windows-Build
           mkdir -p $GITHUB_WORKSPACE/Smake-Linux-Build
 
-      - name: Build and Publish for Linux (linux-x64)
+      - name: Build and Publish for Linux
         run: dotnet publish Smake.csproj -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.LINUX_BUILD_DIR }}
 
       - name: Copy required folders to Linux Build
@@ -48,7 +48,7 @@ jobs:
           cd ${{ env.LINUX_BUILD_DIR }}
           7z a -tzip $GITHUB_WORKSPACE/${{ env.LINUX_ZIP }} Smake Languages Sounds Jsons
           
-      - name: Build and Publish for Windows (win-x64)
+      - name: Build and Publish for Windows
         run: dotnet publish Smake.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true -o ${{ env.WINDOWS_BUILD_DIR }}
 
       - name: Copy required folders to Windows Build
