@@ -43,7 +43,7 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          sed -n "/^## ${REF:10}/,/^## /{/^## /b;p}" CHANGELOG.md > ./RELEASE_CHANGELOG
+          sed -n "/^## ${REF:10}/,/^## /{/^## /b;p}" docs/CHANGELOG.md > ./RELEASE_CHANGELOG
           
       - name: Create release
         id: create_release
@@ -55,5 +55,4 @@ jobs:
           draft: true
           prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'beta') || contains(github.ref, 'alpha') }}
           body_path: ./RELEASE_CHANGELOG
-          files: |
-            ${{ env.TARGET_DIR }}/Smake.zip
+          files: ${{ env.TARGET_DIR }}/Smake.zip
