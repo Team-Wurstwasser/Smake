@@ -15,7 +15,7 @@ namespace Smake
         static void Main()
         {
 
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.Title = "Smake";
 
             // Sprache aus config.json laden

@@ -1,5 +1,6 @@
+﻿using NAudio.Wave;
 using Smake.Speicher;
-using NAudio.Wave;
+using System.Runtime.InteropServices;
 
 namespace Smake.SFX
 {
@@ -48,6 +49,8 @@ namespace Smake.SFX
 
         public static void Melodie(int Currentmusik)
         {
+            if (!OperatingSystem.IsWindows()) return;
+            
             if (!Musikplay && !Soundplay)
             {
                 StopMusik();
@@ -96,7 +99,7 @@ namespace Smake.SFX
 
         public static void Playbeep()
         {
-            if (!Soundplay) return;
+            if (!Soundplay || !OperatingSystem.IsWindows()) return;
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string dateipfad = Path.Combine(basePath, "Sounds", GameData.BeepFile);
