@@ -8,15 +8,18 @@ namespace Smake.Menues
     public class Einstellungen : RendernMenue
     {
         private int menuTracker;
+        private static int MaxMenuItems => OperatingSystem.IsWindows() ? 10 : 8;
+
         public int MenuTracker
         {
             get { return menuTracker; }
             set
             {
+                int max = MaxMenuItems;
                 if (value != menuTracker)
                 {
-                    if (value > 10) menuTracker = 1;
-                    else if (value < 1) menuTracker = 10;
+                    if (value > max) menuTracker = 1;
+                    else if (value < 1) menuTracker = max;
                     else menuTracker = value;
                     Selected = MenuTracker;
                 }
@@ -84,15 +87,32 @@ namespace Smake.Menues
 
         private void SelectMenu()
         {
-            switch (MenuTracker)
+            bool isWindows = System.OperatingSystem.IsWindows();
+
+            int actionCase = MenuTracker;
+
+            if (!isWindows)
+            {
+                if (MenuTracker >= 6)
+                {
+                    actionCase = MenuTracker switch
+                    {
+                        6 => 8,
+                        7 => 9,
+                        8 => 10,
+                        _ => MenuTracker
+                    };
+                }
+            }
+            switch (actionCase)
             {
                 case 1: ChangeDifficulty(); break;
                 case 2: Spielvalues.Multiplayer = !Spielvalues.Multiplayer; break;
                 case 3: ChangeGamemode(); break;
                 case 4: ChangeMaxFutter(); break;
                 case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
-                case 6: Sounds.Musikplay = !Sounds.Musikplay;break;
-                case 7: Sounds.Soundplay = !Sounds.Soundplay;break;
+                case 6: Sounds.Musikplay = !Sounds.Musikplay; break;
+                case 7: Sounds.Soundplay = !Sounds.Soundplay; break;
                 case 8: ChangeLanguage(); break;
                 case 9: ResetSpielstand(); break;
                 case 10: StopInputstream(); break;
@@ -102,20 +122,26 @@ namespace Smake.Menues
 
         private static string[] BuildMenu()
         {
+            bool isWindows = OperatingSystem.IsWindows();
+
             var items = LanguageManager.GetArray("settings.items");
-            return
-            [
-                items[0].Replace("{difficulty}", Spielvalues.Difficulty),
-                items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[2].Replace("{gamemode}", Spielvalues.Gamemode),
-                items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
-                items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[5].Replace("{music}", Sounds.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[7].Replace("{language}", LanguageManager.Language?.ToUpper()),
-                items[8],
-                items[9]
-            ];
+            var menuList = new System.Collections.Generic.List<string>();
+            menuList.Add(items[0].Replace("{difficulty}", Spielvalues.Difficulty));
+            menuList.Add(items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
+            menuList.Add(items[2].Replace("{gamemode}", Spielvalues.Gamemode));
+            menuList.Add(items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()));
+            menuList.Add(items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
+
+            if (isWindows)
+            {
+                menuList.Add(items[5].Replace("{music}", Sounds.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
+                menuList.Add(items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
+            }
+            menuList.Add(items[7].Replace("{language}", LanguageManager.Language?.ToUpper()));
+            menuList.Add(items[8]);
+            menuList.Add(items[9]);
+
+            return menuList.ToArray();
         }
 
         static void ChangeLanguage()
