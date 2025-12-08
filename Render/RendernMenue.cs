@@ -1,6 +1,5 @@
 ﻿using Smake.Speicher;
 using Smake.Values;
-using Smake.SFX;
 
 namespace Smake.Render
 {
@@ -42,6 +41,10 @@ namespace Smake.Render
 
                 case "Shop_Farben":
                     RenderShopFarbenLayout();
+                    break;
+
+                case "Shop_Musik":
+                    RenderShopMusikLayout();
                     break;
 
                 default:
@@ -140,9 +143,16 @@ namespace Smake.Render
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(LanguageManager.Get("shop.title").PadLeft(14));
             Console.WriteLine(LanguageManager.Get("shop.coins").Replace("{coins}", Spielstatus.Coins.ToString()).PadRight(50));
-            Console.WriteLine(LanguageManager.Get("shop.level").Replace("{coins}", Spielstatus.Level.ToString()).PadRight(50));
+            Console.WriteLine(LanguageManager.Get("shop.level").Replace("{level}", Spielstatus.Level.ToString()).PadRight(50));
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine(LanguageManager.Get("shop.switchPage"));
+        }
+
+        private void RenderShopFooter(int option)
+        {
+            string zeiger = option + 1 == Selected ? ">>" : "  ";
+            Console.WriteLine($"\n{zeiger} {LanguageManager.Get("shop.back")}");
+            Console.WriteLine("══════════════════════════");
         }
 
         private static int RenderShopSection(string titleKey, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
@@ -174,9 +184,7 @@ namespace Smake.Render
             option = RenderShopSection("foodSkins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.FreigeschaltetFood, GameData.FoodPreis);
             option = RenderShopSection("randSkins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.FreigeschaltetRand, GameData.RandPreis);
 
-            string zeiger = option + 1 == Selected ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger} {LanguageManager.Get("shop.back")}");
-            Console.WriteLine("══════════════════════════");
+            RenderShopFooter(option);
         }
 
         private void RenderShopFarbenLayout()
@@ -197,12 +205,18 @@ namespace Smake.Render
                 Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext}".PadRight(50));
                 Console.ResetColor();
             }
-
-            string zeiger2 = option + 1 == Selected ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger2} {LanguageManager.Get("shop.back")}");
-            Console.WriteLine("══════════════════════════");
+            RenderShopFooter(option);
         }
 
+        private void RenderShopMusikLayout()
+        {
+            RenderShopHeader();
+            int option = 0;
+
+            option = RenderShopSection("tailSkins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.FreigeschaltetTail, GameData.TailPreis, 2);
+
+            RenderShopFooter(option);
+        }
 
         public void StartInputstream()
         {
