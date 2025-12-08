@@ -163,7 +163,7 @@ namespace Smake.Menues
                     }
 
                     // Kauflogik Farben
-                    else if (!Menüsvalues.FreigeschaltetFarben[MenuTracker] &&
+                    if (!Menüsvalues.FreigeschaltetFarben[MenuTracker] &&
                              Spielstatus.Coins >= GameData.FarbenPreis[MenuTracker - 1] &&
                              Spielstatus.Level >= GameData.FarbenLevel[MenuTracker - 1])
                     {
@@ -172,7 +172,7 @@ namespace Smake.Menues
                     }
                     break;
 
-                default:
+                case 2:
                     if (MenuTracker == gesamtOptionen[ShopTab])
                     {
                         StopInputstream();
