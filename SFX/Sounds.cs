@@ -11,7 +11,7 @@ namespace Smake.SFX
 
         private static SoundPlayer? currentPlayer;
         private static int? lastmusik = -1;
-        private static bool lastPlayState = false; // merkt sich, ob Musik an/aus war
+        private static bool lastPlayState; // merkt sich, ob Musik an/aus war
 
         public static void Melodie(int Currentmusik)
         {

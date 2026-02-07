@@ -1,6 +1,5 @@
 ﻿using Smake.Speicher;
 using Smake.Values;
-using Smake.SFX;
 
 namespace Smake.Render
 {
@@ -140,7 +139,7 @@ namespace Smake.Render
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(LanguageManager.Get("shop.title").PadLeft(14));
             Console.WriteLine(LanguageManager.Get("shop.coins").Replace("{coins}", Spielstatus.Coins.ToString()).PadRight(50));
-            Console.WriteLine(LanguageManager.Get("shop.level").Replace("{coins}", Spielstatus.Level.ToString()).PadRight(50));
+            Console.WriteLine(LanguageManager.Get("shop.level").Replace("{level}", Spielstatus.Level.ToString()).PadRight(50));
             Console.WriteLine("═══════════════════════════");
             Console.WriteLine(LanguageManager.Get("shop.switchPage"));
         }
