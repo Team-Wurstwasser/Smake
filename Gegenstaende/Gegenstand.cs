@@ -1,24 +1,26 @@
-using Smake.Render;
+﻿using Smake.Render;
 using Smake.Values;
 
 namespace Smake.Gegenstaende
 {
-    public class Mauer
+    public class Gegenstand
     {
-        // Position der Mauer
-        int MauerX;
-        int MauerY;
-
         private static readonly Random Rand = new();
 
-        public Mauer()
+        public int X { get; private set; }
+        public int Y { get; private set; }
+
+        public char Skin;
+
+        public Gegenstand(char skin) 
         {
-            SetzeMauer();
-            ZeichneMauer();
+            Skin = skin;
+            Setze();
+            Zeichne();
         }
 
-        // Setzt das Mauer an eine zuf�llige, freie Position
-        void SetzeMauer()
+        // Setzt das Gegendstand an eine zufällige, freie Position
+        protected virtual void Setze()
         {
             int x, y;
 
@@ -36,14 +38,14 @@ namespace Smake.Gegenstaende
             } while (RendernSpielfeld.Grid[y, x] != ' ');
 
             // Setze Position
-            MauerX = x;
-            MauerY = y;
+            X = x;
+            Y = y;
         }
 
-        public void ZeichneMauer()
+        protected virtual void Zeichne()
         {
-            // Mauer ins Spielfeld einzeichnen
-            RendernSpielfeld.Grid[MauerY, MauerX] = Skinvalues.MauerSkin;
+            // Gegendstand ins Spielfeld einzeichnen
+            RendernSpielfeld.Grid[Y, X] = Skin;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Smake.Spiel
 
         public static List<Futter> Essen { get; private set; } = [];
 
-        public static List<Mauer> Mauer { get; private set; } = [];
+        public static List<Gegenstand> Mauer { get; private set; } = [];
 
         public Spiellogik()
         {
@@ -143,14 +143,6 @@ namespace Smake.Spiel
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
 
-            if (Spielvalues.GamemodeInt == 5)
-            {
-                foreach (var Mauer in Mauer)
-                {
-                    Mauer.ZeichneMauer();
-                }
-            }
-
             GameoverCheck(spieler1Tot, spieler2Tot);
         }
 
@@ -184,64 +176,54 @@ namespace Smake.Spiel
             Console.WriteLine("              GAME OVER              ");
             Console.WriteLine("═════════════════════════════════════");
 
-            if (Spielvalues.Multiplayer)
+            if (gameover !=0)
             {
-                if (unentschieden)
+                if (Spielvalues.Multiplayer)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine(LanguageManager.Get("gameover.draw"));
-                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
-                        .Replace("{player}", Player.Name)
-                        .Replace("{points}", Player.Punkte.ToString()));
-                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
-                        .Replace("{player}", Player2.Name)
-                        .Replace("{points}", Player2.Punkte.ToString()));
-                    Console.WriteLine();
+                    if (unentschieden)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(LanguageManager.Get("gameover.draw"));
+                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player.Name).Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player2.Name).Replace("{points}", Player2.Punkte.ToString()));
+                        Console.WriteLine();
+                    }
+                    else if (gameover == 1)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player2.Name));
+                        Console.WriteLine($"Punkte: {Player2.Punkte}");
+                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player.Name).Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine();
+                    }
+                    else if (gameover == 2)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player.Name));
+                        Console.WriteLine($"Punkte: {Player.Punkte}");
+                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player2.Name).Replace("{points}", Player2.Punkte.ToString()));
+                        Console.WriteLine();
+                    }
                 }
-                else if (gameover == 1)
+                else
                 {
-                    Console.WriteLine();
-                    Console.WriteLine(LanguageManager.Get("gameover.playerWins")
-                        .Replace("{player}", Player2.Name));
-                    Console.WriteLine($"Punkte: {Player2.Punkte}");
-                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
-                        .Replace("{player}", Player.Name)
-                        .Replace("{points}", Player.Punkte.ToString()));
-                    Console.WriteLine();
+                    if (gameover == 1)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(LanguageManager.Get("gameover.lose"));
+                        Console.WriteLine(LanguageManager.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine();
+                    }
+                    else if (gameover == 2)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(LanguageManager.Get("gameover.win"));
+                        Console.WriteLine(LanguageManager.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine();
+                    }
                 }
-                else if (gameover == 2)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(LanguageManager.Get("gameover.playerWins")
-                        .Replace("{player}", Player.Name));
-                    Console.WriteLine($"Punkte: {Player.Punkte}");
-                    Console.WriteLine(LanguageManager.Get("gameover.playerPoints")
-                        .Replace("{player}", Player2.Name)
-                        .Replace("{points}", Player2.Punkte.ToString()));
-                    Console.WriteLine();
-                }
+                Console.WriteLine("═════════════════════════════════════");
             }
-            else
-            {
-                if (gameover == 1)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(LanguageManager.Get("gameover.lose"));
-                    Console.WriteLine(LanguageManager.Get("gameover.losePoints")
-                        .Replace("{points}", Player.Punkte.ToString()));
-                    Console.WriteLine();
-                }
-                else if (gameover == 2)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(LanguageManager.Get("gameover.win"));
-                    Console.WriteLine(LanguageManager.Get("gameover.winPoints")
-                        .Replace("{points}", Player.Punkte.ToString()));
-                    Console.WriteLine();
-                }
-            }
-
-            Console.WriteLine("═════════════════════════════════════");
             Console.WriteLine(LanguageManager.Get("gameover.backToMenu"));
             Console.WriteLine(LanguageManager.Get("gameover.restart"));
 
