@@ -125,12 +125,14 @@ namespace Smake.Menues
             bool isWindows = OperatingSystem.IsWindows();
 
             var items = LanguageManager.GetArray("settings.items");
-            var menuList = new System.Collections.Generic.List<string>();
-            menuList.Add(items[0].Replace("{difficulty}", Spielvalues.Difficulty));
-            menuList.Add(items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
-            menuList.Add(items[2].Replace("{gamemode}", Spielvalues.Gamemode));
-            menuList.Add(items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()));
-            menuList.Add(items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
+            var menuList = new List<string>
+            {
+                items[0].Replace("{difficulty}", Spielvalues.Difficulty),
+                items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[2].Replace("{gamemode}", Spielvalues.Gamemode),
+                items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
+                items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off"))
+            };
 
             if (isWindows)
             {
@@ -141,7 +143,7 @@ namespace Smake.Menues
             menuList.Add(items[8]);
             menuList.Add(items[9]);
 
-            return menuList.ToArray();
+            return [.. menuList];
         }
 
         static void ChangeLanguage()
