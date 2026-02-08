@@ -9,8 +9,8 @@ namespace Smake.Speicher
 {
     public class SpeicherSystem
     {
-        private const string SpeicherDatei = "spielstand.bin";
-        private const string BackupDatei = "spielstand.bak";
+        const string SpeicherDatei = "spielstand.bin";
+        const string BackupDatei = "spielstand.bak";
 
         public static void Speichern_Laden(string aktion)
         {
@@ -77,7 +77,7 @@ namespace Smake.Speicher
             }
         }
 
-        private static void SetzeStandardwerte()
+        static void SetzeStandardwerte()
         {
             Sounds.Musikplay = true;
             Sounds.Soundplay = true;
@@ -122,7 +122,7 @@ namespace Smake.Speicher
             Spiellogik.Player2.HeadFarbe = GameData.Farben[0];
         }
 
-        private static void Speichern()
+        static void Speichern()
         {
             var zeilen = new List<string>
             {
@@ -165,7 +165,7 @@ namespace Smake.Speicher
             File.WriteAllBytes(SpeicherDatei, encrypted);
         }
 
-        private static bool Laden(string datei)
+        static bool Laden(string datei)
         {
             if (!File.Exists(datei)) return false;
 

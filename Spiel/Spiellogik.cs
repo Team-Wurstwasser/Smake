@@ -15,9 +15,9 @@ namespace Smake.Spiel
         int gameover;
         bool unentschieden;
 
-        public static Player Player { get; set; } = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y);
+        public static Player Player { get; set; } = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, GameData.TailStartLaenge);
 
-        public static Player Player2 { get; set; } = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y);
+        public static Player Player2 { get; set; } = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, GameData.TailStartLaenge);
 
         public static List<Futter> Essen { get; private set; } = [];
 

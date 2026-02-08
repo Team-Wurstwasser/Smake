@@ -8,8 +8,8 @@ namespace Smake.Menues
 {
     public class Einstellungen : RendernMenue
     {
-        private int menuTracker;
-        private static int MaxMenuItems => OperatingSystem.IsWindows() ? 10 : 8;
+        int menuTracker;
+        static int MaxMenuItems => OperatingSystem.IsWindows() ? 10 : 8;
 
         public int MenuTracker
         {
@@ -32,7 +32,7 @@ namespace Smake.Menues
             Menueloop();
         }
 
-        private void Menueloop()
+        void Menueloop()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0);
             Title = LanguageManager.Get("settings.title");
@@ -74,7 +74,7 @@ namespace Smake.Menues
             Render();
         }
 
-        private void SelectMenu()
+        void SelectMenu()
         {
             bool isWindows = OperatingSystem.IsWindows();
 
@@ -109,7 +109,7 @@ namespace Smake.Menues
         }
 
 
-        private static string[] BuildMenu()
+        static string[] BuildMenu()
         {
             bool isWindows = OperatingSystem.IsWindows();
 
