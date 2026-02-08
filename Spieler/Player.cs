@@ -237,9 +237,7 @@ namespace Smake.Spieler
             }
 
             // Altes Tail-Feld nur leeren, wenn es kein Rand und nicht auf einem Spielersegment ist
-            if (oldTailX >= 0 && oldTailY >= 0
-                && RendernSpielfeld.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin
-                && !isOnPlayer)
+            if (oldTailX >= 0 && oldTailY >= 0 && RendernSpielfeld.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin && !isOnPlayer)
             {
                 RendernSpielfeld.Grid[oldTailY, oldTailX] = ' ';
             }
