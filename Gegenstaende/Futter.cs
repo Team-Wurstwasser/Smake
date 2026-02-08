@@ -23,7 +23,7 @@ namespace Smake.Gegenstaende
         {
             base.Setze();
 
-            if (Spielvalues.Gamemode == Gamemodes.SchlüsselModus)
+            if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
                 Schluessel = new();
             }
@@ -42,7 +42,7 @@ namespace Smake.Gegenstaende
         protected override void Zeichne()
         {
             // Futter ins Spielfeld einzeichnen
-            if (Spielvalues.Gamemode == Gamemodes.SchlüsselModus)
+            if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
                 if (Schluessel != null && Schluessel.Collected)
                 {
@@ -64,7 +64,7 @@ namespace Smake.Gegenstaende
 
         public void EsseFutter(Player p)
         {
-            if (Spielvalues.Gamemode == Gamemodes.SchlüsselModus)
+            if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
                 if (Schluessel != null && !Schluessel.Collected)
                 {
