@@ -14,7 +14,7 @@ namespace Smake.Render
         public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Vorheriges Frame für Performance-Rendering
-        private readonly char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
+        readonly char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
         public void InitialisiereSpielfeld()
@@ -42,7 +42,7 @@ namespace Smake.Render
             RenderRand();
         }
 
-        private static void RenderRand()
+        static void RenderRand()
         {
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
@@ -95,7 +95,7 @@ namespace Smake.Render
         }
 
         // Normaler Modus: komplette Ausgabe mit Farben + Legende
-        private void RenderFull()
+        void RenderFull()
         {
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
@@ -132,7 +132,7 @@ namespace Smake.Render
         }
 
         // Performance-Modus: nur geänderte Zeichen zeichnen
-        private void RenderPerformance()
+        void RenderPerformance()
         {
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
@@ -160,7 +160,7 @@ namespace Smake.Render
         }
 
         // Hilfsfunktion für Legende im Performance-Modus (nur Text)
-        private static string RenderLegendeText(int y)
+        static string RenderLegendeText(int y)
         {
             switch (y)
             {
@@ -187,7 +187,7 @@ namespace Smake.Render
         }
 
         // Farb-Bestimmung (nur für normalen Modus gebraucht)
-        private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
+        static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
             if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
                 return Spiellogik.Player.HeadFarbe;
@@ -212,7 +212,7 @@ namespace Smake.Render
         }
 
         // RenderLegende mit Farben für den Full-Mode
-        private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
+        static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
         {
             void SetFarbe(ConsoleColor farbe)
             {

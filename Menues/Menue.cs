@@ -28,7 +28,7 @@ namespace Smake.Menues
             Render();
         }
 
-        private int menuTracker;
+        int menuTracker;
         public int MenuTracker
         {
             get { return menuTracker; }
@@ -58,7 +58,7 @@ namespace Smake.Menues
             Menueloop();
         }
 
-        private void Menueloop()
+        void Menueloop()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Main ?? 0);
 
@@ -90,7 +90,7 @@ namespace Smake.Menues
             }
         }
 
-        private void SelectMenu()
+        void SelectMenu()
         {
             switch (MenuTracker)
             {
