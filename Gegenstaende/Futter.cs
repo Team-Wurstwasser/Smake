@@ -12,12 +12,12 @@ namespace Smake.Gegenstaende
     {
         public ConsoleColor FoodFarbe { get; private set; } = foodfarbe;
 
-        private Schluessel? Schluessel;
-        private Bombe? Bombe;
+        Schluessel? Schluessel;
+        Bombe? Bombe;
 
         // Für Sprungfutter-Modus
-        private int TeleportCounter = 0;
-        private readonly int TeleportInterval = GameData.TeleportInterval;
+        int TeleportCounter = 0;
+        readonly int TeleportInterval = GameData.TeleportInterval;
 
         protected override void Setze()
         {
@@ -104,7 +104,7 @@ namespace Smake.Gegenstaende
             Zeichne();
         }
 
-        private void Tick()
+        void Tick()
         {
             if (Spielvalues.Gamemode == Gamemodes.SprungfutterModus)
             {
