@@ -146,12 +146,12 @@ namespace Smake.Speicher
             public MusikSpeed? Normal { get; set; }
             public MusikSpeed? Unendlich { get; set; }
             public MusikSpeed? Babymode { get; set; }
-            public MusikSpeed? Babymode_Unendlich { get; set; }
-            public MusikSpeed? Mauer_Modus { get; set; }
-            public MusikSpeed? Schluessel_Modus { get; set; }
-            public MusikSpeed? Sprungfutter_Modus { get; set; }
-            public MusikSpeed? Bomben_Modus { get; set; }
-            public MusikSpeed? Chaos_Steuerung { get; set; }
+            public MusikSpeed? BabymodeUnendlich { get; set; }
+            public MusikSpeed? MauerModus { get; set; }
+            public MusikSpeed? SchluesselModus { get; set; }
+            public MusikSpeed? SprungfutterModus { get; set; }
+            public MusikSpeed? BombenModus { get; set; }
+            public MusikSpeed? ChaosSteuerung { get; set; }
         }
 
         public class MusikSpeed
