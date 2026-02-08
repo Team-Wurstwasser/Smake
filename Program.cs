@@ -7,7 +7,7 @@ namespace Smake
 {
     public class Program
     {
-        private static int currentView = 7;
+        static int currentView = 7;
 
         public static int CurrentView { get => currentView; set => currentView = value; }
 
