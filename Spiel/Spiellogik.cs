@@ -1,4 +1,5 @@
-﻿using Smake.Gegenstaende;
+﻿using Smake.Enums;
+using Smake.Gegenstaende;
 using Smake.Helper;
 using Smake.Render;
 using Smake.SFX;
@@ -40,8 +41,8 @@ namespace Smake.Spiel
             unentschieden = false;
 
             // Zeit einstellen
-            if (Spielvalues.DifficultyInt == 1) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
-            else if (Spielvalues.DifficultyInt == 2) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
+            if (Spielvalues.Difficulty == Difficultys.slow) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
+            else if (Spielvalues.Difficulty == Difficultys.medium) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
             else Spielvalues.Zeit = GameData.SpielSchwierigkeit.Schnell;
 
             // Initialisiere das Spielfeld mit Rahmen
@@ -252,7 +253,7 @@ namespace Smake.Spiel
         // Coins und xp hinzufügen
         static void Coins()
         {
-            if (Spielvalues.GamemodeInt != 3 && Spielvalues.GamemodeInt != 4)
+            if (Spielvalues.Gamemode != Gamemodes.Babymode && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
             {
                 if (Spielstatus.Highscore < Player.Punkte)
                 { Spielstatus.Highscore = Player.Punkte; }
@@ -261,21 +262,21 @@ namespace Smake.Spiel
 
                 Spielstatus.SpieleGesamt++;
 
-                switch (Spielvalues.DifficultyInt)
+                switch (Spielvalues.Difficulty)
                 {
-                    case 1:
+                    case Difficultys.slow:
                         Spielstatus.Gesamtcoins = Player.Punkte + Player2.Punkte + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = Player.Punkte + Player2.Punkte + Spielstatus.Coins;
                         Spielstatus.Xp = Player.Punkte + Player2.Punkte + Spielstatus.Xp;
                         break;
 
-                    case 2:
+                    case Difficultys.medium:
                         Spielstatus.Gesamtcoins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
                         Spielstatus.Xp = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
                         break;
 
-                    case 3:
+                    case Difficultys.fast:
                         Spielstatus.Gesamtcoins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
                         Spielstatus.Xp = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
