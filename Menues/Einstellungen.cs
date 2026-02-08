@@ -100,8 +100,8 @@ namespace Smake.Menues
                 case 3: ChangeGamemode(); break;
                 case 4: ChangeMaxFutter(); break;
                 case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
-                case 6: Sounds.Musikplay = !Sounds.Musikplay; break;
-                case 7: Sounds.Soundplay = !Sounds.Soundplay; break;
+                case 6: Sounds.Musikplay = !Sounds.Musikplay; Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0); break;
+                case 7: Sounds.Soundplay = !Sounds.Soundplay; Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0); break;
                 case 8: ChangeLanguage(); break;
                 case 9: ResetSpielstand(); break;
                 case 10: StopInputstream(); break;
