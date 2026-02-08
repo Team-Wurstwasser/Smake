@@ -87,8 +87,8 @@ namespace Smake.Spieler
             Kollisioncheck(newPlayerX, newPlayerY, p);
             if (!Kollision || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                TailShift(this);
-                TailBewegung(this);
+                TailShift();
+                TailBewegung();
                 Bewegung(newPlayerX, newPlayerY);
 
                 foreach (var Futter in Spiellogik.Essen)
@@ -197,23 +197,23 @@ namespace Smake.Spieler
         }
 
         // Tailkoordinaten berechnen
-        void TailShift(Player p)
+        void TailShift()
         {
-            p.TailLaenge = Punkte + tailStartLaenge;
+            TailLaenge = Punkte + tailStartLaenge;
 
             for (int i = TailLaenge + 1; i > 0; i--)
             {
-                p.PlayerX[i] = p.PlayerX[i - 1];
+                PlayerX[i] = PlayerX[i - 1];
             }
 
             for (int i = TailLaenge + 1; i > 0; i--)
             {
-                p.PlayerY[i] = p.PlayerY[i - 1];
+                PlayerY[i] = PlayerY[i - 1];
             }
 
         }
 
-        void TailBewegung(Player p)
+        void TailBewegung()
         {
             int oldTailX = PlayerX[TailLaenge + 1];
             int oldTailY = PlayerY[TailLaenge + 1];
@@ -221,15 +221,15 @@ namespace Smake.Spieler
             // Spieler-Tail zeichnen
             for (int i = 0; i <= TailLaenge; i++)
             {
-                if (p.PlayerX[i] >= 0 && p.PlayerY[i] >= 0)
-                    RendernSpielfeld.Grid[p.PlayerY[i], p.PlayerX[i]] = TailSkin;
+                if (PlayerX[i] >= 0 && PlayerY[i] >= 0)
+                    RendernSpielfeld.Grid[PlayerY[i], PlayerX[i]] = TailSkin;
             }
 
             // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt
             bool isOnPlayer = false;
             for (int i = 0; i <= TailLaenge; i++)
             {
-                if (p.PlayerX[i] == oldTailX && p.PlayerY[i] == oldTailY)
+                if (PlayerX[i] == oldTailX && PlayerY[i] == oldTailY)
                 {
                     isOnPlayer = true;
                     break;
