@@ -85,7 +85,7 @@ namespace Smake.Menues
         {
             gesamtOptionen[0] = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
             gesamtOptionen[1] = GameData.Farben.Length;
-            gesamtOptionen[2] = GameData.Farben.Length;
+            gesamtOptionen[2] = 6;
 
             Menueloop();
         }
