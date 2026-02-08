@@ -1,4 +1,5 @@
-﻿using Smake.Spieler;
+﻿using Smake.Enums;
+using Smake.Spieler;
 using Smake.Values;
 
 namespace Smake.Spiel
@@ -93,7 +94,7 @@ namespace Smake.Spiel
         private static void UpdatePlayerDirection(Player p, int newX, int newY, char head)
         {
             // Gespiegelte Steuerung bei Chaos-Steuerung
-            if (Spielvalues.GamemodeInt == 9)
+            if (Spielvalues.Gamemode == Gamemodes.ChaosSteuerung)
             {
                 newX = -newX;
                 newY = -newY;

@@ -1,3 +1,4 @@
+using Smake.Enums;
 using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
@@ -78,7 +79,7 @@ namespace Smake.Spieler
             int newPlayerY = PlayerY[0] + InputY;
 
             Kollisioncheck(newPlayerX, newPlayerY, p);
-            if (!Kollision || Spielvalues.GamemodeInt == 3 || Spielvalues.GamemodeInt == 4)
+            if (!Kollision || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
                 TailShift(this);
                 TailBewegung(this);
@@ -97,16 +98,16 @@ namespace Smake.Spieler
             bool SpielerTot = false;
             bool Maxpunkte = false;
 
-            if (Spielvalues.GamemodeInt == 2 || Spielvalues.GamemodeInt == 4)
+            if (Spielvalues.Gamemode == Gamemodes.Unendlich || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                if (Kollision && Spielvalues.GamemodeInt != 4)
+                if (Kollision && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
                     SpielerTot = true;
                 else if (TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
                     Maxpunkte = true;
                 else if (TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
-            else if (Spielvalues.GamemodeInt == 3)
+            else if (Spielvalues.Gamemode == Gamemodes.Babymode)
             {
                 if (Punkte >= GameData.MaxPunkte)
                 {
@@ -128,7 +129,7 @@ namespace Smake.Spieler
         // Prüft die Kollision
         void Kollisioncheck(int newPlayerX, int newPlayerY, Player p)
         {
-            if (Spielvalues.GamemodeInt == 3 || Spielvalues.GamemodeInt == 4)
+            if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
                 if (RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
                 {
@@ -172,7 +173,7 @@ namespace Smake.Spieler
         void Bewegung(int newPlayerX, int newPlayerY)
         {
             // Babymode Wrap-around
-            if (Spielvalues.GamemodeInt == 3 && Kollision || Spielvalues.GamemodeInt == 4 && Kollision)
+            if (Spielvalues.Gamemode == Gamemodes.Babymode && Kollision || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich && Kollision)
             {
                 if (InputX == 1) newPlayerX = 2;
                 else if (InputX == -1) newPlayerX = Spielvalues.weite - 3;
