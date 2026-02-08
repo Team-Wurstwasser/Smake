@@ -2,6 +2,7 @@
 using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Menues
 {
@@ -42,18 +43,6 @@ namespace Smake.Menues
 
             while (DoReadInput)
             {
-                Spielvalues.GamemodeInt ??= 1;
-                var modes = LanguageManager.GetArray("settings.gamemodes");
-                Spielvalues.Gamemode = modes[(int)Spielvalues.GamemodeInt - 1];
-
-                Spielvalues.Difficulty = Spielvalues.DifficultyInt switch
-                {
-                    1 => LanguageManager.Get("settings.difficulty.slow"),
-                    2 => LanguageManager.Get("settings.difficulty.medium"),
-                    3 => LanguageManager.Get("settings.difficulty.fast"),
-                    _ => LanguageManager.Get("settings.difficulty.medium") // Standardwert
-                };
-
                 ProcessInput();
                 Thread.Sleep(5);
             }
@@ -87,7 +76,7 @@ namespace Smake.Menues
 
         private void SelectMenu()
         {
-            bool isWindows = System.OperatingSystem.IsWindows();
+            bool isWindows = OperatingSystem.IsWindows();
 
             int actionCase = MenuTracker;
 
@@ -125,11 +114,13 @@ namespace Smake.Menues
             bool isWindows = OperatingSystem.IsWindows();
 
             var items = LanguageManager.GetArray("settings.items");
+            var gamemodes = LanguageManager.GetArray("settings.gamemodes");
+            var difficultys = LanguageManager.GetArray("settings.difficultys");
             var menuList = new List<string>
             {
-                items[0].Replace("{difficulty}", Spielvalues.Difficulty),
+                items[0].Replace("{difficulty}", difficultys[(int)Spielvalues.Difficulty]),
                 items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
-                items[2].Replace("{gamemode}", Spielvalues.Gamemode),
+                items[2].Replace("{gamemode}", gamemodes[(int)Spielvalues.Gamemode]),
                 items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
                 items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off"))
             };
@@ -228,21 +219,13 @@ namespace Smake.Menues
         // Auswahl der Spielgeschwindigkeit
         static void ChangeDifficulty()
         {
-            if (Spielvalues.DifficultyInt == 1)
+            Spielvalues.Difficulty = Spielvalues.Difficulty switch
             {
-                Spielvalues.Difficulty = LanguageManager.Get("settings.difficulty.medium");
-                Spielvalues.DifficultyInt = 2;
-            }
-            else if (Spielvalues.DifficultyInt == 2)
-            {
-                Spielvalues.Difficulty = LanguageManager.Get("settings.difficulty.fast");
-                Spielvalues.DifficultyInt = 3;
-            }
-            else
-            {
-                Spielvalues.Difficulty = LanguageManager.Get("settings.difficulty.slow");
-                Spielvalues.DifficultyInt = 1;
-            } 
+                Difficultys.slow    => Difficultys.medium,
+                Difficultys.medium  => Difficultys.fast,
+                Difficultys.fast    => Difficultys.slow,
+                _                   => Difficultys.medium
+            };
         }
 
         static void ChangeGamemode()
@@ -260,7 +243,7 @@ namespace Smake.Menues
                 for (int i = 0; i < modes.Length; i++)
                 {
                     Console.Write($"║ ");
-                    if (Spielvalues.Gamemode == modes[i])
+                    if ((int)Spielvalues.Gamemode == i)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write($"[{i + 1}] {modes[i],-25} ← {LanguageManager.Get("settings.current")}".PadRight(43));
@@ -279,8 +262,7 @@ namespace Smake.Menues
                 string eingabe = Console.ReadLine()!;
                 if (int.TryParse(eingabe, out int auswahl) && auswahl >= 1 && auswahl <= modes.Length)
                 {
-                    Spielvalues.Gamemode = modes[auswahl - 1];
-                    Spielvalues.GamemodeInt = auswahl;
+                    Spielvalues.Gamemode = (Gamemodes)(auswahl - 1);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\n✔ {LanguageManager.Get("settings.gamemodeChanged")} {Spielvalues.Gamemode}");
                     Console.ResetColor();
