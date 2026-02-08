@@ -8,7 +8,7 @@ namespace Smake.Speicher
 
         public static string? Language { get; private set; }
 
-        const string Config = "config.config";
+        const string Config = "language.config";
         const string DefaultLanguage = "de";
 
         public static void Speichern_Laden(string aktion, string newLang = "")
