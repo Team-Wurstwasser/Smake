@@ -24,7 +24,7 @@ namespace Smake.Spieler
         bool Kollision;
 
         //Punkte des Spielers
-        public int Punkte { get; set; }
+        public int Punkte;
 
         // Namen der Spieler
         public string? Name;
