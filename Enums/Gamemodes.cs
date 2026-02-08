@@ -7,7 +7,7 @@
         Babymode,
         BabymodeUnendlich,
         MauerModus,
-        SchlüsselModus,
+        SchluesselModus,
         SprungfutterModus,
         BombenModus,
         ChaosSteuerung
