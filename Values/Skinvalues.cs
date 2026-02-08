@@ -12,12 +12,12 @@
 
         internal static bool FoodfarbeRandom;
 
-        private static char mauerSkin = '█';
-        private static ConsoleColor mauerFarbe = ConsoleColor.Red;
-        private static char schluesselSkin = 'Q';
-        private static ConsoleColor schluesselFarbe = ConsoleColor.Yellow;
-        private static char bombenSkin = 'o';
-        private static ConsoleColor bombenFarbe = ConsoleColor.Red;
+        static char mauerSkin = '█';
+        static ConsoleColor mauerFarbe = ConsoleColor.Red;
+        static char schluesselSkin = 'Q';
+        static ConsoleColor schluesselFarbe = ConsoleColor.Yellow;
+        static char bombenSkin = 'o';
+        static ConsoleColor bombenFarbe = ConsoleColor.Red;
 
         public static char MauerSkin { get => mauerSkin; set => mauerSkin = value; }
         public static ConsoleColor MauerFarbe { get => mauerFarbe; set => mauerFarbe = value; }

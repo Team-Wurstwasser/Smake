@@ -64,7 +64,7 @@ namespace Smake
         }
 
         // Eingaben für Spielernamen
-        public static void Eingaben()
+        static void Eingaben()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Eingabe ?? 0);
 

@@ -58,9 +58,9 @@ namespace Smake.Menues
             }
         }
 
-        private bool ShopSkins;
-        private readonly int gesamtOptionenSkins;
-        private readonly int gesamtOptionenFarben;
+        bool ShopSkins;
+        readonly int gesamtOptionenSkins;
+        readonly int gesamtOptionenFarben;
 
         public Shop()
         {
@@ -70,7 +70,7 @@ namespace Smake.Menues
             Menueloop();
         }
 
-        private void Menueloop()
+        void Menueloop()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Shop ?? 0);
             MenuTracker = 1;
@@ -85,7 +85,7 @@ namespace Smake.Menues
             Program.CurrentView = 7;
         }
 
-        private void SelectMenu()
+        void SelectMenu()
         {
             if (ShopSkins)
             {
@@ -149,7 +149,7 @@ namespace Smake.Menues
             }
         }
 
-        private void BuildMenu()
+        void BuildMenu()
         {
             if (ShopSkins)
             {
