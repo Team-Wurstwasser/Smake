@@ -1,3 +1,4 @@
+using Smake.Enums;
 using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
@@ -5,7 +6,7 @@ using Smake.Values;
 
 namespace Smake.Spieler
 {
-    public class Player(int xstart, int ystart) : Tail
+    public class Player(int xstart, int ystart, int tailStartLaenge)
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
@@ -23,18 +24,24 @@ namespace Smake.Spieler
         bool Kollision;
 
         //Punkte des Spielers
-        public int Punkte { get; set; }
+        public int Punkte;
 
         // Namen der Spieler
         public string? Name;
 
         // Aussehen des Spielers
         public char HeadSkin;
+        public char TailSkin;
 
         public ConsoleColor HeadFarbe;
+        public ConsoleColor TailFarbe;
 
         public readonly int xstart = xstart;
         public readonly int ystart = ystart;
+
+        // Länge des Spielers
+        public int TailLaenge { get; private set; }
+        readonly int tailStartLaenge = tailStartLaenge;
 
         void InitialisiereSpieler()
         {
@@ -47,7 +54,7 @@ namespace Smake.Spieler
             Kollision = false;
 
             // Taillängen zurücksetzen
-            TailLaenge = TailStartLaenge;
+            TailLaenge = tailStartLaenge;
 
             // Punkte zurücksetzen
             Punkte = 0;
@@ -78,10 +85,10 @@ namespace Smake.Spieler
             int newPlayerY = PlayerY[0] + InputY;
 
             Kollisioncheck(newPlayerX, newPlayerY, p);
-            if (!Kollision || Spielvalues.GamemodeInt == 3 || Spielvalues.GamemodeInt == 4)
+            if (!Kollision || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                TailShift(this);
-                TailBewegung(this);
+                TailShift();
+                TailBewegung();
                 Bewegung(newPlayerX, newPlayerY);
 
                 foreach (var Futter in Spiellogik.Essen)
@@ -97,16 +104,16 @@ namespace Smake.Spieler
             bool SpielerTot = false;
             bool Maxpunkte = false;
 
-            if (Spielvalues.GamemodeInt == 2 || Spielvalues.GamemodeInt == 4)
+            if (Spielvalues.Gamemode == Gamemodes.Unendlich || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                if (Kollision && Spielvalues.GamemodeInt != 4)
+                if (Kollision && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
                     SpielerTot = true;
                 else if (TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
                     Maxpunkte = true;
                 else if (TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
-            else if (Spielvalues.GamemodeInt == 3)
+            else if (Spielvalues.Gamemode == Gamemodes.Babymode)
             {
                 if (Punkte >= GameData.MaxPunkte)
                 {
@@ -128,7 +135,7 @@ namespace Smake.Spieler
         // Prüft die Kollision
         void Kollisioncheck(int newPlayerX, int newPlayerY, Player p)
         {
-            if (Spielvalues.GamemodeInt == 3 || Spielvalues.GamemodeInt == 4)
+            if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
                 if (RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
                 {
@@ -172,7 +179,7 @@ namespace Smake.Spieler
         void Bewegung(int newPlayerX, int newPlayerY)
         {
             // Babymode Wrap-around
-            if (Spielvalues.GamemodeInt == 3 && Kollision || Spielvalues.GamemodeInt == 4 && Kollision)
+            if (Spielvalues.Gamemode == Gamemodes.Babymode && Kollision || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich && Kollision)
             {
                 if (InputX == 1) newPlayerX = 2;
                 else if (InputX == -1) newPlayerX = Spielvalues.weite - 3;
@@ -187,6 +194,53 @@ namespace Smake.Spieler
             PlayerX[0] = newPlayerX;
             PlayerY[0] = newPlayerY;
 
+        }
+
+        // Tailkoordinaten berechnen
+        void TailShift()
+        {
+            TailLaenge = Punkte + tailStartLaenge;
+
+            for (int i = TailLaenge + 1; i > 0; i--)
+            {
+                PlayerX[i] = PlayerX[i - 1];
+            }
+
+            for (int i = TailLaenge + 1; i > 0; i--)
+            {
+                PlayerY[i] = PlayerY[i - 1];
+            }
+
+        }
+
+        void TailBewegung()
+        {
+            int oldTailX = PlayerX[TailLaenge + 1];
+            int oldTailY = PlayerY[TailLaenge + 1];
+
+            // Spieler-Tail zeichnen
+            for (int i = 0; i <= TailLaenge; i++)
+            {
+                if (PlayerX[i] >= 0 && PlayerY[i] >= 0)
+                    RendernSpielfeld.Grid[PlayerY[i], PlayerX[i]] = TailSkin;
+            }
+
+            // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt
+            bool isOnPlayer = false;
+            for (int i = 0; i <= TailLaenge; i++)
+            {
+                if (PlayerX[i] == oldTailX && PlayerY[i] == oldTailY)
+                {
+                    isOnPlayer = true;
+                    break;
+                }
+            }
+
+            // Altes Tail-Feld nur leeren, wenn es kein Rand und nicht auf einem Spielersegment ist
+            if (oldTailX >= 0 && oldTailY >= 0 && RendernSpielfeld.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin && !isOnPlayer)
+            {
+                RendernSpielfeld.Grid[oldTailY, oldTailX] = ' ';
+            }
         }
     }
 }

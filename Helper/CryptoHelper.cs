@@ -5,11 +5,11 @@ namespace Smake.Helper
 {
     public class CryptoHelper
     {
-        private const string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
-        private const int SaltLength = 16;
-        private const int NonceLength = 12;
-        private const int TagLength = 16;
-        private const int Iterations = 100_000;
+        const string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
+        const int SaltLength = 16;
+        const int NonceLength = 12;
+        const int TagLength = 16;
+        const int Iterations = 100_000;
 
         public static byte[] Encrypt(string plainText)
         {

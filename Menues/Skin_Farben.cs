@@ -48,7 +48,7 @@ namespace Smake.Menues
 
         }
 
-        private int menuTracker;
+        int menuTracker;
         public int MenuTracker
         {
             get { return menuTracker; }
@@ -78,7 +78,7 @@ namespace Smake.Menues
             Menueloop();
         }
 
-        private void Menueloop()
+        void Menueloop()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.SkinFarben ?? 0);
             Title = "Skin_Farben";
@@ -96,7 +96,7 @@ namespace Smake.Menues
             Program.CurrentView = 7;
         }
 
-        private void SelectMenu()
+        void SelectMenu()
         {
             switch (MenuTracker)
             {
@@ -116,7 +116,7 @@ namespace Smake.Menues
             }
         }
 
-        private static object?[] BuildMenu()
+        static object?[] BuildMenu()
         {
             return [
                 Spiellogik.Player.TailSkin,

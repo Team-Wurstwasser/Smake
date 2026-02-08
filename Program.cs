@@ -7,7 +7,7 @@ namespace Smake
 {
     public class Program
     {
-        private static int currentView = 7;
+        static int currentView = 7;
 
         public static int CurrentView { get => currentView; set => currentView = value; }
 
@@ -64,7 +64,7 @@ namespace Smake
         }
 
         // Eingaben für Spielernamen
-        public static void Eingaben()
+        static void Eingaben()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Eingabe ?? 0);
 

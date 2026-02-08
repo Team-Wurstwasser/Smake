@@ -1,4 +1,5 @@
-﻿using Smake.Menues;
+﻿using Smake.Enums;
+using Smake.Menues;
 using Smake.Speicher;
 using Smake.Spiel;
 using Smake.Values;
@@ -13,7 +14,7 @@ namespace Smake.Render
         public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Vorheriges Frame für Performance-Rendering
-        private readonly char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
+        readonly char[,] PrevGrid = new char[Spielvalues.hoehe, Spielvalues.weite];
 
         // Initialisiert das Spielfeld: Rahmen, leere Fläche
         public void InitialisiereSpielfeld()
@@ -41,7 +42,7 @@ namespace Smake.Render
             RenderRand();
         }
 
-        private static void RenderRand()
+        static void RenderRand()
         {
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
@@ -94,7 +95,7 @@ namespace Smake.Render
         }
 
         // Normaler Modus: komplette Ausgabe mit Farben + Legende
-        private void RenderFull()
+        void RenderFull()
         {
             ConsoleColor aktuelleFarbe = Console.ForegroundColor;
 
@@ -131,7 +132,7 @@ namespace Smake.Render
         }
 
         // Performance-Modus: nur geänderte Zeichen zeichnen
-        private void RenderPerformance()
+        void RenderPerformance()
         {
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
@@ -159,7 +160,7 @@ namespace Smake.Render
         }
 
         // Hilfsfunktion für Legende im Performance-Modus (nur Text)
-        private static string RenderLegendeText(int y)
+        static string RenderLegendeText(int y)
         {
             switch (y)
             {
@@ -167,17 +168,13 @@ namespace Smake.Render
                 case 2: return LanguageManager.Get("legende");
                 case 3: return "  ══════════════════════════════";
                 case 4:
-                    string maxpunkte = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
-                    ? GameData.MaxPunkte.ToString()
-                    : "∞";
+                    string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
                     return $"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}";
                 case 5: return "  ══════════════════════════════";
                 case 6:
                     if (Spielvalues.Multiplayer)
                     {
-                        string maxpunkte2 = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
-                   ? GameData.MaxPunkte.ToString()
-                   : "∞";
+                        string maxpunkte2 = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
                         return $"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}";
                     }
                     break;
@@ -190,7 +187,7 @@ namespace Smake.Render
         }
 
         // Farb-Bestimmung (nur für normalen Modus gebraucht)
-        private static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
+        static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
             if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
                 return Spiellogik.Player.HeadFarbe;
@@ -208,14 +205,14 @@ namespace Smake.Render
                 return Skinvalues.SchluesselFarbe;
             foreach (var Essen in Spiellogik.Essen)
             {
-                if (x == Essen.FutterX && y == Essen.FutterY)
+                if (x == Essen.X && y == Essen.Y)
                     return Essen.FoodFarbe;
             }
             return ConsoleColor.White;
         }
 
         // RenderLegende mit Farben für den Full-Mode
-        private static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
+        static ConsoleColor RenderLegende(int y, ConsoleColor aktuelleFarbe)
         {
             void SetFarbe(ConsoleColor farbe)
             {
@@ -244,9 +241,7 @@ namespace Smake.Render
                     break;
                 case 4:
                     SetFarbe(Spiellogik.Player.HeadFarbe);
-                    string maxpunkte = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
-                   ? GameData.MaxPunkte.ToString()
-                   : "∞";
+                    string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
                     Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
                     break;
                 case 5:
@@ -257,9 +252,7 @@ namespace Smake.Render
                     if (Spielvalues.Multiplayer)
                     {
                         SetFarbe(Spiellogik.Player2.HeadFarbe);
-                        string maxpunkte2 = (Spielvalues.GamemodeInt != 2 && Spielvalues.GamemodeInt != 4)
-                   ? GameData.MaxPunkte.ToString()
-                   : "∞";
+                        string maxpunkte2 = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
                         Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
                     }
                     break;

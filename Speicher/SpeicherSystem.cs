@@ -3,13 +3,14 @@ using Smake.Render;
 using Smake.Spiel;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Speicher
 {
     public class SpeicherSystem
     {
-        private const string SpeicherDatei = "spielstand.bin";
-        private const string BackupDatei = "spielstand.bak";
+        const string SpeicherDatei = "spielstand.bin";
+        const string BackupDatei = "spielstand.bak";
 
         public static void Speichern_Laden(string aktion)
         {
@@ -76,7 +77,7 @@ namespace Smake.Speicher
             }
         }
 
-        private static void SetzeStandardwerte()
+        static void SetzeStandardwerte()
         {
             Sounds.Musikplay = true;
             Sounds.Soundplay = true;
@@ -102,19 +103,9 @@ namespace Smake.Speicher
             Spielstatus.SpieleGesamt = 0;
             Spielvalues.Maxfutter = 1;
 
-            Spielvalues.DifficultyInt = 2;
+            Spielvalues.Difficulty = Difficultys.medium;
 
-            Spielvalues.Difficulty = Spielvalues.DifficultyInt switch
-            {
-                1 => LanguageManager.Get("settings.difficulty.slow"),
-                2 => LanguageManager.Get("settings.difficulty.medium"),
-                3 => LanguageManager.Get("settings.difficulty.fast"),
-                _ => LanguageManager.Get("settings.difficulty.medium") // Standardwert
-            };
-
-            Spielvalues.GamemodeInt = 1;
-            var modes = LanguageManager.GetArray("settings.gamemodes");
-            Spielvalues.Gamemode = modes[(int)Spielvalues.GamemodeInt - 1];
+            Spielvalues.Gamemode = Gamemodes.Normal;
             Spielvalues.Multiplayer = false;
 
             Skinvalues.RandSkin = GameData.RandSkins[0];
@@ -131,7 +122,7 @@ namespace Smake.Speicher
             Spiellogik.Player2.HeadFarbe = GameData.Farben[0];
         }
 
-        private static void Speichern()
+        static void Speichern()
         {
             var zeilen = new List<string>
             {
@@ -142,8 +133,7 @@ namespace Smake.Speicher
                 $"Maxfutter={Spielvalues.Maxfutter}",
                 $"Highscore={Spielstatus.Highscore}",
                 $"Gesamtcoins={Spielstatus.Gesamtcoins}",
-                $"Difficulty={Spielvalues.DifficultyInt}",
-                $"Gamemode={Spielvalues.GamemodeInt}",
+                $"Difficulty={Spielvalues.Difficulty}",
                 $"Multiplayer={Spielvalues.Multiplayer}",
                 $"RandSkin={Skinvalues.RandSkin}",
                 $"FoodSkin={Skinvalues.FoodSkin}",
@@ -175,7 +165,7 @@ namespace Smake.Speicher
             File.WriteAllBytes(SpeicherDatei, encrypted);
         }
 
-        private static bool Laden(string datei)
+        static bool Laden(string datei)
         {
             if (!File.Exists(datei)) return false;
 
@@ -213,8 +203,8 @@ namespace Smake.Speicher
                         case "SpieleGesamt": Spielstatus.SpieleGesamt = int.Parse(wert); break;
                         case "Maxfutter": Spielvalues.Maxfutter = int.Parse(wert); break;
 
-                        case "Difficulty": Spielvalues.DifficultyInt = int.Parse(wert); break;
-                        case "Gamemode": Spielvalues.GamemodeInt = int.Parse(wert); break;
+                        case "Difficulty": Spielvalues.Difficulty = Enum.Parse<Difficultys>(wert); ; break;
+                        case "Gamemode": Spielvalues.Gamemode = Enum.Parse<Gamemodes>(wert); break;
                         case "Multiplayer": Spielvalues.Multiplayer = bool.Parse(wert); break;
 
                         case "RandSkin": Skinvalues.RandSkin = wert[0]; break;

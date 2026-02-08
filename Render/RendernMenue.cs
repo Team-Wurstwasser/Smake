@@ -53,7 +53,7 @@ namespace Smake.Render
             }
         }
 
-        private void RenderDefaultLayout()
+        void RenderDefaultLayout()
         {
             Console.WriteLine(Title);
             Console.WriteLine("══════════════════════════════");
@@ -67,7 +67,7 @@ namespace Smake.Render
             Console.WriteLine("══════════════════════════════");
         }
 
-        static private void DrawTitle()
+        static void DrawTitle()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(@"
@@ -84,7 +84,7 @@ namespace Smake.Render
             Console.ResetColor();
         }
 
-        private void RenderMainMenuLayout()
+        void RenderMainMenuLayout()
         {
             Console.SetCursorPosition(0, 11);
             Console.WriteLine("╔══════════════════════════════╗");
@@ -100,7 +100,7 @@ namespace Smake.Render
             Console.WriteLine("╚══════════════════════════════╝");
         }
 
-        private void RenderSkinFarbenLayout()
+        void RenderSkinFarbenLayout()
         {
             Console.WriteLine(LanguageManager.Get("skins.title"));
             Console.WriteLine("══════════════════════════════");
@@ -138,7 +138,7 @@ namespace Smake.Render
             Console.WriteLine("══════════════════════════════");
         }
 
-        private static void RenderShopHeader()
+        static void RenderShopHeader()
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(LanguageManager.Get("shop.title").PadLeft(14));
@@ -148,14 +148,14 @@ namespace Smake.Render
             Console.WriteLine(LanguageManager.Get("shop.switchPage"));
         }
 
-        private void RenderShopFooter(int option)
+        void RenderShopFooter(int option)
         {
             string zeiger = option + 1 == Selected ? ">>" : "  ";
             Console.WriteLine($"\n{zeiger} {LanguageManager.Get("shop.back")}");
             Console.WriteLine("══════════════════════════");
         }
 
-        private static int RenderShopSection(string titleKey, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
+        static int RenderShopSection(string titleKey, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
         {
             Console.WriteLine($"\n{LanguageManager.Get("shop." + titleKey)}:");
             for (int i = startIndex; i < items.Length; i++)
@@ -175,7 +175,7 @@ namespace Smake.Render
         }
 
 
-        private void RenderShopSkinsLayout()
+        void RenderShopSkinsLayout()
         {
             RenderShopHeader();
             int option = 0;
@@ -187,7 +187,7 @@ namespace Smake.Render
             RenderShopFooter(option);
         }
 
-        private void RenderShopFarbenLayout()
+        void RenderShopFarbenLayout()
         {
             RenderShopHeader();
             Console.WriteLine($"\n{LanguageManager.Get("shop.colors")}:");
@@ -230,7 +230,7 @@ namespace Smake.Render
             InputThread?.Join();
         }
 
-        private void ReadInput()
+        void ReadInput()
         {
             while (DoReadInput)
             {

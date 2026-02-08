@@ -62,7 +62,7 @@ namespace Smake.Menues
             }
         }
 
-        private int shopTab;
+        int shopTab;
         public int ShopTab
         {
             get { return shopTab; }
@@ -79,7 +79,7 @@ namespace Smake.Menues
                 }
             }
         }
-        private readonly int[] gesamtOptionen = new int[3];
+        readonly int[] gesamtOptionen = new int[3];
 
         public Shop()
         {
@@ -90,7 +90,7 @@ namespace Smake.Menues
             Menueloop();
         }
 
-        private void Menueloop()
+        void Menueloop()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Shop ?? 0);
             MenuTracker = 1;
@@ -106,7 +106,7 @@ namespace Smake.Menues
             Program.CurrentView = 7;
         }
 
-        private void SelectMenu()
+        void SelectMenu()
         {
             switch (ShopTab)
             {
@@ -181,7 +181,7 @@ namespace Smake.Menues
             }
         }
 
-        private void BuildMenu()
+        void BuildMenu()
         {
             switch (ShopTab)
             {

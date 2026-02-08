@@ -4,12 +4,12 @@ namespace Smake.Speicher
 {
     public static class LanguageManager
     {
-        private static Dictionary<string, object> data = [];
+        static Dictionary<string, object> data = [];
 
         public static string? Language { get; private set; }
 
-        private const string Config = "language.config";
-        private const string DefaultLanguage = "de";
+        const string Config = "language.config";
+        const string DefaultLanguage = "de";
 
         public static void Speichern_Laden(string aktion, string newLang = "")
         {
@@ -117,7 +117,7 @@ namespace Smake.Speicher
             return results;
         }
 
-        private static object? ResolveKey(string key)
+        static object? ResolveKey(string key)
         {
             string[] parts = key.Split('.');
             object? current = data;

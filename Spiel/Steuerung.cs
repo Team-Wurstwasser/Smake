@@ -1,4 +1,5 @@
-﻿using Smake.Spieler;
+﻿using Smake.Enums;
+using Smake.Spieler;
 using Smake.Values;
 
 namespace Smake.Spiel
@@ -26,7 +27,7 @@ namespace Smake.Spiel
         }
 
         // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und speichert diese
-        private void ReadInput()
+        void ReadInput()
         {
             while (DoReadInput)
             {
@@ -90,10 +91,10 @@ namespace Smake.Spiel
         }
 
         // Hilfsmethode zum Setzen der neuen Richtung eines Spielers
-        private static void UpdatePlayerDirection(Player p, int newX, int newY, char head)
+        static void UpdatePlayerDirection(Player p, int newX, int newY, char head)
         {
             // Gespiegelte Steuerung bei Chaos-Steuerung
-            if (Spielvalues.GamemodeInt == 9)
+            if (Spielvalues.Gamemode == Gamemodes.ChaosSteuerung)
             {
                 newX = -newX;
                 newY = -newY;

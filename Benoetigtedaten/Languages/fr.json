@@ -29,11 +29,11 @@
         "title": "Paramètres",
         "on": "Activé",
         "off": "Désactivé",
-        "difficulty": {
-            "slow": "Lent",
-            "medium": "Moyen",
-            "fast": "Rapide"
-        },
+        "difficultys": [
+            "Lent",
+            "Moyen",
+            "Rapide"
+        ],
         "items": [
             "Changer la difficulté  [Actuel: {difficulty}]",
             "Multijoueur            [Actuel: {multiplayer}]",

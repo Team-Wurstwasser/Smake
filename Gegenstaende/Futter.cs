@@ -4,104 +4,67 @@ using Smake.Spiel;
 using Smake.Spieler;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Gegenstaende
 {
-    public class Futter
+    public class Futter(char food, ConsoleColor foodfarbe) : Gegenstand(food)
     {
-        // Position des Futters
-        public int FutterX { get; private set; }
-        public int FutterY { get; private set; }
+        public ConsoleColor FoodFarbe { get; private set; } = foodfarbe;
 
-        public char FoodSkin { get; private set; }
-        public ConsoleColor FoodFarbe { get; private set; }
-
-        private static readonly Random Rand = new();
-        private Schluessel? Schluessel;
-        private Bombe? Bombe;
+        Schluessel? Schluessel;
+        Bombe? Bombe;
 
         // Für Sprungfutter-Modus
-        private int TeleportCounter = 0;
-        private readonly int TeleportInterval = GameData.TeleportInterval;
-        public Futter(char food, ConsoleColor foodfarbe)
+        int TeleportCounter = 0;
+        readonly int TeleportInterval = GameData.TeleportInterval;
+
+        protected override void Setze()
         {
-            FoodSkin = food;
-            FoodFarbe = foodfarbe;
-            SetzeFutter();
-            ZeichneFutter();
+            base.Setze();
 
-        }
-
-        // Setzt das Futter an eine zufällige, freie Position
-        void SetzeFutter()
-        {
-            int x, y;
-
-            do
-            {
-                // Zufalls-X (immer gerade Zahl, damit zur Snake passt)
-                x = Rand.Next(1, Spielvalues.weite - 2);
-                if (x % 2 != 0 && x < Spielvalues.weite - 2)
-                    x++;
-
-                // Zufalls-Y
-                y = Rand.Next(1, Spielvalues.hoehe - 2);
-
-                // Wiederholen solange die Stelle nicht frei ist
-            } while (RendernSpielfeld.Grid[y, x] != ' ');
-
-            // Setze Position
-            FutterX = x;
-            FutterY = y;
-
-            if (Spielvalues.GamemodeInt == 6)
+            if (Spielvalues.Gamemode == Gamemodes.SchlüsselModus)
             {
                 Schluessel = new();
             }
 
-            if (Spielvalues.GamemodeInt == 8)
-            {
-                Bombe = new();
-            }
-
-            if (Spielvalues.GamemodeInt == 7)
+            if (Spielvalues.Gamemode == Gamemodes.SprungfutterModus)
             {
                 TeleportCounter = 0;
             }
 
+            if (Spielvalues.Gamemode == Gamemodes.BombenModus)
+            {
+                Bombe = new();
+            }
         }
 
-        private void ZeichneFutter()
+        protected override void Zeichne()
         {
             // Futter ins Spielfeld einzeichnen
-            if (Spielvalues.GamemodeInt == 6)
+            if (Spielvalues.Gamemode == Gamemodes.SchlüsselModus)
             {
-                if (Schluessel != null && !Schluessel.Collected)
+                if (Schluessel != null && Schluessel.Collected)
                 {
                     if (!Schluessel.Collected)
                     {
-                        RendernSpielfeld.Grid[FutterY, FutterX] = Skinvalues.MauerSkin;
+                        RendernSpielfeld.Grid[Y, X] = Skinvalues.MauerSkin;
                     }
                     else
                     {
-                        RendernSpielfeld.Grid[FutterY, FutterX] = FoodSkin;
+                        RendernSpielfeld.Grid[Y, X] = Skin;
                     }
                 }
             }
             else
             {
-                RendernSpielfeld.Grid[FutterY, FutterX] = FoodSkin;
+                RendernSpielfeld.Grid[Y, X] = Skin;
             }
         }
 
         public void EsseFutter(Player p)
         {
-            if (Spielvalues.GamemodeInt == 8)
-            {
-                Bombe?.ZeichneBombe();
-            }
-
-            if (Spielvalues.GamemodeInt == 6)
+            if (Spielvalues.Gamemode == Gamemodes.SchlüsselModus)
             {
                 if (Schluessel != null && !Schluessel.Collected)
                 {
@@ -113,24 +76,24 @@ namespace Smake.Gegenstaende
                 // Überprüfe jedes Segment des Spielers
                 for (int i = 0; i < p.TailLaenge; i++)
                 {
-                    if (p.PlayerX[i] == FutterX && p.PlayerY[i] == FutterY)
+                    if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
                     {
 
                         p.Punkte++;
 
                         Sounds.Playbeep();
 
-                        if (Spielvalues.GamemodeInt == 5)
+                        if (Spielvalues.Gamemode == Gamemodes.MauerModus)
                         {
-                            Spiellogik.Mauer.Add(new());
+                            Spiellogik.Mauer.Add(new(Skinvalues.MauerSkin));
                         }
 
-                        if(Spielvalues.GamemodeInt == 8)
+                        if(Spielvalues.Gamemode == Gamemodes.BombenModus)
                         {
                             Bombe?.LöscheBombe();
                         }
 
-                        SetzeFutter();
+                        Setze();
 
                         // Wenn Futter gefunden, können wir die Schleife abbrechen
                         break;
@@ -138,19 +101,19 @@ namespace Smake.Gegenstaende
                 }
             }
             Tick();
-            ZeichneFutter();
+            Zeichne();
         }
 
-        private void Tick()
+        void Tick()
         {
-            if (Spielvalues.GamemodeInt == 7)
+            if (Spielvalues.Gamemode == Gamemodes.SprungfutterModus)
             {
                 TeleportCounter++;
                 if (TeleportCounter >= TeleportInterval)
                 {
                     // Alte Position löschen
-                    RendernSpielfeld.Grid[FutterY, FutterX] = ' ';
-                    SetzeFutter();
+                    RendernSpielfeld.Grid[Y, X] = ' ';
+                    Setze();
                 }
             }
         }
