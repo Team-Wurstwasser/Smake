@@ -29,11 +29,11 @@
         "title": "Settings",
         "on": "On",
         "off": "Off",
-        "difficulty": {
-            "slow": "Slow",
-            "medium": "Medium",
-            "fast": "Fast"
-        },
+        "difficultys": [
+            "Slow",
+            "Medium",
+            "Fast"
+        ],
         "items": [
             "Change Difficulty   [Current: {difficulty}]",
             "Multiplayer         [Current: {multiplayer}]",
