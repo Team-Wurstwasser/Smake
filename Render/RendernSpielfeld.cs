@@ -1,7 +1,7 @@
 ﻿using Smake.Enums;
 using Smake.Menues;
 using Smake.Speicher;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.Values;
 
 namespace Smake.Render
@@ -106,7 +106,7 @@ namespace Smake.Render
             {
                 for (int x = 2; x < cols - 1; x++)
                 {
-                    bool IstStartposition = (x == Spiellogik.Player.xstart && y == Spiellogik.Player.ystart) || (x == Spiellogik.Player2.xstart && y == Spiellogik.Player2.ystart);
+                    bool IstStartposition = (x == Spiellogik.Player.StartX && y == Spiellogik.Player.StartY) || (x == Spiellogik.Player2.StartX && y == Spiellogik.Player2.StartY);
 
                     if (Grid[y, x] != PrevGrid[y, x] || IstStartposition)
                     {

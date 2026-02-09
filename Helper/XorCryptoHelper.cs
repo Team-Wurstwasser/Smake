@@ -3,7 +3,7 @@
 namespace Smake.Helper
 {
     // XOR-Entschlüsselung
-    public class XorCryptoHelper
+    public static class XorCryptoHelper
     {
         static readonly byte[] key =
         [

@@ -1,13 +1,18 @@
-﻿using Smake.Render;
-using Smake.Speicher;
-using Smake.Spiel;
-using Smake.Values;
+﻿using Smake.Enums;
+using Smake.Render;
 using Smake.SFX;
+using Smake.Speicher;
+using Smake.Game;
+using Smake.Values;
 
 namespace Smake.Menues
 {
-    public class Menue : RendernMenue
+    public class MainMenu : RendernMenue
     {
+        const int MinMenuIndex = 1;
+        const int MaxMenuIndex = 7;
+        const int XpPerLevel = 100;
+
         void ProcessInput()
         {
             switch (Input)
@@ -36,13 +41,13 @@ namespace Smake.Menues
             {
                 if (value != menuTracker) // loop index
                 {
-                    if (value > 7)
+                    if (value > MaxMenuIndex)
                     {
-                        menuTracker = 1;
+                        menuTracker = MinMenuIndex;
                     }
-                    else if (value < 1)
+                    else if (value < MinMenuIndex)
                     {
-                        menuTracker = 7;
+                        menuTracker = MaxMenuIndex;
                     }
                     else
                     {
@@ -53,7 +58,7 @@ namespace Smake.Menues
             }
         }
 
-        public Menue()
+        public MainMenu()
         {
             Menueloop();
         }
@@ -62,10 +67,10 @@ namespace Smake.Menues
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Main ?? 0);
 
-            SpeicherSystem.Speichern_Laden("Speichern");
+            SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
             // Level-Berechnung (1 Level pro 100 XP)
-            Spielstatus.Level = Spielstatus.Xp / 100 + 1;
+            Spielstatus.Level = Spielstatus.Xp / XpPerLevel + 1;
 
             if (RendernSpielfeld.Performancemode)
             {
@@ -95,25 +100,25 @@ namespace Smake.Menues
             switch (MenuTracker)
             {
                 case 1:
-                    Program.CurrentView = 1;
+                    Program.CurrentView = ViewType.Game;
                     break;
                 case 2:
-                    Program.CurrentView = 2;
+                    Program.CurrentView = ViewType.Settings;
                     break;
                 case 3:
-                    Program.CurrentView = 3;
+                    Program.CurrentView = ViewType.Shop;
                     break;
                 case 4:
-                    Program.CurrentView = 4;
+                    Program.CurrentView = ViewType.SkinColors;
                     break;
                 case 5:
-                    Program.CurrentView = 5;
+                    Program.CurrentView = ViewType.Statistics;
                     break;
                 case 6:
-                    Program.CurrentView = 6;
+                    Program.CurrentView = ViewType.Instructions;
                     break;
                 case 7:
-                    Program.CurrentView = 0;
+                    Program.CurrentView = ViewType.Exit;
                     break;
             }
             StopInputstream();

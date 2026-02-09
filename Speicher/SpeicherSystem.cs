@@ -1,18 +1,18 @@
 ﻿using Smake.Helper;
 using Smake.Render;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
 
 namespace Smake.Speicher
 {
-    public class SpeicherSystem
+    public static class SpeicherSystem
     {
         const string SpeicherDatei = "spielstand.bin";
         const string BackupDatei = "spielstand.bak";
 
-        public static void Speichern_Laden(string aktion)
+        public static void Speichern_Laden(StorageAction aktion)
         {
             // Wenn die Hauptdatei fehlt, aber ein Backup existiert, lade das Backup
             if (!File.Exists(SpeicherDatei) && File.Exists(BackupDatei))
@@ -43,14 +43,14 @@ namespace Smake.Speicher
 
             switch (aktion)
             {
-                case "Zurücksetzen":
+                case StorageAction.Reset:
                     SetzeStandardwerte();
                     Speichern();
                     break;
-                case "Speichern":
+                case StorageAction.Save:
                     Speichern();
                     break;
-                case "Laden":
+                case StorageAction.Load:
                     if (!Laden(SpeicherDatei))
                     {
                         Console.WriteLine(LanguageManager.Get("saveLoad.loadError"));
