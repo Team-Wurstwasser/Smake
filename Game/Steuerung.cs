@@ -79,7 +79,7 @@ namespace Smake.Game
 
                         // Spiel beenden
                         case ConsoleKey.Escape:
-                            Spiellogik.Spiel = false;
+                            Spiellogik.gameovertype = GameOverType.Exit;
                             break;
                     }
                 }
