@@ -1,38 +1,17 @@
 ﻿namespace Smake.Values
 {
-    public class Skinvalues
+    public static class Skinvalues
     {
-        internal static char RandSkin;
-
-        internal static ConsoleColor RandFarbe;
-
-        internal static char FoodSkin;
-
-        internal static ConsoleColor FoodFarbe;
-
-        internal static bool FoodfarbeRandom;
-
-        static char mauerSkin = '█';
-        static ConsoleColor mauerFarbe = ConsoleColor.Red;
-        static char schluesselSkin = 'Q';
-        static ConsoleColor schluesselFarbe = ConsoleColor.Yellow;
-        static char bombenSkin = 'o';
-        static ConsoleColor bombenFarbe = ConsoleColor.Red;
-
-        public static char MauerSkin { get => mauerSkin; set => mauerSkin = value; }
-        public static ConsoleColor MauerFarbe { get => mauerFarbe; set => mauerFarbe = value; }
-        public static char SchluesselSkin { get => schluesselSkin; set => schluesselSkin = value; }
-        public static ConsoleColor SchluesselFarbe { get => schluesselFarbe; set => schluesselFarbe = value; }
-        public static char BombenSkin { get => bombenSkin; set => bombenSkin = value; }
-        public static ConsoleColor BombenFarbe { get => bombenFarbe; set => bombenFarbe = value; }
-
-        static Skinvalues()
-        {
-            RandSkin = ' ';
-            RandFarbe = ConsoleColor.DarkGray;
-            FoodSkin = ' ';
-            FoodFarbe = ConsoleColor.White;
-            FoodfarbeRandom = false;
-        }
+        public static char RandSkin { get; set; }
+        public static ConsoleColor RandFarbe { get; set; }
+        public static char FoodSkin { get; set; }
+        public static ConsoleColor FoodFarbe { get; set; }
+        public static bool FoodfarbeRandom { get; set; }
+        public const char MauerSkin = '█';
+        public const ConsoleColor MauerFarbe = ConsoleColor.Red;
+        public const char SchluesselSkin = 'Q';
+        public const ConsoleColor SchluesselFarbe = ConsoleColor.Yellow;
+        public const char BombenSkin = 'o';
+        public const ConsoleColor BombenFarbe = ConsoleColor.Red;
     }
 }

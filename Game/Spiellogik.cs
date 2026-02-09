@@ -1,19 +1,17 @@
 ﻿using Smake.Enums;
+using Smake.Game.Spieler;
 using Smake.Gegenstaende;
 using Smake.Helper;
 using Smake.Render;
 using Smake.SFX;
 using Smake.Speicher;
-using Smake.Spieler;
 using Smake.Values;
 
-namespace Smake.Spiel
+namespace Smake.Game
 {
     public class Spiellogik : RendernSpielfeld
     {
-        public static bool Spiel { get; set; }
-        int gameover;
-        bool unentschieden;
+        public static GameOverType Gameovertype { get; set; }
 
         public static Player Player { get; set; } = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, GameData.TailStartLaenge);
 
@@ -32,13 +30,9 @@ namespace Smake.Spiel
         // Allen Variablen den Startwert geben
         void Neustart()
         {
-            SpeicherSystem.Speichern_Laden("Speichern");
+            SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
-            Spiel = true;
-
-            gameover = 0;
-
-            unentschieden = false;
+            Gameovertype = GameOverType.None;
 
             // Zeit einstellen
             if (Spielvalues.Difficulty == Difficultys.slow) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
@@ -72,8 +66,7 @@ namespace Smake.Spiel
                     }
 
                     // Zufällige Auswahl aus den freigeschalteten Farben
-                    Random random = new();
-                    int zufallIndex = random.Next(freigeschalteteFarbenIndex.Count);
+                    int zufallIndex = RandomHelper.Next(freigeschalteteFarbenIndex.Count);
                     int farbenIndex = freigeschalteteFarbenIndex[zufallIndex];
 
                     Essen.Add(new Futter(Skinvalues.FoodSkin, GameData.Farben[farbenIndex]));
@@ -97,7 +90,7 @@ namespace Smake.Spiel
             Steuerung Input = new();
 
             // Game Loop 
-            while (Spiel)
+            do
             {
 
                 Update();   // Spielerposition aktualisieren
@@ -114,6 +107,7 @@ namespace Smake.Spiel
                 }
 
             }
+            while (Gameovertype == GameOverType.None);
 
             Coins();
 
@@ -124,7 +118,7 @@ namespace Smake.Spiel
         }
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
-        void Update()
+        static void Update()
         {
             bool spieler1Tot = false;
             bool spieler2Tot = false;
@@ -148,106 +142,113 @@ namespace Smake.Spiel
         }
 
         // Prüft, ob das Spiel vorbei ist
-        void GameoverCheck(bool spieler1Tot, bool spieler2Tot)
+        static void GameoverCheck(bool spieler1Tot, bool spieler2Tot)
         {
-
             if (spieler1Tot && spieler2Tot)
             {
-                unentschieden = true;
-                Spiel = false;
+                Gameovertype = GameOverType.Draw;
             }
             else if (spieler1Tot)
             {
-                gameover = 1;
-                Spiel = false;
+                Gameovertype = GameOverType.Player2;
             }
             else if (spieler2Tot)
             {
-                gameover = 2;
-                Spiel = false;
+                Gameovertype = GameOverType.Player1;
             }
-
         }
 
         // Zeigt den Game-Over-Screen an
-        void ShowGameOverScreen()
+        static void ShowGameOverScreen()
         {
             Console.Clear();
             Console.WriteLine("═════════════════════════════════════");
-            Console.WriteLine("              GAME OVER              ");
+            Console.WriteLine("            GAME OVER              ");
             Console.WriteLine("═════════════════════════════════════");
+            Console.WriteLine();
 
-            if (gameover !=0)
+            switch (Gameovertype)
             {
-                if (Spielvalues.Multiplayer)
-                {
-                    if (unentschieden)
+                case GameOverType.Draw:
+                    Console.WriteLine(LanguageManager.Get("gameover.draw"));
+                    if (Spielvalues.Multiplayer)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine(LanguageManager.Get("gameover.draw"));
-                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player.Name).Replace("{points}", Player.Punkte.ToString()));
-                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player2.Name).Replace("{points}", Player2.Punkte.ToString()));
-                        Console.WriteLine();
+                        ShowPoints(Player.Name, Player.Punkte);
+                        ShowPoints(Player2.Name, Player2.Punkte);
                     }
-                    else if (gameover == 1)
+                    break;
+
+                case GameOverType.Player1:
+                    if (Spielvalues.Multiplayer)
                     {
-                        Console.WriteLine();
                         Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player2.Name));
-                        Console.WriteLine($"Punkte: {Player2.Punkte}");
-                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player.Name).Replace("{points}", Player.Punkte.ToString()));
-                        Console.WriteLine();
+                        Console.WriteLine(LanguageManager.Get("gameover.points").Replace("{points}", Player2.Punkte.ToString()));
+                        ShowPoints(Player.Name, Player.Punkte);
                     }
-                    else if (gameover == 2)
+                    else
                     {
-                        Console.WriteLine();
-                        Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player.Name));
-                        Console.WriteLine($"Punkte: {Player.Punkte}");
-                        Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", Player2.Name).Replace("{points}", Player2.Punkte.ToString()));
-                        Console.WriteLine();
-                    }
-                }
-                else
-                {
-                    if (gameover == 1)
-                    {
-                        Console.WriteLine();
                         Console.WriteLine(LanguageManager.Get("gameover.lose"));
                         Console.WriteLine(LanguageManager.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
-                        Console.WriteLine();
                     }
-                    else if (gameover == 2)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine(LanguageManager.Get("gameover.win"));
-                        Console.WriteLine(LanguageManager.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
-                        Console.WriteLine();
-                    }
-                }
+                    break;
+
+                case GameOverType.Player2:
+                        if (Spielvalues.Multiplayer)
+                        {
+                            Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player.Name));
+                            Console.WriteLine(LanguageManager.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
+                            ShowPoints(Player2.Name, Player2.Punkte);
+                        }
+                        else
+                        {
+                            Console.WriteLine(LanguageManager.Get("gameover.win"));
+                            Console.WriteLine(LanguageManager.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
+                        }
+                    break;
+
+                case GameOverType.Exit:
+
+                    break;
+            }
+
+            if(Gameovertype != GameOverType.Exit)
+            {
+                Console.WriteLine();
                 Console.WriteLine("═════════════════════════════════════");
             }
             Console.WriteLine(LanguageManager.Get("gameover.backToMenu"));
             Console.WriteLine(LanguageManager.Get("gameover.restart"));
 
+            WaitForInput();
+        }
+
+        // Hilfsmethode für die Punkteanzeige
+        static void ShowPoints(string? name, int points)
+        {
+            Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", name).Replace("{points}", points.ToString()));
+        }
+
+        static void WaitForInput()
+        {
             bool check = false;
             do
             {
                 while (Console.KeyAvailable) Console.ReadKey(true);
-                var key2 = Console.ReadKey(true).Key;
-                switch (key2)
-                {
-                    case ConsoleKey.Enter:
-                        check = true;
-                        Program.CurrentView = 1;
-                        break;
+                var key = Console.ReadKey(true).Key;
 
-                    case ConsoleKey.Escape:
-                        check = true;
-                        Program.CurrentView = 7;
-                        break;
+                if (key == ConsoleKey.Enter)
+                {
+                    check = true;
+                    Program.CurrentView = ViewType.Game;
                 }
-            }
-            while (!check);
-            while (Console.KeyAvailable) Console.ReadKey(true); // Eingabepuffer leeren
+                else if (key == ConsoleKey.Escape)
+                {
+                    check = true;
+                    Program.CurrentView = ViewType.MainMenu;
+                }
+            } while (!check);
+
+            while (Console.KeyAvailable) Console.ReadKey(true);
         }
 
         // Coins und xp hinzufügen

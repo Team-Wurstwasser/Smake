@@ -123,6 +123,7 @@
     "gameover": {
         "draw": "Draw!",
         "playerWins": "{player} wins!",
+        "points": "Points: {points}",
         "playerPoints": "{player} reached {points} points.",
         "lose": "Unfortunately lost - try again!",
         "losePoints": "You scored {points} points.",

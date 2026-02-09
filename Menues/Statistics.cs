@@ -2,18 +2,19 @@
 using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class Statistiken : RendernMenue
+    public class Statistics
     {
-        public Statistiken()
+        public Statistics()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Statistiken ?? 0);
 
             RenderStatistiken();
             Console.ReadKey();
-            Program.CurrentView = 7;
+            Program.CurrentView = ViewType.MainMenu;
         }
         static void RenderStatistiken()
         {

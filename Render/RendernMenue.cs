@@ -5,13 +5,13 @@ namespace Smake.Render
 {
     public abstract class RendernMenue
     {
-        protected string[] Display { private get; set; } = [];
-        protected int Selected { private get; set; }
-        protected string? Title { private get; set; }
-        protected object?[] GameValue { private get; set; } = [];
-        protected  bool[] IsColor { private get; set; } = [];
+        protected string[] Display = [];
+        protected int Selected;
+        protected string? Title;
+        protected object?[] GameValue = [];
+        protected bool[] IsColor = [];
         protected volatile bool DoReadInput = true;
-        protected ConsoleKey Input { get; set; }
+        protected ConsoleKey Input;
         Thread? InputThread;
 
         protected void InitialRender()
@@ -205,6 +205,7 @@ namespace Smake.Render
                 Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext}".PadRight(50));
                 Console.ResetColor();
             }
+          
             RenderShopFooter(option);
         }
 

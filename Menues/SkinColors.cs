@@ -1,12 +1,13 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class Skin_Farben : RendernMenue
+    public class SkinColors : RendernMenue
     {
         readonly bool[] Color =
         [
@@ -73,7 +74,7 @@ namespace Smake.Menues
             }
         }
 
-        public Skin_Farben()
+        public SkinColors()
         {
             Menueloop();
         }
@@ -93,26 +94,27 @@ namespace Smake.Menues
                 ProcessInput();
                 Thread.Sleep(5); // kleine Pause, CPU schonen
             }
-            Program.CurrentView = 7;
+            Program.CurrentView = ViewType.MainMenu;
         }
 
         void SelectMenu()
         {
             switch (MenuTracker)
             {
-                case 1: WechselSkin(ref Spiellogik.Player.TailSkin, GameData.TailSkins, Menüsvalues.FreigeschaltetTail, Spiellogik.Player2.TailSkin); break;
-                case 2: WechselSkin(ref Spiellogik.Player2.TailSkin, GameData.TailSkins, Menüsvalues.FreigeschaltetTail, Spiellogik.Player.TailSkin); break;
-                case 3: WechselSkin(ref Skinvalues.FoodSkin, GameData.FoodSkins, Menüsvalues.FreigeschaltetFood); break;
-                case 4: WechselSkin(ref Skinvalues.RandSkin, GameData.RandSkins, Menüsvalues.FreigeschaltetRand); break;
-                case 5: WechselFarbe(ref Spiellogik.Player.HeadFarbe); break;
-                case 6: WechselFarbe(ref Spiellogik.Player2.HeadFarbe); break;
-                case 7: WechselFarbe(ref Spiellogik.Player.TailFarbe); break;
-                case 8: WechselFarbe(ref Spiellogik.Player2.TailFarbe); break;
-                case 9: WechselFarbe(ref Skinvalues.FoodFarbe, true); break;
-                case 10: WechselFarbe(ref Skinvalues.RandFarbe); break;
-                case 11:
-                    StopInputstream();
-                    break;
+                case 1: Spiellogik.Player.TailSkin = WechselSkin(Spiellogik.Player.TailSkin, GameData.TailSkins, Menüsvalues.FreigeschaltetTail, Spiellogik.Player2.TailSkin); break;
+                case 2: Spiellogik.Player2.TailSkin = WechselSkin(Spiellogik.Player2.TailSkin, GameData.TailSkins, Menüsvalues.FreigeschaltetTail, Spiellogik.Player.TailSkin); break;
+                case 3: Skinvalues.FoodSkin = WechselSkin(Skinvalues.FoodSkin, GameData.FoodSkins, Menüsvalues.FreigeschaltetFood); break;
+                case 4: Skinvalues.RandSkin = WechselSkin(Skinvalues.RandSkin, GameData.RandSkins, Menüsvalues.FreigeschaltetRand); break;
+
+                case 5: Spiellogik.Player.HeadFarbe = WechselFarbe(Spiellogik.Player.HeadFarbe); break;
+                case 6: Spiellogik.Player2.HeadFarbe = WechselFarbe(Spiellogik.Player2.HeadFarbe); break;
+                case 7: Spiellogik.Player.TailFarbe = WechselFarbe(Spiellogik.Player.TailFarbe); break;
+                case 8: Spiellogik.Player2.TailFarbe = WechselFarbe(Spiellogik.Player2.TailFarbe); break;
+
+                case 9: Skinvalues.FoodFarbe = WechselFarbe(Skinvalues.FoodFarbe, true); break;
+                case 10: Skinvalues.RandFarbe = WechselFarbe(Skinvalues.RandFarbe); break;
+
+                case 11: StopInputstream(); break;
             }
         }
 
@@ -136,58 +138,51 @@ namespace Smake.Menues
 
 
         // Helper für Tail/Food/Rand
-        static void WechselSkin(ref char aktuellesSkin, char[] skins, bool[] freigeschaltet, char? verboteneSkin = null)
+        static char WechselSkin(char aktuellesSkin, char[] skins, bool[] freigeschaltet, char? verboteneSkin = null)
         {
-            if (skins.Length == 0) return;
+            if (skins.Length == 0) return aktuellesSkin;
+
             int idx = Array.IndexOf(skins, aktuellesSkin);
-            int start = idx;
+
             do
             {
                 idx = (idx + 1) % skins.Length;
-            } while ((!freigeschaltet[idx] || verboteneSkin.HasValue && skins[idx] == verboteneSkin.Value) && idx != start);
-            aktuellesSkin = skins[idx];
+            } while ((!freigeschaltet[idx] || verboteneSkin.HasValue && skins[idx] == verboteneSkin.Value));
+
+            return skins[idx];
         }
 
         // Helper für Farben
-        static void WechselFarbe(ref ConsoleColor aktuelleFarbe, bool isFood = false)
+        static ConsoleColor WechselFarbe(ConsoleColor aktuelleFarbe, bool isFood = false)
         {
-            if (GameData.Farben.Length == 0) return;
+            if (GameData.Farben.Length == 0) return aktuelleFarbe;
 
-            // Nächste freigeschaltete Farbe suchen
+            if (isFood && Skinvalues.FoodfarbeRandom)
+            {
+                Skinvalues.FoodfarbeRandom = false;
+                return GameData.Farben[0];
+            }
+
             int idx = Array.IndexOf(GameData.Farben, aktuelleFarbe);
-            int start = idx;
+
+            int lastUnlockedIndex = -1;
+            for (int i = 0; i < Menüsvalues.FreigeschaltetFarben.Length; i++)
+            {
+                if (Menüsvalues.FreigeschaltetFarben[i]) lastUnlockedIndex = i;
+            }
+
+            if (isFood && idx == lastUnlockedIndex)
+            {
+                Skinvalues.FoodfarbeRandom = true;
+                return aktuelleFarbe;
+            }
+
             do
             {
                 idx = (idx + 1) % GameData.Farben.Length;
-            } while (!Menüsvalues.FreigeschaltetFarben[idx] && idx != start);
+            } while (!Menüsvalues.FreigeschaltetFarben[idx]);
 
-            aktuelleFarbe = GameData.Farben[idx];
-
-            if (isFood)
-            {
-                int lastIndex = -1;
-
-                for (int i = 0; i < Menüsvalues.FreigeschaltetFarben.Length; i++)
-                {
-                    if (Menüsvalues.FreigeschaltetFarben[i])
-                    {
-                        lastIndex = i; // letzte Position merken
-                    }
-                }
-
-                // Nur für foodfarbe: Random aktivieren, wenn letzte freigeschaltete Farbe erreicht
-                if (!Skinvalues.FoodfarbeRandom)
-                {
-                    if (lastIndex == idx)
-                    {
-                        Skinvalues.FoodfarbeRandom = true;
-                    }
-                }
-                else
-                {
-                    Skinvalues.FoodfarbeRandom = false;
-                }
-            }
+            return GameData.Farben[idx];
         }
     }
 }

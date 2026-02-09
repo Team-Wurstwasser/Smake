@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Smake.Enums;
+using System.Text.Json;
 
 namespace Smake.Speicher
 {
@@ -11,7 +12,7 @@ namespace Smake.Speicher
         const string Config = "language.config";
         const string DefaultLanguage = "de";
 
-        public static void Speichern_Laden(string aktion, string newLang = "")
+        public static void Speichern_Laden(StorageAction aktion, string newLang = "")
         {
             if (!File.Exists(Config))
             {
@@ -21,10 +22,10 @@ namespace Smake.Speicher
 
             switch (aktion)
             {
-                case "Speichern":
+                case StorageAction.Save:
                     Speichern(newLang);
                     break;
-                case "Laden":
+                case StorageAction.Load:
                     if (!Laden())
                     {
                         Console.WriteLine($"Fehler beim Laden der konfigurierten Sprache. Versuche Standard-Sprache: {DefaultLanguage.ToUpper()}");
