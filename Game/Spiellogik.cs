@@ -11,7 +11,7 @@ namespace Smake.Game
 {
     public class Spiellogik : RendernSpielfeld
     {
-        public static GameOverType gameovertype { get; set; }
+        public static GameOverType Gameovertype { get; set; }
 
         public static Player Player { get; set; } = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, GameData.TailStartLaenge);
 
@@ -32,7 +32,7 @@ namespace Smake.Game
         {
             SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
-            gameovertype = GameOverType.None;
+            Gameovertype = GameOverType.None;
 
             // Zeit einstellen
             if (Spielvalues.Difficulty == Difficultys.slow) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
@@ -107,7 +107,7 @@ namespace Smake.Game
                 }
 
             }
-            while (gameovertype == GameOverType.None);
+            while (Gameovertype == GameOverType.None);
 
             Coins();
 
@@ -146,15 +146,15 @@ namespace Smake.Game
         {
             if (spieler1Tot && spieler2Tot)
             {
-                gameovertype = GameOverType.Draw;
+                Gameovertype = GameOverType.Draw;
             }
             else if (spieler1Tot)
             {
-                gameovertype = GameOverType.Player2;
+                Gameovertype = GameOverType.Player2;
             }
             else if (spieler2Tot)
             {
-                gameovertype = GameOverType.Player1;
+                Gameovertype = GameOverType.Player1;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Smake.Game
             Console.WriteLine("═════════════════════════════════════");
             Console.WriteLine();
 
-            switch (gameovertype)
+            switch (Gameovertype)
             {
                 case GameOverType.Draw:
                     Console.WriteLine(LanguageManager.Get("gameover.draw"));
@@ -211,7 +211,7 @@ namespace Smake.Game
                     break;
             }
 
-            if(gameovertype != GameOverType.Exit)
+            if(Gameovertype != GameOverType.Exit)
             {
                 Console.WriteLine();
                 Console.WriteLine("═════════════════════════════════════");
