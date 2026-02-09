@@ -123,6 +123,7 @@
     "gameover": {
         "draw": "Unentschieden!",
         "playerWins": "{player} gewinnt!",
+        "points": "Punkte: {points}",
         "playerPoints": "{player} hat {points} Punkte erreicht.",
         "lose": "Leider verloren - versuch's noch einmal!",
         "losePoints": "Du hast {points} Punkte erreicht.",

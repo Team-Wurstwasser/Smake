@@ -1,14 +1,12 @@
-﻿using Smake.Spieler;
-using Smake.Values;
+﻿using Smake.Values;
 using Smake.SFX;
+using Smake.Game.Spieler;
 
 namespace Smake.Gegenstaende
 {
-    public class Schluessel : Gegenstand
+    public class Schluessel() : Gegenstand(Skinvalues.SchluesselSkin)
     {
-        public bool Collected = false;
-
-        public Schluessel() : base(Skinvalues.SchluesselSkin) {}
+        public bool Collected;
 
         public void EsseSchluessel(Player p)
         {
