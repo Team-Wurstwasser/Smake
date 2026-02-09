@@ -3,7 +3,7 @@ using Smake.Speicher;
 
 namespace Smake.Values
 {
-    public class Spielvalues
+    public static class Spielvalues
     {
         public static int Maxfutter { get; set; }
 

@@ -1,12 +1,12 @@
 using Smake.Enums;
 using Smake.Render;
 using Smake.Speicher;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.Values;
 
-namespace Smake.Spieler
+namespace Smake.Game.Spieler
 {
-    public class Player(int xstart, int ystart, int tailStartLaenge)
+    public class Player(int StartX, int StartY, int tailStartLaenge)
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
@@ -36,8 +36,8 @@ namespace Smake.Spieler
         public ConsoleColor HeadFarbe;
         public ConsoleColor TailFarbe;
 
-        public readonly int xstart = xstart;
-        public readonly int ystart = ystart;
+        public readonly int StartX = StartX;
+        public readonly int StartY = StartY;
 
         // Länge des Spielers
         public int TailLaenge { get; private set; }
@@ -64,8 +64,8 @@ namespace Smake.Spieler
             Array.Fill(PlayerY, -1);
 
             // Spieler-Positionen auf Startwerte setzen
-            PlayerX[0] = xstart;
-            PlayerY[0] = ystart;
+            PlayerX[0] = StartX;
+            PlayerY[0] = StartY;
 
             // Aussehen einstellen
             HeadSkin = TailSkin;

@@ -6,11 +6,11 @@ using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class Einstellungen : RendernMenue
+    public class Settings : RendernMenue
     {
-        int menuTracker;
         static int MaxMenuItems => OperatingSystem.IsWindows() ? 10 : 8;
 
+        int menuTracker;
         public int MenuTracker
         {
             get { return menuTracker; }
@@ -27,7 +27,7 @@ namespace Smake.Menues
             }
         }
 
-        public Einstellungen()
+        public Settings()
         {
             Menueloop();
         }
@@ -47,7 +47,7 @@ namespace Smake.Menues
                 Thread.Sleep(5);
             }
 
-            Program.CurrentView = 7;
+            Program.CurrentView = ViewType.MainMenu;
         }
 
         void ProcessInput()
@@ -192,7 +192,7 @@ namespace Smake.Menues
 
                 if (newLang != null)
                 {
-                    LanguageManager.Speichern_Laden("Speichern", newLang);
+                    LanguageManager.Speichern_Laden(StorageAction.Save, newLang);
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\n✔ {LanguageManager.Get("settings.languageChanged").Replace("{lang}", newLang.ToUpper())}");
@@ -356,7 +356,7 @@ namespace Smake.Menues
                 }
             }
 
-            SpeicherSystem.Speichern_Laden("Zurücksetzen");
+            SpeicherSystem.Speichern_Laden(StorageAction.Reset);
             Console.WriteLine(LanguageManager.Get("settings.resetDone"));
             Console.WriteLine(LanguageManager.Get("settings.pressAnyKey"));
             Console.ReadKey(true);

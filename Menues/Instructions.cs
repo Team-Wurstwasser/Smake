@@ -2,18 +2,19 @@
 using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class Anleitung : RendernMenue
+    public class Instructions : RendernMenue
     {
-        public Anleitung()
+        public Instructions()
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.Anleitung ?? 0);
 
             RenderAnleitung();
             Console.ReadKey();
-            Program.CurrentView = 7;
+            Program.CurrentView = ViewType.MainMenu;
         }
         static void RenderAnleitung()
         {
