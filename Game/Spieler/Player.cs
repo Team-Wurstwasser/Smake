@@ -1,18 +1,19 @@
 using Smake.Enums;
 using Smake.Render;
 using Smake.Speicher;
+using Smake.Game;
 using Smake.Values;
 
 namespace Smake.Game.Spieler
 {
-    public class Player(int StartX, int StartY, char Tailskin, ConsoleColor HeadFarbe, ConsoleColor TailFarbe)
+    public class Player(int StartX, int StartY, int tailStartLaenge)
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
 
         public int InputY;
 
-        public bool Aenderung = true;
+        public bool Aenderung;
 
         // Position des Spielers (Startkoordinaten)
         public int[] PlayerX { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
@@ -25,21 +26,39 @@ namespace Smake.Game.Spieler
         //Punkte des Spielers
         public int Punkte;
 
-        // Aussehen des Spielers  
-        public readonly char TailSkin = Tailskin;
-        public char HeadSkin = Tailskin;
+        // Namen der Spieler
+        public string? Name;
 
-        public readonly ConsoleColor HeadFarbe = HeadFarbe;
-        public readonly ConsoleColor TailFarbe = TailFarbe;
+        // Aussehen des Spielers
+        public char HeadSkin;
+        public char TailSkin;
+
+        public ConsoleColor HeadFarbe;
+        public ConsoleColor TailFarbe;
 
         public readonly int StartX = StartX;
         public readonly int StartY = StartY;
 
         // Länge des Spielers
-        public int TailLaenge { get; private set; } = GameData.TailStartLaenge;
+        public int TailLaenge { get; private set; }
+        readonly int tailStartLaenge = tailStartLaenge;
 
-        public void Start()
+        void InitialisiereSpieler()
         {
+            // Spielerzeichen auf Startposition setzen
+            RendernSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
+        }
+
+        public void Neustart()
+        {
+            Kollision = false;
+
+            // Taillängen zurücksetzen
+            TailLaenge = tailStartLaenge;
+
+            // Punkte zurücksetzen
+            Punkte = 0;
+
             // Arrays zurücksetzen
             Array.Fill(PlayerX, -1);
             Array.Fill(PlayerY, -1);
@@ -48,8 +67,15 @@ namespace Smake.Game.Spieler
             PlayerX[0] = StartX;
             PlayerY[0] = StartY;
 
-            // Spielerzeichen auf Startposition setzen
-            RendernSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
+            // Aussehen einstellen
+            HeadSkin = TailSkin;
+
+            // Alle Eingabewerte zurücksetzen
+            InputX = 0;
+            InputY = 0;
+            Aenderung = true;
+
+            InitialisiereSpieler();
         }
 
         public (bool spielerTot, bool Maxpunkte) Update(Player p)

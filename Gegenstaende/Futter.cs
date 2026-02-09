@@ -1,6 +1,6 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;

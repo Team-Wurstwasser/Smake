@@ -2,7 +2,7 @@
 using Smake.Render;
 using Smake.SFX;
 using Smake.Speicher;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.Values;
 
 namespace Smake.Menues

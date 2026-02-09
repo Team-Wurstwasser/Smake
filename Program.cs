@@ -26,6 +26,7 @@ namespace Smake
 
             SpeicherSystem.Speichern_Laden(StorageAction.Load);
 
+            Eingaben();
             bool Exit = false;
             do
             {
@@ -35,7 +36,7 @@ namespace Smake
                         _ = new MainMenu();
                         break;
                     case ViewType.Game:
-                        _ = new Spiel();
+                        _ = new Spiellogik();
                         break;
                     case ViewType.Settings:
                         _ = new Settings();
@@ -59,7 +60,24 @@ namespace Smake
                 }
 
             } while (!Exit);
+        }
 
+        // Eingaben für Spielernamen
+        static void Eingaben()
+        {
+            Sounds.Melodie(GameData.MusikDaten.Menue?.Eingabe ?? 0);
+
+            Console.Clear();
+
+            Console.Write(LanguageManager.Get("input.player1"));
+            Spiellogik.Player.Name = Console.ReadLine();
+
+            Console.Clear();
+
+            Console.Write(LanguageManager.Get("input.player2"));
+            Spiellogik.Player2.Name = Console.ReadLine();
+
+            Console.Clear();
         }
     }
 }
