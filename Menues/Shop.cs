@@ -2,6 +2,7 @@
 using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake.Menues
 {
@@ -41,7 +42,7 @@ namespace Smake.Menues
             Render();
         }
 
-        private int menuTracker;
+        int menuTracker;
         public int MenuTracker
         {
             get { return menuTracker; }
@@ -103,7 +104,7 @@ namespace Smake.Menues
                 ProcessInput();
                 Thread.Sleep(5); // kleine Pause, CPU schonen
             }
-            Program.CurrentView = 7;
+            Program.CurrentView = ViewType.MainMenu;
         }
 
         void SelectMenu()

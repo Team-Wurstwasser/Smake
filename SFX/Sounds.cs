@@ -3,15 +3,15 @@ using System.Media;
 
 namespace Smake.SFX
 {
-    public class Sounds
+    public static class Sounds
     {
         public static bool Musikplay { get; set; }
         public static int Currentmusik { private get; set; }
         public static bool Soundplay { get; set; }
 
-        private static SoundPlayer? currentPlayer;
-        private static int? lastmusik = -1;
-        private static bool lastPlayState; // merkt sich, ob Musik an/aus war
+        static SoundPlayer? currentPlayer;
+        static int? lastmusik = -1;
+        static bool lastPlayState; // merkt sich, ob Musik an/aus war
 
         public static void Melodie(int Currentmusik)
         {

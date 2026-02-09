@@ -2,7 +2,7 @@
 
 namespace Smake.Values
 {
-    public class Menüsvalues
+    public static class Menüsvalues
     {
         //Freigeschalteneskins/farben
         public static bool[] FreigeschaltetTail { get; set; } = new bool[GameData.TailSkins.Length];

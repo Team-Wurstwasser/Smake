@@ -1,6 +1,6 @@
 ﻿namespace Smake.Values
 {
-    public class Spielstatus
+    public static class Spielstatus
     {
         // Level und Experience
         public static int Coins { get; set; }

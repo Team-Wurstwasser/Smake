@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Smake.Helper
 {
-    public class CryptoHelper
+    public static class CryptoHelper
     {
         const string Passwort = "djsghiowrhurt9iwezriwehgfokweh9tfhwoirthweoihtoeriwh";
         const int SaltLength = 16;
