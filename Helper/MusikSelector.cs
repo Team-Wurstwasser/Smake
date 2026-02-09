@@ -4,7 +4,7 @@ using Smake.Values;
 
 namespace Smake.Helper
 {
-    public class MusikSelector
+    public static class MusikSelector
     {
         public static int? Selector()
         {

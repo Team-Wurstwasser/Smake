@@ -1,15 +1,14 @@
 using Smake.Menues;
 using Smake.Speicher;
-using Smake.Spiel;
+using Smake.Game;
 using Smake.SFX;
+using Smake.Enums;
 
 namespace Smake
 {
-    public class Program
+    public static class Program
     {
-        static int currentView = 7;
-
-        public static int CurrentView { get => currentView; set => currentView = value; }
+        public static ViewType CurrentView { private get; set; } = ViewType.MainMenu;
 
         // Main
         static void Main()
@@ -19,41 +18,41 @@ namespace Smake
             Console.Title = "Smake";
 
             // Sprache aus config.json laden
-            LanguageManager.Speichern_Laden("Laden");
+            LanguageManager.Speichern_Laden(StorageAction.Load);
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
             GameData.LoadAllConfigs();
 
-            SpeicherSystem.Speichern_Laden("Laden");
+            SpeicherSystem.Speichern_Laden(StorageAction.Load);
 
-            Eingaben();
             bool Exit = false;
             do
             {
                 switch (CurrentView)
                 {
-                    case 1:
-                        _ = new Spiellogik();
+                    case ViewType.MainMenu:
+                        _ = new MainMenu();
                         break;
-                    case 2:
-                        _ = new Einstellungen();
+                    case ViewType.Game:
+                        _ = new Spiel();
                         break;
-                    case 3:
+                    case ViewType.Settings:
+                        _ = new Settings();
+                        break;
+                    case ViewType.Shop:
                         _ = new Shop();
                         break;
-                    case 4:
-                        _ = new Skin_Farben();
+                    case ViewType.SkinColors:
+                        _ = new SkinColors();
                         break;
-                    case 5:
-                        _ = new Statistiken();
+                    case ViewType.Statistics:
+                        _ = new Statistics();
                         break;
-                    case 6:
-                        _ = new Anleitung();
+                    case ViewType.Instructions:
+                        _ = new Instructions();
                         break;
-                    case 7:
-                        _ = new Menue();
-                        break;
+                    case ViewType.Exit:
                     default:
                         Exit = true;
                         break;
@@ -62,25 +61,5 @@ namespace Smake
             } while (!Exit);
 
         }
-
-        // Eingaben für Spielernamen
-        static void Eingaben()
-        {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Eingabe ?? 0);
-
-            Console.Clear();
-
-            Console.Write(LanguageManager.Get("input.player1"));
-            Spiellogik.Player.Name = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write(LanguageManager.Get("input.player2"));
-            Spiellogik.Player2.Name = Console.ReadLine();
-
-            Console.Clear();
-        }
-
     }
-
 }

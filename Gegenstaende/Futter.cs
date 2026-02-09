@@ -1,10 +1,10 @@
 ﻿using Smake.Render;
 using Smake.Speicher;
 using Smake.Spiel;
-using Smake.Spieler;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
+using Smake.Game.Spieler;
 
 namespace Smake.Gegenstaende
 {
@@ -16,7 +16,7 @@ namespace Smake.Gegenstaende
         Bombe? Bombe;
 
         // Für Sprungfutter-Modus
-        int TeleportCounter = 0;
+        int TeleportCounter;
         readonly int TeleportInterval = GameData.TeleportInterval;
 
         protected override void Setze()

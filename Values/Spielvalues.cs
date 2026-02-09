@@ -3,7 +3,7 @@ using Smake.Speicher;
 
 namespace Smake.Values
 {
-    public class Spielvalues
+    public static class Spielvalues
     {
         public static int Maxfutter { get; set; }
 
@@ -18,5 +18,7 @@ namespace Smake.Values
 
         // Spielgeschwindigkeit
         public static int Zeit { get; set; }
+
+        public static bool Performancemode { get; set; }
     }
 }

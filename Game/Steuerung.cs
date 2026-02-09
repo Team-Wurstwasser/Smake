@@ -1,12 +1,12 @@
 ﻿using Smake.Enums;
-using Smake.Spieler;
+using Smake.Game.Spieler;
 using Smake.Values;
 
-namespace Smake.Spiel
+namespace Smake.Game
 {
     public class Steuerung
     {
-        bool DoReadInput = true;
+        volatile bool DoReadInput = true;
         Thread? InputThread;
 
         public Steuerung()
