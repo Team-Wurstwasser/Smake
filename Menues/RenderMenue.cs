@@ -1,9 +1,10 @@
-﻿using Smake.Speicher;
+﻿using Smake.Game;
+using Smake.Speicher;
 using Smake.Values;
 
-namespace Smake.Render
+namespace Smake.Menues
 {
-    public abstract class RendernMenue
+    public abstract class RenderMenue
     {
         protected string[] Display = [];
         protected int Selected;
@@ -108,7 +109,7 @@ namespace Smake.Render
 
                 if (GameValue[i] != null)
                 {
-                    if (IsColor[i] && !RendernSpielfeld.Performancemode || !IsColor[i])
+                    if (IsColor[i] && !RenderSpielfeld.Performancemode || !IsColor[i])
                     {
                         if (GameValue[i] is ConsoleColor color)
                         {
@@ -123,7 +124,7 @@ namespace Smake.Render
                     }
                     else
                     {
-                        Console.Write(RendernSpielfeld.Performancemode ? LanguageManager.Get("skins.performancemode") : GameValue[i]);
+                        Console.Write(RenderSpielfeld.Performancemode ? LanguageManager.Get("skins.performancemode") : GameValue[i]);
                     }
 
                     Console.Write("]".PadRight(13));

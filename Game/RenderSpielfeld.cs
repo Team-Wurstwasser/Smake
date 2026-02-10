@@ -1,12 +1,10 @@
 ﻿using Smake.Enums;
-using Smake.Menues;
 using Smake.Speicher;
-using Smake.Game;
 using Smake.Values;
 
-namespace Smake.Render
+namespace Smake.Game
 {
-    public class RendernSpielfeld
+    public abstract class RenderSpielfeld
     {
         public static bool Performancemode { get; set; } 
 

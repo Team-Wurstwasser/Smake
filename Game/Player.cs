@@ -1,10 +1,8 @@
 using Smake.Enums;
-using Smake.Render;
 using Smake.Speicher;
-using Smake.Game;
 using Smake.Values;
 
-namespace Smake.Game.Spieler
+namespace Smake.Game
 {
     public class Player(int StartX, int StartY, int tailStartLaenge)
     {
@@ -46,7 +44,7 @@ namespace Smake.Game.Spieler
         void InitialisiereSpieler()
         {
             // Spielerzeichen auf Startposition setzen
-            RendernSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
+            RenderSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
         }
 
         public void Neustart()
@@ -137,7 +135,7 @@ namespace Smake.Game.Spieler
         {
             if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                if (RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
+                if (RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
                 {
                     Kollision = true;
                 }
@@ -162,7 +160,7 @@ namespace Smake.Game.Spieler
 
                 }
 
-                if (RendernSpielfeld.Grid[newPlayerY, newPlayerX] == ' ' || RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0] || RendernSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.SchluesselSkin)
+                if (RenderSpielfeld.Grid[newPlayerY, newPlayerX] == ' ' || RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0] || RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.SchluesselSkin)
                 {
                     Kollision = false;
                 }
@@ -188,7 +186,7 @@ namespace Smake.Game.Spieler
             }
 
             // Kopf setzen
-            RendernSpielfeld.Grid[newPlayerY, newPlayerX] = HeadSkin;
+            RenderSpielfeld.Grid[newPlayerY, newPlayerX] = HeadSkin;
 
             // Spieler-Koordinaten aktualisieren
             PlayerX[0] = newPlayerX;
@@ -222,7 +220,7 @@ namespace Smake.Game.Spieler
             for (int i = 0; i <= TailLaenge; i++)
             {
                 if (PlayerX[i] >= 0 && PlayerY[i] >= 0)
-                    RendernSpielfeld.Grid[PlayerY[i], PlayerX[i]] = TailSkin;
+                    RenderSpielfeld.Grid[PlayerY[i], PlayerX[i]] = TailSkin;
             }
 
             // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt
@@ -237,9 +235,9 @@ namespace Smake.Game.Spieler
             }
 
             // Altes Tail-Feld nur leeren, wenn es kein Rand und nicht auf einem Spielersegment ist
-            if (oldTailX >= 0 && oldTailY >= 0 && RendernSpielfeld.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin && !isOnPlayer)
+            if (oldTailX >= 0 && oldTailY >= 0 && RenderSpielfeld.Grid[oldTailY, oldTailX] != Skinvalues.RandSkin && !isOnPlayer)
             {
-                RendernSpielfeld.Grid[oldTailY, oldTailX] = ' ';
+                RenderSpielfeld.Grid[oldTailY, oldTailX] = ' ';
             }
         }
     }
