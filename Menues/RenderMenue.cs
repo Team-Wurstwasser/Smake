@@ -44,6 +44,10 @@ namespace Smake.Menues
                     RenderShopFarbenLayout();
                     break;
 
+                case "Shop_Musik":
+                    RenderShopMusikLayout();
+                    break;
+
                 default:
                     RenderDefaultLayout();
                     break;
@@ -202,10 +206,19 @@ namespace Smake.Menues
                 Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext}".PadRight(50));
                 Console.ResetColor();
             }
-
+          
             RenderShopFooter(option);
         }
 
+        private void RenderShopMusikLayout()
+        {
+            RenderShopHeader();
+            int option = 0;
+
+            option = RenderShopSection("tailSkins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.FreigeschaltetTail, GameData.TailPreis, 2);
+
+            RenderShopFooter(option);
+        }
 
         public void StartInputstream()
         {
