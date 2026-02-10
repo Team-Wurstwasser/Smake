@@ -221,10 +221,10 @@ namespace Smake.Menues
         {
             Spielvalues.Difficulty = Spielvalues.Difficulty switch
             {
-                Difficultys.slow    => Difficultys.medium,
-                Difficultys.medium  => Difficultys.fast,
-                Difficultys.fast    => Difficultys.slow,
-                _                   => Difficultys.medium
+                Difficultys.Slow    => Difficultys.Medium,
+                Difficultys.Medium  => Difficultys.Fast,
+                Difficultys.Fast    => Difficultys.Slow,
+                _                   => Difficultys.Medium
             };
         }
 

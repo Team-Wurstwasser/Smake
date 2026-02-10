@@ -102,7 +102,7 @@ namespace Smake.Speicher
             Spielstatus.SpieleGesamt = 0;
             Spielvalues.Maxfutter = 1;
 
-            Spielvalues.Difficulty = Difficultys.medium;
+            Spielvalues.Difficulty = Difficultys.Medium;
 
             Spielvalues.Gamemode = Gamemodes.Normal;
             Spielvalues.Multiplayer = false;
@@ -125,7 +125,9 @@ namespace Smake.Speicher
         {
             var zeilen = new List<string>
             {
-                $"Performancemode={RenderSpielfeld.Performancemode}",
+                $"Performancemode={RendernSpielfeld.Performancemode}",
+                $"Musikplay={Sounds.Musikplay}",
+                $"Soundplay={Sounds.Soundplay}",
                 $"Coins={Spielstatus.Coins}",
                 $"Xp={Spielstatus.Xp}",
                 $"SpieleGesamt={Spielstatus.SpieleGesamt}",
@@ -133,7 +135,6 @@ namespace Smake.Speicher
                 $"Highscore={Spielstatus.Highscore}",
                 $"Gesamtcoins={Spielstatus.Gesamtcoins}",
                 $"Difficulty={Spielvalues.Difficulty}",
-                $"Multiplayer={Spielvalues.Multiplayer}",
                 $"RandSkin={Skinvalues.RandSkin}",
                 $"FoodSkin={Skinvalues.FoodSkin}",
                 $"Player1.TailSkin={Spiellogik.Player.TailSkin}",
@@ -144,9 +145,7 @@ namespace Smake.Speicher
                 $"Player1.TailFarbe={Spiellogik.Player.TailFarbe}",
                 $"Player2.TailFarbe={Spiellogik.Player2.TailFarbe}",
                 $"Player1.HeadFarbe={Spiellogik.Player.HeadFarbe}",
-                $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}",
-                $"Musikplay={Sounds.Musikplay}",
-                $"Soundplay={Sounds.Soundplay}"
+                $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}"
             };
 
             for (int i = 0; i < Menüsvalues.FreigeschaltetTail.Length; i++)

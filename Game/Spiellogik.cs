@@ -33,8 +33,8 @@ namespace Smake.Game
             Gameovertype = GameOverType.None;
 
             // Zeit einstellen
-            if (Spielvalues.Difficulty == Difficultys.slow) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
-            else if (Spielvalues.Difficulty == Difficultys.medium) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
+            if (Spielvalues.Difficulty == Difficultys.Slow) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
+            else if (Spielvalues.Difficulty == Difficultys.Medium) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
             else Spielvalues.Zeit = GameData.SpielSchwierigkeit.Schnell;
 
             // Initialisiere das Spielfeld mit Rahmen
@@ -263,19 +263,19 @@ namespace Smake.Game
 
                 switch (Spielvalues.Difficulty)
                 {
-                    case Difficultys.slow:
+                    case Difficultys.Slow:
                         Spielstatus.Gesamtcoins = Player.Punkte + Player2.Punkte + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = Player.Punkte + Player2.Punkte + Spielstatus.Coins;
                         Spielstatus.Xp = Player.Punkte + Player2.Punkte + Spielstatus.Xp;
                         break;
 
-                    case Difficultys.medium:
+                    case Difficultys.Medium:
                         Spielstatus.Gesamtcoins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
                         Spielstatus.Xp = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
                         break;
 
-                    case Difficultys.fast:
+                    case Difficultys.Fast:
                         Spielstatus.Gesamtcoins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
                         Spielstatus.Coins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
                         Spielstatus.Xp = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
