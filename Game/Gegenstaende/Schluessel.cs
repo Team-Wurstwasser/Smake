@@ -1,8 +1,7 @@
 ﻿using Smake.Values;
 using Smake.SFX;
-using Smake.Game.Spieler;
 
-namespace Smake.Gegenstaende
+namespace Smake.Game.Gegenstaende
 {
     public class Schluessel() : Gegenstand(Skinvalues.SchluesselSkin)
     {

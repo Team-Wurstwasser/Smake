@@ -1,5 +1,4 @@
 ﻿using Smake.Enums;
-using Smake.Game.Spieler;
 using Smake.Values;
 
 namespace Smake.Game
@@ -79,7 +78,7 @@ namespace Smake.Game
 
                         // Spiel beenden
                         case ConsoleKey.Escape:
-                            Spiellogik.gameovertype = GameOverType.Exit;
+                            Spiellogik.Gameovertype = GameOverType.Exit;
                             break;
                     }
                 }

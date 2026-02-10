@@ -1,12 +1,11 @@
-﻿using Smake.Render;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class Shop : RendernMenue
+    public class Shop : RenderMenue
     {
         void ProcessInput()
         {

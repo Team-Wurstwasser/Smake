@@ -1,12 +1,11 @@
-﻿using Smake.Render;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class Instructions : RendernMenue
+    public class Instructions : RenderMenue
     {
         public Instructions()
         {
