@@ -1,7 +1,6 @@
-﻿using Smake.Render;
-using Smake.Values;
+﻿using Smake.Values;
 
-namespace Smake.Gegenstaende
+namespace Smake.Game.Gegenstaende
 {
     public class Gegenstand
     {
@@ -35,7 +34,7 @@ namespace Smake.Gegenstaende
                 y = Rand.Next(1, Spielvalues.hoehe - 2);
 
                 // Wiederholen solange die Stelle nicht frei ist
-            } while (RendernSpielfeld.Grid[y, x] != ' ');
+            } while (RenderSpielfeld.Grid[y, x] != ' ');
 
             // Setze Position
             X = x;
@@ -45,7 +44,7 @@ namespace Smake.Gegenstaende
         protected virtual void Zeichne()
         {
             // Gegendstand ins Spielfeld einzeichnen
-            RendernSpielfeld.Grid[Y, X] = Skin;
+            RenderSpielfeld.Grid[Y, X] = Skin;
         }
     }
 }

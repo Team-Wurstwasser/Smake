@@ -2,8 +2,8 @@
 {
     public enum Difficultys
     {
-        slow,
-        medium,
-        fast
+        Slow,
+        Medium,
+        Fast
     }
 }

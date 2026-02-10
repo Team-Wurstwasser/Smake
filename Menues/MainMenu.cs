@@ -1,5 +1,4 @@
 ﻿using Smake.Enums;
-using Smake.Render;
 using Smake.SFX;
 using Smake.Speicher;
 using Smake.Game;
@@ -7,7 +6,7 @@ using Smake.Values;
 
 namespace Smake.Menues
 {
-    public class MainMenu : RendernMenue
+    public class MainMenu : RenderMenue
     {
         const int MinMenuIndex = 1;
         const int MaxMenuIndex = 7;
@@ -72,7 +71,7 @@ namespace Smake.Menues
             // Level-Berechnung (1 Level pro 100 XP)
             Spielstatus.Level = Spielstatus.Xp / XpPerLevel + 1;
 
-            if (RendernSpielfeld.Performancemode)
+            if (RenderSpielfeld.Performancemode)
             {
                 Skinvalues.FoodFarbe = GameData.Farben[0];
                 Skinvalues.FoodfarbeRandom = false;
