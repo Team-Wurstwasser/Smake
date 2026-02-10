@@ -1,5 +1,4 @@
 ﻿using Smake.Enums;
-using Smake.Game.Spieler;
 using Smake.Values;
 
 namespace Smake.Game

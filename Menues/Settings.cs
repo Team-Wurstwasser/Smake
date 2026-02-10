@@ -1,12 +1,12 @@
-﻿using Smake.Render;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
+using Smake.Game;
 
 namespace Smake.Menues
 {
-    public class Settings : RendernMenue
+    public class Settings : RenderMenue
     {
         static int MaxMenuItems => OperatingSystem.IsWindows() ? 10 : 8;
 
@@ -99,7 +99,7 @@ namespace Smake.Menues
                 case 2: Spielvalues.Multiplayer = !Spielvalues.Multiplayer; break;
                 case 3: ChangeGamemode(); break;
                 case 4: ChangeMaxFutter(); break;
-                case 5: RendernSpielfeld.Performancemode = !RendernSpielfeld.Performancemode; break;
+                case 5: RenderSpielfeld.Performancemode = !RenderSpielfeld.Performancemode; break;
                 case 6: Sounds.Musikplay = !Sounds.Musikplay; Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0); break;
                 case 7: Sounds.Soundplay = !Sounds.Soundplay; Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0); break;
                 case 8: ChangeLanguage(); break;
@@ -122,7 +122,7 @@ namespace Smake.Menues
                 items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
                 items[2].Replace("{gamemode}", gamemodes[(int)Spielvalues.Gamemode]),
                 items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
-                items[4].Replace("{performance}", RendernSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off"))
+                items[4].Replace("{performance}", RenderSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off"))
             };
 
             if (isWindows)

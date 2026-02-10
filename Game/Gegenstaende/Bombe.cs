@@ -1,13 +1,12 @@
-﻿using Smake.Render;
-using Smake.Values;
+﻿using Smake.Values;
 
-namespace Smake.Gegenstaende
+namespace Smake.Game.Gegenstaende
 {
     public class Bombe() : Gegenstand(Skinvalues.BombenSkin)
     {
         public void LöscheBombe()
         {
-            RendernSpielfeld.Grid[Y, X] = ' ';
+            RenderSpielfeld.Grid[Y, X] = ' ';
         }
     }
 }

@@ -1,12 +1,9 @@
-﻿using Smake.Render;
-using Smake.Speicher;
-using Smake.Game;
+﻿using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
-using Smake.Game.Spieler;
 
-namespace Smake.Gegenstaende
+namespace Smake.Game.Gegenstaende
 {
     public class Futter(char food, ConsoleColor foodfarbe) : Gegenstand(food)
     {
@@ -48,17 +45,17 @@ namespace Smake.Gegenstaende
                 {
                     if (!Schluessel.Collected)
                     {
-                        RendernSpielfeld.Grid[Y, X] = Skinvalues.MauerSkin;
+                        RenderSpielfeld.Grid[Y, X] = Skinvalues.MauerSkin;
                     }
                     else
                     {
-                        RendernSpielfeld.Grid[Y, X] = Skin;
+                        RenderSpielfeld.Grid[Y, X] = Skin;
                     }
                 }
             }
             else
             {
-                RendernSpielfeld.Grid[Y, X] = Skin;
+                RenderSpielfeld.Grid[Y, X] = Skin;
             }
         }
 
@@ -112,7 +109,7 @@ namespace Smake.Gegenstaende
                 if (TeleportCounter >= TeleportInterval)
                 {
                     // Alte Position löschen
-                    RendernSpielfeld.Grid[Y, X] = ' ';
+                    RenderSpielfeld.Grid[Y, X] = ' ';
                     Setze();
                 }
             }
