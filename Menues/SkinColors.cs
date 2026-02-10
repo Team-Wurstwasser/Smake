@@ -1,5 +1,4 @@
-﻿using Smake.Render;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 using Smake.Game;
 using Smake.Values;
 using Smake.SFX;
@@ -7,7 +6,7 @@ using Smake.Enums;
 
 namespace Smake.Menues
 {
-    public class SkinColors : RendernMenue
+    public class SkinColors : RenderMenue
     {
         readonly bool[] Color =
         [

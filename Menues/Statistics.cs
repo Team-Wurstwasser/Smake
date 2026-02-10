@@ -1,5 +1,4 @@
-﻿using Smake.Render;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;

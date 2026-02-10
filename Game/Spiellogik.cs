@@ -1,15 +1,13 @@
 ﻿using Smake.Enums;
-using Smake.Game.Spieler;
-using Smake.Gegenstaende;
+using Smake.Game.Gegenstaende;
 using Smake.Helper;
-using Smake.Render;
 using Smake.SFX;
 using Smake.Speicher;
 using Smake.Values;
 
 namespace Smake.Game
 {
-    public class Spiellogik : RendernSpielfeld
+    public class Spiellogik : RenderSpielfeld
     {
         public static GameOverType Gameovertype { get; set; }
 
