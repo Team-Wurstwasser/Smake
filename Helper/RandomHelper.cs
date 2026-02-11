@@ -5,5 +5,6 @@ namespace Smake.Helper
         static readonly Random random = new();
 
         public static int Next(int maxValue) => random.Next(maxValue);
+        public static int Next(int minValue, int maxValue) => random.Next(minValue, maxValue);
     }
 }

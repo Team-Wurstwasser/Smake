@@ -1,11 +1,10 @@
 ﻿using Smake.Values;
+using Smake.Helper;
 
 namespace Smake.Game.Gegenstaende
 {
     public class Gegenstand
     {
-        private static readonly Random Rand = new();
-
         public int X { get; private set; }
         public int Y { get; private set; }
 
@@ -26,12 +25,12 @@ namespace Smake.Game.Gegenstaende
             do
             {
                 // Zufalls-X (immer gerade Zahl, damit zur Snake passt)
-                x = Rand.Next(1, Spielvalues.weite - 2);
+                x = RandomHelper.Next(1, Spielvalues.weite - 2);
                 if (x % 2 != 0 && x < Spielvalues.weite - 2)
                     x++;
 
                 // Zufalls-Y
-                y = Rand.Next(1, Spielvalues.hoehe - 2);
+                y = RandomHelper.Next(1, Spielvalues.hoehe - 2);
 
                 // Wiederholen solange die Stelle nicht frei ist
             } while (RenderSpielfeld.Grid[y, x] != ' ');

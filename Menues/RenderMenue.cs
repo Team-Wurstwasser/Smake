@@ -109,7 +109,7 @@ namespace Smake.Menues
 
                 if (GameValue[i] != null)
                 {
-                    if (IsColor[i] && !RenderSpielfeld.Performancemode || !IsColor[i])
+                    if (IsColor[i] && !Spielvalues.Performancemode || !IsColor[i])
                     {
                         if (GameValue[i] is ConsoleColor color)
                         {
@@ -124,7 +124,7 @@ namespace Smake.Menues
                     }
                     else
                     {
-                        Console.Write(RenderSpielfeld.Performancemode ? LanguageManager.Get("skins.performancemode") : GameValue[i]);
+                        Console.Write(Spielvalues.Performancemode ? LanguageManager.Get("skins.performancemode") : GameValue[i]);
                     }
 
                     Console.Write("]".PadRight(13));

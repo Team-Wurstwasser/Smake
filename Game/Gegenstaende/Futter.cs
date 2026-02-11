@@ -41,7 +41,7 @@ namespace Smake.Game.Gegenstaende
             // Futter ins Spielfeld einzeichnen
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
-                if (Schluessel != null && Schluessel.Collected)
+                if (Schluessel != null)
                 {
                     if (!Schluessel.Collected)
                     {
@@ -67,6 +67,24 @@ namespace Smake.Game.Gegenstaende
                 {
                     Schluessel.EsseSchluessel(p);
                 }
+                else
+                {
+                    // Überprüfe jedes Segment des Spielers
+                    for (int i = 0; i < p.TailLaenge; i++)
+                    {
+                        if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
+                        {
+                            p.Punkte++;
+
+                            Sounds.Playbeep();
+
+                            Setze();
+
+                            // Wenn Futter gefunden, können wir die Schleife abbrechen
+                            break;
+                        }
+                    }
+                }
             }
             else
             {
@@ -75,7 +93,6 @@ namespace Smake.Game.Gegenstaende
                 {
                     if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
                     {
-
                         p.Punkte++;
 
                         Sounds.Playbeep();

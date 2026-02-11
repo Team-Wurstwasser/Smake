@@ -2,6 +2,14 @@
 {
     public static class Skinvalues
     {
+        // Aussehen des Spielers
+        public static char[] HeadSkin { get; set; } = new char[2];
+        public static char[] TailSkin { get; set; } = new char[2];
+
+        public static ConsoleColor[] HeadFarbe { get; set; } = new ConsoleColor[2];
+        public static ConsoleColor[] TailFarbe { get; set; } = new ConsoleColor[2];
+
+        // Ausehen Spielfeld
         public static char RandSkin { get; set; }
         public static ConsoleColor RandFarbe { get; set; }
         public static char FoodSkin { get; set; }
