@@ -153,6 +153,7 @@ namespace Smake.Speicher
             public MusikSpeed SprungfutterModus { get; set; } = new();
             public MusikSpeed BombenModus { get; set; } = new();
             public MusikSpeed ChaosSteuerung { get; set; } = new();
+            public int Input { get; set; }
         }
 
         public class MusikSpeed
@@ -170,7 +171,6 @@ namespace Smake.Speicher
             public int Statistics { get; set; }
             public int Instructions { get; set; }
             public int MainMenu { get; set; }
-            public int Input { get; set; }
         }
     }
 }

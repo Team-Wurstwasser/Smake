@@ -26,7 +26,6 @@ namespace Smake
 
             SpeicherSystem.Speichern_Laden(StorageAction.Load);
 
-            Eingaben();
             bool Exit = false;
             do
             {
@@ -60,24 +59,6 @@ namespace Smake
                 }
 
             } while (!Exit);
-        }
-
-        // Eingaben für Spielernamen
-        static void Eingaben()
-        {
-            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Input);
-
-            Console.Clear();
-
-            Console.Write(LanguageSystem.Get("input.player1"));
-            Spiellogik.Player.Name = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write(LanguageSystem.Get("input.player2"));
-            Spiellogik.Player2.Name = Console.ReadLine();
-
-            Console.Clear();
         }
     }
 }
