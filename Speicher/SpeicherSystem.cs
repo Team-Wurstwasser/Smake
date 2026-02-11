@@ -15,11 +15,11 @@ namespace Smake.Speicher
             // Wenn die Hauptdatei fehlt, aber ein Backup existiert, lade das Backup
             if (!File.Exists(SpeicherDatei) && File.Exists(BackupDatei))
             {
-                Console.WriteLine(LanguageManager.Get("saveLoad.mainMissing"));
+                Console.WriteLine(LanguageSystem.Get("saveLoad.mainMissing"));
                 Console.ReadKey();
                 if (!Laden(BackupDatei))
                 {
-                    Console.WriteLine(LanguageManager.Get("saveLoad.backupCorrupt"));
+                    Console.WriteLine(LanguageSystem.Get("saveLoad.backupCorrupt"));
                     Console.ReadKey();
                     SetzeStandardwerte();
                     Speichern();
@@ -51,11 +51,11 @@ namespace Smake.Speicher
                 case StorageAction.Load:
                     if (!Laden(SpeicherDatei))
                     {
-                        Console.WriteLine(LanguageManager.Get("saveLoad.loadError"));
+                        Console.WriteLine(LanguageSystem.Get("saveLoad.loadError"));
                         Console.ReadKey(true);
                         if (!Laden(BackupDatei))
                         {
-                            Console.WriteLine(LanguageManager.Get("saveLoad.backupAlsoCorrupt"));
+                            Console.WriteLine(LanguageSystem.Get("saveLoad.backupAlsoCorrupt"));
                             Console.ReadKey(true);
                             SetzeStandardwerte();
                             Speichern();
@@ -86,6 +86,7 @@ namespace Smake.Speicher
             Array.Clear(Menüsvalues.FreigeschaltetRand);
             Array.Clear(Menüsvalues.FreigeschaltetFarben);
 
+            
             Menüsvalues.FreigeschaltetTail[0] = true;
             Menüsvalues.FreigeschaltetTail[1] = true;
             Menüsvalues.FreigeschaltetFood[0] = true;
@@ -106,16 +107,16 @@ namespace Smake.Speicher
             Spielvalues.Gamemode = Gamemodes.Normal;
             Spielvalues.Multiplayer = false;
 
-            Skinvalues.RandSkin = GameData.RandSkins[0];
-            Skinvalues.FoodSkin = GameData.FoodSkins[0];
-            Skinvalues.TailSkin[0] = GameData.TailSkins[0];
-            Skinvalues.TailSkin[1] = GameData.TailSkins[1];
+            Skinvalues.RandSkin = ConfigSystem.Skins.RandSkins[0];
+            Skinvalues.FoodSkin = ConfigSystem.Skins.FoodSkins[0];
+            Skinvalues.TailSkin[0] = ConfigSystem.Skins.TailSkins[0];
+            Skinvalues.TailSkin[1] = ConfigSystem.Skins.TailSkins[1];
 
-            Skinvalues.RandFarbe = GameData.Farben[0];
-            Skinvalues.FoodFarbe = GameData.Farben[0];
+            Skinvalues.RandFarbe = ConfigSystem.Skins.Farben[0];
+            Skinvalues.FoodFarbe = ConfigSystem.Skins.Farben[0];
             Skinvalues.FoodfarbeRandom = false;
-            Array.Fill(Skinvalues.TailFarbe, GameData.Farben[0]);
-            Array.Fill(Skinvalues.HeadFarbe, GameData.Farben[0]);
+            Array.Fill(Skinvalues.TailFarbe, ConfigSystem.Skins.Farben[0]);
+            Array.Fill(Skinvalues.HeadFarbe, ConfigSystem.Skins.Farben[0]);
         }
 
         static void Speichern()
@@ -156,7 +157,7 @@ namespace Smake.Speicher
                 zeilen.Add($"FreigeschaltetFarben{i}={Menüsvalues.FreigeschaltetFarben[i]}");
 
             string plainText = string.Join(Environment.NewLine, zeilen);
-            byte[] encrypted = CryptoHelper.Encrypt(plainText);
+            byte[] encrypted = AesCryptoHelper.Encrypt(plainText);
 
             File.WriteAllBytes(SpeicherDatei, encrypted);
         }
@@ -170,7 +171,7 @@ namespace Smake.Speicher
 
             try
             {
-                plainText = CryptoHelper.Decrypt(encrypted);
+                plainText = AesCryptoHelper.Decrypt(encrypted);
             }
             catch
             {

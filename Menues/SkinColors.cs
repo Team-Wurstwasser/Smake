@@ -80,9 +80,9 @@ namespace Smake.Menues
 
         void Menueloop()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.SkinFarben ?? 0);
-            Title = "Skin_Farben";
-            Display = LanguageManager.GetArray("skins.items");
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.SkinColors);
+            Title = "SkinColors";
+            Display = LanguageSystem.GetArray("skins.items");
             IsColor = Color;
             GameValue = BuildMenu();
             MenuTracker = 1;
@@ -100,10 +100,10 @@ namespace Smake.Menues
         {
             switch (MenuTracker)
             {
-                case 1: Skinvalues.TailSkin[0] = WechselSkin(Skinvalues.TailSkin[0], GameData.TailSkins, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[1]); break;
-                case 2: Skinvalues.TailSkin[1] = WechselSkin(Skinvalues.TailSkin[1], GameData.TailSkins, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[0]); break;
-                case 3: Skinvalues.FoodSkin = WechselSkin(Skinvalues.FoodSkin, GameData.FoodSkins, Menüsvalues.FreigeschaltetFood); break;
-                case 4: Skinvalues.RandSkin = WechselSkin(Skinvalues.RandSkin, GameData.RandSkins, Menüsvalues.FreigeschaltetRand); break;
+                case 1: Skinvalues.TailSkin[0] = WechselSkin(Skinvalues.TailSkin[0], ConfigSystem.Skins.TailSkins, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[1]); break;
+                case 2: Skinvalues.TailSkin[1] = WechselSkin(Skinvalues.TailSkin[1], ConfigSystem.Skins.TailSkins, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[0]); break;
+                case 3: Skinvalues.FoodSkin = WechselSkin(Skinvalues.FoodSkin, ConfigSystem.Skins.FoodSkins, Menüsvalues.FreigeschaltetFood); break;
+                case 4: Skinvalues.RandSkin = WechselSkin(Skinvalues.RandSkin, ConfigSystem.Skins.RandSkins, Menüsvalues.FreigeschaltetRand); break;
 
                 case 5: Skinvalues.HeadFarbe[0] = WechselFarbe(Skinvalues.HeadFarbe[0]); break;
                 case 6: Skinvalues.HeadFarbe[1] = WechselFarbe(Skinvalues.HeadFarbe[1]); break;
@@ -154,15 +154,15 @@ namespace Smake.Menues
         // Helper für Farben
         static ConsoleColor WechselFarbe(ConsoleColor aktuelleFarbe, bool isFood = false)
         {
-            if (GameData.Farben.Length == 0) return aktuelleFarbe;
+            if (ConfigSystem.Skins.Farben.Length == 0) return aktuelleFarbe;
 
             if (isFood && Skinvalues.FoodfarbeRandom)
             {
                 Skinvalues.FoodfarbeRandom = false;
-                return GameData.Farben[0];
+                return ConfigSystem.Skins.Farben[0];
             }
 
-            int idx = Array.IndexOf(GameData.Farben, aktuelleFarbe);
+            int idx = Array.IndexOf(ConfigSystem.Skins.Farben, aktuelleFarbe);
 
             int lastUnlockedIndex = -1;
             for (int i = 0; i < Menüsvalues.FreigeschaltetFarben.Length; i++)
@@ -178,10 +178,10 @@ namespace Smake.Menues
 
             do
             {
-                idx = (idx + 1) % GameData.Farben.Length;
+                idx = (idx + 1) % ConfigSystem.Skins.Farben.Length;
             } while (!Menüsvalues.FreigeschaltetFarben[idx]);
 
-            return GameData.Farben[idx];
+            return ConfigSystem.Skins.Farben[idx];
         }
     }
 }

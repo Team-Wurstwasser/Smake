@@ -18,11 +18,11 @@ namespace Smake
             Console.Title = "Smake";
 
             // Sprache aus config.json laden
-            LanguageManager.Speichern_Laden(StorageAction.Load);
+            LanguageSystem.Speichern_Laden(StorageAction.Load);
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
-            GameData.LoadAllConfigs();
+            ConfigSystem.LoadAllConfigs();
 
             SpeicherSystem.Speichern_Laden(StorageAction.Load);
 
@@ -65,16 +65,16 @@ namespace Smake
         // Eingaben für Spielernamen
         static void Eingaben()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Eingabe ?? 0);
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Input);
 
             Console.Clear();
 
-            Console.Write(LanguageManager.Get("input.player1"));
+            Console.Write(LanguageSystem.Get("input.player1"));
             Spiellogik.Player.Name = Console.ReadLine();
 
             Console.Clear();
 
-            Console.Write(LanguageManager.Get("input.player2"));
+            Console.Write(LanguageSystem.Get("input.player2"));
             Spiellogik.Player2.Name = Console.ReadLine();
 
             Console.Clear();

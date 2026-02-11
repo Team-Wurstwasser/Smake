@@ -14,7 +14,7 @@ namespace Smake.Game.Gegenstaende
 
         // Für Sprungfutter-Modus
         int TeleportCounter;
-        readonly int TeleportInterval = GameData.TeleportInterval;
+        readonly int TeleportInterval = ConfigSystem.Game.TeleportInterval;
 
         protected override void Setze()
         {

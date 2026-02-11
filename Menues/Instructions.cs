@@ -9,7 +9,7 @@ namespace Smake.Menues
     {
         public Instructions()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Anleitung ?? 0);
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Instructions);
 
             RenderAnleitung();
             Console.ReadKey();
@@ -18,17 +18,17 @@ namespace Smake.Menues
         static void RenderAnleitung()
         {
             Console.Clear();
-            Console.WriteLine(LanguageManager.Get("anleitung.title"));
+            Console.WriteLine(LanguageSystem.Get("anleitung.title"));
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine(LanguageManager.Get("anleitung.goal").Replace("{food}", Skinvalues.FoodSkin.ToString()));
+            Console.WriteLine(LanguageSystem.Get("anleitung.goal").Replace("{food}", Skinvalues.FoodSkin.ToString()));
             Console.WriteLine();
-            Console.WriteLine(LanguageManager.Get("anleitung.controls"));
+            Console.WriteLine(LanguageSystem.Get("anleitung.controls"));
             Console.WriteLine();
-            Console.WriteLine(LanguageManager.Get("anleitung.player1"));
-            Console.WriteLine(LanguageManager.Get("anleitung.player2"));
-            Console.WriteLine(LanguageManager.Get("anleitung.collision"));
+            Console.WriteLine(LanguageSystem.Get("anleitung.player1"));
+            Console.WriteLine(LanguageSystem.Get("anleitung.player2"));
+            Console.WriteLine(LanguageSystem.Get("anleitung.collision"));
             Console.WriteLine("══════════════════════════════");
-            Console.WriteLine(LanguageManager.Get("anleitung.back"));
+            Console.WriteLine(LanguageSystem.Get("anleitung.back"));
         }
     }
 }
