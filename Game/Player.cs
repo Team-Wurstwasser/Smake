@@ -14,9 +14,9 @@ namespace Smake.Game
         public bool Aenderung;
 
         // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
+        public int[] PlayerX { get; private set; } = new int[(ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2)];
 
-        public int[] PlayerY { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
+        public int[] PlayerY { get; private set; } = new int[(ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2)];
 
         // Kollisionsvariablen
         bool Kollision;
@@ -106,14 +106,14 @@ namespace Smake.Game
             {
                 if (Kollision && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
                     SpielerTot = true;
-                else if (TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
+                else if (TailLaenge >= (ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
                     Maxpunkte = true;
-                else if (TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
+                else if (TailLaenge + p.TailLaenge >= (ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
             else if (Spielvalues.Gamemode == Gamemodes.Babymode)
             {
-                if (Punkte >= GameData.MaxPunkte)
+                if (Punkte >= ConfigSystem.Game.MaxPunkte)
                 {
                     Maxpunkte = true;
                 }
@@ -122,7 +122,7 @@ namespace Smake.Game
             {
                 if (Kollision)
                     SpielerTot = true;
-                else if (Punkte >= GameData.MaxPunkte)
+                else if (Punkte >= ConfigSystem.Game.MaxPunkte)
                     Maxpunkte = true;
             }
 

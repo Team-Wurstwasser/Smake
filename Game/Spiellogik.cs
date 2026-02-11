@@ -11,9 +11,9 @@ namespace Smake.Game
     {
         public static GameOverType Gameovertype { get; set; }
 
-        public static Player Player { get; set; } = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, GameData.TailStartLaenge);
+        public static Player Player { get; set; } = new(ConfigSystem.Game.Startpositionen.Spieler1.X, ConfigSystem.Game.Startpositionen.Spieler1.Y, ConfigSystem.Game.TailStartLaenge);
 
-        public static Player Player2 { get; set; } = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, GameData.TailStartLaenge);
+        public static Player Player2 { get; set; } = new(ConfigSystem.Game.Startpositionen.Spieler2.X, ConfigSystem.Game.Startpositionen.Spieler2.Y, ConfigSystem.Game.TailStartLaenge);
 
         public static List<Futter> Essen { get; private set; } = [];
 
@@ -21,7 +21,7 @@ namespace Smake.Game
 
         public Spiellogik()
         {
-            Sounds.Melodie(MusikSelector.Selector() ?? 1);
+            Sounds.Melodie(MusikSelector.Selector());
             Spielloop();
         }
 
@@ -33,9 +33,9 @@ namespace Smake.Game
             Gameovertype = GameOverType.None;
 
             // Zeit einstellen
-            if (Spielvalues.Difficulty == Difficultys.Slow) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Langsam;
-            else if (Spielvalues.Difficulty == Difficultys.Medium) Spielvalues.Zeit = GameData.SpielSchwierigkeit.Mittel;
-            else Spielvalues.Zeit = GameData.SpielSchwierigkeit.Schnell;
+            if (Spielvalues.Difficulty == Difficultys.Slow) Spielvalues.Zeit = ConfigSystem.Game.Difficulty.Slow;
+            else if (Spielvalues.Difficulty == Difficultys.Medium) Spielvalues.Zeit = ConfigSystem.Game.Difficulty.Medium;
+            else Spielvalues.Zeit = ConfigSystem.Game.Difficulty.Fast;
 
             // Initialisiere das Spielfeld mit Rahmen
             InitialisiereSpielfeld();
@@ -67,7 +67,7 @@ namespace Smake.Game
                     int zufallIndex = RandomHelper.Next(freigeschalteteFarbenIndex.Count);
                     int farbenIndex = freigeschalteteFarbenIndex[zufallIndex];
 
-                    Essen.Add(new Futter(Skinvalues.FoodSkin, GameData.Farben[farbenIndex]));
+                    Essen.Add(new Futter(Skinvalues.FoodSkin, ConfigSystem.Skins.Farben[farbenIndex]));
                 }
 
             }
@@ -168,7 +168,7 @@ namespace Smake.Game
             switch (Gameovertype)
             {
                 case GameOverType.Draw:
-                    Console.WriteLine(LanguageManager.Get("gameover.draw"));
+                    Console.WriteLine(LanguageSystem.Get("gameover.draw"));
                     if (Spielvalues.Multiplayer)
                     {
                         ShowPoints(Player.Name, Player.Punkte);
@@ -179,28 +179,28 @@ namespace Smake.Game
                 case GameOverType.Player1:
                     if (Spielvalues.Multiplayer)
                     {
-                        Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player2.Name));
-                        Console.WriteLine(LanguageManager.Get("gameover.points").Replace("{points}", Player2.Punkte.ToString()));
+                        Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player2.Name));
+                        Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player2.Punkte.ToString()));
                         ShowPoints(Player.Name, Player.Punkte);
                     }
                     else
                     {
-                        Console.WriteLine(LanguageManager.Get("gameover.lose"));
-                        Console.WriteLine(LanguageManager.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine(LanguageSystem.Get("gameover.lose"));
+                        Console.WriteLine(LanguageSystem.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
                     }
                     break;
 
                 case GameOverType.Player2:
                         if (Spielvalues.Multiplayer)
                         {
-                            Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player.Name));
-                            Console.WriteLine(LanguageManager.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
+                            Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player.Name));
+                            Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
                             ShowPoints(Player2.Name, Player2.Punkte);
                         }
                         else
                         {
-                            Console.WriteLine(LanguageManager.Get("gameover.win"));
-                            Console.WriteLine(LanguageManager.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
+                            Console.WriteLine(LanguageSystem.Get("gameover.win"));
+                            Console.WriteLine(LanguageSystem.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
                         }
                     break;
 
@@ -214,8 +214,8 @@ namespace Smake.Game
                 Console.WriteLine();
                 Console.WriteLine("═════════════════════════════════════");
             }
-            Console.WriteLine(LanguageManager.Get("gameover.backToMenu"));
-            Console.WriteLine(LanguageManager.Get("gameover.restart"));
+            Console.WriteLine(LanguageSystem.Get("gameover.backToMenu"));
+            Console.WriteLine(LanguageSystem.Get("gameover.restart"));
 
             WaitForInput();
         }
@@ -223,7 +223,7 @@ namespace Smake.Game
         // Hilfsmethode für die Punkteanzeige
         static void ShowPoints(string? name, int points)
         {
-            Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", name).Replace("{points}", points.ToString()));
+            Console.WriteLine(LanguageSystem.Get("gameover.playerPoints").Replace("{player}", name).Replace("{points}", points.ToString()));
         }
 
         static void WaitForInput()
@@ -284,8 +284,8 @@ namespace Smake.Game
             }
             else
             {
-                Spielstatus.Gesamtcoins = (GameData.MaxPunkte) / 2 + Spielstatus.Gesamtcoins;
-                Spielstatus.Coins = (GameData.MaxPunkte) / 2 + Spielstatus.Coins;
+                Spielstatus.Gesamtcoins = (ConfigSystem.Game.MaxPunkte) / 2 + Spielstatus.Gesamtcoins;
+                Spielstatus.Coins = (ConfigSystem.Game.MaxPunkte) / 2 + Spielstatus.Coins;
             }
 
         }

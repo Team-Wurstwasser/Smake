@@ -63,7 +63,7 @@ namespace Smake.Menues
 
         void Menueloop()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Main ?? 0);
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.MainMenu);
 
             SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
@@ -72,15 +72,15 @@ namespace Smake.Menues
 
             if (Spielvalues.Performancemode)
             {
-                Skinvalues.FoodFarbe = GameData.Farben[0];
+                Skinvalues.FoodFarbe = ConfigSystem.Skins.Farben[0];
                 Skinvalues.FoodfarbeRandom = false;
-                Skinvalues.RandFarbe = GameData.Farben[0];
-                Array.Fill(Skinvalues.TailFarbe, GameData.Farben[0]);
-                Array.Fill(Skinvalues.HeadFarbe, GameData.Farben[0]);
+                Skinvalues.RandFarbe = ConfigSystem.Skins.Farben[0];
+                Array.Fill(Skinvalues.TailFarbe, ConfigSystem.Skins.Farben[0]);
+                Array.Fill(Skinvalues.HeadFarbe, ConfigSystem.Skins.Farben[0]);
             }
 
             Title = "Menü";
-            Display = LanguageManager.GetArray("menu.items"); ;
+            Display = LanguageSystem.GetArray("menu.items"); ;
             MenuTracker = 1;
             InitialRender();
             StartInputstream();

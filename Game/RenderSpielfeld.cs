@@ -161,16 +161,16 @@ namespace Smake.Game
             switch (y)
             {
                 case 1: return "  ══════════════════════════════";
-                case 2: return LanguageManager.Get("legende");
+                case 2: return LanguageSystem.Get("legende");
                 case 3: return "  ══════════════════════════════";
                 case 4:
-                    string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
+                    string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? ConfigSystem.Game.MaxPunkte.ToString() : "∞";
                     return $"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}";
                 case 5: return "  ══════════════════════════════";
                 case 6:
                     if (Spielvalues.Multiplayer)
                     {
-                        string maxpunkte2 = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
+                        string maxpunkte2 = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? ConfigSystem.Game.MaxPunkte.ToString() : "∞";
                         return $"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}";
                     }
                     break;
@@ -212,7 +212,7 @@ namespace Smake.Game
         {
             void SetFarbe(ConsoleColor farbe)
             {
-                Console.SetCursorPosition(GameData.Weite, y);
+                Console.SetCursorPosition(ConfigSystem.Game.Weite, y);
 
                 if (farbe != aktuelleFarbe)
                 {
@@ -229,7 +229,7 @@ namespace Smake.Game
                     break;
                 case 2:
                     SetFarbe(ConsoleColor.White);
-                    Console.Write(LanguageManager.Get("legende"));
+                    Console.Write(LanguageSystem.Get("legende"));
                     break;
                 case 3:
                     SetFarbe(Skinvalues.RandFarbe);
@@ -237,7 +237,7 @@ namespace Smake.Game
                     break;
                 case 4:
                     SetFarbe(Spiellogik.Player.HeadFarbe);
-                    string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
+                    string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? ConfigSystem.Game.MaxPunkte.ToString() : "∞";
                     Console.Write($"  {Spiellogik.Player.Name}: {Spiellogik.Player.Punkte}/{maxpunkte}");
                     break;
                 case 5:
@@ -248,7 +248,7 @@ namespace Smake.Game
                     if (Spielvalues.Multiplayer)
                     {
                         SetFarbe(Spiellogik.Player2.HeadFarbe);
-                        string maxpunkte2 = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
+                        string maxpunkte2 = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? ConfigSystem.Game.MaxPunkte.ToString() : "∞";
                         Console.Write($"  {Spiellogik.Player2.Name}: {Spiellogik.Player2.Punkte}/{maxpunkte2}");
                     }
                     break;
