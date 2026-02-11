@@ -7,6 +7,8 @@ namespace Smake.Values
     {
         public static int Maxfutter { get; set; }
 
+        public static bool Performancemode { get; set; }
+
         // Spielfeldgröße (Breite x Höhe)
         public readonly static int weite = GameData.Weite;
         public readonly static int hoehe = GameData.Hoehe;

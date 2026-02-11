@@ -6,8 +6,6 @@ namespace Smake.Game
 {
     public abstract class RenderSpielfeld
     {
-        public static bool Performancemode { get; set; } 
-
         // Das Spielfeld als zweidimensionales Zeichen-Array
         public static char[,] Grid { get; set; } = new char[Spielvalues.hoehe, Spielvalues.weite];
 
@@ -45,7 +43,7 @@ namespace Smake.Game
             int rows = Grid.GetLength(0);
             int cols = Grid.GetLength(1);
 
-            if (!Performancemode)
+            if (!Spielvalues.Performancemode)
             {
                 Console.ForegroundColor = Skinvalues.RandFarbe;
             }
@@ -82,7 +80,7 @@ namespace Smake.Game
 
         public void Render()
         {
-            if (Performancemode)
+            if (Spielvalues.Performancemode)
             {
                 RenderPerformance();
             }
