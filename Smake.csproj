@@ -11,19 +11,19 @@
 	<!-- Kopieren der Unterordner beim Debug-Build -->
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<!-- Jsons -->
-		<Content Include="Benoetigtedaten\Jsons\**\*.*">
+		<Content Include="Benoetigtedaten\Jsons\**\*.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>Jsons\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 
 		<!-- Languages -->
-		<Content Include="Benoetigtedaten\Languages\**\*.*">
+		<Content Include="Benoetigtedaten\Languages\**\*.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>Languages\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>
 
 		<!-- Sounds -->
-		<Content Include="Benoetigtedaten\Sounds\**\*.*">
+		<Content Include="Benoetigtedaten\Sounds\**\*.wav">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>Sounds\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
 		</Content>

@@ -76,6 +76,8 @@ namespace Smake.Game
         // Spielablauf
         void Spielloop()
         {
+            Eingaben();
+
             Essen = [];
 
             Mauer = [];
@@ -247,6 +249,24 @@ namespace Smake.Game
             } while (!check);
 
             while (Console.KeyAvailable) Console.ReadKey(true);
+        }
+
+        // Eingaben für Spielernamen
+        static void Eingaben()
+        {
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Game.Input);
+
+            Console.Clear();
+
+            Console.Write(LanguageSystem.Get("input.player1"));
+            Spiellogik.Player.Name = Console.ReadLine();
+
+            Console.Clear();
+
+            Console.Write(LanguageSystem.Get("input.player2"));
+            Spiellogik.Player2.Name = Console.ReadLine();
+
+            Console.Clear();
         }
 
         // Coins und xp hinzufügen
