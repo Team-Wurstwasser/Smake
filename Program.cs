@@ -35,7 +35,7 @@ namespace Smake
                         _ = new MainMenu();
                         break;
                     case ViewType.Game:
-                        _ = new Spiellogik();
+                        _ = new Spiel();
                         break;
                     case ViewType.Settings:
                         _ = new Settings();
