@@ -1,4 +1,65 @@
-SMAKE O—‘”b½êéPV›Ö‹¾}•º›~u²ckÃÖ¢ÿUY›–ƒ¢ÀXûªs“öm†Ş/#üØë Q>d×±9òqwræMËn\ĞñÕé„C¶¦-P®SW¢îïa8FNÆ•Ÿyº­XgC•%Õ!‘ŸÍÊfz…”š„vba]<BZ¦Û°fg¨~˜}Ó¸‘ ñ'z¤§j²ßìô4oŠs`5é#:,.½²Øä1›)Ö(~
-I®¼õú;J>6zTW›wLûÍ$¥ ¾.£Û‰šC6BÌQl¥&‡‡œŞ12ôæŸ<m‡„q|¥Â­Ÿå¹Â^Š<1ïe0¡BÒ7…ƒÉÉäÔ{b¿ÜÑ$²öèCÇŸõ–g•Á¶Tu²c/ñÈXıñ5ç”2ˆÀXTÔó>Ò½(”Ğz ë˜{ŒïÅi0SıêÚ?8?³N€V%CÙ¼˜ëœ-èÇUöS ôìãN_
-GŞPÌ2©»ulJi•%Õ!“ØÁbO4‡Õ·¿=\ba]>Hø»Û*e²~ÃPûúĞÌù¼h>áğw»Ì¢§w6„DJnÄ	:,.½²Ú©Dw0Ô}fX³òĞ;J>6zTWŒI—a\°‚i¶”?¥Û‰ÇOhÌS*äuÑĞÈ›n[’¯Üto„w]¢è­Ÿå¹Â\Å.(å`ô–h?µƒ’äÎÔ{b½‘”`ùğéZÌ“É°J¿Á¶Tu²ci²Ö®¤O×”>¥;ÀXùÙ>Ò½*Ò‘+6¨À"Ğ«,2Iı±9­3³N€V'Æ°‡¥Óhª˜=TäQEööã?lN‹ÀRÖ2¸µ
->—?Õ0Ÿõ¦‡#`…Ï·®;'%Bsô‡ıO²~ÃPù¸‘¢·f)ğ§#şD¥Äî4~†^Jhå,.½²Ú©F&‚.Îd#LöÅš¨vzc)VMŒ÷ù×$´”.ğÃ”ŞÅUyÀ½{l¥&…ÒÒ›tõê˜=:Ğ†0QÎ€µå¹Â^ˆo}¢tsèÁ!=¾®ãÉäÔ{bà¹Jû£¥YÔÑ—ñ%Ğû1ç0s°ÀqpçñÍ”2ŠBŒJûÃ>Ã±¾ĞxbªÚ"Á ƒaw´ätò%8.¿c.€V'•óÏé„k¸˜,ŞS±)<ôìãLF¦êRÖ2¸·XD	!Ôj†rÇÙÂqI.ÂÍ­®K[Ha]>ô–óy)ı)ÁJù©£Šñ'z¤¥9şUŠ£«p7ÓH/é26½²Ú©DuÒ|™l%Y ‹ßë`>6zTWŒÖ	2ù×$´”,FíßİÅUxáºQl¥&ØŞÿ±v¸¯Ş9*ÓÑoS•Âö²"å¹Â^ˆoówfï|n­™ÉÙèù8{b½‘”`ùğíZ	Ì“È°J¿Á¶Tu²c:ûÒ¨½MJ–•2˜í/XùÙ>Ò½*Ç„96ã‰vˆãÒ.(Ií½Ú?8?³N‚iCÁ¡šªÒd¶…+ŞS°;ŞìãLFNÆ˜ıùDPi…ÿ!“ØŒÚ6`…’š„M
+SMAKE{
+  "Filenames": [
+    "Smake.wav",
+    "Smake2.wav"
+  ],
+  "NoMusikFile": "NoMusik.wav",
+  "Musik": {
+    "Game": {
+      "Normal": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "Unendlich": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "Babymode": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "BabymodeUnendlich": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "MauerModus": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "SchluesselModus": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "SprungfutterModus": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "BombenModus": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "ChaosSteuerung": {
+        "Slow": 1,
+        "Medium": 1,
+        "Fast": 1
+      },
+      "Input": 0
+    },
+    "Menue": {
+      "Settings": 0,
+      "Shop": 0,
+      "SkinColors": 0,
+      "Statistics": 0,
+      "Instructions": 0,
+      "Mainmenu": 0
+    }
+  }
+}

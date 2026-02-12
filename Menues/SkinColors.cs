@@ -100,10 +100,10 @@ namespace Smake.Menues
         {
             switch (MenuTracker)
             {
-                case 1: Skinvalues.TailSkin[0] = WechselSkin(Skinvalues.TailSkin[0], ConfigSystem.Skins.TailSkins, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[1]); break;
-                case 2: Skinvalues.TailSkin[1] = WechselSkin(Skinvalues.TailSkin[1], ConfigSystem.Skins.TailSkins, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[0]); break;
-                case 3: Skinvalues.FoodSkin = WechselSkin(Skinvalues.FoodSkin, ConfigSystem.Skins.FoodSkins, Menüsvalues.FreigeschaltetFood); break;
-                case 4: Skinvalues.RandSkin = WechselSkin(Skinvalues.RandSkin, ConfigSystem.Skins.RandSkins, Menüsvalues.FreigeschaltetRand); break;
+                case 1: Skinvalues.TailSkin[0] = WechselSkin(Skinvalues.TailSkin[0], ConfigSystem.Skins.Tail, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[1]); break;
+                case 2: Skinvalues.TailSkin[1] = WechselSkin(Skinvalues.TailSkin[1], ConfigSystem.Skins.Tail, Menüsvalues.FreigeschaltetTail, Skinvalues.TailSkin[0]); break;
+                case 3: Skinvalues.FoodSkin = WechselSkin(Skinvalues.FoodSkin, ConfigSystem.Skins.Food, Menüsvalues.FreigeschaltetFood); break;
+                case 4: Skinvalues.RandSkin = WechselSkin(Skinvalues.RandSkin, ConfigSystem.Skins.Rand, Menüsvalues.FreigeschaltetRand); break;
 
                 case 5: Skinvalues.HeadFarbe[0] = WechselFarbe(Skinvalues.HeadFarbe[0]); break;
                 case 6: Skinvalues.HeadFarbe[1] = WechselFarbe(Skinvalues.HeadFarbe[1]); break;
