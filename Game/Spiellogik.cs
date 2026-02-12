@@ -19,11 +19,6 @@ namespace Smake.Game
 
         public static List<Gegenstand> Mauer { get; private set; } = [];
 
-        public Spiellogik()
-        {
-            Spielloop();
-        }
-
         // Allen Variablen den Startwert geben
         void Neustart()
         {
@@ -73,12 +68,11 @@ namespace Smake.Game
         }
 
         // Spielablauf
-        void Spielloop()
+        public void Spielloop()
         {
             Eingaben();
 
             Sounds.Melodie(MusikSelector.Selector());
-
             Essen = [];
 
             Mauer = [];
