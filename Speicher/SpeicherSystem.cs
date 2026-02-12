@@ -107,10 +107,10 @@ namespace Smake.Speicher
             Spielvalues.Gamemode = Gamemodes.Normal;
             Spielvalues.Multiplayer = false;
 
-            Skinvalues.RandSkin = ConfigSystem.Skins.RandSkins[0];
-            Skinvalues.FoodSkin = ConfigSystem.Skins.FoodSkins[0];
-            Skinvalues.TailSkin[0] = ConfigSystem.Skins.TailSkins[0];
-            Skinvalues.TailSkin[1] = ConfigSystem.Skins.TailSkins[1];
+            Skinvalues.RandSkin = ConfigSystem.Skins.Rand[0];
+            Skinvalues.FoodSkin = ConfigSystem.Skins.Food[0];
+            Skinvalues.TailSkin[0] = ConfigSystem.Skins.Tail[0];
+            Skinvalues.TailSkin[1] = ConfigSystem.Skins.Tail[1];
 
             Skinvalues.RandFarbe = ConfigSystem.Skins.Farben[0];
             Skinvalues.FoodFarbe = ConfigSystem.Skins.Farben[0];

@@ -21,7 +21,6 @@ namespace Smake.Game
 
         public Spiellogik()
         {
-            Sounds.Melodie(MusikSelector.Selector());
             Spielloop();
         }
 
@@ -77,6 +76,8 @@ namespace Smake.Game
         void Spielloop()
         {
             Eingaben();
+
+            Sounds.Melodie(MusikSelector.Selector());
 
             Essen = [];
 

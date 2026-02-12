@@ -174,9 +174,9 @@ namespace Smake.Menues
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("tailSkins", option, Selected, ConfigSystem.Skins.TailSkins, ConfigSystem.Levels.TailLevel, Menüsvalues.FreigeschaltetTail, ConfigSystem.Prices.TailPreis, 2);
-            option = RenderShopSection("foodSkins", option, Selected, ConfigSystem.Skins.FoodSkins, ConfigSystem.Levels.FoodLevel, Menüsvalues.FreigeschaltetFood, ConfigSystem.Prices.FoodPreis);
-            option = RenderShopSection("randSkins", option, Selected, ConfigSystem.Skins.RandSkins, ConfigSystem.Levels.RandLevel, Menüsvalues.FreigeschaltetRand, ConfigSystem.Prices.RandPreis);
+            option = RenderShopSection("tailSkins", option, Selected, ConfigSystem.Skins.Tail, ConfigSystem.Levels.Tail, Menüsvalues.FreigeschaltetTail, ConfigSystem.Prices.Tail, 2);
+            option = RenderShopSection("foodSkins", option, Selected, ConfigSystem.Skins.Food, ConfigSystem.Levels.Food, Menüsvalues.FreigeschaltetFood, ConfigSystem.Prices.Food);
+            option = RenderShopSection("randSkins", option, Selected, ConfigSystem.Skins.Rand, ConfigSystem.Levels.Rand, Menüsvalues.FreigeschaltetRand, ConfigSystem.Prices.Rand);
 
             RenderShopFooter(option);
         }
@@ -189,7 +189,7 @@ namespace Smake.Menues
 
             for (int i = 1; i < ConfigSystem.Skins.Farben.Length; i++, option++)
             {
-                string shoptext = Spielstatus.Level < ConfigSystem.Levels.FarbenLevel[i - 1] ? LanguageSystem.Get("shop.requiredLevel").Replace("{level}", ConfigSystem.Levels.FarbenLevel[i - 1].ToString()) : Menüsvalues.FreigeschaltetFarben[i] ? LanguageSystem.Get("shop.unlocked") : LanguageSystem.Get("shop.price").Replace("{price}", ConfigSystem.Prices.FarbenPreis[i - 1].ToString());
+                string shoptext = Spielstatus.Level < ConfigSystem.Levels.Farben[i - 1] ? LanguageSystem.Get("shop.requiredLevel").Replace("{level}", ConfigSystem.Levels.Farben[i - 1].ToString()) : Menüsvalues.FreigeschaltetFarben[i] ? LanguageSystem.Get("shop.unlocked") : LanguageSystem.Get("shop.price").Replace("{price}", ConfigSystem.Prices.Farben[i - 1].ToString());
                 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = ConfigSystem.Skins.Farben[i];

@@ -1,31 +1,61 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Smake.Helper;
 
 namespace Smake.Speicher
 {
     public static class ConfigSystem
     {
-        public static SoundConfig Sounds { get; private set; } = new();
-        public static MarketConfig Prices { get; private set; } = new();
-        public static MarketConfig Levels { get; private set; } = new();
-        public static SkinsConfig Skins { get; private set; } = new();
+        public static SoundConfig Sounds { get; private set; } = GetDefaultSounds();
+        public static MarketConfig Prices { get; private set; } = GetDefaultPrices();
+        public static MarketConfig Levels { get; private set; } = GetDefaultLevels();
+        public static SkinsConfig Skins { get; private set; } = GetDefaultSkins();
         public static GameSettings Game { get; private set; } = new();
 
         static readonly JsonSerializerOptions JsonOptions = new()
         {
-            PropertyNameCaseInsensitive = true,
-            WriteIndented = true
+            PropertyNameCaseInsensitive = true
         };
 
         public static void LoadAllConfigs()
         {
-            Sounds = Load<SoundConfig>("Jsons/sounds.json") ?? new();
-            Prices = Load<MarketConfig>("Jsons/preise.json") ?? new();
-            Levels = Load<MarketConfig>("Jsons/level.json") ?? new();
-            Game = Load<GameSettings>("Jsons/game.json") ?? new();
-            Skins = LoadSkins("Jsons/skins.json");
+            Sounds = Load<SoundConfig>("Jsons/sounds.json") ?? Sounds;
+            Prices = Load<MarketConfig>("Jsons/preise.json") ?? Prices;
+            Levels = Load<MarketConfig>("Jsons/level.json") ?? Levels;
+            Game = Load<GameSettings>("Jsons/game.json") ?? Game;
+
+            var loadedSkins = LoadSkins("Jsons/skins.json");
+            if (loadedSkins != null) Skins = loadedSkins;
         }
+
+        static MarketConfig GetDefaultPrices() => new()
+        {
+            Tail = [300, 350, 400, 450, 500],
+            Food = [350, 500, 400, 300, 250, 250],
+            Rand = [200, 400, 400, 350, 300, 400],
+            Farben = [100, 259, 100, 250, 200, 300, 100, 300, 175, 250, 100, 250, 450, 500]
+        };
+
+        static MarketConfig GetDefaultLevels() => new()
+        {
+            Tail = [2, 4, 6, 8, 10],
+            Food = [2, 4, 6, 8, 10, 12, 14],
+            Rand = [2, 4, 6, 8, 10, 12, 14, 0],
+            Farben = [0, 4, 0, 6, 8, 10, 0, 10, 20, 25, 0, 20, 25, 30]
+        };
+
+        static SkinsConfig GetDefaultSkins() => new()
+        {
+            Farben = [ConsoleColor.White, ConsoleColor.Blue, ConsoleColor.DarkBlue, ConsoleColor.Green, ConsoleColor.DarkGreen, ConsoleColor.Cyan, ConsoleColor.DarkCyan, ConsoleColor.Red, ConsoleColor.DarkRed, ConsoleColor.Magenta, ConsoleColor.DarkMagenta, ConsoleColor.Yellow, ConsoleColor.DarkYellow, ConsoleColor.Gray, ConsoleColor.DarkGray],
+            Tail = ['+', 'x', '~', '=', '-', 'o', '•'],
+            Food = ['*', '@', '$', '♥', '%', '¤', '&'],
+            Rand = ['█', '#', '▓', '░', '■', '▌', '▒']
+        };
+
+        static SoundConfig GetDefaultSounds() => new()
+        {
+            Filenames = ["Smake.wav", "Smake2.wav"],
+            NoMusikFile = "NoMusik.wav"
+        };
 
         static T? Load<T>(string path) where T : class
         {
@@ -47,17 +77,17 @@ namespace Smake.Speicher
             }
         }
 
-        static SkinsConfig LoadSkins(string path)
+        static SkinsConfig? LoadSkins(string path)
         {
             var raw = Load<SkinsRaw>(path);
-            if (raw == null) return new SkinsConfig();
+            if (raw == null) return null;
 
             return new SkinsConfig
             {
-                TailSkins = raw.TailSkins ?? [],
-                FoodSkins = raw.FoodSkins ?? [],
-                RandSkins = raw.RandSkins ?? [],
-                Farben = raw.FarbenRaw?.Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? c : ConsoleColor.Gray).ToArray() ?? []
+                Tail = raw.Tail ?? GetDefaultSkins().Tail,
+                Food = raw.Food ?? GetDefaultSkins().Food,
+                Rand = raw.Rand ?? GetDefaultSkins().Rand,
+                Farben = raw.Farben?.Select(f => Enum.TryParse(f, true, out ConsoleColor c) ? c : ConsoleColor.White).ToArray() ?? GetDefaultSkins().Farben
             };
         }
 
@@ -66,68 +96,59 @@ namespace Smake.Speicher
             string error = LanguageSystem.Get(key).Replace("{path}", path).Replace("{message}", message);
             Console.WriteLine(error);
             Console.ReadKey(true);
+
         }
 
         public class MarketConfig
         {
-            [JsonPropertyName("TailPreis")] public int[] TailPreis { get; set; } = [];
-            [JsonPropertyName("FoodPreis")] public int[] FoodPreis { get; set; } = [];
-            [JsonPropertyName("RandPreis")] public int[] RandPreis { get; set; } = [];
-            [JsonPropertyName("FarbenPreis")] public int[] FarbenPreis { get; set; } = [];
-
-            [JsonPropertyName("TailLevel")] public int[] TailLevel { get; set; } = [];
-            [JsonPropertyName("FoodLevel")] public int[] FoodLevel { get; set; } = [];
-            [JsonPropertyName("RandLevel")] public int[] RandLevel { get; set; } = [];
-            [JsonPropertyName("FarbenLevel")] public int[] FarbenLevel { get; set; } = [];
+            public int[] Tail { get; set; } = [];
+            public int[] Food { get; set; } = [];
+            public int[] Rand { get; set; } = [];
+            public int[] Farben { get; set; } = [];
         }
 
         public class SoundConfig
         {
             public string[] Filenames { get; set; } = [];
             public string NoMusikFile { get; set; } = "";
-            public string BeepFile { get; set; } = "";
             public Musik Musik { get; set; } = new();
         }
 
         public class SkinsConfig
         {
-            public char[] TailSkins { get; set; } = [];
-            public char[] FoodSkins { get; set; } = [];
-            public char[] RandSkins { get; set; } = [];
+            public char[] Tail { get; set; } = [];
+            public char[] Food { get; set; } = [];
+            public char[] Rand { get; set; } = [];
             public ConsoleColor[] Farben { get; set; } = [];
         }
 
         class SkinsRaw
         {
-            [JsonPropertyName("Farben")] public string[]? FarbenRaw { get; set; }
-            [JsonPropertyName("Tailskins")] public char[]? TailSkins { get; set; }
-            [JsonPropertyName("Foodskins")] public char[]? FoodSkins { get; set; }
-            [JsonPropertyName("Randskins")] public char[]? RandSkins { get; set; }
+            public string[]? Farben { get; set; }
+            public char[]? Tail { get; set; }
+            public char[]? Food { get; set; }
+            public char[]? Rand { get; set; }
         }
 
         public class GameSettings
         {
-            public int Weite { get; set; }
-            public int Hoehe { get; set; }
-            public int MaxPunkte { get; set; }
-            public int MaxFutterconfig { get; set; }
-            public int TeleportInterval { get; set; }
-            public int TailStartLaenge { get; set; }
+            public int Weite { get; set; } = 41;
+            public int Hoehe { get; set; } = 20;
+            public int MaxPunkte { get; set; } = 20;
+            public int MaxFutterconfig { get; set; } = 10;
+            public int TeleportInterval { get; set; } = 60;
+            public int TailStartLaenge { get; set; } = 3;
             public Positionen Startpositionen { get; set; } = new();
             public Difficulty Difficulty { get; set; } = new();
         }
 
         public class Positionen
         {
-            public Point Spieler1 { get; set; } = new();
-            public Point Spieler2 { get; set; } = new();
+            public Point Spieler1 { get; set; } = new() { X = 36, Y = 4 };
+            public Point Spieler2 { get; set; } = new() { X = 4, Y = 4 };
         }
 
-        public class Point 
-        { 
-            public int X { get; set; } 
-            public int Y { get; set; } 
-        }
+        public class Point { public int X { get; set; } public int Y { get; set; } }
 
         public class Difficulty
         {
@@ -153,24 +174,24 @@ namespace Smake.Speicher
             public MusikSpeed SprungfutterModus { get; set; } = new();
             public MusikSpeed BombenModus { get; set; } = new();
             public MusikSpeed ChaosSteuerung { get; set; } = new();
-            public int Input { get; set; }
+            public int Input { get; set; } = 0;
         }
 
         public class MusikSpeed
         {
-            public int Slow { get; set; }
-            public int Medium { get; set; }
-            public int Fast { get; set; }
+            public int Slow { get; set; } = 1;
+            public int Medium { get; set; } = 1;
+            public int Fast { get; set; } = 1;
         }
 
         public class MenueMusik
         {
-            public int Settings { get; set; }
-            public int Shop { get; set; }
-            public int SkinColors { get; set; }
-            public int Statistics { get; set; }
-            public int Instructions { get; set; }
-            public int MainMenu { get; set; }
+            public int Settings { get; set; } = 0;
+            public int Shop { get; set; } = 0;
+            public int SkinColors { get; set; } = 0;
+            public int Statistics { get; set; } = 0;
+            public int Instructions { get; set; } = 0;
+            public int MainMenu { get; set; } = 0;
         }
     }
 }
