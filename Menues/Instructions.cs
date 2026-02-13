@@ -15,6 +15,7 @@ namespace Smake.Menues
             Console.ReadKey();
             Program.CurrentView = ViewType.MainMenu;
         }
+        
         static void RenderAnleitung()
         {
             Console.Clear();
