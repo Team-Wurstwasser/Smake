@@ -66,8 +66,6 @@ namespace Smake.Game
         // Spielablauf
         public void Spielloop()
         {
-            Eingaben();
-
             Sounds.Melodie(MusikSelector.Selector());
             Essen = [];
 
