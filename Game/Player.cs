@@ -4,19 +4,19 @@ using Smake.Values;
 
 namespace Smake.Game
 {
-    public class Player(int StartX, int StartY, int tailStartLaenge)
+    public class Player(int StartX, int StartY, string? Name, char TailSkin, ConsoleColor HeadFarbe, ConsoleColor TailFarbe)
     {
         // Eingabe-Richtung (durch Pfeiltasten)
         public int InputX;
 
         public int InputY;
 
-        public bool Aenderung;
+        public bool Aenderung = true;
 
         // Position des Spielers (Startkoordinaten)
-        public int[] PlayerX { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
+        public int[] PlayerX { get; private set; } = new int[(ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2)];
 
-        public int[] PlayerY { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
+        public int[] PlayerY { get; private set; } = new int[(ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2)];
 
         // Kollisionsvariablen
         bool Kollision;
@@ -25,38 +25,23 @@ namespace Smake.Game
         public int Punkte;
 
         // Namen der Spieler
-        public string? Name;
+        public readonly string? Name = Name;
 
         // Aussehen des Spielers
-        public char HeadSkin;
-        public char TailSkin;
+        public char HeadSkin = TailSkin;
+        public readonly char TailSkin = TailSkin;
 
-        public ConsoleColor HeadFarbe;
-        public ConsoleColor TailFarbe;
+        public readonly ConsoleColor HeadFarbe = HeadFarbe;
+        public readonly ConsoleColor TailFarbe = TailFarbe;
 
         public readonly int StartX = StartX;
         public readonly int StartY = StartY;
 
         // Länge des Spielers
-        public int TailLaenge { get; private set; }
-        readonly int tailStartLaenge = tailStartLaenge;
+        public int TailLaenge { get; private set; } = ConfigSystem.Game.TailStartLaenge;
 
-        void InitialisiereSpieler()
+        public void Start()
         {
-            // Spielerzeichen auf Startposition setzen
-            RenderSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
-        }
-
-        public void Neustart()
-        {
-            Kollision = false;
-
-            // Taillängen zurücksetzen
-            TailLaenge = tailStartLaenge;
-
-            // Punkte zurücksetzen
-            Punkte = 0;
-
             // Arrays zurücksetzen
             Array.Fill(PlayerX, -1);
             Array.Fill(PlayerY, -1);
@@ -65,15 +50,7 @@ namespace Smake.Game
             PlayerX[0] = StartX;
             PlayerY[0] = StartY;
 
-            // Aussehen einstellen
-            HeadSkin = TailSkin;
-
-            // Alle Eingabewerte zurücksetzen
-            InputX = 0;
-            InputY = 0;
-            Aenderung = true;
-
-            InitialisiereSpieler();
+            RenderSpielfeld.Grid[PlayerY[0], PlayerX[0]] = HeadSkin;
         }
 
         public (bool spielerTot, bool Maxpunkte) Update(Player p)
@@ -106,14 +83,14 @@ namespace Smake.Game
             {
                 if (Kollision && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
                     SpielerTot = true;
-                else if (TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
+                else if (TailLaenge >= (ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
                     Maxpunkte = true;
-                else if (TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
+                else if (TailLaenge + p.TailLaenge >= (ConfigSystem.Game.Hoehe - 2) * ((ConfigSystem.Game.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
                     Maxpunkte = true;
             }
             else if (Spielvalues.Gamemode == Gamemodes.Babymode)
             {
-                if (Punkte >= GameData.MaxPunkte)
+                if (Punkte >= ConfigSystem.Game.MaxPunkte)
                 {
                     Maxpunkte = true;
                 }
@@ -122,7 +99,7 @@ namespace Smake.Game
             {
                 if (Kollision)
                     SpielerTot = true;
-                else if (Punkte >= GameData.MaxPunkte)
+                else if (Punkte >= ConfigSystem.Game.MaxPunkte)
                     Maxpunkte = true;
             }
 
@@ -197,7 +174,7 @@ namespace Smake.Game
         // Tailkoordinaten berechnen
         void TailShift()
         {
-            TailLaenge = Punkte + tailStartLaenge;
+            TailLaenge = Punkte + ConfigSystem.Game.TailStartLaenge;
 
             for (int i = TailLaenge + 1; i > 0; i--)
             {

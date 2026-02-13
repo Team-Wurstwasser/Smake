@@ -2,7 +2,6 @@
 using Smake.Values;
 using Smake.SFX;
 using Smake.Enums;
-using Smake.Game;
 
 namespace Smake.Menues
 {
@@ -34,8 +33,8 @@ namespace Smake.Menues
 
         void Menueloop()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0);
-            Title = LanguageManager.Get("settings.title");
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Settings);
+            Title = LanguageSystem.Get("settings.title");
             Display = BuildMenu();
             MenuTracker = 1;
             InitialRender();
@@ -99,9 +98,9 @@ namespace Smake.Menues
                 case 2: Spielvalues.Multiplayer = !Spielvalues.Multiplayer; break;
                 case 3: ChangeGamemode(); break;
                 case 4: ChangeMaxFutter(); break;
-                case 5: RenderSpielfeld.Performancemode = !RenderSpielfeld.Performancemode; break;
-                case 6: Sounds.Musikplay = !Sounds.Musikplay; Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0); break;
-                case 7: Sounds.Soundplay = !Sounds.Soundplay; Sounds.Melodie(GameData.MusikDaten.Menue?.Einstellungen ?? 0); break;
+                case 5: Spielvalues.Performancemode = !Spielvalues.Performancemode; break;
+                case 6: Sounds.Musikplay = !Sounds.Musikplay; Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Settings); break;
+                case 7: Sounds.Soundplay = !Sounds.Soundplay; Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Settings); break;
                 case 8: ChangeLanguage(); break;
                 case 9: ResetSpielstand(); break;
                 case 10: StopInputstream(); break;
@@ -113,24 +112,24 @@ namespace Smake.Menues
         {
             bool isWindows = OperatingSystem.IsWindows();
 
-            var items = LanguageManager.GetArray("settings.items");
-            var gamemodes = LanguageManager.GetArray("settings.gamemodes");
-            var difficultys = LanguageManager.GetArray("settings.difficultys");
+            var items = LanguageSystem.GetArray("settings.items");
+            var gamemodes = LanguageSystem.GetArray("settings.gamemodes");
+            var difficultys = LanguageSystem.GetArray("settings.difficultys");
             var menuList = new List<string>
             {
                 items[0].Replace("{difficulty}", difficultys[(int)Spielvalues.Difficulty]),
-                items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")),
+                items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")),
                 items[2].Replace("{gamemode}", gamemodes[(int)Spielvalues.Gamemode]),
                 items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
-                items[4].Replace("{performance}", RenderSpielfeld.Performancemode ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off"))
+                items[4].Replace("{performance}", Spielvalues.Performancemode ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off"))
             };
 
             if (isWindows)
             {
-                menuList.Add(items[5].Replace("{music}", Sounds.Musikplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
-                menuList.Add(items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageManager.Get("settings.on") : LanguageManager.Get("settings.off")));
+                menuList.Add(items[5].Replace("{music}", Sounds.Musikplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")));
+                menuList.Add(items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")));
             }
-            menuList.Add(items[7].Replace("{language}", LanguageManager.Language?.ToUpper()));
+            menuList.Add(items[7].Replace("{language}", LanguageSystem.Language?.ToUpper()));
             menuList.Add(items[8]);
             menuList.Add(items[9]);
 
@@ -142,13 +141,13 @@ namespace Smake.Menues
             bool valid = false;
 
             // Dynamisch verfügbare Sprachen (Code + Anzeigename)
-            List<(string, string)> languages = LanguageManager.GetAvailableLanguages();
+            List<(string, string)> languages = LanguageSystem.GetAvailableLanguages();
 
             do
             {
                 Console.Clear();
                 Console.WriteLine("╔════════════════════════════════════════════╗");
-                Console.WriteLine(LanguageManager.Get("settings.languageMenuTitle"));
+                Console.WriteLine(LanguageSystem.Get("settings.languageMenuTitle"));
                 Console.WriteLine("╠════════════════════════════════════════════╣");
 
                 // Sprachen dynamisch auflisten
@@ -158,10 +157,10 @@ namespace Smake.Menues
                     var (langCode, displayName) = languages[i];
 
                     Console.Write("║ ");
-                    if (LanguageManager.Language == langCode)
+                    if (LanguageSystem.Language == langCode)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"[{i + 1}] {displayName,-10} ({langCode}) ← {LanguageManager.Get("settings.current")}".PadRight(43));
+                        Console.Write($"[{i + 1}] {displayName,-10} ({langCode}) ← {LanguageSystem.Get("settings.current")}".PadRight(43));
                         Console.ResetColor();
                     }
                     else
@@ -172,7 +171,7 @@ namespace Smake.Menues
                 }
 
                 Console.WriteLine("╚════════════════════════════════════════════╝");
-                Console.Write(LanguageManager.Get("settings.languageMenuPrompt"));
+                Console.Write(LanguageSystem.Get("settings.languageMenuPrompt"));
 
                 string eingabe = Console.ReadLine()!.Trim().ToLower();
                 string? newLang = null;
@@ -192,26 +191,26 @@ namespace Smake.Menues
 
                 if (newLang != null)
                 {
-                    LanguageManager.Speichern_Laden(StorageAction.Save, newLang);
+                    LanguageSystem.Speichern_Laden(StorageAction.Save, newLang);
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\n✔ {LanguageManager.Get("settings.languageChanged").Replace("{lang}", newLang.ToUpper())}");
+                    Console.WriteLine($"\n✔ {LanguageSystem.Get("settings.languageChanged").Replace("{lang}", newLang.ToUpper())}");
                     Console.ResetColor();
                     valid = true;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n" + LanguageManager.Get("settings.invalidSelection"));
+                    Console.WriteLine("\n" + LanguageSystem.Get("settings.invalidSelection"));
                     Console.ResetColor();
 
-                    Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+                    Console.WriteLine("\n" + LanguageSystem.Get("settings.pressAnyKey"));
                     Console.ReadKey(true);
                 }
 
             } while (!valid);
 
-            Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+            Console.WriteLine("\n" + LanguageSystem.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
@@ -230,14 +229,14 @@ namespace Smake.Menues
 
         static void ChangeGamemode()
         {
-            var modes = LanguageManager.GetArray("settings.gamemodes");
+            var modes = LanguageSystem.GetArray("settings.gamemodes");
             bool valid = false;
 
             do
             {
                 Console.Clear();
                 Console.WriteLine("╔════════════════════════════════════════════╗");
-                Console.WriteLine(LanguageManager.Get("settings.gamemodeHeaderTitle"));
+                Console.WriteLine(LanguageSystem.Get("settings.gamemodeHeaderTitle"));
                 Console.WriteLine("╠════════════════════════════════════════════╣");
 
                 for (int i = 0; i < modes.Length; i++)
@@ -246,7 +245,7 @@ namespace Smake.Menues
                     if ((int)Spielvalues.Gamemode == i)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($"[{i + 1}] {modes[i],-25} ← {LanguageManager.Get("settings.current")}".PadRight(43));
+                        Console.Write($"[{i + 1}] {modes[i],-25} ← {LanguageSystem.Get("settings.current")}".PadRight(43));
                         Console.ResetColor();
                     }
                     else
@@ -257,33 +256,33 @@ namespace Smake.Menues
                 }
 
                 Console.WriteLine("╚════════════════════════════════════════════╝");
-                Console.Write(LanguageManager.Get("settings.gamemodePrompt"));
+                Console.Write(LanguageSystem.Get("settings.gamemodePrompt"));
 
                 string eingabe = Console.ReadLine()!;
                 if (int.TryParse(eingabe, out int auswahl) && auswahl >= 1 && auswahl <= modes.Length)
                 {
                     Spielvalues.Gamemode = (Gamemodes)(auswahl - 1);
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\n✔ {LanguageManager.Get("settings.gamemodeChanged")} {Spielvalues.Gamemode}");
+                    Console.WriteLine($"\n✔ {LanguageSystem.Get("settings.gamemodeChanged")} {Spielvalues.Gamemode}");
                     Console.ResetColor();
                     valid = true;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n" + LanguageManager.Get("settings.invalidSelection"));
+                    Console.WriteLine("\n" + LanguageSystem.Get("settings.invalidSelection"));
                     Console.ResetColor();
                 }
 
                 if (!valid)
                 {
-                    Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+                    Console.WriteLine("\n" + LanguageSystem.Get("settings.pressAnyKey"));
                     Console.ReadKey(true);
                 }
 
             } while (!valid);
 
-            Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+            Console.WriteLine("\n" + LanguageSystem.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
@@ -296,25 +295,25 @@ namespace Smake.Menues
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine("╔════════════════════════════════════════════╗");
-                Console.WriteLine(LanguageManager.Get("settings.maxFoodHeaderTitle"));
+                Console.WriteLine(LanguageSystem.Get("settings.maxFoodHeaderTitle"));
                 Console.WriteLine("╠════════════════════════════════════════════╣");
-                Console.WriteLine(LanguageManager.Get("settings.maxFoodLimit").Replace("{limit}", GameData.MaxFutterconfig.ToString().PadRight(17)));
+                Console.WriteLine(LanguageSystem.Get("settings.maxFoodLimit").Replace("{limit}", ConfigSystem.Game.MaxFutterconfig.ToString().PadRight(17)));
                 Console.WriteLine("╚════════════════════════════════════════════╝");
-                Console.Write(LanguageManager.Get("settings.maxFoodPrompt"));
+                Console.Write(LanguageSystem.Get("settings.maxFoodPrompt"));
                 string input = Console.ReadLine()!;
                 if (int.TryParse(input, out int wert) && wert > 0)
                 {
-                    if (wert > GameData.MaxFutterconfig)
+                    if (wert > ConfigSystem.Game.MaxFutterconfig)
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("\n" + LanguageManager.Get("settings.maxFoodTooHigh").Replace("{limit}", GameData.MaxFutterconfig.ToString()));
+                        Console.WriteLine("\n" + LanguageSystem.Get("settings.maxFoodTooHigh").Replace("{limit}", ConfigSystem.Game.MaxFutterconfig.ToString()));
                         Console.ResetColor();
                     }
                     else
                     {
                         Spielvalues.Maxfutter = wert;
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\n" + LanguageManager.Get("settings.maxFoodChanged").Replace("{value}", wert.ToString()));
+                        Console.WriteLine("\n" + LanguageSystem.Get("settings.maxFoodChanged").Replace("{value}", wert.ToString()));
                         Console.ResetColor();
                         valid = true;
                     }
@@ -322,19 +321,19 @@ namespace Smake.Menues
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n" + LanguageManager.Get("settings.invalidInput"));
+                    Console.WriteLine("\n" + LanguageSystem.Get("settings.invalidInput"));
                     Console.ResetColor();
                 }
 
                 if (!valid)
                 {
-                    Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+                    Console.WriteLine("\n" + LanguageSystem.Get("settings.pressAnyKey"));
                     Console.ReadKey(true);
                 }
 
             } while (!valid);
 
-            Console.WriteLine("\n" + LanguageManager.Get("settings.pressAnyKey"));
+            Console.WriteLine("\n" + LanguageSystem.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
@@ -344,12 +343,12 @@ namespace Smake.Menues
             Console.Clear();
             for (int i = 1; i <= 3; i++)
             {
-                Console.WriteLine(LanguageManager.Get("settings.resetPrompt").Replace("{count}", i.ToString()));
+                Console.WriteLine(LanguageSystem.Get("settings.resetPrompt").Replace("{count}", i.ToString()));
                 string? input = Console.ReadLine()?.Trim().ToLower();
                 Console.Clear();
-                if (input != LanguageManager.Get("settings.resetConfirm"))
+                if (input != LanguageSystem.Get("settings.resetConfirm"))
                 {
-                    Console.WriteLine(LanguageManager.Get("settings.resetCancelled"));
+                    Console.WriteLine(LanguageSystem.Get("settings.resetCancelled"));
                     Console.ReadKey(true);
                     Console.Clear();
                     return;
@@ -357,8 +356,8 @@ namespace Smake.Menues
             }
 
             SpeicherSystem.Speichern_Laden(StorageAction.Reset);
-            Console.WriteLine(LanguageManager.Get("settings.resetDone"));
-            Console.WriteLine(LanguageManager.Get("settings.pressAnyKey"));
+            Console.WriteLine(LanguageSystem.Get("settings.resetDone"));
+            Console.WriteLine(LanguageSystem.Get("settings.pressAnyKey"));
             Console.ReadKey(true);
             Console.Clear();
         }
