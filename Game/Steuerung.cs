@@ -38,42 +38,42 @@ namespace Smake.Game
                     {
                         // Player 1 Steuerung (Pfeiltasten)
                         case ConsoleKey.UpArrow:
-                            UpdatePlayerDirection(Spiellogik.Player, 0, -1, '^');
+                            UpdatePlayerDirection(Spiel.Player[0], 0, -1, '^');
                             break;
                         case ConsoleKey.DownArrow:
-                            UpdatePlayerDirection(Spiellogik.Player, 0, 1, 'v');
+                            UpdatePlayerDirection(Spiel.Player[0], 0, 1, 'v');
                             break;
                         case ConsoleKey.LeftArrow:
-                            UpdatePlayerDirection(Spiellogik.Player, -1, 0, '<');
+                            UpdatePlayerDirection(Spiel.Player[0], -1, 0, '<');
                             break;
                         case ConsoleKey.RightArrow:
-                            UpdatePlayerDirection(Spiellogik.Player, 1, 0, '>');
+                            UpdatePlayerDirection(Spiel.Player[0], 1, 0, '>');
                             break;
 
                         // Player 2 Steuerung (WASD) im Multiplayer
                         case ConsoleKey.W:
                             if (Spielvalues.Multiplayer)
-                                UpdatePlayerDirection(Spiellogik.Player2, 0, -1, '^');
+                                UpdatePlayerDirection(Spiel.Player[1], 0, -1, '^');
                             else
-                                UpdatePlayerDirection(Spiellogik.Player, 0, -1, '^');
+                                UpdatePlayerDirection(Spiel.Player[0], 0, -1, '^');
                             break;
                         case ConsoleKey.S:
                             if (Spielvalues.Multiplayer)
-                                UpdatePlayerDirection(Spiellogik.Player2, 0, 1, 'v');
+                                UpdatePlayerDirection(Spiel.Player[1], 0, 1, 'v');
                             else
-                                UpdatePlayerDirection(Spiellogik.Player, 0, 1, 'v');
+                                UpdatePlayerDirection(Spiel.Player[0], 0, 1, 'v');
                             break;
                         case ConsoleKey.A:
                             if (Spielvalues.Multiplayer)
-                                UpdatePlayerDirection(Spiellogik.Player2, -1, 0, '<');
+                                UpdatePlayerDirection(Spiel.Player[1], -1, 0, '<');
                             else
-                                UpdatePlayerDirection(Spiellogik.Player, -1, 0, '<');
+                                UpdatePlayerDirection(Spiel.Player[0], -1, 0, '<');
                             break;
                         case ConsoleKey.D:
                             if (Spielvalues.Multiplayer)
-                                UpdatePlayerDirection(Spiellogik.Player2, 1, 0, '>');
+                                UpdatePlayerDirection(Spiel.Player[1], 1, 0, '>');
                             else
-                                UpdatePlayerDirection(Spiellogik.Player, 1, 0, '>');
+                                UpdatePlayerDirection(Spiel.Player[0], 1, 0, '>');
                             break;
 
                         // Spiel beenden

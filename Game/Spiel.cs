@@ -1,20 +1,17 @@
-﻿using Smake.Values;
+﻿using Smake.Speicher;
+using Smake.Values;
 
 namespace Smake.Game
 {
     public class Spiel
     {
+        public static Player[] Player { get; set; } = [];
+
         public Spiel()
         {
-            Spiellogik.Player.TailFarbe = Skinvalues.TailFarbe[0];
-            Spiellogik.Player.HeadFarbe = Skinvalues.HeadFarbe[0];
-            Spiellogik.Player2.TailFarbe = Skinvalues.TailFarbe[1];
-            Spiellogik.Player2.HeadFarbe = Skinvalues.HeadFarbe[1];
+            string?[] Namen = Spiellogik.Eingaben();
 
-            Spiellogik.Player.TailSkin = Skinvalues.TailSkin[0];
-            Spiellogik.Player.HeadSkin = Skinvalues.HeadSkin[0];
-            Spiellogik.Player2.TailSkin = Skinvalues.TailSkin[1];
-            Spiellogik.Player2.HeadSkin = Skinvalues.HeadSkin[1];
+            Player = [new(ConfigSystem.Game.Startpositionen.Spieler1.X, ConfigSystem.Game.Startpositionen.Spieler1.Y, Namen[0], Skinvalues.TailSkin[0], Skinvalues.HeadFarbe[0], Skinvalues.TailFarbe[0]), new(ConfigSystem.Game.Startpositionen.Spieler2.X, ConfigSystem.Game.Startpositionen.Spieler2.Y, Namen[1], Skinvalues.TailSkin[1], Skinvalues.HeadFarbe[1], Skinvalues.TailFarbe[1])];
 
             Spiellogik spiel = new();
             spiel.Spielloop();

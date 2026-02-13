@@ -11,16 +11,12 @@ namespace Smake.Game
     {
         public static GameOverType Gameovertype { get; set; }
 
-        public static Player Player { get; set; } = new(ConfigSystem.Game.Startpositionen.Spieler1.X, ConfigSystem.Game.Startpositionen.Spieler1.Y, ConfigSystem.Game.TailStartLaenge);
-
-        public static Player Player2 { get; set; } = new(ConfigSystem.Game.Startpositionen.Spieler2.X, ConfigSystem.Game.Startpositionen.Spieler2.Y, ConfigSystem.Game.TailStartLaenge);
-
         public static List<Futter> Essen { get; private set; } = [];
 
         public static List<Gegenstand> Mauer { get; private set; } = [];
 
         // Allen Variablen den Startwert geben
-        void Neustart()
+        void Start()
         {
             SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
@@ -34,11 +30,11 @@ namespace Smake.Game
             // Initialisiere das Spielfeld mit Rahmen
             InitialisiereSpielfeld();
 
-            Player.Neustart();
+            Spiel.Player[0].Start();
 
             if (Spielvalues.Multiplayer)
             {
-                Player2.Neustart();
+                Spiel.Player[1].Start();
             }
 
             for (int i = 0; i < Spielvalues.Maxfutter; i++)
@@ -77,7 +73,7 @@ namespace Smake.Game
 
             Mauer = [];
 
-            Neustart();
+            Start();
             Render();
 
             Thread.Sleep(5);
@@ -94,11 +90,11 @@ namespace Smake.Game
 
                 Thread.Sleep(Spielvalues.Zeit); // Spieltempo regulieren
 
-                Player.Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
+                Spiel.Player[0].Aenderung = true; // Eingaben auf 1 pro Tick Beschränken
 
                 if (Spielvalues.Multiplayer)
                 {
-                    Player2.Aenderung = true;
+                    Spiel.Player[1].Aenderung = true;
                 }
 
             }
@@ -120,7 +116,7 @@ namespace Smake.Game
 
             {
                 // Update Player 1
-                var (spielerTot, Maxpunkte) = Player.Update(Player2);
+                var (spielerTot, Maxpunkte) = Spiel.Player[0].Update(Spiel.Player[1]);
                 spieler1Tot |= spielerTot;
                 spieler2Tot |= Maxpunkte;  // Falls MaxPunkte
             }
@@ -128,7 +124,7 @@ namespace Smake.Game
             // Update Player 2
             if (Spielvalues.Multiplayer)
             {
-                var (spielerTot, Maxpunkte) = Player2.Update(Player);
+                var (spielerTot, Maxpunkte) = Spiel.Player[1].Update(Spiel.Player[0]);
                 spieler2Tot |= spielerTot;
                 spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
             }
@@ -168,36 +164,36 @@ namespace Smake.Game
                     Console.WriteLine(LanguageSystem.Get("gameover.draw"));
                     if (Spielvalues.Multiplayer)
                     {
-                        ShowPoints(Player.Name, Player.Punkte);
-                        ShowPoints(Player2.Name, Player2.Punkte);
+                        ShowPoints(Spiel.Player[0].Name, Spiel.Player[0].Punkte);
+                        ShowPoints(Spiel.Player[1].Name, Spiel.Player[1].Punkte);
                     }
                     break;
 
                 case GameOverType.Player1:
                     if (Spielvalues.Multiplayer)
                     {
-                        Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player2.Name));
-                        Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player2.Punkte.ToString()));
-                        ShowPoints(Player.Name, Player.Punkte);
+                        Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Spiel.Player[1].Name));
+                        Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Spiel.Player[1].Punkte.ToString()));
+                        ShowPoints(Spiel.Player[0].Name, Spiel.Player[0].Punkte);
                     }
                     else
                     {
                         Console.WriteLine(LanguageSystem.Get("gameover.lose"));
-                        Console.WriteLine(LanguageSystem.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine(LanguageSystem.Get("gameover.losePoints").Replace("{points}", Spiel.Player[0].Punkte.ToString()));
                     }
                     break;
 
                 case GameOverType.Player2:
                         if (Spielvalues.Multiplayer)
                         {
-                            Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player.Name));
-                            Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
-                            ShowPoints(Player2.Name, Player2.Punkte);
+                            Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Spiel.Player[0].Name));
+                            Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Spiel.Player[0].Punkte.ToString()));
+                            ShowPoints(Spiel.Player[1].Name, Spiel.Player[1].Punkte);
                         }
                         else
                         {
                             Console.WriteLine(LanguageSystem.Get("gameover.win"));
-                            Console.WriteLine(LanguageSystem.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
+                            Console.WriteLine(LanguageSystem.Get("gameover.winPoints").Replace("{points}", Spiel.Player[0].Punkte.ToString()));
                         }
                     break;
 
@@ -247,21 +243,21 @@ namespace Smake.Game
         }
 
         // Eingaben für Spielernamen
-        static void Eingaben()
+        public static string?[] Eingaben()
         {
+            string?[] namen = new string[2];
+
             Sounds.Melodie(ConfigSystem.Sounds.Musik.Game.Input);
 
-            Console.Clear();
-
-            Console.Write(LanguageSystem.Get("input.player1"));
-            Spiellogik.Player.Name = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write(LanguageSystem.Get("input.player2"));
-            Spiellogik.Player2.Name = Console.ReadLine();
+            for (int i = 0; i < namen.Length; i++)
+            {
+                Console.Clear();
+                Console.Write(LanguageSystem.Get($"input.player{i + 1}"));
+                namen[i] = Console.ReadLine();
+            }
 
             Console.Clear();
+            return namen;
         }
 
         // Coins und xp hinzufügen
@@ -269,31 +265,31 @@ namespace Smake.Game
         {
             if (Spielvalues.Gamemode != Gamemodes.Babymode && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
             {
-                if (Spielstatus.Highscore < Player.Punkte)
-                { Spielstatus.Highscore = Player.Punkte; }
-                else if (Spielstatus.Highscore < Player2.Punkte)
-                { Spielstatus.Highscore = Player2.Punkte; }
+                if (Spielstatus.Highscore < Spiel.Player[0].Punkte)
+                { Spielstatus.Highscore = Spiel.Player[0].Punkte; }
+                else if (Spielstatus.Highscore < Spiel.Player[1].Punkte)
+                { Spielstatus.Highscore = Spiel.Player[1].Punkte; }
 
                 Spielstatus.SpieleGesamt++;
 
                 switch (Spielvalues.Difficulty)
                 {
                     case Difficultys.Slow:
-                        Spielstatus.Gesamtcoins = Player.Punkte + Player2.Punkte + Spielstatus.Gesamtcoins;
-                        Spielstatus.Coins = Player.Punkte + Player2.Punkte + Spielstatus.Coins;
-                        Spielstatus.Xp = Player.Punkte + Player2.Punkte + Spielstatus.Xp;
+                        Spielstatus.Gesamtcoins = Spiel.Player[0].Punkte + Spiel.Player[1].Punkte + Spielstatus.Gesamtcoins;
+                        Spielstatus.Coins = Spiel.Player[0].Punkte + Spiel.Player[1].Punkte + Spielstatus.Coins;
+                        Spielstatus.Xp = Spiel.Player[0].Punkte + Spiel.Player[1].Punkte + Spielstatus.Xp;
                         break;
 
                     case Difficultys.Medium:
-                        Spielstatus.Gesamtcoins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
-                        Spielstatus.Coins = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
-                        Spielstatus.Xp = 2 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
+                        Spielstatus.Gesamtcoins = 2 * (Spiel.Player[0].Punkte + Spiel.Player[1].Punkte) + Spielstatus.Gesamtcoins;
+                        Spielstatus.Coins = 2 * (Spiel.Player[0].Punkte + Spiel.Player[1].Punkte) + Spielstatus.Coins;
+                        Spielstatus.Xp = 2 * (Spiel.Player[0].Punkte + Spiel.Player[1].Punkte) + Spielstatus.Xp;
                         break;
 
                     case Difficultys.Fast:
-                        Spielstatus.Gesamtcoins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Gesamtcoins;
-                        Spielstatus.Coins = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Coins;
-                        Spielstatus.Xp = 3 * (Player.Punkte + Player2.Punkte) + Spielstatus.Xp;
+                        Spielstatus.Gesamtcoins = 3 * (Spiel.Player[0].Punkte + Spiel.Player[1].Punkte) + Spielstatus.Gesamtcoins;
+                        Spielstatus.Coins = 3 * (Spiel.Player[0].Punkte + Spiel.Player[1].Punkte) + Spielstatus.Coins;
+                        Spielstatus.Xp = 3 * (Spiel.Player[0].Punkte + Spiel.Player[1].Punkte) + Spielstatus.Xp;
                         break;
                 }
             }
