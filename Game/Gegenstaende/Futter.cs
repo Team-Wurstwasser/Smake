@@ -5,7 +5,7 @@ using Smake.Enums;
 
 namespace Smake.Game.Gegenstaende
 {
-    public class Futter(char food, ConsoleColor foodfarbe) : Gegenstand(food)
+    public class Futter(char[,] grid, char food, ConsoleColor foodfarbe) : Gegenstand(grid, food)
     {
         public ConsoleColor FoodFarbe { get; private set; } = foodfarbe;
 
@@ -22,7 +22,7 @@ namespace Smake.Game.Gegenstaende
 
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
-                Schluessel = new();
+                Schluessel = new(grid);
             }
 
             if (Spielvalues.Gamemode == Gamemodes.SprungfutterModus)
@@ -32,7 +32,7 @@ namespace Smake.Game.Gegenstaende
 
             if (Spielvalues.Gamemode == Gamemodes.BombenModus)
             {
-                Bombe = new();
+                Bombe = new(grid);
             }
         }
 
@@ -45,21 +45,21 @@ namespace Smake.Game.Gegenstaende
                 {
                     if (!Schluessel.Collected)
                     {
-                        RenderSpielfeld.Grid[Y, X] = Skinvalues.MauerSkin;
+                        grid[Y, X] = Skinvalues.MauerSkin;
                     }
                     else
                     {
-                        RenderSpielfeld.Grid[Y, X] = Skin;
+                        grid[Y, X] = Skin;
                     }
                 }
             }
             else
             {
-                RenderSpielfeld.Grid[Y, X] = Skin;
+                grid[Y, X] = Skin;
             }
         }
 
-        public void EsseFutter(Player p)
+        public void EsseFutter(char[,] grid,Player p)
         {
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
@@ -74,7 +74,7 @@ namespace Smake.Game.Gegenstaende
                     {
                         if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
                         {
-                            p.Punkte++;
+                            p.AddPunkt();
 
                             Sounds.Playbeep();
 
@@ -93,13 +93,13 @@ namespace Smake.Game.Gegenstaende
                 {
                     if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
                     {
-                        p.Punkte++;
+                        p.AddPunkt();
 
                         Sounds.Playbeep();
 
                         if (Spielvalues.Gamemode == Gamemodes.MauerModus)
                         {
-                            Spiellogik.Mauer.Add(new(Skinvalues.MauerSkin));
+                            Spiellogik.Mauer.Add(new(grid, Skinvalues.MauerSkin));
                         }
 
                         if(Spielvalues.Gamemode == Gamemodes.BombenModus)
@@ -126,7 +126,7 @@ namespace Smake.Game.Gegenstaende
                 if (TeleportCounter >= TeleportInterval)
                 {
                     // Alte Position löschen
-                    RenderSpielfeld.Grid[Y, X] = ' ';
+                    grid[Y, X] = ' ';
                     Setze();
                 }
             }
