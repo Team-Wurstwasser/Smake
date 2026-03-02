@@ -1,49 +1,36 @@
-﻿using Smake.Values;
-using Smake.Helper;
+﻿using Smake.Helper;
 
 namespace Smake.Game.Gegenstaende
 {
     public class Gegenstand
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
+        public int X { get; protected set; }
+        public int Y { get; protected set; }
+        public char Skin { get; }
 
-        public char Skin;
+        protected readonly char[,] grid;
 
-        public Gegenstand(char skin) 
+        public Gegenstand(char[,] grid, char skin)
         {
+            this.grid = grid;
             Skin = skin;
             Setze();
-            Zeichne();
         }
 
-        // Setzt das Gegendstand an eine zufällige, freie Position
         protected virtual void Setze()
         {
             int x, y;
-
             do
             {
-                // Zufalls-X (immer gerade Zahl, damit zur Snake passt)
-                x = RandomHelper.Next(1, Spielvalues.weite - 2);
-                if (x % 2 != 0 && x < Spielvalues.weite - 2)
-                    x++;
+                x = RandomHelper.Next(1, grid.GetLength(1) - 2);
+                if (x % 2 != 0) x++;
+                y = RandomHelper.Next(1, grid.GetLength(0) - 2);
+            } while (grid[y, x] != ' ');
 
-                // Zufalls-Y
-                y = RandomHelper.Next(1, Spielvalues.hoehe - 2);
-
-                // Wiederholen solange die Stelle nicht frei ist
-            } while (RenderSpielfeld.Grid[y, x] != ' ');
-
-            // Setze Position
-            X = x;
-            Y = y;
+            X = x; Y = y;
+            Zeichne();
         }
 
-        protected virtual void Zeichne()
-        {
-            // Gegendstand ins Spielfeld einzeichnen
-            RenderSpielfeld.Grid[Y, X] = Skin;
-        }
+        protected virtual void Zeichne() => grid[Y, X] = Skin;
     }
 }

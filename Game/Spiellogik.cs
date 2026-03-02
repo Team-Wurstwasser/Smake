@@ -7,7 +7,7 @@ using Smake.Values;
 
 namespace Smake.Game
 {
-    public class Spiellogik : RenderSpielfeld
+    public class Spiellogik
     {
         public static GameOverType Gameovertype { get; set; }
 
@@ -16,8 +16,12 @@ namespace Smake.Game
         public static List<Gegenstand> Mauer { get; private set; } = [];
 
         // Allen Variablen den Startwert geben
-        void Start()
+        public static void Start(char[,] grid)
         {
+            Essen = [];
+
+            Mauer = [];
+
             SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
             Gameovertype = GameOverType.None;
@@ -28,20 +32,13 @@ namespace Smake.Game
             else Spielvalues.Zeit = ConfigSystem.Game.Difficulty.Fast;
 
             // Initialisiere das Spielfeld mit Rahmen
-            InitialisiereSpielfeld();
-
-            Spiel.Player[0].Start();
-
-            if (Spielvalues.Multiplayer)
-            {
-                Spiel.Player[1].Start();
-            }
+            Spiel.Render.InitialisiereSpielfeld();
 
             for (int i = 0; i < Spielvalues.Maxfutter; i++)
             {
                 if (!Skinvalues.FoodfarbeRandom)
                 {
-                    Essen.Add(new Futter(Skinvalues.FoodSkin, Skinvalues.FoodFarbe));
+                    Essen.Add(new Futter(grid, Skinvalues.FoodSkin, Skinvalues.FoodFarbe));
                 }
                 else
                 {
@@ -57,22 +54,18 @@ namespace Smake.Game
                     int zufallIndex = RandomHelper.Next(freigeschalteteFarbenIndex.Count);
                     int farbenIndex = freigeschalteteFarbenIndex[zufallIndex];
 
-                    Essen.Add(new Futter(Skinvalues.FoodSkin, ConfigSystem.Skins.Farben[farbenIndex]));
+                    Essen.Add(new Futter(grid, Skinvalues.FoodSkin, ConfigSystem.Skins.Farben[farbenIndex]));
                 }
 
             }
         }
 
         // Spielablauf
-        public void Spielloop()
+        public static void Spielloop()
         {
             Sounds.Melodie(MusikSelector.Selector());
-            Essen = [];
 
-            Mauer = [];
-
-            Start();
-            Render();
+            Spiel.Render.Render(Spiel.Player);
 
             Thread.Sleep(5);
 
@@ -84,7 +77,7 @@ namespace Smake.Game
 
                 Update();   // Spielerposition aktualisieren
 
-                Render();   // Spielfeld neu zeichnen
+                Spiel.Render.Render(Spiel.Player);   // Spielfeld neu zeichnen
 
                 Thread.Sleep(Spielvalues.Zeit); // Spieltempo regulieren
 
@@ -151,6 +144,7 @@ namespace Smake.Game
         static void ShowGameOverScreen()
         {
             Console.Clear();
+            Console.ResetColor();
             Console.WriteLine("═════════════════════════════════════");
             Console.WriteLine("            GAME OVER              ");
             Console.WriteLine("═════════════════════════════════════");
