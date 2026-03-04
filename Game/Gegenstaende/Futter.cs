@@ -59,7 +59,7 @@ namespace Smake.Game.Gegenstaende
             }
         }
 
-        public void EsseFutter(char[,] grid,Player p)
+        public void EsseFutter(Player p)
         {
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
