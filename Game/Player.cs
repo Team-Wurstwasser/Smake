@@ -68,7 +68,7 @@ namespace Smake.Game
 
                 foreach (var Futter in Spiellogik.Essen)
                 {
-                    Futter.EsseFutter(grid, this);
+                    Futter.EsseFutter(this);
                 }
             }
             return GameoverChecker(p);
