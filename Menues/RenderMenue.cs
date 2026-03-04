@@ -32,7 +32,7 @@ namespace Smake.Menues
                     RenderMainMenuLayout();
                     break;
 
-                case "Skin_Farben":
+                case "SkinColors":
                     RenderSkinFarbenLayout();
                     break;
 
@@ -67,17 +67,17 @@ namespace Smake.Menues
         static void DrawTitle()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(@"
-  ██████  ███▄ ▄███▓ ▄▄▄       ██ ▄█▀▓█████ 
-▒██    ▒ ▓██▒▀█▀ ██▒▒████▄     ██▄█▒ ▓█   ▀ 
-░ ▓██▄   ▓██    ▓██░▒██  ▀█▄  ▓███▄░ ▒███   
-  ▒   ██▒▒██    ▒██ ░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄ 
-▒██████▒▒▒██▒   ░██▒ ▓█   ▓██▒▒██▒ █▄░▒████▒
-▒ ▒▓▒ ▒ ░░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░
-░ ░▒  ░ ░░  ░      ░  ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░
-░  ░  ░  ░      ░     ░   ▒   ░ ░░ ░    ░   
-      ░         ░         ░  ░░  ░      ░  ░
-");
+            Console.WriteLine("""
+     ██████  ███▄ ▄███▓ ▄▄▄        ██ ▄█▀▓█████
+    ▒██    ▒ ▓██▒▀█▀ ██▒▒████▄     ██▄█▒ ▓█   ▀ 
+    ░ ▓██▄   ▓██    ▓██░▒██  ▀█▄   ▓███▄░ ▒███   
+      ▒   ██▒▒██    ▒██ ░██▄▄▄▄██ ▓██ █▄ ▒▓█  ▄ 
+    ▒██████▒▒▒██▒   ░██▒ ▓█   ▓██▒▒██▒ █▄░▒████▒
+    ▒ ▒▓▒ ▒ ░░ ▒░   ░  ░ ▒▒   ▓▒█░▒ ▒▒ ▓▒░░ ▒░ ░
+    ░ ░▒  ░ ░░  ░      ░  ▒   ▒▒ ░░ ░▒ ▒░ ░ ░  ░
+    ░  ░  ░  ░      ░      ░   ▒   ░ ░░ ░    ░   
+          ░          ░          ░  ░░  ░      ░  ░
+    """);
             Console.ResetColor();
         }
 
@@ -99,7 +99,7 @@ namespace Smake.Menues
 
         void RenderSkinFarbenLayout()
         {
-            Console.WriteLine(LanguageManager.Get("skins.title"));
+            Console.WriteLine(LanguageSystem.Get("skins.title"));
             Console.WriteLine("══════════════════════════════");
 
             for (int i = 0; i < Display.Length; i++)
@@ -109,7 +109,7 @@ namespace Smake.Menues
 
                 if (GameValue[i] != null)
                 {
-                    if (IsColor[i] && !RenderSpielfeld.Performancemode || !IsColor[i])
+                    if (IsColor[i] && !Spielvalues.Performancemode || !IsColor[i])
                     {
                         if (GameValue[i] is ConsoleColor color)
                         {
@@ -124,7 +124,7 @@ namespace Smake.Menues
                     }
                     else
                     {
-                        Console.Write(RenderSpielfeld.Performancemode ? LanguageManager.Get("skins.performancemode") : GameValue[i]);
+                        Console.Write(Spielvalues.Performancemode ? LanguageSystem.Get("skins.performancemode") : GameValue[i]);
                     }
 
                     Console.Write("]".PadRight(13));
@@ -138,31 +138,28 @@ namespace Smake.Menues
         static void RenderShopHeader()
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine(LanguageManager.Get("shop.title").PadLeft(14));
-            Console.WriteLine(LanguageManager.Get("shop.coins").Replace("{coins}", Spielstatus.Coins.ToString()).PadRight(50));
-            Console.WriteLine(LanguageManager.Get("shop.level").Replace("{level}", Spielstatus.Level.ToString()).PadRight(50));
+            Console.WriteLine(LanguageSystem.Get("shop.title").PadLeft(14));
+            Console.WriteLine(LanguageSystem.Get("shop.coins").Replace("{coins}", Spielstatus.Coins.ToString()).PadRight(50));
+            Console.WriteLine(LanguageSystem.Get("shop.level").Replace("{level}", Spielstatus.Level.ToString()).PadRight(50));
             Console.WriteLine("═══════════════════════════");
-            Console.WriteLine(LanguageManager.Get("shop.switchPage"));
+            Console.WriteLine(LanguageSystem.Get("shop.switchPage"));
         }
 
         void RenderShopFooter(int option)
         {
             string zeiger = option + 1 == Selected ? ">>" : "  ";
-            Console.WriteLine($"\n{zeiger} {LanguageManager.Get("shop.back")}");
+            Console.WriteLine($"\n{zeiger} {LanguageSystem.Get("shop.back")}");
             Console.WriteLine("══════════════════════════");
         }
 
         static int RenderShopSection(string titleKey, int optionCounter, int selected1, char[] items, int[] levels, bool[] unlocked, int[] prices, int startIndex = 1)
         {
-            Console.WriteLine($"\n{LanguageManager.Get("shop." + titleKey)}:");
+            Console.WriteLine($"\n{LanguageSystem.Get("shop." + titleKey)}:");
             for (int i = startIndex; i < items.Length; i++)
             {
                 int shopItemIndex = i - startIndex;
 
-                string shoptext = Spielstatus.Level < levels[shopItemIndex]
-                    ? LanguageManager.Get("shop.requiredLevel").Replace("{level}", levels[shopItemIndex].ToString())
-                    : unlocked[i] ? LanguageManager.Get("shop.unlocked")
-                    : LanguageManager.Get("shop.price").Replace("{price}", prices[shopItemIndex].ToString());
+                string shoptext = Spielstatus.Level < levels[shopItemIndex] ? LanguageSystem.Get("shop.requiredLevel").Replace("{level}", levels[shopItemIndex].ToString()) : unlocked[i] ? LanguageSystem.Get("shop.unlocked") : LanguageSystem.Get("shop.price").Replace("{price}", prices[shopItemIndex].ToString());
 
                 string zeiger = optionCounter + 1 == selected1 ? ">>" : "  ";
                 Console.WriteLine($"{zeiger} {items[i]} {shoptext}".PadRight(50));
@@ -177,9 +174,9 @@ namespace Smake.Menues
             RenderShopHeader();
             int option = 0;
 
-            option = RenderShopSection("tailSkins", option, Selected, GameData.TailSkins, GameData.TailLevel, Menüsvalues.FreigeschaltetTail, GameData.TailPreis, 2);
-            option = RenderShopSection("foodSkins", option, Selected, GameData.FoodSkins, GameData.FoodLevel, Menüsvalues.FreigeschaltetFood, GameData.FoodPreis);
-            option = RenderShopSection("randSkins", option, Selected, GameData.RandSkins, GameData.RandLevel, Menüsvalues.FreigeschaltetRand, GameData.RandPreis);
+            option = RenderShopSection("tailSkins", option, Selected, ConfigSystem.Skins.Tail, ConfigSystem.Levels.Tail, Menüsvalues.FreigeschaltetTail, ConfigSystem.Prices.Tail, 2);
+            option = RenderShopSection("foodSkins", option, Selected, ConfigSystem.Skins.Food, ConfigSystem.Levels.Food, Menüsvalues.FreigeschaltetFood, ConfigSystem.Prices.Food);
+            option = RenderShopSection("randSkins", option, Selected, ConfigSystem.Skins.Rand, ConfigSystem.Levels.Rand, Menüsvalues.FreigeschaltetRand, ConfigSystem.Prices.Rand);
 
             RenderShopFooter(option);
         }
@@ -187,19 +184,16 @@ namespace Smake.Menues
         void RenderShopFarbenLayout()
         {
             RenderShopHeader();
-            Console.WriteLine($"\n{LanguageManager.Get("shop.colors")}:");
+            Console.WriteLine($"\n{LanguageSystem.Get("shop.colors")}:");
             int option = 0;
 
-            for (int i = 1; i < GameData.Farben.Length; i++, option++)
+            for (int i = 1; i < ConfigSystem.Skins.Farben.Length; i++, option++)
             {
-                string shoptext = Spielstatus.Level < GameData.FarbenLevel[i - 1]
-                    ? LanguageManager.Get("shop.requiredLevel").Replace("{level}", GameData.FarbenLevel[i - 1].ToString())
-                    : Menüsvalues.FreigeschaltetFarben[i] ? LanguageManager.Get("shop.unlocked")
-                    : LanguageManager.Get("shop.price").Replace("{price}", GameData.FarbenPreis[i - 1].ToString());
-
+                string shoptext = Spielstatus.Level < ConfigSystem.Levels.Farben[i - 1] ? LanguageSystem.Get("shop.requiredLevel").Replace("{level}", ConfigSystem.Levels.Farben[i - 1].ToString()) : Menüsvalues.FreigeschaltetFarben[i] ? LanguageSystem.Get("shop.unlocked") : LanguageSystem.Get("shop.price").Replace("{price}", ConfigSystem.Prices.Farben[i - 1].ToString());
+                
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
-                Console.ForegroundColor = GameData.Farben[i];
-                Console.WriteLine($"{zeiger} {GameData.Farben[i],-12} {shoptext}".PadRight(50));
+                Console.ForegroundColor = ConfigSystem.Skins.Farben[i];
+                Console.WriteLine($"{zeiger} {ConfigSystem.Skins.Farben[i],-12} {shoptext}".PadRight(50));
                 Console.ResetColor();
             }
 

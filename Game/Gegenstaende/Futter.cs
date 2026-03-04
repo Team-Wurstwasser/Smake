@@ -5,7 +5,7 @@ using Smake.Enums;
 
 namespace Smake.Game.Gegenstaende
 {
-    public class Futter(char food, ConsoleColor foodfarbe) : Gegenstand(food)
+    public class Futter(char[,] grid, char food, ConsoleColor foodfarbe) : Gegenstand(grid, food)
     {
         public ConsoleColor FoodFarbe { get; private set; } = foodfarbe;
 
@@ -14,7 +14,7 @@ namespace Smake.Game.Gegenstaende
 
         // Für Sprungfutter-Modus
         int TeleportCounter;
-        readonly int TeleportInterval = GameData.TeleportInterval;
+        readonly int TeleportInterval = ConfigSystem.Game.TeleportInterval;
 
         protected override void Setze()
         {
@@ -22,7 +22,7 @@ namespace Smake.Game.Gegenstaende
 
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
-                Schluessel = new();
+                Schluessel = new(grid);
             }
 
             if (Spielvalues.Gamemode == Gamemodes.SprungfutterModus)
@@ -32,7 +32,7 @@ namespace Smake.Game.Gegenstaende
 
             if (Spielvalues.Gamemode == Gamemodes.BombenModus)
             {
-                Bombe = new();
+                Bombe = new(grid);
             }
         }
 
@@ -41,21 +41,21 @@ namespace Smake.Game.Gegenstaende
             // Futter ins Spielfeld einzeichnen
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
-                if (Schluessel != null && Schluessel.Collected)
+                if (Schluessel != null)
                 {
                     if (!Schluessel.Collected)
                     {
-                        RenderSpielfeld.Grid[Y, X] = Skinvalues.MauerSkin;
+                        grid[Y, X] = Skinvalues.MauerSkin;
                     }
                     else
                     {
-                        RenderSpielfeld.Grid[Y, X] = Skin;
+                        grid[Y, X] = Skin;
                     }
                 }
             }
             else
             {
-                RenderSpielfeld.Grid[Y, X] = Skin;
+                grid[Y, X] = Skin;
             }
         }
 
@@ -67,6 +67,24 @@ namespace Smake.Game.Gegenstaende
                 {
                     Schluessel.EsseSchluessel(p);
                 }
+                else
+                {
+                    // Überprüfe jedes Segment des Spielers
+                    for (int i = 0; i < p.TailLaenge; i++)
+                    {
+                        if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
+                        {
+                            p.AddPunkt();
+
+                            Sounds.Playbeep();
+
+                            Setze();
+
+                            // Wenn Futter gefunden, können wir die Schleife abbrechen
+                            break;
+                        }
+                    }
+                }
             }
             else
             {
@@ -75,14 +93,13 @@ namespace Smake.Game.Gegenstaende
                 {
                     if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
                     {
-
-                        p.Punkte++;
+                        p.AddPunkt();
 
                         Sounds.Playbeep();
 
                         if (Spielvalues.Gamemode == Gamemodes.MauerModus)
                         {
-                            Spiellogik.Mauer.Add(new(Skinvalues.MauerSkin));
+                            Spiellogik.Mauer.Add(new(grid, Skinvalues.MauerSkin));
                         }
 
                         if(Spielvalues.Gamemode == Gamemodes.BombenModus)
@@ -109,7 +126,7 @@ namespace Smake.Game.Gegenstaende
                 if (TeleportCounter >= TeleportInterval)
                 {
                     // Alte Position löschen
-                    RenderSpielfeld.Grid[Y, X] = ' ';
+                    grid[Y, X] = ' ';
                     Setze();
                 }
             }

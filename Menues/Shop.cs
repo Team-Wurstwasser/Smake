@@ -64,15 +64,15 @@ namespace Smake.Menues
 
         public Shop()
         {
-            gesamtOptionenSkins = GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length - 3;
-            gesamtOptionenFarben = GameData.Farben.Length;
+            gesamtOptionenSkins = ConfigSystem.Skins.Tail.Length + ConfigSystem.Skins.Food.Length + ConfigSystem.Skins.Rand.Length - 3;
+            gesamtOptionenFarben = ConfigSystem.Skins.Farben.Length;
 
             Menueloop();
         }
 
         void Menueloop()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Shop ?? 0);
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.Shop);
             MenuTracker = 1;
             BuildMenu();
             InitialRender();
@@ -95,38 +95,32 @@ namespace Smake.Menues
                 }
 
                 // Kauflogik Skins
-                if (MenuTracker + 1 < GameData.TailSkins.Length)
+                if (MenuTracker + 1 < ConfigSystem.Skins.Tail.Length)
                 {
-                    if (!Menüsvalues.FreigeschaltetTail[MenuTracker + 1] &&
-                        Spielstatus.Coins >= GameData.TailPreis[MenuTracker - 1] &&
-                        Spielstatus.Level >= GameData.TailLevel[MenuTracker - 1])
+                    if (!Menüsvalues.FreigeschaltetTail[MenuTracker + 1] && Spielstatus.Coins >= ConfigSystem.Prices.Tail[MenuTracker - 1] && Spielstatus.Level >= ConfigSystem.Levels.Tail[MenuTracker - 1])
                     {
                         Menüsvalues.FreigeschaltetTail[MenuTracker + 1] = true;
-                        Spielstatus.Coins -= GameData.TailPreis[MenuTracker - 1];
+                        Spielstatus.Coins -= ConfigSystem.Prices.Tail[MenuTracker - 1];
                     }
                 }
-                else if (MenuTracker + 2 < GameData.TailSkins.Length + GameData.FoodSkins.Length)
+                else if (MenuTracker + 2 < ConfigSystem.Skins.Tail.Length + ConfigSystem.Skins.Food.Length)
                 {
-                    int i = MenuTracker + 2 - GameData.TailSkins.Length;
-                    int b = MenuTracker + 1 - GameData.TailSkins.Length;
-                    if (!Menüsvalues.FreigeschaltetFood[i] &&
-                        Spielstatus.Coins >= GameData.FoodPreis[b] &&
-                        Spielstatus.Level >= GameData.FoodLevel[b])
+                    int i = MenuTracker + 2 - ConfigSystem.Skins.Tail.Length;
+                    int b = MenuTracker + 1 - ConfigSystem.Skins.Tail.Length;
+                    if (!Menüsvalues.FreigeschaltetFood[i] && Spielstatus.Coins >= ConfigSystem.Prices.Food[b] && Spielstatus.Level >= ConfigSystem.Levels.Food[b])
                     {
                         Menüsvalues.FreigeschaltetFood[i] = true;
-                        Spielstatus.Coins -= GameData.FoodPreis[b];
+                        Spielstatus.Coins -= ConfigSystem.Prices.Food[b];
                     }
                 }
-                else if (MenuTracker + 3 < GameData.TailSkins.Length + GameData.FoodSkins.Length + GameData.RandSkins.Length)
+                else if (MenuTracker + 3 < ConfigSystem.Skins.Tail.Length + ConfigSystem.Skins.Food.Length + ConfigSystem.Skins.Rand.Length)
                 {
-                    int i = MenuTracker + 3 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
-                    int b = MenuTracker + 2 - GameData.TailSkins.Length - GameData.FoodSkins.Length;
-                    if (!Menüsvalues.FreigeschaltetRand[i] &&
-                        Spielstatus.Coins >= GameData.RandPreis[b] &&
-                        Spielstatus.Level >= GameData.RandLevel[b])
+                    int i = MenuTracker + 3 - ConfigSystem.Skins.Tail.Length - ConfigSystem.Skins.Food.Length;
+                    int b = MenuTracker + 2 - ConfigSystem.Skins.Tail.Length - ConfigSystem.Skins.Food.Length;
+                    if (!Menüsvalues.FreigeschaltetRand[i] && Spielstatus.Coins >= ConfigSystem.Prices.Rand[b] && Spielstatus.Level >= ConfigSystem.Prices.Rand[b])
                     {
                         Menüsvalues.FreigeschaltetRand[i] = true;
-                        Spielstatus.Coins -= GameData.RandPreis[b];
+                        Spielstatus.Coins -= ConfigSystem.Prices.Rand[b];
                     }
                 }
             }
@@ -139,12 +133,10 @@ namespace Smake.Menues
                 }
 
                 // Kauflogik Farben
-                else if (!Menüsvalues.FreigeschaltetFarben[MenuTracker] &&
-                    Spielstatus.Coins >= GameData.FarbenPreis[MenuTracker - 1] &&
-                    Spielstatus.Level >= GameData.FarbenLevel[MenuTracker - 1])
+                else if (!Menüsvalues.FreigeschaltetFarben[MenuTracker] && Spielstatus.Coins >= ConfigSystem.Prices.Farben[MenuTracker - 1] && Spielstatus.Level >= ConfigSystem.Levels.Farben[MenuTracker - 1])
                 {
                     Menüsvalues.FreigeschaltetFarben[MenuTracker] = true;
-                    Spielstatus.Coins -= GameData.FarbenPreis[MenuTracker - 1];
+                    Spielstatus.Coins -= ConfigSystem.Prices.Farben[MenuTracker - 1];
                 }
             }
         }

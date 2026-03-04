@@ -3,7 +3,7 @@ using Smake.SFX;
 
 namespace Smake.Game.Gegenstaende
 {
-    public class Schluessel() : Gegenstand(Skinvalues.SchluesselSkin)
+    public class Schluessel(char[,] grid) : Gegenstand(grid, Skinvalues.SchluesselSkin)
     {
         public bool Collected;
 

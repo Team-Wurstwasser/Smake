@@ -6,98 +6,98 @@ namespace Smake.Helper
 {
     public static class MusikSelector
     {
-        public static int? Selector()
+        public static int Selector()
         {
-            int? currentMusik = null;
+            int currentMusik = 1;
 
             switch (Spielvalues.Gamemode)
             {
                 case Gamemodes.Normal:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.Normal?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.Normal?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.Normal?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.Normal.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.Normal.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.Normal.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.Unendlich:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.Unendlich?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.Unendlich?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.Unendlich?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.Unendlich.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.Unendlich.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.Unendlich.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.Babymode:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.Babymode?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.Babymode?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.Babymode?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.Babymode.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.Babymode.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.Babymode.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.BabymodeUnendlich:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.BabymodeUnendlich?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.BabymodeUnendlich?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.BabymodeUnendlich?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.BabymodeUnendlich.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.BabymodeUnendlich.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.BabymodeUnendlich.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.MauerModus:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.MauerModus?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.MauerModus?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.MauerModus?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.MauerModus.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.MauerModus.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.MauerModus.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.SchluesselModus:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.SchluesselModus?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.SchluesselModus?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.SchluesselModus?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.SchluesselModus.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.SchluesselModus.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.SchluesselModus.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.SprungfutterModus:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.SprungfutterModus?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.SprungfutterModus?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.SprungfutterModus?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.SprungfutterModus.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.SprungfutterModus.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.SprungfutterModus.Fast,
+                        _ => 1
                     };
                     break;
                 case Gamemodes.BombenModus:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.BombenModus?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.BombenModus?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.BombenModus?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.BombenModus.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.BombenModus.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.BombenModus.Fast,
+                        _ => 1
                     };
                     break;
 
                 case Gamemodes.ChaosSteuerung:
                     currentMusik = Spielvalues.Difficulty switch
                     {
-                        Difficultys.Slow => GameData.MusikDaten.Game?.ChaosSteuerung?.Langsam ?? 1,
-                        Difficultys.Medium => GameData.MusikDaten.Game?.ChaosSteuerung?.Mittel ?? 1,
-                        Difficultys.Fast => GameData.MusikDaten.Game?.ChaosSteuerung?.Schnell ?? 1,
-                        _ => null
+                        Difficultys.Slow => ConfigSystem.Sounds.Musik.Game.ChaosSteuerung.Slow,
+                        Difficultys.Medium => ConfigSystem.Sounds.Musik.Game.ChaosSteuerung.Medium,
+                        Difficultys.Fast => ConfigSystem.Sounds.Musik.Game.ChaosSteuerung.Fast,
+                        _ => 1
                     };
                     break;
             }

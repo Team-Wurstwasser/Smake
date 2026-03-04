@@ -1,7 +1,6 @@
 ﻿using Smake.Enums;
 using Smake.SFX;
 using Smake.Speicher;
-using Smake.Game;
 using Smake.Values;
 
 namespace Smake.Menues
@@ -64,26 +63,24 @@ namespace Smake.Menues
 
         void Menueloop()
         {
-            Sounds.Melodie(GameData.MusikDaten.Menue?.Main ?? 0);
+            Sounds.Melodie(ConfigSystem.Sounds.Musik.Menue.MainMenu);
 
             SpeicherSystem.Speichern_Laden(StorageAction.Save);
 
             // Level-Berechnung (1 Level pro 100 XP)
             Spielstatus.Level = Spielstatus.Xp / XpPerLevel + 1;
 
-            if (RenderSpielfeld.Performancemode)
+            if (Spielvalues.Performancemode)
             {
-                Skinvalues.FoodFarbe = GameData.Farben[0];
+                Skinvalues.FoodFarbe = ConfigSystem.Skins.Farben[0];
                 Skinvalues.FoodfarbeRandom = false;
-                Skinvalues.RandFarbe = GameData.Farben[0];
-                Spiellogik.Player.TailFarbe = GameData.Farben[0];
-                Spiellogik.Player.HeadFarbe = GameData.Farben[0];
-                Spiellogik.Player2.TailFarbe = GameData.Farben[0];
-                Spiellogik.Player2.HeadFarbe = GameData.Farben[0];
+                Skinvalues.RandFarbe = ConfigSystem.Skins.Farben[0];
+                Array.Fill(Skinvalues.TailFarbe, ConfigSystem.Skins.Farben[0]);
+                Array.Fill(Skinvalues.HeadFarbe, ConfigSystem.Skins.Farben[0]);
             }
 
             Title = "Menü";
-            Display = LanguageManager.GetArray("menu.items"); ;
+            Display = LanguageSystem.GetArray("menu.items"); ;
             MenuTracker = 1;
             InitialRender();
             StartInputstream();

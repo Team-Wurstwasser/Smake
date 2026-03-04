@@ -2,11 +2,11 @@
 
 namespace Smake.Game.Gegenstaende
 {
-    public class Bombe() : Gegenstand(Skinvalues.BombenSkin)
+    public class Bombe(char[,] grid) : Gegenstand(grid, Skinvalues.BombenSkin)
     {
         public void LöscheBombe()
         {
-            RenderSpielfeld.Grid[Y, X] = ' ';
+            grid[Y, X] = ' ';
         }
     }
 }

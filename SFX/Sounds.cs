@@ -34,11 +34,11 @@ namespace Smake.SFX
 
                 if (Musikplay)
                 {
-                    dateipfad = Path.Combine(basePath, "Sounds", GameData.Filenames[Currentmusik]);
+                    dateipfad = Path.Combine(basePath, "Sounds", ConfigSystem.Sounds.Filenames[Currentmusik]);
                 }
                 else
                 {
-                    dateipfad = Path.Combine(basePath, "Sounds", GameData.NoMusikFile);
+                    dateipfad = Path.Combine(basePath, "Sounds", ConfigSystem.Sounds.NoMusikFile);
                 }
 
                 if (File.Exists(dateipfad))
