@@ -148,11 +148,11 @@ namespace Smake.Game
             }
             else if (spieler1Tot)
             {
-                Gameovertype = GameOverType.Player2;
+                Gameovertype = GameOverType.Player1;
             }
             else if (spieler2Tot)
             {
-                Gameovertype = GameOverType.Player1;
+                Gameovertype = GameOverType.Player2;
             }
         }
 
