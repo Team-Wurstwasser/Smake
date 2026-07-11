@@ -6,7 +6,7 @@ namespace Smake.SFX.Players
 {
     internal abstract class UnixPlayerBase : IPlayer
     {
-        private Process? _process = null;
+        private Process? _process;
         private string? _fileName;
         private bool _loop;
 
@@ -33,8 +33,6 @@ namespace Smake.SFX.Players
                 $"{BashToolName} '{_fileName}'");
             _process.EnableRaisingEvents = true;
             _process.Exited += HandlePlaybackFinished;
-            _process.ErrorDataReceived += HandlePlaybackFinished;
-            _process.Disposed += HandlePlaybackFinished;
             Playing = true;
 
             await Task.CompletedTask;
@@ -52,8 +50,6 @@ namespace Smake.SFX.Players
             if (_process != null)
             {
                 _process.Exited -= HandlePlaybackFinished;
-                _process.ErrorDataReceived -= HandlePlaybackFinished;
-                _process.Disposed -= HandlePlaybackFinished;
 
                 if (!_process.HasExited)
                 {
