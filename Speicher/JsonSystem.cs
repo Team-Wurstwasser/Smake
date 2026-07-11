@@ -7,7 +7,6 @@ namespace Smake.Speicher
     {
         // Sounds
         public static string[] Filenames { get; private set; } = [];
-        public static string NoMusikFile { get; private set; } = "";
         public static string BeepFile { get; private set; } = "";
         public static Musik MusikDaten { get; private set; } = new();
 
@@ -49,7 +48,6 @@ namespace Smake.Speicher
             Load<Sounds>("Jsons/sounds.json", data =>
             {
                 Filenames = data?.Filenames ?? [];
-                NoMusikFile = data?.NoMusikFile ?? "";
                 BeepFile = data?.BeepFile ?? "";
                 MusikDaten = data?.Musik ?? new();
             });
