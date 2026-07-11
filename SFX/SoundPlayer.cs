@@ -1,5 +1,6 @@
 ﻿using Smake.Interfaces;
 using Smake.SFX.Players;
+using Smake.Speicher;
 using System.Runtime.InteropServices;
 
 namespace Smake.SFX
@@ -24,7 +25,7 @@ namespace Smake.SFX
             }
             else
             {
-                throw new PlatformNotSupportedException("Dieses Betriebssystem wird nicht unterstützt.");
+                throw new PlatformNotSupportedException(LanguageSystem.Get("sfx.os_not_supported"));
             }
 
             _internalPlayer.PlaybackFinished += OnPlaybackFinished;

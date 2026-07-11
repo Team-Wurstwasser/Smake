@@ -1,144 +1,147 @@
 {
-    "languageName": "English",
-    "jsonload": {
-        "fileNotFound": "JSON file not found: {path}",
-        "loadError": "Error loading file {path}: {message}"
-    },
-    "saveLoad": {
-        "mainMissing": "Main file missing, loading backup...",
-        "backupCorrupt": "❌ Backup corrupted - default values will be set.",
-        "loadError": "⚠ Error loading, trying backup...",
-        "backupAlsoCorrupt": "❌ Backup also corrupted - default values will be set."
-    },
-    "input": {
-        "player1": "Player 1, enter your name: ",
-        "player2": "Player 2, enter your name: "
-    },
-    "menu": {
-        "items": [
-            "Start Game",
-            "Settings",
-            "Shop",
-            "Skins/Colors",
-            "Statistics",
-            "Instructions",
-            "Exit"
-        ]
-    },
-    "settings": {
-        "title": "Settings",
-        "on": "On",
-        "off": "Off",
-        "difficultys": [
-            "Slow",
-            "Medium",
-            "Fast"
-        ],
-        "items": [
-            "Change Difficulty   [Current: {difficulty}]",
-            "Multiplayer         [Current: {multiplayer}]",
-            "Change Gamemode     [Current: {gamemode}]",
-            "Change MaxFood      [Current: {maxfutter}]",
-            "Performance Mode    [Current: {performance}]",
-            "Music ON/OFF        [Current: {music}]",
-            "Sounds ON/OFF       [Current: {sounds}]",
-            "Change language     [Current: {language}]",
-            "Reset Save          ",
-            "Back to Main Menu"
-        ],
-        "gamemodes": [
-            "Normal",
-            "Infinite",
-            "Baby Mode",
-            "Baby Mode Infinite",
-            "Wall Mode",
-            "Key Mode",
-            "Jump Food Mode",
-            "Bomb Mode",
-            "Chaos Control"
-        ],
-        "gamemodeHeaderTitle": "║             Select Game Mode               ║",
-        "gamemodePrompt": "Choice: ",
-        "gamemodeChanged": "Game mode changed:",
-        "current": "current",
-        "maxFoodHeaderTitle": "║         Set Maximum Food                  ║",
-        "maxFoodLimit": "║ Maximum allowed: {limit} ║",
-        "maxFoodPrompt": "Input: ",
-        "maxFoodTooHigh": "⚠ The value cannot exceed {limit}.",
-        "maxFoodChanged": "✔ MaxFood has been set to {value}!",
-        "languageMenuTitle": "║              Select Language               ║",
-        "languageMenuPrompt": "Choice: ",
-        "languageChanged": "Language successfully changed to {lang}!",
-        "invalidSelection": "⚠ Invalid selection!",
-        "invalidInput": "⚠ Invalid input. Please enter a valid positive number.",
-        "pressAnyKey": "Press any key to continue...",
-        "resetPrompt": "⚠ Do you really want to reset the save? ({count}/3) [yes/no] ",
-        "resetConfirm": "yes",
-        "resetCancelled": "✔ Reset cancelled.",
-        "resetDone": "✔ Save successfully reset!"
-    },
-    "shop": {
-        "title": "Shop",
-        "coins": "Coins: {coins}",
-        "level": "Level: {level}",
-        "switchPage": "←  Switch Shop Page  →",
-        "requiredLevel": "[Required Level: {level}]",
-        "unlocked": "[Unlocked]",
-        "price": "[{price} Coins]",
-        "back": "Back to Main Menu",
-        "tailSkins": "Tail Skins",
-        "foodSkins": "Food Skins",
-        "randSkins": "Border Skins",
-        "colors": "Colors"
-    },
-    "skins": {
-        "title": "Skins / Colors",
-        "performancemode": "Performance Mode ON",
-      "items": [
-        "Change Player 1 Tail Skin    [Current:{item}]",
-        "Change Player 2 Tail Skin    [Current:{item}]",
-        "Change Food Skin             [Current:{item}]",
-        "Change Border Skin           [Current:{item}]",
-        "Change Player 1 Color        [Current:{item}]",
-        "Change Player 2 Color        [Current:{item}]",
-        "Change Player 1 Tail Color   [Current:{item}]",
-        "Change Player 2 Tail Color   [Current:{item}]",
-        "Change Food Color            [Current:{item}]",
-        "Change Border Color          [Current:{item}]",
-        "Back to Main Menu"
-      ]
-    },
-    "stats": {
-        "title": "Statistics",
-        "level": "Level:                    {level}",
-        "progress": "Progress:                 [{bar}] {points}/100",
-        "totalGames": "Total Games:              {games}",
-        "highscore": "High Score:               {highscore}",
-        "avgXp": "Average XP:               {avgxp}",
-        "totalCoins": "Total Coins:              {totalcoins}",
-        "currentCoins": "Current Coins:            {coins}",
-        "back": "Press any key to return to menu..."
-    },
-    "legende": "  Points: ",
-    "gameover": {
-        "draw": "Draw!",
-        "playerWins": "{player} wins!",
-        "points": "Points: {points}",
-        "playerPoints": "{player} reached {points} points.",
-        "lose": "Unfortunately lost - try again!",
-        "losePoints": "You scored {points} points.",
-        "win": "Congratulations! You won!",
-        "winPoints": "Your score: {points}",
-        "backToMenu": "Press [Esc] to return to menu",
-        "restart": "or [Enter] to start a new game"
-    },
-    "anleitung": {
-        "title": "INSTRUCTIONS",
-        "goal": "Goal: Eat as much {food} as possible!",
-        "controls": "Controls:",
-        "player1": "Player 1:\n  ↑ - Up\n  ← - Left\n  ↓ - Down\n  → - Right\n",
-        "player2": "Player 2:\n  W - Up\n  A - Left\n  S - Down\n  D - Right\n",
-        "collision": "Avoid collisions with yourself or the border!",
-        "back": "Press any key to return to menu..."
-    }
+  "languageName": "English",
+  "jsonload": {
+    "fileNotFound": "JSON file not found: {path}",
+    "loadError": "Error loading file {path}: {message}"
+  },
+  "saveLoad": {
+    "mainMissing": "Main file missing, loading backup...",
+    "backupCorrupt": "❌ Backup corrupted - default values will be set.",
+    "loadError": "⚠ Error loading, trying backup...",
+    "backupAlsoCorrupt": "❌ Backup also corrupted - default values will be set."
+  },
+  "sfx": {
+    "os_not_supported": "This operating system is not supported."
+  },
+  "input": {
+    "player1": "Player 1, enter your name: ",
+    "player2": "Player 2, enter your name: "
+  },
+  "menu": {
+    "items": [
+      "Start Game",
+      "Settings",
+      "Shop",
+      "Skins/Colors",
+      "Statistics",
+      "Instructions",
+      "Exit"
+    ]
+  },
+  "settings": {
+    "title": "Settings",
+    "on": "On",
+    "off": "Off",
+    "difficultys": [
+      "Slow",
+      "Medium",
+      "Fast"
+    ],
+    "items": [
+      "Change Difficulty   [Current: {difficulty}]",
+      "Multiplayer         [Current: {multiplayer}]",
+      "Change Gamemode     [Current: {gamemode}]",
+      "Change MaxFood      [Current: {maxfutter}]",
+      "Performance Mode    [Current: {performance}]",
+      "Music ON/OFF        [Current: {music}]",
+      "Sounds ON/OFF       [Current: {sounds}]",
+      "Change language     [Current: {language}]",
+      "Reset Save          ",
+      "Back to Main Menu"
+    ],
+    "gamemodes": [
+      "Normal",
+      "Infinite",
+      "Baby Mode",
+      "Baby Mode Infinite",
+      "Wall Mode",
+      "Key Mode",
+      "Jump Food Mode",
+      "Bomb Mode",
+      "Chaos Control"
+    ],
+    "gamemodeHeaderTitle": "║             Select Game Mode               ║",
+    "gamemodePrompt": "Choice: ",
+    "gamemodeChanged": "Game mode changed:",
+    "current": "current",
+    "maxFoodHeaderTitle": "║         Set Maximum Food                  ║",
+    "maxFoodLimit": "║ Maximum allowed: {limit} ║",
+    "maxFoodPrompt": "Input: ",
+    "maxFoodTooHigh": "⚠ The value cannot exceed {limit}.",
+    "maxFoodChanged": "✔ MaxFood has been set to {value}!",
+    "languageMenuTitle": "║              Select Language               ║",
+    "languageMenuPrompt": "Choice: ",
+    "languageChanged": "Language successfully changed to {lang}!",
+    "invalidSelection": "⚠ Invalid selection!",
+    "invalidInput": "⚠ Invalid input. Please enter a valid positive number.",
+    "pressAnyKey": "Press any key to continue...",
+    "resetPrompt": "⚠ Do you really want to reset the save? ({count}/3) [yes/no] ",
+    "resetConfirm": "yes",
+    "resetCancelled": "✔ Reset cancelled.",
+    "resetDone": "✔ Save successfully reset!"
+  },
+  "shop": {
+    "title": "Shop",
+    "coins": "Coins: {coins}",
+    "level": "Level: {level}",
+    "switchPage": "←  Switch Shop Page  →",
+    "requiredLevel": "[Required Level: {level}]",
+    "unlocked": "[Unlocked]",
+    "price": "[{price} Coins]",
+    "back": "Back to Main Menu",
+    "tailSkins": "Tail Skins",
+    "foodSkins": "Food Skins",
+    "randSkins": "Border Skins",
+    "colors": "Colors"
+  },
+  "skins": {
+    "title": "Skins / Colors",
+    "performancemode": "Performance Mode ON",
+    "items": [
+      "Change Player 1 Tail Skin    [Current:{item}]",
+      "Change Player 2 Tail Skin    [Current:{item}]",
+      "Change Food Skin             [Current:{item}]",
+      "Change Border Skin           [Current:{item}]",
+      "Change Player 1 Color        [Current:{item}]",
+      "Change Player 2 Color        [Current:{item}]",
+      "Change Player 1 Tail Color   [Current:{item}]",
+      "Change Player 2 Tail Color   [Current:{item}]",
+      "Change Food Color            [Current:{item}]",
+      "Change Border Color          [Current:{item}]",
+      "Back to Main Menu"
+    ]
+  },
+  "stats": {
+    "title": "Statistics",
+    "level": "Level:                    {level}",
+    "progress": "Progress:                 [{bar}] {points}/100",
+    "totalGames": "Total Games:              {games}",
+    "highscore": "High Score:               {highscore}",
+    "avgXp": "Average XP:               {avgxp}",
+    "totalCoins": "Total Coins:              {totalcoins}",
+    "currentCoins": "Current Coins:            {coins}",
+    "back": "Press any key to return to menu..."
+  },
+  "legende": "  Points: ",
+  "gameover": {
+    "draw": "Draw!",
+    "playerWins": "{player} wins!",
+    "points": "Points: {points}",
+    "playerPoints": "{player} reached {points} points.",
+    "lose": "Unfortunately lost - try again!",
+    "losePoints": "You scored {points} points.",
+    "win": "Congratulations! You won!",
+    "winPoints": "Your score: {points}",
+    "backToMenu": "Press [Esc] to return to menu",
+    "restart": "or [Enter] to start a new game"
+  },
+  "anleitung": {
+    "title": "INSTRUCTIONS",
+    "goal": "Goal: Eat as much {food} as possible!",
+    "controls": "Controls:",
+    "player1": "Player 1:\n  ↑ - Up\n  ← - Left\n  ↓ - Down\n  → - Right\n",
+    "player2": "Player 2:\n  W - Up\n  A - Left\n  S - Down\n  D - Right\n",
+    "collision": "Avoid collisions with yourself or the border!",
+    "back": "Press any key to return to menu..."
+  }
 }
