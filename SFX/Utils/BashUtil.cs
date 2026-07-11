@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace Smake.SFX.Utils
 {
@@ -16,9 +16,15 @@ namespace Smake.SFX.Utils
                     Arguments = $"-c \"{escapedArgs}\"",
                     UseShellExecute = false,
                     CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                 }
             };
             process.Start();
+
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
             return process;
         }
     }
