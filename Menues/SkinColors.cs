@@ -82,7 +82,7 @@ namespace Smake.Menues
         {
             Sounds.Melodie(GameData.MusikDaten.Menue?.SkinFarben ?? 0);
             Title = "Skin_Farben";
-            Display = LanguageManager.GetArray("skins.items");
+            Display = LanguageSystem.GetArray("skins.items");
             IsColor = Color;
             GameValue = BuildMenu();
             MenuTracker = 1;

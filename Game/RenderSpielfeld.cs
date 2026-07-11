@@ -163,7 +163,7 @@ namespace Smake.Game
             switch (y)
             {
                 case 1: return "  ══════════════════════════════";
-                case 2: return LanguageManager.Get("legende");
+                case 2: return LanguageSystem.Get("legende");
                 case 3: return "  ══════════════════════════════";
                 case 4:
                     string maxpunkte = (Spielvalues.Gamemode != Gamemodes.Unendlich && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich) ? GameData.MaxPunkte.ToString() : "∞";
@@ -231,7 +231,7 @@ namespace Smake.Game
                     break;
                 case 2:
                     SetFarbe(ConsoleColor.White);
-                    Console.Write(LanguageManager.Get("legende"));
+                    Console.Write(LanguageSystem.Get("legende"));
                     break;
                 case 3:
                     SetFarbe(Skinvalues.RandFarbe);

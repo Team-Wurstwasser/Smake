@@ -168,7 +168,7 @@ namespace Smake.Game
             switch (Gameovertype)
             {
                 case GameOverType.Draw:
-                    Console.WriteLine(LanguageManager.Get("gameover.draw"));
+                    Console.WriteLine(LanguageSystem.Get("gameover.draw"));
                     if (Spielvalues.Multiplayer)
                     {
                         ShowPoints(Player.Name, Player.Punkte);
@@ -179,28 +179,28 @@ namespace Smake.Game
                 case GameOverType.Player1:
                     if (Spielvalues.Multiplayer)
                     {
-                        Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player2.Name));
-                        Console.WriteLine(LanguageManager.Get("gameover.points").Replace("{points}", Player2.Punkte.ToString()));
+                        Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player2.Name));
+                        Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player2.Punkte.ToString()));
                         ShowPoints(Player.Name, Player.Punkte);
                     }
                     else
                     {
-                        Console.WriteLine(LanguageManager.Get("gameover.lose"));
-                        Console.WriteLine(LanguageManager.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
+                        Console.WriteLine(LanguageSystem.Get("gameover.lose"));
+                        Console.WriteLine(LanguageSystem.Get("gameover.losePoints").Replace("{points}", Player.Punkte.ToString()));
                     }
                     break;
 
                 case GameOverType.Player2:
                         if (Spielvalues.Multiplayer)
                         {
-                            Console.WriteLine(LanguageManager.Get("gameover.playerWins").Replace("{player}", Player.Name));
-                            Console.WriteLine(LanguageManager.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
+                            Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player.Name));
+                            Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
                             ShowPoints(Player2.Name, Player2.Punkte);
                         }
                         else
                         {
-                            Console.WriteLine(LanguageManager.Get("gameover.win"));
-                            Console.WriteLine(LanguageManager.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
+                            Console.WriteLine(LanguageSystem.Get("gameover.win"));
+                            Console.WriteLine(LanguageSystem.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
                         }
                     break;
 
@@ -214,8 +214,8 @@ namespace Smake.Game
                 Console.WriteLine();
                 Console.WriteLine("═════════════════════════════════════");
             }
-            Console.WriteLine(LanguageManager.Get("gameover.backToMenu"));
-            Console.WriteLine(LanguageManager.Get("gameover.restart"));
+            Console.WriteLine(LanguageSystem.Get("gameover.backToMenu"));
+            Console.WriteLine(LanguageSystem.Get("gameover.restart"));
 
             WaitForInput();
         }
@@ -223,7 +223,7 @@ namespace Smake.Game
         // Hilfsmethode für die Punkteanzeige
         static void ShowPoints(string? name, int points)
         {
-            Console.WriteLine(LanguageManager.Get("gameover.playerPoints").Replace("{player}", name).Replace("{points}", points.ToString()));
+            Console.WriteLine(LanguageSystem.Get("gameover.playerPoints").Replace("{player}", name).Replace("{points}", points.ToString()));
         }
 
         static void WaitForInput()

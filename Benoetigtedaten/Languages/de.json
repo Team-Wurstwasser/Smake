@@ -94,19 +94,19 @@
     "skins": {
         "title": "Skins / Farben",
         "performancemode": "Performance Mode AN",
-        "items": [
-            "Player 1 Tailskin ändern    [Aktuell: ",
-            "Player 2 Tailskin ändern    [Aktuell: ",
-            "Foodskin ändern             [Aktuell: ",
-            "Randskin ändern             [Aktuell: ",
-            "Player 1 Farbe ändern       [Aktuell: ",
-            "Player 2 Farbe ändern       [Aktuell: ",
-            "Player 1 Tailfarbe ändern   [Aktuell: ",
-            "Player 2 Tailfarbe ändern   [Aktuell: ",
-            "Foodfarbe ändern            [Aktuell: ",
-            "Randfarbe ändern            [Aktuell: ",
-            "Zurück zum Hauptmenü"
-        ]
+      "items": [
+        "Player 1 Tailskin ändern    [Aktuell:{item}]",
+        "Player 2 Tailskin ändern    [Aktuell:{item}]",
+        "Foodskin ändern             [Aktuell:{item}]",
+        "Randskin ändern             [Aktuell:{item}]",
+        "Player 1 Farbe ändern       [Aktuell:{item}]",
+        "Player 2 Farbe ändern       [Aktuell:{item}]",
+        "Player 1 Tailfarbe ändern   [Aktuell:{item}]",
+        "Player 2 Tailfarbe ändern   [Aktuell:{item}]",
+        "Foodfarbe ändern            [Aktuell:{item}]",
+        "Randfarbe ändern            [Aktuell:{item}]",
+        "Zurück zum Hauptmenü"
+      ]
     },
     "stats": {
         "title": "Statistiken",

@@ -94,19 +94,19 @@
     "skins": {
         "title": "Skins / Colors",
         "performancemode": "Performance Mode ON",
-        "items": [
-            "Change Player 1 Tail Skin    [Current: ",
-            "Change Player 2 Tail Skin    [Current: ",
-            "Change Food Skin             [Current: ",
-            "Change Border Skin           [Current: ",
-            "Change Player 1 Color        [Current: ",
-            "Change Player 2 Color        [Current: ",
-            "Change Player 1 Tail Color   [Current: ",
-            "Change Player 2 Tail Color   [Current: ",
-            "Change Food Color            [Current: ",
-            "Change Border Color          [Current: ",
-            "Back to Main Menu"
-        ]
+      "items": [
+        "Change Player 1 Tail Skin    [Current:{item}]",
+        "Change Player 2 Tail Skin    [Current:{item}]",
+        "Change Food Skin             [Current:{item}]",
+        "Change Border Skin           [Current:{item}]",
+        "Change Player 1 Color        [Current:{item}]",
+        "Change Player 2 Color        [Current:{item}]",
+        "Change Player 1 Tail Color   [Current:{item}]",
+        "Change Player 2 Tail Color   [Current:{item}]",
+        "Change Food Color            [Current:{item}]",
+        "Change Border Color          [Current:{item}]",
+        "Back to Main Menu"
+      ]
     },
     "stats": {
         "title": "Statistics",
