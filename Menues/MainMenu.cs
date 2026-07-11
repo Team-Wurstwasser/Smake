@@ -83,7 +83,7 @@ namespace Smake.Menues
             }
 
             Title = "Menü";
-            Display = LanguageManager.GetArray("menu.items"); ;
+            Display = LanguageSystem.GetArray("menu.items"); ;
             MenuTracker = 1;
             InitialRender();
             StartInputstream();

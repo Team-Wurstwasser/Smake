@@ -101,7 +101,7 @@ namespace Smake.Speicher
             try
             {
                 if (!File.Exists(path))
-                    throw new FileNotFoundException(LanguageManager.Get("jsonload.fileNotFound").Replace("{path}", path));
+                    throw new FileNotFoundException(LanguageSystem.Get("jsonload.fileNotFound").Replace("{path}", path));
 
                 string json = XorCryptoHelper.Decrypt(path);
                 var data = JsonSerializer.Deserialize<T>(json, JsonOptions);
@@ -109,7 +109,7 @@ namespace Smake.Speicher
             }
             catch (Exception ex)
             {
-                Console.WriteLine(LanguageManager.Get("jsonload.loadError").Replace("{path}", path).Replace("{message}", ex.Message));
+                Console.WriteLine(LanguageSystem.Get("jsonload.loadError").Replace("{path}", path).Replace("{message}", ex.Message));
                 Console.ReadKey(true);
                 setData(default);
             }

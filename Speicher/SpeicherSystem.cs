@@ -16,11 +16,11 @@ namespace Smake.Speicher
             // Wenn die Hauptdatei fehlt, aber ein Backup existiert, lade das Backup
             if (!File.Exists(SpeicherDatei) && File.Exists(BackupDatei))
             {
-                Console.WriteLine(LanguageManager.Get("saveLoad.mainMissing"));
+                Console.WriteLine(LanguageSystem.Get("saveLoad.mainMissing"));
                 Console.ReadKey();
                 if (!Laden(BackupDatei))
                 {
-                    Console.WriteLine(LanguageManager.Get("saveLoad.backupCorrupt"));
+                    Console.WriteLine(LanguageSystem.Get("saveLoad.backupCorrupt"));
                     Console.ReadKey();
                     SetzeStandardwerte();
                     Speichern();
@@ -52,11 +52,11 @@ namespace Smake.Speicher
                 case StorageAction.Load:
                     if (!Laden(SpeicherDatei))
                     {
-                        Console.WriteLine(LanguageManager.Get("saveLoad.loadError"));
+                        Console.WriteLine(LanguageSystem.Get("saveLoad.loadError"));
                         Console.ReadKey(true);
                         if (!Laden(BackupDatei))
                         {
-                            Console.WriteLine(LanguageManager.Get("saveLoad.backupAlsoCorrupt"));
+                            Console.WriteLine(LanguageSystem.Get("saveLoad.backupAlsoCorrupt"));
                             Console.ReadKey(true);
                             SetzeStandardwerte();
                             Speichern();

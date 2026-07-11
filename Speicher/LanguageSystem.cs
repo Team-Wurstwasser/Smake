@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Smake.Speicher
 {
-    public static class LanguageManager
+    public static class LanguageSystem
     {
         static Dictionary<string, object> data = [];
 

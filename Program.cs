@@ -18,7 +18,7 @@ namespace Smake
             Console.Title = "Smake";
 
             // Sprache aus config.json laden
-            LanguageManager.Speichern_Laden(StorageAction.Load);
+            LanguageSystem.Speichern_Laden(StorageAction.Load);
 
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
@@ -69,12 +69,12 @@ namespace Smake
 
             Console.Clear();
 
-            Console.Write(LanguageManager.Get("input.player1"));
+            Console.Write(LanguageSystem.Get("input.player1"));
             Spiellogik.Player.Name = Console.ReadLine();
 
             Console.Clear();
 
-            Console.Write(LanguageManager.Get("input.player2"));
+            Console.Write(LanguageSystem.Get("input.player2"));
             Spiellogik.Player2.Name = Console.ReadLine();
 
             Console.Clear();

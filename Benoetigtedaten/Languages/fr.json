@@ -94,19 +94,19 @@
     "skins": {
         "title": "Skins / Couleurs",
         "performancemode": "Mode performance ACTIVÉ",
-        "items": [
-            "Changer le skin de queue du Joueur 1         [Actuel: ",
-            "Changer le skin de queue du Joueur 2         [Actuel: ",
-            "Changer le skin de nourriture                [Actuel: ",
-            "Changer le skin de bord                      [Actuel: ",
-            "Changer la couleur du Joueur 1               [Actuel: ",
-            "Changer la couleur du Joueur 2               [Actuel: ",
-            "Changer la couleur de la queue du Joueur 1   [Actuel: ",
-            "Changer la couleur de la queue du Joueur 2   [Actuel: ",
-            "Changer la couleur de la nourriture          [Actuel: ",
-            "Changer la couleur du bord                   [Actuel: ",
-            "Retour au menu principal"
-        ]
+      "items": [
+        "Changer le skin de queue du Joueur 1         [Actuel:{item}]",
+        "Changer le skin de queue du Joueur 2         [Actuel:{item}]",
+        "Changer le skin de nourriture                [Actuel:{item}]",
+        "Changer le skin de bord                      [Actuel:{item}]",
+        "Changer la couleur du Joueur 1               [Actuel:{item}]",
+        "Changer la couleur du Joueur 2               [Actuel:{item}]",
+        "Changer la couleur de la queue du Joueur 1   [Actuel:{item}]",
+        "Changer la couleur de la queue du Joueur 2   [Actuel:{item}]",
+        "Changer la couleur de la nourriture          [Actuel:{item}]",
+        "Changer la couleur du bord                   [Actuel:{item}]",
+        "Retour au menu principal"
+      ]
     },
     "stats": {
         "title": "Statistiques",
