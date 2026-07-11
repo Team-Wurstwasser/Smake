@@ -6,9 +6,12 @@ namespace Smake.SFX.Players
 {
     internal abstract class UnixPlayerBase : IPlayer
     {
+        private static readonly TimeSpan MinPlaybackDuration = TimeSpan.FromMilliseconds(300);
+
         private Process? _process;
         private string? _fileName;
         private bool _loop;
+        private readonly Stopwatch _playStopwatch = new();
 
         public event EventHandler? PlaybackFinished;
 
@@ -34,6 +37,7 @@ namespace Smake.SFX.Players
             _process.EnableRaisingEvents = true;
             _process.Exited += HandlePlaybackFinished;
             Playing = true;
+            _playStopwatch.Restart();
 
             await Task.CompletedTask;
         }
@@ -69,6 +73,17 @@ namespace Smake.SFX.Players
                 return;
 
             Playing = false;
+
+            int exitCode = (sender as Process)?.ExitCode ?? 0;
+            bool playbackFailed = exitCode != 0 || _playStopwatch.Elapsed < MinPlaybackDuration;
+
+            if (playbackFailed)
+            {
+                _loop = false;
+
+                PlaybackFinished?.Invoke(this, e);
+                return;
+            }
 
             if (_loop && _fileName != null)
             {
