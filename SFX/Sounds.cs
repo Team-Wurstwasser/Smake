@@ -1,24 +1,11 @@
-﻿using NAudio.Wave;
-using Smake.Speicher;
+﻿using Smake.Speicher;
 
 namespace Smake.SFX
 {
     public class Sounds
     {
-        private static readonly bool _audioAvailable;
-
-        static Sounds()
-        {
-            try
-            {
-                using (var device = new WaveOutEvent()) { }
-                _audioAvailable = true;
-            }
-            catch
-            {
-                _audioAvailable = false;
-            }
-        }
+        private static readonly SoundPlayer _musicPlayer = new();
+        private static readonly SoundPlayer _sfxPlayer = new();
 
         private static bool _musikplay;
 
@@ -49,23 +36,15 @@ namespace Smake.SFX
                     return;
                 }
                 _soundplay = value;
-
-                Melodie(lastmusik > -1 ? lastmusik.Value : 0);
             }
         }
 
         private static int? lastmusik = -1;
         private static bool lastPlayState = false; // merkt sich, ob Musik an/aus war
 
-        private static WaveOutEvent? waveOutMusik;
-        private static AudioFileReader? audioFile;
-        private static LoopStream? loopStream;
-
         public static void Melodie(int Currentmusik)
         {
-            if (!_audioAvailable) return;
-
-            if (!Musikplay && !Soundplay)
+            if (!Musikplay)
             {
                 StopMusik();
                 lastPlayState = false;
@@ -78,17 +57,11 @@ namespace Smake.SFX
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
 
-                string dateipfad = Musikplay
-                                    ? Path.Combine(basePath, "Sounds", GameData.Filenames[Currentmusik])
-                                    : Path.Combine(basePath, "Sounds", GameData.NoMusikFile);
+                string dateipfad = Path.Combine(basePath, "Sounds", GameData.Filenames[Currentmusik]);
 
                 if (File.Exists(dateipfad))
                 {
-                    waveOutMusik = new WaveOutEvent();
-                    audioFile = new AudioFileReader(dateipfad);
-                    loopStream = new LoopStream(audioFile);
-                    waveOutMusik.Init(loopStream);
-                    waveOutMusik.Play();
+                    Task.Run(async () => await _musicPlayer.Play(dateipfad, loop: true));
                 }
 
                 lastmusik = Currentmusik;
@@ -98,39 +71,19 @@ namespace Smake.SFX
 
         private static void StopMusik()
         {
-            if (waveOutMusik != null)
-            {
-                waveOutMusik.Stop();
-                waveOutMusik.Dispose();
-                waveOutMusik = null;
-            }
-
-            audioFile?.Dispose();
-            audioFile = null;
-
-            loopStream = null;
+            Task.Run(async () => await _musicPlayer.Stop());
         }
 
         public static void Playbeep()
         {
-            if (!Soundplay || !_audioAvailable) return;
+            if (!Soundplay) return;
 
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string dateipfad = Path.Combine(basePath, "Sounds", GameData.BeepFile);
 
             if (File.Exists(dateipfad))
             {
-                var waveOutBeep = new WaveOutEvent();
-                var audioFile = new AudioFileReader(dateipfad);
-
-                waveOutBeep.Init(audioFile);
-                waveOutBeep.Play();
-
-                waveOutBeep.PlaybackStopped += (s, e) =>
-                {
-                    waveOutBeep.Dispose();
-                    audioFile.Dispose();
-                };
+                Task.Run(async () => await _sfxPlayer.Play(dateipfad));
             }
         }
     }

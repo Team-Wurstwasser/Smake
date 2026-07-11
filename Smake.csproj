@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<ApplicationIcon>titel.ico</ApplicationIcon>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<!-- Kopieren der Unterordner beim Debug-Build -->
@@ -38,10 +39,4 @@
 	<ItemGroup>
 	  <None Include=".github\workflows\release.yml" />
 	</ItemGroup>
-
-	<!-- Pakete -->
-	<ItemGroup>
-		<PackageReference Include="NAudio" Version="2.3.0" />
-	</ItemGroup>
-
 </Project>
