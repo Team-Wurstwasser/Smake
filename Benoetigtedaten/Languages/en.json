@@ -10,9 +10,6 @@
     "loadError": "⚠ Error loading, trying backup...",
     "backupAlsoCorrupt": "❌ Backup also corrupted - default values will be set."
   },
-  "sfx": {
-    "os_not_supported": "This operating system is not supported."
-  },
   "input": {
     "player1": "Player 1, enter your name: ",
     "player2": "Player 2, enter your name: "

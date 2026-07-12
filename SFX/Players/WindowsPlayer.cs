@@ -1,17 +1,12 @@
 ﻿using Smake.Interfaces;
-using Smake.SFX.Utils;
-using System.Diagnostics;
-using System.Timers;
-using Timer = System.Timers.Timer;
+using NAudio.Wave;
 
 namespace Smake.SFX.Players
 {
     internal class WindowsPlayer : IPlayer
     {
-        private readonly string _alias = "smake_" + Guid.NewGuid().ToString("N");
-
-        private Timer? _playbackTimer;
-        private Stopwatch? _playStopwatch;
+        private WaveOutEvent? _outputDevice;
+        private AudioFileReader? _audioFile;
         private string? _fileName;
         private bool _loop;
 
@@ -21,65 +16,60 @@ namespace Smake.SFX.Players
 
         public async Task Play(string fileName, bool loop = false)
         {
+            _fileName = fileName;
             _loop = loop;
-            FileUtil.ClearTempFiles();
-            _fileName = $"\"{FileUtil.CheckFileToPlay(fileName)}\"";
 
             await StartPlayback();
         }
 
-        private async Task StartPlayback()
+        private Task StartPlayback()
         {
-            _playbackTimer = new Timer
-            {
-                AutoReset = false
-            };
-            _playStopwatch = new Stopwatch();
+            CleanupDevice();
 
-            await CloseOwnDevice();
+            _audioFile = new AudioFileReader(_fileName!);
+            _outputDevice = new WaveOutEvent();
+            _outputDevice.Init(_audioFile);
+            _outputDevice.PlaybackStopped += HandlePlaybackFinished;
+            _outputDevice.Play();
 
-            await WindowsUtil.ExecuteMciCommand($"Open {_fileName} Alias {_alias}");
-            await WindowsUtil.ExecuteMciCommand($"Status {_alias} Length", _playbackTimer);
-            await WindowsUtil.ExecuteMciCommand($"Play {_alias}");
             Playing = true;
-            _playbackTimer.Elapsed += HandlePlaybackFinished;
-            _playbackTimer.Start();
-            _playStopwatch.Start();
+
+            return Task.CompletedTask;
         }
 
-        public async Task Stop()
+        public Task Stop()
         {
             _loop = false;
 
-            if (Playing)
+            if (_outputDevice != null)
             {
-                await WindowsUtil.ExecuteMciCommand($"Stop {_alias}");
-                Playing = false;
-                _playbackTimer?.Stop();
-                _playStopwatch?.Stop();
-                FileUtil.ClearTempFiles();
+                _outputDevice.PlaybackStopped -= HandlePlaybackFinished;
+                _outputDevice.Stop();
             }
 
-            await CloseOwnDevice();
+            Playing = false;
+            CleanupDevice();
+
+            return Task.CompletedTask;
         }
 
-        private async Task CloseOwnDevice()
+        private void CleanupDevice()
         {
-            try
-            {
-                await WindowsUtil.ExecuteMciCommand($"Close {_alias}");
-            }
-            catch
-            {
+            _outputDevice?.Dispose();
+            _outputDevice = null;
 
-            }
+            _audioFile?.Dispose();
+            _audioFile = null;
         }
 
-        private async void HandlePlaybackFinished(object? sender, ElapsedEventArgs e)
+        private async void HandlePlaybackFinished(object? sender, StoppedEventArgs e)
         {
             Playing = false;
-            _playbackTimer?.Dispose();
-            _playbackTimer = null;
+
+            if (e.Exception != null)
+            {
+                _loop = false;
+            }
 
             if (_loop && _fileName != null)
             {
@@ -87,8 +77,8 @@ namespace Smake.SFX.Players
                 return;
             }
 
-            PlaybackFinished?.Invoke(this, e);
-            await CloseOwnDevice();
+            PlaybackFinished?.Invoke(this, EventArgs.Empty);
+            CleanupDevice();
         }
     }
 }

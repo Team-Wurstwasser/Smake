@@ -39,4 +39,9 @@
 	<ItemGroup>
 	  <None Include=".github\workflows\release.yml" />
 	</ItemGroup>
+
+	<!-- Pakete -->
+	<ItemGroup>
+		<PackageReference Include="NAudio" Version="2.3.0" />
+	</ItemGroup>
 </Project>

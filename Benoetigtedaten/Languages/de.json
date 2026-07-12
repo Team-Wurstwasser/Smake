@@ -10,9 +10,6 @@
     "loadError": "⚠ Fehler beim Laden, versuche Backup...",
     "backupAlsoCorrupt": "❌ Backup auch beschädigt - Standardwerte werden gesetzt."
   },
-  "sfx": {
-    "os_not_supported": "Dieses Betriebssystem wird nicht unterstützt."
-  },
   "input": {
     "player1": "Spieler 1, gib deinen Namen ein: ",
     "player2": "Spieler 2, gib deinen Namen ein: "

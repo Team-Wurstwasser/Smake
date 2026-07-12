@@ -8,7 +8,7 @@ namespace Smake.Menues
 {
     public class Settings : RenderMenue
     {
-        static int MaxMenuItems => OperatingSystem.IsWindows() ? 10 : 8;
+        static int MaxMenuItems => SoundPlayer.NotSupported ? 8 : 10;
 
         int menuTracker;
         public int MenuTracker
@@ -76,11 +76,9 @@ namespace Smake.Menues
 
         void SelectMenu()
         {
-            bool isWindows = OperatingSystem.IsWindows();
-
             int actionCase = MenuTracker;
 
-            if (!isWindows)
+            if (SoundPlayer.NotSupported)
             {
                 if (MenuTracker >= 6)
                 {
@@ -111,8 +109,6 @@ namespace Smake.Menues
 
         static string[] BuildMenu()
         {
-            bool isWindows = OperatingSystem.IsWindows();
-
             var items = LanguageSystem.GetArray("settings.items");
             var gamemodes = LanguageSystem.GetArray("settings.gamemodes");
             var difficultys = LanguageSystem.GetArray("settings.difficultys");
@@ -125,7 +121,7 @@ namespace Smake.Menues
                 items[4].Replace("{performance}", RenderSpielfeld.Performancemode ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off"))
             };
 
-            if (isWindows)
+            if (!SoundPlayer.NotSupported)
             {
                 menuList.Add(items[5].Replace("{music}", Sounds.Musikplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")));
                 menuList.Add(items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")));

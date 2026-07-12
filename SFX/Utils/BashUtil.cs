@@ -17,13 +17,10 @@ namespace Smake.SFX.Utils
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardOutput = true,
-                    RedirectStandardError = true,
+                    RedirectStandardInput = true
                 }
             };
             process.Start();
-
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
 
             return process;
         }

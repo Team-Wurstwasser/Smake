@@ -1,12 +1,96 @@
 ﻿using Smake.Interfaces;
+using Smake.SFX.Utils;
+using System.Diagnostics;
 
 namespace Smake.SFX.Players
 {
-    internal class LinuxPlayer : UnixPlayerBase, IPlayer
+    internal class LinuxPlayer : IPlayer
     {
-        protected override string GetBashCommand(string fileName)
+        private static readonly TimeSpan MinPlaybackDuration = TimeSpan.FromMilliseconds(300);
+
+        private Process? _process;
+        private string? _fileName;
+        private bool _loop;
+        private readonly Stopwatch _playStopwatch = new();
+
+        public event EventHandler? PlaybackFinished;
+
+        private const string BashToolName = "aplay -q";
+
+        public bool Playing { get; private set; }
+
+        public async Task Play(string fileName, bool loop = false)
         {
-            return Path.GetExtension(fileName).Equals(".mp3", StringComparison.OrdinalIgnoreCase)? "mpg123 -q" : "aplay -q";
+            _fileName = fileName;
+            _loop = loop;
+
+            await StartPlayback();
+        }
+
+        private async Task StartPlayback()
+        {
+            await KillCurrentProcess();
+
+            _process = BashUtil.StartBashProcess(
+                $"{BashToolName} '{_fileName}'");
+            _process.EnableRaisingEvents = true;
+            _process.Exited += HandlePlaybackFinished;
+            Playing = true;
+            _playStopwatch.Restart();
+
+            await Task.CompletedTask;
+        }
+
+        public async Task Stop()
+        {
+            _loop = false;
+            await KillCurrentProcess();
+            Playing = false;
+        }
+
+        private Task KillCurrentProcess()
+        {
+            if (_process != null)
+            {
+                _process.Exited -= HandlePlaybackFinished;
+
+                if (!_process.HasExited)
+                {
+                    _process.Kill();
+                }
+
+                _process.Dispose();
+                _process = null;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        internal async void HandlePlaybackFinished(object? sender, EventArgs e)
+        {
+            if (!Playing)
+                return;
+
+            Playing = false;
+
+            int exitCode = (sender as Process)?.ExitCode ?? 0;
+            bool playbackFailed = exitCode != 0 || _playStopwatch.Elapsed < MinPlaybackDuration;
+
+            if (playbackFailed)
+            {
+                _loop = false;
+
+                PlaybackFinished?.Invoke(this, e);
+                return;
+            }
+
+            if (_loop && _fileName != null)
+            {
+                await StartPlayback();
+                return;
+            }
+
+            PlaybackFinished?.Invoke(this, e);
         }
     }
 }

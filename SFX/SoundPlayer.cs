@@ -7,6 +7,8 @@ namespace Smake.SFX
 {
     public class SoundPlayer : IPlayer
     {
+        public static bool NotSupported { get; private set; } = false;
+
         private readonly IPlayer _internalPlayer;
 
         public event EventHandler? PlaybackFinished;
@@ -25,7 +27,9 @@ namespace Smake.SFX
             }
             else
             {
-                throw new PlatformNotSupportedException(LanguageSystem.Get("sfx.os_not_supported"));
+                NotSupported = true;
+                _internalPlayer = new NullPlayer();
+                return;
             }
 
             _internalPlayer.PlaybackFinished += OnPlaybackFinished;
