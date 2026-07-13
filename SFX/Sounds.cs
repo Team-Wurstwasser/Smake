@@ -11,35 +11,40 @@ namespace Smake.SFX
         private static AudioMixer? _mixer;
         private static FileSource? _musikSource;
         private static SampleSource? _beepSource;
+        public static bool AudioAvailable { get; private set; }
 
         public static void Init()
         {
-            var config = new AudioConfig
+            try
             {
-                BufferSize = 1024,
-                HostType = GetPlatformHostType()
-            };
-
-            OwnaudioNet.Initialize(config);
-            OwnaudioNet.Start();
-
-            _mixer = new AudioMixer(OwnaudioNet.Engine!.UnderlyingEngine);
-            _mixer.Start();
-
-            string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string beepPfad = Path.Combine(basePath, "Sounds", GameData.BeepFile);
-
-            if (File.Exists(beepPfad))
-            {
-                float[] beepSamples = LoadWavAsFloatArray(beepPfad);
-
-                _beepSource = new SampleSource(beepSamples, config)
+                var config = new AudioConfig
                 {
-                    Volume = 0f
+                    BufferSize = 1024,
+                    HostType = GetPlatformHostType()
                 };
-                _mixer.AddSource(_beepSource);
-                _beepSource.Stop();
-                _beepSource.Volume = 1f;
+
+                OwnaudioNet.Initialize(config);
+                OwnaudioNet.Start();
+
+                _mixer = new AudioMixer(OwnaudioNet.Engine!.UnderlyingEngine);
+                _mixer.Start();
+
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                string beepPfad = Path.Combine(basePath, "Sounds", GameData.BeepFile);
+
+                if (File.Exists(beepPfad))
+                {
+                    float[] beepSamples = LoadWavAsFloatArray(beepPfad);
+                    _beepSource = new SampleSource(beepSamples, config);
+                    _mixer.AddSource(_beepSource);
+                    _beepSource.Stop();
+                }
+
+                AudioAvailable = true;
+            }
+            catch
+            {
+                AudioAvailable = false;
             }
         }
 
@@ -136,6 +141,8 @@ namespace Smake.SFX
 
         public static void Melodie(int Currentmusik)
         {
+            if (!AudioAvailable) return;
+
             if (!Musikplay)
             {
                 StopMusik();
@@ -179,7 +186,7 @@ namespace Smake.SFX
 
         public static void Playbeep()
         {
-            if (!Soundplay || _beepSource == null) return;
+            if (!AudioAvailable || !Soundplay || _beepSource == null) return;
 
             _beepSource.Seek(0);
             _beepSource.Play();
