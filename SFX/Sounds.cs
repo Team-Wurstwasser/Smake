@@ -46,10 +46,13 @@ namespace Smake.SFX
         static EngineHostType GetPlatformHostType()
         {
             if (OperatingSystem.IsWindows())
+            {
                 return EngineHostType.WASAPI;
-
-            if (OperatingSystem.IsLinux())
+            }    
+            else if (OperatingSystem.IsLinux())
+            {
                 return EngineHostType.ALSA;
+            }    
 
             return EngineHostType.None;
         }
