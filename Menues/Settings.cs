@@ -8,15 +8,13 @@ namespace Smake.Menues
 {
     public class Settings : RenderMenue
     {
-        static int MaxMenuItems => SoundPlayer.NotSupported ? 8 : 10;
-
         int menuTracker;
         public int MenuTracker
         {
             get { return menuTracker; }
             set
             {
-                int max = MaxMenuItems;
+                int max = 10;
                 if (value != menuTracker)
                 {
                     if (value > max) menuTracker = 1;
@@ -78,19 +76,6 @@ namespace Smake.Menues
         {
             int actionCase = MenuTracker;
 
-            if (SoundPlayer.NotSupported)
-            {
-                if (MenuTracker >= 6)
-                {
-                    actionCase = MenuTracker switch
-                    {
-                        6 => 8,
-                        7 => 9,
-                        8 => 10,
-                        _ => MenuTracker
-                    };
-                }
-            }
             switch (actionCase)
             {
                 case 1: ChangeDifficulty(); break;
@@ -118,17 +103,13 @@ namespace Smake.Menues
                 items[1].Replace("{multiplayer}", Spielvalues.Multiplayer ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")),
                 items[2].Replace("{gamemode}", gamemodes[(int)Spielvalues.Gamemode]),
                 items[3].Replace("{maxfutter}", Spielvalues.Maxfutter.ToString()),
-                items[4].Replace("{performance}", RenderSpielfeld.Performancemode ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off"))
+                items[4].Replace("{performance}", RenderSpielfeld.Performancemode ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")),
+                items[5].Replace("{music}", Sounds.Musikplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")),
+                items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")),
+                items[7].Replace("{language}", LanguageSystem.Language?.ToUpper()),
+                items[8],
+                items[9]
             };
-
-            if (!SoundPlayer.NotSupported)
-            {
-                menuList.Add(items[5].Replace("{music}", Sounds.Musikplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")));
-                menuList.Add(items[6].Replace("{sounds}", Sounds.Soundplay ? LanguageSystem.Get("settings.on") : LanguageSystem.Get("settings.off")));
-            }
-            menuList.Add(items[7].Replace("{language}", LanguageSystem.Language?.ToUpper()));
-            menuList.Add(items[8]);
-            menuList.Add(items[9]);
 
             return [.. menuList];
         }
