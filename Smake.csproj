@@ -39,4 +39,9 @@
 	<ItemGroup>
 	  <None Include=".github\workflows\release.yml" />
 	</ItemGroup>
+
+	<!-- Pakete -->
+	<ItemGroup>
+		<PackageReference Include="OwnAudioSharp.Basic" Version="3.1.7" />
+	</ItemGroup>
 </Project>

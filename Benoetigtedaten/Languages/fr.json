@@ -10,9 +10,6 @@
     "loadError": "⚠ Erreur de chargement, tentative de sauvegarde...",
     "backupAlsoCorrupt": "❌ La sauvegarde est également corrompue - les valeurs par défaut seront définies."
   },
-  "sfx": {
-    "os_not_supported": "Ce système d'exploitation n'est pas pris en charge."
-  },
   "input": {
     "player1": "Joueur 1, entrez votre nom: ",
     "player2": "Joueur 2, entrez votre nom: "

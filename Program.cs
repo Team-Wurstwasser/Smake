@@ -13,6 +13,7 @@ namespace Smake
         // Main
         static void Main()
         {
+            Logger.Log.LoggerLevel = Logger.Log.Level.Disabled;
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.Title = "Smake";
@@ -23,6 +24,7 @@ namespace Smake
             // Mauszeiger im Konsolenfenster ausblenden
             Console.CursorVisible = false;
             GameData.LoadAllConfigs();
+            Sounds.Init();
 
             SpeicherSystem.Speichern_Laden(StorageAction.Load);
 
