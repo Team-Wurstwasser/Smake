@@ -1,4 +1,5 @@
 ﻿using Smake.Enums;
+using Smake.Game.Struct;
 using Smake.Values;
 
 namespace Smake.Game
@@ -106,15 +107,12 @@ namespace Smake.Game
             }
 
             // Verhindert Rückwärtsbewegung und doppelte Änderungen pro Tick
-            if (p.Aenderung && (p.InputX != -newX || p.InputY != -newY))
+            if (p.Aenderung && (p.Richtung.X != -newX || p.Richtung.Y != -newY))
             {
-                p.InputX = newX;
-                p.InputY = newY;
+                p.Richtung = new Position(newX, newY);
                 p.HeadSkin = head;
                 p.Aenderung = false;
             }
         }
-
     }
-
 }

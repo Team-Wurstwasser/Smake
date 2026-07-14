@@ -4,6 +4,7 @@ using Smake.Helper;
 using Smake.SFX;
 using Smake.Speicher;
 using Smake.Values;
+using Smake.Game.Struct;
 
 namespace Smake.Game
 {
@@ -11,9 +12,9 @@ namespace Smake.Game
     {
         public static GameOverType Gameovertype { get; set; }
 
-        public static Player Player { get; set; } = new(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y, GameData.TailStartLaenge);
+        public static Player Player { get; set; } = new(new Position(GameData.Startpositionen.Spieler1.X, GameData.Startpositionen.Spieler1.Y), GameData.TailStartLaenge);
 
-        public static Player Player2 { get; set; } = new(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y, GameData.TailStartLaenge);
+        public static Player Player2 { get; set; } = new(new Position(GameData.Startpositionen.Spieler2.X, GameData.Startpositionen.Spieler2.Y), GameData.TailStartLaenge);
 
         public static List<Futter> Essen { get; private set; } = [];
 
@@ -115,20 +116,19 @@ namespace Smake.Game
         static void Update()
         {
             //Zukünftige Koordinaten berechnen
-            int newP1X = Player.PlayerX[0] + 2 * Player.InputX;
-            int newP1Y = Player.PlayerY[0] + Player.InputY;
+            int newP1X = Player.Positionen[0].X + 2 * Player.InputX;
+            int newP1Y = Player.Positionen[0].Y + Player.InputY;
 
-            int newP2X = Player2.PlayerX[0] + 2 * Player2.InputX;
-            int newP2Y = Player2.PlayerY[0] + Player2.InputY;
+            int newP2X = Player2.Positionen[0].X + 2 * Player2.InputX;
+            int newP2Y = Player2.Positionen[0].Y + Player2.InputY;
 
-            //Kollisionen prüfen und dem jeweiligen Spieler zuweisen
+            //Kollisionen prüfen
             Player.IstKollidiert = PrüfeKollision(Player, Player2, newP1X, newP1Y);
             if (Spielvalues.Multiplayer)
             {
                 Player2.IstKollidiert = PrüfeKollision(Player2, Player, newP2X, newP2Y);
             }
 
-            //Spieler mit den neuen Positionsdaten updaten
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
@@ -152,13 +152,13 @@ namespace Smake.Game
         {
             if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                return RenderSpielfeld.Grid[newY, newX] == Skinvalues.RandSkin;
+                return Grid[newY, newX] == Skinvalues.RandSkin;
             }
 
             if (Spielvalues.Multiplayer)
             {
-                int gegnerNextX = gegner.PlayerX[0] + 2 * gegner.InputX;
-                int gegnerNextY = gegner.PlayerY[0] + gegner.InputY;
+                int gegnerNextX = gegner.Positionen[0].X + 2 * gegner.InputX;
+                int gegnerNextY = gegner.Positionen[0].Y + gegner.InputY;
 
                 if (newX == gegnerNextX && newY == gegnerNextY)
                 {
@@ -166,12 +166,11 @@ namespace Smake.Game
                 }
             }
 
-            if (RenderSpielfeld.Grid[newY, newX] == ' ' || RenderSpielfeld.Grid[newY, newX] == Skinvalues.FoodSkin || (newX == spieler.PlayerX[0] && newY == spieler.PlayerY[0]) || RenderSpielfeld.Grid[newY, newX] == Skinvalues.SchluesselSkin)
+            if (Grid[newY, newX] == ' ' || Grid[newY, newX] == Skinvalues.FoodSkin || (newX == spieler.Positionen[0].X && newY == spieler.Positionen[0].Y) || Grid[newY, newX] == Skinvalues.SchluesselSkin)
             {
                 return false;
             }
 
-            // Wenn das Feld besetzt ist
             return true;
         }
 

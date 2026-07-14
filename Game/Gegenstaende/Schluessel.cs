@@ -14,7 +14,7 @@ namespace Smake.Game.Gegenstaende
                 // Überprüfe jedes Segment des Spielers
                 for (int i = 0; i < p.TailLaenge; i++)
                 {
-                    if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
+                    if (p.Positionen[i].X == Pos.X && p.Positionen[i].Y == Pos.Y)
                     {
                         Collected = true;
 
