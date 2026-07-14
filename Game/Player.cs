@@ -170,7 +170,9 @@ namespace Smake.Game
             for (int i = 0; i <= TailLaenge; i++)
             {
                 if (PlayerX[i] >= 0 && PlayerY[i] >= 0)
+                {
                     RenderSpielfeld.Grid[PlayerY[i], PlayerX[i]] = TailSkin;
+                }
             }
 
             // Prüfen, ob das alte Tail-Feld noch auf einem Player-Segment liegt

@@ -167,15 +167,12 @@ namespace Smake.Game
                 }
             }
 
-            if (RenderSpielfeld.Grid[newY, newX] == ' ' ||
-                RenderSpielfeld.Grid[newY, newX] == Skinvalues.FoodSkin ||
-                (newX == spieler.PlayerX[0] && newY == spieler.PlayerY[0]) ||
-                RenderSpielfeld.Grid[newY, newX] == Skinvalues.SchluesselSkin)
+            if (RenderSpielfeld.Grid[newY, newX] == ' ' || RenderSpielfeld.Grid[newY, newX] == Skinvalues.FoodSkin || (newX == spieler.PlayerX[0] && newY == spieler.PlayerY[0]) || RenderSpielfeld.Grid[newY, newX] == Skinvalues.SchluesselSkin)
             {
                 return false;
             }
 
-            // Wenn das Feld besetzt ist (z.B. Hindernisse oder Schlangenkörper)
+            // Wenn das Feld besetzt ist
             return true;
         }
 
