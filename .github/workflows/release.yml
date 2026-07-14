@@ -36,7 +36,7 @@ jobs:
           7z a -tzip ../${{ env.WINDOWS_ZIP }} Smake.exe Languages Sounds Jsons
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: windows-zip
           path: ${{ env.WINDOWS_ZIP }}
@@ -72,7 +72,7 @@ jobs:
           7z a -tzip ../${{ env.LINUX_ZIP }} Smake Languages Sounds Jsons
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: linux-zip
           path: ${{ env.LINUX_ZIP }}
@@ -108,7 +108,7 @@ jobs:
           7z a -tzip ../${{ env.MACOS_X86_64_ZIP }} Smake Languages Sounds Jsons
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: macos-x86_64-zip
           path: ${{ env.MACOS_X86_64_ZIP }}
@@ -144,7 +144,7 @@ jobs:
           7z a -tzip ../${{ env.MACOS_ARM_ZIP }} Smake Languages Sounds Jsons
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: macos-arm-zip
           path: ${{ env.MACOS_ARM_ZIP }}
@@ -160,22 +160,22 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Download Windows Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: windows-zip
 
       - name: Download Linux Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: linux-zip
 
       - name: Download macOS x86_64 Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: macos-x86_64-zip
 
       - name: Download macOS ARM Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: macos-arm-zip
 
