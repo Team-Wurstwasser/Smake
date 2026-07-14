@@ -69,7 +69,6 @@ namespace Smake.Game
 
                     Essen.Add(new Futter(Skinvalues.FoodSkin, GameData.Farben[farbenIndex]));
                 }
-
             }
         }
 
@@ -90,7 +89,6 @@ namespace Smake.Game
             // Game Loop 
             do
             {
-
                 Update();   // Spielerposition aktualisieren
 
                 Render();   // Spielfeld neu zeichnen
@@ -103,7 +101,6 @@ namespace Smake.Game
                 {
                     Player2.Aenderung = true;
                 }
-
             }
             while (Gameovertype == GameOverType.None);
 
@@ -112,31 +109,70 @@ namespace Smake.Game
             Input.StopInputStream(); // Warte auf Ende des Eingabethreads sodass das Spiel sauber beendet wird
 
             ShowGameOverScreen(); // Spielende-Bildschirm
-
         }
 
         // Aktualisiert die Position des Spielers anhand der Eingabe
         static void Update()
         {
+            //Zukünftige Koordinaten berechnen
+            int newP1X = Player.PlayerX[0] + 2 * Player.InputX;
+            int newP1Y = Player.PlayerY[0] + Player.InputY;
+
+            int newP2X = Player2.PlayerX[0] + 2 * Player2.InputX;
+            int newP2Y = Player2.PlayerY[0] + Player2.InputY;
+
+            //Kollisionen prüfen und dem jeweiligen Spieler zuweisen
+            Player.IstKollidiert = PrüfeKollision(Player, Player2, newP1X, newP1Y);
+            if (Spielvalues.Multiplayer)
+            {
+                Player2.IstKollidiert = PrüfeKollision(Player2, Player, newP2X, newP2Y);
+            }
+
+            //Spieler mit den neuen Positionsdaten updaten
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
             {
-                // Update Player 1
-                var (spielerTot, Maxpunkte) = Player.Update(Player2);
+                var (spielerTot, Maxpunkte) = Player.Update(newP1X, newP1Y, Player2);
                 spieler1Tot |= spielerTot;
-                spieler2Tot |= Maxpunkte;  // Falls MaxPunkte
+                spieler2Tot |= Maxpunkte;
             }
 
-            // Update Player 2
             if (Spielvalues.Multiplayer)
             {
-                var (spielerTot, Maxpunkte) = Player2.Update(Player);
+                var (spielerTot, Maxpunkte) = Player2.Update(newP2X, newP2Y, Player);
                 spieler2Tot |= spielerTot;
-                spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
+                spieler1Tot |= Maxpunkte;
             }
 
             GameoverCheck(spieler1Tot, spieler2Tot);
+        }
+
+        public static bool PrüfeKollision(Player spieler, Player gegner, int newX, int newY)
+        {
+            if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
+            {
+                return RenderSpielfeld.Grid[newY, newX] == Skinvalues.RandSkin;
+            }
+
+            if (Spielvalues.Multiplayer)
+            {
+                int gegnerNextX = gegner.PlayerX[0] + 2 * gegner.InputX;
+                int gegnerNextY = gegner.PlayerY[0] + gegner.InputY;
+
+                if (newX == gegnerNextX && newY == gegnerNextY)
+                {
+                    return true;
+                }
+            }
+
+            if (RenderSpielfeld.Grid[newY, newX] == ' ' || RenderSpielfeld.Grid[newY, newX] == Skinvalues.FoodSkin || (newX == spieler.PlayerX[0] && newY == spieler.PlayerY[0]) || RenderSpielfeld.Grid[newY, newX] == Skinvalues.SchluesselSkin)
+            {
+                return false;
+            }
+
+            // Wenn das Feld besetzt ist
+            return true;
         }
 
         // Prüft, ob das Spiel vorbei ist
@@ -191,25 +227,24 @@ namespace Smake.Game
                     break;
 
                 case GameOverType.Player2:
-                        if (Spielvalues.Multiplayer)
-                        {
-                            Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player.Name));
-                            Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
-                            ShowPoints(Player2.Name, Player2.Punkte);
-                        }
-                        else
-                        {
-                            Console.WriteLine(LanguageSystem.Get("gameover.win"));
-                            Console.WriteLine(LanguageSystem.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
-                        }
+                    if (Spielvalues.Multiplayer)
+                    {
+                        Console.WriteLine(LanguageSystem.Get("gameover.playerWins").Replace("{player}", Player.Name));
+                        Console.WriteLine(LanguageSystem.Get("gameover.points").Replace("{points}", Player.Punkte.ToString()));
+                        ShowPoints(Player2.Name, Player2.Punkte);
+                    }
+                    else
+                    {
+                        Console.WriteLine(LanguageSystem.Get("gameover.win"));
+                        Console.WriteLine(LanguageSystem.Get("gameover.winPoints").Replace("{points}", Player.Punkte.ToString()));
+                    }
                     break;
 
                 case GameOverType.Exit:
-
                     break;
             }
 
-            if(Gameovertype != GameOverType.Exit)
+            if (Gameovertype != GameOverType.Exit)
             {
                 Console.WriteLine();
                 Console.WriteLine("═════════════════════════════════════");
@@ -287,7 +322,6 @@ namespace Smake.Game
                 Spielstatus.Gesamtcoins = (GameData.MaxPunkte) / 2 + Spielstatus.Gesamtcoins;
                 Spielstatus.Coins = (GameData.MaxPunkte) / 2 + Spielstatus.Coins;
             }
-
         }
     }
 }
