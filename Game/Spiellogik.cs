@@ -116,11 +116,11 @@ namespace Smake.Game
         static void Update()
         {
             //Zukünftige Koordinaten berechnen
-            int newP1X = Player.Positionen[0].X + 2 * Player.InputX;
-            int newP1Y = Player.Positionen[0].Y + Player.InputY;
+            int newP1X = Player.Positionen[0].X + 2 * Player.Richtung.X;
+            int newP1Y = Player.Positionen[0].Y + Player.Richtung.Y;
 
-            int newP2X = Player2.Positionen[0].X + 2 * Player2.InputX;
-            int newP2Y = Player2.Positionen[0].Y + Player2.InputY;
+            int newP2X = Player2.Positionen[0].X + 2 * Player2.Richtung.X;
+            int newP2Y = Player2.Positionen[0].Y + Player2.Richtung.Y;
 
             //Kollisionen prüfen
             Player.IstKollidiert = PrüfeKollision(Player, Player2, newP1X, newP1Y);
@@ -157,8 +157,8 @@ namespace Smake.Game
 
             if (Spielvalues.Multiplayer)
             {
-                int gegnerNextX = gegner.Positionen[0].X + 2 * gegner.InputX;
-                int gegnerNextY = gegner.Positionen[0].Y + gegner.InputY;
+                int gegnerNextX = gegner.Positionen[0].X + 2 * gegner.Richtung.X;
+                int gegnerNextY = gegner.Positionen[0].Y + gegner.Richtung.Y;
 
                 if (newX == gegnerNextX && newY == gegnerNextY)
                 {
