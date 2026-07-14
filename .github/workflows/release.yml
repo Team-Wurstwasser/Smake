@@ -77,81 +77,9 @@ jobs:
           name: linux-zip
           path: ${{ env.LINUX_ZIP }}
 
-  build-macos-x86_64:
-    name: Build macOS (x86_64)
-    runs-on: ubuntu-latest
-    env:
-      MACOS_X86_64_ZIP: Smake-MacOS-x86_64-${{ github.ref_name }}.zip
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.0.x
-
-      - name: Install 7zip
-        run: sudo apt-get update && sudo apt-get install -y p7zip-full
-
-      - name: Build & Copy Assets
-        run: |
-          dotnet publish Smake.csproj -c Release -r osx-x64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true /p:IncludeNativeLibrariesForSelfExtract=true -o ./Build
-          cp -r Benoetigtedaten/Languages ./Build/
-          cp -r Benoetigtedaten/Sounds ./Build/
-          cp -r Benoetigtedaten/Jsons ./Build/
-
-      - name: Package
-        run: |
-          cd ./Build
-          chmod +x Smake
-          7z a -tzip ../${{ env.MACOS_X86_64_ZIP }} Smake Languages Sounds Jsons
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: macos-x86_64-zip
-          path: ${{ env.MACOS_X86_64_ZIP }}
-
-  build-macos-arm:
-    name: Build macOS (ARM)
-    runs-on: ubuntu-latest
-    env:
-      MACOS_ARM_ZIP: Smake-MacOS-ARM-${{ github.ref_name }}.zip
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.0.x
-
-      - name: Install 7zip
-        run: sudo apt-get update && sudo apt-get install -y p7zip-full
-
-      - name: Build & Copy Assets
-        run: |
-          dotnet publish Smake.csproj -c Release -r osx-arm64 --self-contained true /p:PublishSingleFile=true /p:PublishReadyToRun=true /p:IncludeNativeLibrariesForSelfExtract=true -o ./Build
-          cp -r Benoetigtedaten/Languages ./Build/
-          cp -r Benoetigtedaten/Sounds ./Build/
-          cp -r Benoetigtedaten/Jsons ./Build/
-
-      - name: Package
-        run: |
-          cd ./Build
-          chmod +x Smake
-          7z a -tzip ../${{ env.MACOS_ARM_ZIP }} Smake Languages Sounds Jsons
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: macos-arm-zip
-          path: ${{ env.MACOS_ARM_ZIP }}
-
   release:
     name: Create Release & Upload Assets
-    needs: [build-windows, build-linux, build-macos-x86_64, build-macos-arm]
+    needs: [build-windows, build-linux]
     runs-on: ubuntu-latest
     permissions:
       contents: write
