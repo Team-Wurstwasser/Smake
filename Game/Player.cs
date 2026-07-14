@@ -76,13 +76,12 @@ namespace Smake.Game
             InitialisiereSpieler();
         }
 
-        public (bool spielerTot, bool Maxpunkte) Update(Player p)
+        public void Update()
         {
             // Neue Zielkoordinaten berechnen
             int newPlayerX = PlayerX[0] + 2 * InputX;
             int newPlayerY = PlayerY[0] + InputY;
 
-            Kollisioncheck(newPlayerX, newPlayerY, p);
             if (!Kollision || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
                 TailShift();
@@ -92,83 +91,6 @@ namespace Smake.Game
                 foreach (var Futter in Spiellogik.Essen)
                 {
                     Futter.EsseFutter(this);
-                }
-            }
-            return GameoverChecker(p);
-        }
-
-        (bool spielerTot, bool Maxpunkte) GameoverChecker(Player p)
-        {
-            bool SpielerTot = false;
-            bool Maxpunkte = false;
-
-            if (Spielvalues.Gamemode == Gamemodes.Unendlich || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
-            {
-                if (Kollision && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
-                    SpielerTot = true;
-                else if (TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
-                    Maxpunkte = true;
-                else if (TailLaenge + p.TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 2 && Spielvalues.Multiplayer)
-                    Maxpunkte = true;
-            }
-            else if (Spielvalues.Gamemode == Gamemodes.Babymode)
-            {
-                if (Punkte >= GameData.MaxPunkte)
-                {
-                    Maxpunkte = true;
-                }
-            }
-            else
-            {
-                if (Kollision)
-                    SpielerTot = true;
-                else if (Punkte >= GameData.MaxPunkte)
-                    Maxpunkte = true;
-            }
-
-            return (SpielerTot, Maxpunkte);
-
-        }
-
-        // Prüft die Kollision
-        void Kollisioncheck(int newPlayerX, int newPlayerY, Player p)
-        {
-            if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
-            {
-                if (RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
-                {
-                    Kollision = true;
-                }
-                else
-                {
-                    Kollision = false;
-                }
-
-            }
-            else
-            {
-                if (Spielvalues.Multiplayer)
-                {
-                    int newPlayer2X = p.PlayerX[0] + 2 * p.InputX;
-                    int newPlayer2Y = p.PlayerY[0] + p.InputY;
-
-                    if (newPlayerX == newPlayer2X && newPlayerY == newPlayer2Y)
-                    {
-                        Kollision = true;
-                        return;
-                    }
-
-                }
-
-                if (RenderSpielfeld.Grid[newPlayerY, newPlayerX] == ' ' || RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0] || RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.SchluesselSkin)
-                {
-                    Kollision = false;
-                }
-                else
-                {
-                    // Wenn das Feld nicht leer, nicht Food, nicht Schlüssel, nicht Head, nicht Rand
-                    Kollision = true;
-
                 }
             }
         }

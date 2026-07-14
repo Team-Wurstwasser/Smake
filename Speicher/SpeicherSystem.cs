@@ -126,26 +126,31 @@ namespace Smake.Speicher
             var zeilen = new List<string>
             {
                 $"Performancemode={RenderSpielfeld.Performancemode}",
-                $"Musikplay={Sounds.Musikplay}",
-                $"Soundplay={Sounds.Soundplay}",
                 $"Coins={Spielstatus.Coins}",
                 $"Xp={Spielstatus.Xp}",
+                $"Gesamtcoins={Spielstatus.Gesamtcoins}",
+                $"Highscore={Spielstatus.Highscore}",
                 $"SpieleGesamt={Spielstatus.SpieleGesamt}",
                 $"Maxfutter={Spielvalues.Maxfutter}",
-                $"Highscore={Spielstatus.Highscore}",
-                $"Gesamtcoins={Spielstatus.Gesamtcoins}",
+
                 $"Difficulty={Spielvalues.Difficulty}",
+                $"Multiplayer={Spielvalues.Multiplayer}",
+                $"Gamemode={Spielvalues.Gamemode}",
+
                 $"RandSkin={Skinvalues.RandSkin}",
                 $"FoodSkin={Skinvalues.FoodSkin}",
                 $"Player1.TailSkin={Spiellogik.Player.TailSkin}",
                 $"Player2.TailSkin={Spiellogik.Player2.TailSkin}",
+
                 $"RandFarbe={Skinvalues.RandFarbe}",
                 $"FoodFarbe={Skinvalues.FoodFarbe}",
                 $"FoodfarbeRandom={Skinvalues.FoodfarbeRandom}",
                 $"Player1.TailFarbe={Spiellogik.Player.TailFarbe}",
                 $"Player2.TailFarbe={Spiellogik.Player2.TailFarbe}",
                 $"Player1.HeadFarbe={Spiellogik.Player.HeadFarbe}",
-                $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}"
+                $"Player2.HeadFarbe={Spiellogik.Player2.HeadFarbe}",
+                $"Musikplay={Sounds.Musikplay}",
+                $"Soundplay={Sounds.Soundplay}"
             };
 
             for (int i = 0; i < Menüsvalues.FreigeschaltetTail.Length; i++)

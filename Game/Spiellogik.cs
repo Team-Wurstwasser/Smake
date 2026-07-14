@@ -4,6 +4,7 @@ using Smake.Helper;
 using Smake.SFX;
 using Smake.Speicher;
 using Smake.Values;
+using System.Numerics;
 
 namespace Smake.Game
 {
@@ -121,22 +122,55 @@ namespace Smake.Game
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
-            {
-                // Update Player 1
-                var (spielerTot, Maxpunkte) = Player.Update(Player2);
-                spieler1Tot |= spielerTot;
-                spieler2Tot |= Maxpunkte;  // Falls MaxPunkte
-            }
+            Player.Update();
 
             // Update Player 2
             if (Spielvalues.Multiplayer)
             {
-                var (spielerTot, Maxpunkte) = Player2.Update(Player);
-                spieler2Tot |= spielerTot;
-                spieler1Tot |= Maxpunkte;  // Falls MaxPunkte
+                Player2.Update();
             }
 
             GameoverCheck(spieler1Tot, spieler2Tot);
+        }
+
+        // Prüft die Kollision
+        static void Kollision(int x, int y, int x2, int y2)
+        {
+            if (grid[y, x] == ' ' || grid[y, x] == food || grid[y, x] == player.Head)
+            {
+                player.KollisionPlayer = false;
+                player.KollisionRand = false;
+            }
+            else if (grid[y, x] == rand)
+            {
+                player.KollisionPlayer = false;
+                player.KollisionRand = true;
+            }
+            else if (grid[y, x] == player2.Skin || grid[y, x] == player2.Head || grid[y, x] == player.Skin)
+            {
+                player.KollisionPlayer = true;
+                player.KollisionRand = false;
+            }
+
+            if (multiplayer)
+            {
+                if (grid[y2, x2] == ' ' || grid[y2, x2] == food || grid[y2, x2] == player2.Head)
+
+                {
+                    player2.KollisionPlayer = false;
+                    player2.KollisionRand = false;
+                }
+                else if (grid[y2, x2] == rand)
+                {
+                    player2.KollisionPlayer = false;
+                    player2.KollisionRand = true;
+                }
+                else if (grid[y2, x2] == player.Skin || grid[y2, x2] == player.Head || grid[y2, x2] == player2.Skin)
+                {
+                    player2.KollisionPlayer = true;
+                    player2.KollisionRand = false;
+                }
+            }
         }
 
         // Prüft, ob das Spiel vorbei ist
