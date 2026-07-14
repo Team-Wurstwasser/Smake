@@ -119,5 +119,3 @@ jobs:
           files: |
             Smake-Windows-${{ github.ref_name }}.zip
             Smake-Linux-${{ github.ref_name }}.zip
-            Smake-MacOS-x86_64-${{ github.ref_name }}.zip
-            Smake-MacOS-ARM-${{ github.ref_name }}.zip
