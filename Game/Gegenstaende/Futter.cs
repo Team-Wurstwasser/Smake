@@ -41,16 +41,9 @@ namespace Smake.Game.Gegenstaende
             // Futter ins Spielfeld einzeichnen
             if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
             {
-                if (Schluessel != null && Schluessel.Collected)
+                if (Schluessel != null)
                 {
-                    if (!Schluessel.Collected)
-                    {
-                        RenderSpielfeld.Grid[Y, X] = Skinvalues.MauerSkin;
-                    }
-                    else
-                    {
-                        RenderSpielfeld.Grid[Y, X] = Skin;
-                    }
+                    RenderSpielfeld.Grid[Y, X] = Schluessel.Collected ? Skin : Skinvalues.MauerSkin;
                 }
             }
             else
@@ -61,12 +54,11 @@ namespace Smake.Game.Gegenstaende
 
         public void EsseFutter(Player p)
         {
-            if (Spielvalues.Gamemode == Gamemodes.SchluesselModus)
+            bool WartetAufSchluessel = Spielvalues.Gamemode == Gamemodes.SchluesselModus && Schluessel != null && !Schluessel.Collected;
+
+            if (WartetAufSchluessel)
             {
-                if (Schluessel != null && !Schluessel.Collected)
-                {
-                    Schluessel.EsseSchluessel(p);
-                }
+                Schluessel!.EsseSchluessel(p);
             }
             else
             {
@@ -85,7 +77,7 @@ namespace Smake.Game.Gegenstaende
                             Spiellogik.Mauer.Add(new(Skinvalues.MauerSkin));
                         }
 
-                        if(Spielvalues.Gamemode == Gamemodes.BombenModus)
+                        if (Spielvalues.Gamemode == Gamemodes.BombenModus)
                         {
                             Bombe?.LöscheBombe();
                         }

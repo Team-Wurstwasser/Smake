@@ -177,7 +177,7 @@ namespace Smake.Game
         void Bewegung(int newPlayerX, int newPlayerY)
         {
             // Babymode Wrap-around
-            if (Spielvalues.Gamemode == Gamemodes.Babymode && Kollision || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich && Kollision)
+            if (Kollision && (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich))
             {
                 if (InputX == 1) newPlayerX = 2;
                 else if (InputX == -1) newPlayerX = Spielvalues.weite - 3;
