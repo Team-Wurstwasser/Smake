@@ -121,7 +121,7 @@ namespace Smake.Game
             int newP2X = Player2.PlayerX[0] + 2 * Player2.InputX;
             int newP2Y = Player2.PlayerY[0] + Player2.InputY;
 
-            //Kollisionen von außen prüfen und dem jeweiligen Spieler zuweisen
+            //Kollisionen prüfen und dem jeweiligen Spieler zuweisen
             Player.IstKollidiert = PrüfeKollision(Player, Player2, newP1X, newP1Y);
             if (Spielvalues.Multiplayer)
             {
