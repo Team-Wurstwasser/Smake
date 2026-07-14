@@ -54,19 +54,43 @@ namespace Smake.Game
                         // Player 2 Steuerung (WASD)
                         case ConsoleKey.W:
                             if (Spielvalues.Multiplayer)
+                            {
                                 UpdatePlayerDirection(Spiellogik.Player2, new Position(0, -1), '^');
+                            }
+                            else
+                            {
+                                UpdatePlayerDirection(Spiellogik.Player, new Position(0, -1), '^');
+                            }
                             break;
                         case ConsoleKey.S:
                             if (Spielvalues.Multiplayer)
+                            {
                                 UpdatePlayerDirection(Spiellogik.Player2, new Position(0, 1), 'v');
+                            }
+                            else
+                            {
+                                UpdatePlayerDirection(Spiellogik.Player, new Position(0, 1), 'v');
+                            }
                             break;
                         case ConsoleKey.A:
                             if (Spielvalues.Multiplayer)
+                            {
                                 UpdatePlayerDirection(Spiellogik.Player2, new Position(-1, 0), '<');
+                            }
+                            else
+                            {
+                                UpdatePlayerDirection(Spiellogik.Player, new Position(-1, 0), '<');
+                            }
                             break;
                         case ConsoleKey.D:
                             if (Spielvalues.Multiplayer)
+                            {
                                 UpdatePlayerDirection(Spiellogik.Player2, new Position(1, 0), '>');
+                            }
+                            else
+                            {
+                                UpdatePlayerDirection(Spiellogik.Player, new Position(1, 0), '>');
+                            }
                             break;
 
                         // Spiel beenden
