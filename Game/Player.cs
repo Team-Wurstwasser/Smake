@@ -18,7 +18,7 @@ namespace Smake.Game
 
         public int[] PlayerY { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
 
-        // Kollisionsstatus (wird nun von außen gesetzt)
+        // Kollisionsstatus
         public bool IstKollidiert { get; set; }
 
         //Punkte des Spielers
@@ -76,7 +76,6 @@ namespace Smake.Game
             InitialisiereSpieler();
         }
 
-        // Erwartet nun die vorberechneten Zielkoordinaten
         public (bool spielerTot, bool Maxpunkte) Update(int newPlayerX, int newPlayerY, Player p)
         {
             if (!IstKollidiert || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)

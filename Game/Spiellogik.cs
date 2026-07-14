@@ -114,21 +114,21 @@ namespace Smake.Game
         // Aktualisiert die Position des Spielers anhand der Eingabe
         static void Update()
         {
-            // 1. Zukünftige Koordinaten berechnen
+            //Zukünftige Koordinaten berechnen
             int newP1X = Player.PlayerX[0] + 2 * Player.InputX;
             int newP1Y = Player.PlayerY[0] + Player.InputY;
 
             int newP2X = Player2.PlayerX[0] + 2 * Player2.InputX;
             int newP2Y = Player2.PlayerY[0] + Player2.InputY;
 
-            // 2. Kollisionen von außen prüfen und dem jeweiligen Spieler zuweisen
+            //Kollisionen von außen prüfen und dem jeweiligen Spieler zuweisen
             Player.IstKollidiert = PrüfeKollision(Player, Player2, newP1X, newP1Y);
             if (Spielvalues.Multiplayer)
             {
                 Player2.IstKollidiert = PrüfeKollision(Player2, Player, newP2X, newP2Y);
             }
 
-            // 3. Spieler mit den neuen Positionsdaten updaten
+            //Spieler mit den neuen Positionsdaten updaten
             bool spieler1Tot = false;
             bool spieler2Tot = false;
 
@@ -148,7 +148,6 @@ namespace Smake.Game
             GameoverCheck(spieler1Tot, spieler2Tot);
         }
 
-        // Hier wird nun die Kollision zentral berechnet
         public static bool PrüfeKollision(Player spieler, Player gegner, int newX, int newY)
         {
             if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
