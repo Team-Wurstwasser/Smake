@@ -18,8 +18,8 @@ namespace Smake.Game
 
         public int[] PlayerY { get; private set; } = new int[(GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2)];
 
-        // Kollisionsvariablen
-        bool Kollision;
+        // Kollisionsstatus (wird nun von außen gesetzt)
+        public bool IstKollidiert { get; set; }
 
         //Punkte des Spielers
         public int Punkte;
@@ -49,7 +49,7 @@ namespace Smake.Game
 
         public void Neustart()
         {
-            Kollision = false;
+            IstKollidiert = false;
 
             // Taillängen zurücksetzen
             TailLaenge = tailStartLaenge;
@@ -76,14 +76,10 @@ namespace Smake.Game
             InitialisiereSpieler();
         }
 
-        public (bool spielerTot, bool Maxpunkte) Update(Player p)
+        // Erwartet nun die vorberechneten Zielkoordinaten
+        public (bool spielerTot, bool Maxpunkte) Update(int newPlayerX, int newPlayerY, Player p)
         {
-            // Neue Zielkoordinaten berechnen
-            int newPlayerX = PlayerX[0] + 2 * InputX;
-            int newPlayerY = PlayerY[0] + InputY;
-
-            Kollisioncheck(newPlayerX, newPlayerY, p);
-            if (!Kollision || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
+            if (!IstKollidiert || Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
                 TailShift();
                 TailBewegung();
@@ -104,7 +100,7 @@ namespace Smake.Game
 
             if (Spielvalues.Gamemode == Gamemodes.Unendlich || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
             {
-                if (Kollision && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
+                if (IstKollidiert && Spielvalues.Gamemode != Gamemodes.BabymodeUnendlich)
                     SpielerTot = true;
                 else if (TailLaenge >= (GameData.Hoehe - 2) * ((GameData.Weite - 2) / 2) - Spielvalues.Maxfutter - 1 && !Spielvalues.Multiplayer)
                     Maxpunkte = true;
@@ -120,64 +116,20 @@ namespace Smake.Game
             }
             else
             {
-                if (Kollision)
+                if (IstKollidiert)
                     SpielerTot = true;
                 else if (Punkte >= GameData.MaxPunkte)
                     Maxpunkte = true;
             }
 
             return (SpielerTot, Maxpunkte);
-
-        }
-
-        // Prüft die Kollision
-        void Kollisioncheck(int newPlayerX, int newPlayerY, Player p)
-        {
-            if (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich)
-            {
-                if (RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.RandSkin)
-                {
-                    Kollision = true;
-                }
-                else
-                {
-                    Kollision = false;
-                }
-
-            }
-            else
-            {
-                if (Spielvalues.Multiplayer)
-                {
-                    int newPlayer2X = p.PlayerX[0] + 2 * p.InputX;
-                    int newPlayer2Y = p.PlayerY[0] + p.InputY;
-
-                    if (newPlayerX == newPlayer2X && newPlayerY == newPlayer2Y)
-                    {
-                        Kollision = true;
-                        return;
-                    }
-
-                }
-
-                if (RenderSpielfeld.Grid[newPlayerY, newPlayerX] == ' ' || RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.FoodSkin || newPlayerX == PlayerX[0] && newPlayerY == PlayerY[0] || RenderSpielfeld.Grid[newPlayerY, newPlayerX] == Skinvalues.SchluesselSkin)
-                {
-                    Kollision = false;
-                }
-                else
-                {
-                    // Wenn das Feld nicht leer, nicht Food, nicht Schlüssel, nicht Head, nicht Rand
-                    Kollision = true;
-
-                }
-            }
         }
 
         // Bewegt die Spieler
         void Bewegung(int newPlayerX, int newPlayerY)
         {
             // Babymode Wrap-around
-            if (Kollision && (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich))
+            if (IstKollidiert && (Spielvalues.Gamemode == Gamemodes.Babymode || Spielvalues.Gamemode == Gamemodes.BabymodeUnendlich))
             {
                 if (InputX == 1) newPlayerX = 2;
                 else if (InputX == -1) newPlayerX = Spielvalues.weite - 3;
@@ -191,7 +143,6 @@ namespace Smake.Game
             // Spieler-Koordinaten aktualisieren
             PlayerX[0] = newPlayerX;
             PlayerY[0] = newPlayerY;
-
         }
 
         // Tailkoordinaten berechnen
@@ -208,7 +159,6 @@ namespace Smake.Game
             {
                 PlayerY[i] = PlayerY[i - 1];
             }
-
         }
 
         void TailBewegung()
