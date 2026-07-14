@@ -43,12 +43,12 @@ namespace Smake.Game.Gegenstaende
             {
                 if (Schluessel != null)
                 {
-                    RenderSpielfeld.Grid[Y, X] = Schluessel.Collected ? Skin : Skinvalues.MauerSkin;
+                    RenderSpielfeld.Grid[Pos.Y, Pos.X] = Schluessel.Collected ? Skin : Skinvalues.MauerSkin;
                 }
             }
             else
             {
-                RenderSpielfeld.Grid[Y, X] = Skin;
+                RenderSpielfeld.Grid[Pos.Y, Pos.X] = Skin;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Smake.Game.Gegenstaende
                 // Überprüfe jedes Segment des Spielers
                 for (int i = 0; i < p.TailLaenge; i++)
                 {
-                    if (p.PlayerX[i] == X && p.PlayerY[i] == Y)
+                    if (p.Positionen[i].X == Pos.X && p.Positionen[i].Y == Pos.Y)
                     {
 
                         p.Punkte++;
@@ -101,7 +101,7 @@ namespace Smake.Game.Gegenstaende
                 if (TeleportCounter >= TeleportInterval)
                 {
                     // Alte Position löschen
-                    RenderSpielfeld.Grid[Y, X] = ' ';
+                    RenderSpielfeld.Grid[Pos.Y, Pos.X] = ' ';
                     Setze();
                 }
             }

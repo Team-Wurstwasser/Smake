@@ -57,7 +57,11 @@ namespace Smake.SFX
             else if (OperatingSystem.IsLinux())
             {
                 return EngineHostType.ALSA;
-            }    
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                return EngineHostType.COREAUDIO;
+            }
 
             return EngineHostType.None;
         }

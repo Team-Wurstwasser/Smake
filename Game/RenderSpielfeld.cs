@@ -104,7 +104,7 @@ namespace Smake.Game
             {
                 for (int x = 2; x < cols - 1; x++)
                 {
-                    bool IstStartposition = (x == Spiellogik.Player.StartX && y == Spiellogik.Player.StartY) || (x == Spiellogik.Player2.StartX && y == Spiellogik.Player2.StartY);
+                    bool IstStartposition = (x == Spiellogik.Player.StartPosition.X && y == Spiellogik.Player.StartPosition.Y) || (x == Spiellogik.Player.StartPosition.X && y == Spiellogik.Player.StartPosition.Y);
 
                     if (Grid[y, x] != PrevGrid[y, x] || IstStartposition)
                     {
@@ -187,9 +187,9 @@ namespace Smake.Game
         // Farb-Bestimmung (nur für normalen Modus gebraucht)
         static ConsoleColor BestimmeFarbe(int x, int y, char zeichen)
         {
-            if (x == Spiellogik.Player.PlayerX[0] && y == Spiellogik.Player.PlayerY[0])
+            if (x == Spiellogik.Player.Positionen[0].X && y == Spiellogik.Player.Positionen[0].Y)
                 return Spiellogik.Player.HeadFarbe;
-            if (Spielvalues.Multiplayer && x == Spiellogik.Player2.PlayerX[0] && y == Spiellogik.Player2.PlayerY[0]) 
+            if (Spielvalues.Multiplayer && x == Spiellogik.Player2.Positionen[0].X && y == Spiellogik.Player2.Positionen[0].Y)
                 return Spiellogik.Player2.HeadFarbe;
             if (zeichen == Spiellogik.Player.TailSkin)
                 return Spiellogik.Player.TailFarbe;
@@ -203,7 +203,7 @@ namespace Smake.Game
                 return Skinvalues.SchluesselFarbe;
             foreach (var Essen in Spiellogik.Essen)
             {
-                if (x == Essen.X && y == Essen.Y)
+                if (x == Essen.Pos.X && y == Essen.Pos.Y)
                     return Essen.FoodFarbe;
             }
             return ConsoleColor.White;
