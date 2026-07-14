@@ -97,16 +97,6 @@ jobs:
         with:
           name: linux-zip
 
-      - name: Download macOS x86_64 Artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: macos-x86_64-zip
-
-      - name: Download macOS ARM Artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: macos-arm-zip
-
       - name: Create Release and Upload
         uses: softprops/action-gh-release@v3
         env:
