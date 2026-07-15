@@ -22,7 +22,7 @@ namespace Smake.Game
 
         public Spiellogik()
         {
-            Sounds.Melodie(MusikSelector.Selector() ?? 1);
+            Sounds.Melodie(MusikSelector.Selector());
             Spielloop();
         }
 
@@ -157,12 +157,18 @@ namespace Smake.Game
 
             if (Spielvalues.Multiplayer)
             {
-                int gegnerNextX = gegner.Positionen[0].X + 2 * gegner.Richtung.X;
-                int gegnerNextY = gegner.Positionen[0].Y + gegner.Richtung.Y;
+                bool spielerBewegtSich = spieler.Richtung.X != 0 || spieler.Richtung.Y != 0;
+                bool gegnerBewegtSich = gegner.Richtung.X != 0 || gegner.Richtung.Y != 0;
 
-                if (newX == gegnerNextX && newY == gegnerNextY)
+                if (spielerBewegtSich && gegnerBewegtSich)
                 {
-                    return true;
+                    int gegnerNextX = gegner.Positionen[0].X + 2 * gegner.Richtung.X;
+                    int gegnerNextY = gegner.Positionen[0].Y + gegner.Richtung.Y;
+
+                    if (newX == gegnerNextX && newY == gegnerNextY)
+                    {
+                        return true;
+                    }
                 }
             }
 
