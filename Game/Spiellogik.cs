@@ -294,9 +294,8 @@ namespace Smake.Game
                         Program.CurrentView = ViewType.MainMenu;
                     }
                 }
-
                 // Controller-Abfrage
-                if (!check && controller.IsConnected)
+                else if (controller.IsConnected)
                 {
                     try
                     {
@@ -325,16 +324,12 @@ namespace Smake.Game
                         // Falls der Controller genau in diesem Moment getrennt wird
                     }
                 }
-
-                //CPU schonen, während wir auf die Eingabe warten
-                if (!check)
+                else
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(5); // CPU schonen
                 }
-
             } while (!check);
 
-            // Nach dem Verlassen nochmals den Tastatur-Puffer leeren
             while (Console.KeyAvailable) Console.ReadKey(true);
         }
 

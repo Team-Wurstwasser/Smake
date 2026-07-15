@@ -135,14 +135,9 @@ namespace Smake.Game
                     }
                 }
 
-                // Wenn keine Eingabe stattfand oder um die CPU zu schonen
                 if (!inputDetected)
                 {
-                    Thread.Sleep(10);
-                }
-                else
-                {
-                    Thread.Sleep(5); // Kürzere Pause bei aktiver Eingabe für bessere Responsivität
+                    Thread.Sleep(5); // CPU schonen
                 }
             }
         }
@@ -200,7 +195,7 @@ namespace Smake.Game
             }
             catch
             {
-                // Falls die Verbindung mitten im Loop abbricht
+                // Falls der Controller genau in diesem Moment getrennt wird
             }
         }
 

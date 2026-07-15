@@ -197,7 +197,7 @@ namespace Smake.Menues
                 string shoptext = Spielstatus.Level < GameData.FarbenLevel[i - 1]
                     ? LanguageSystem.Get("shop.requiredLevel").Replace("{level}", GameData.FarbenLevel[i - 1].ToString())
                     : Menüsvalues.FreigeschaltetFarben[i] ? LanguageSystem.Get("shop.unlocked")
-                    : GameData.FarbenPreis[i - 1].ToString();
+                    : LanguageSystem.Get("shop.price").Replace("{price}", GameData.FarbenPreis[i - 1].ToString());
 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
@@ -229,12 +229,9 @@ namespace Smake.Menues
         {
             while (DoReadInput)
             {
-                bool processedInput = false;
-
                 if (Console.KeyAvailable)
                 {
                     Input = Console.ReadKey(true).Key;
-                    processedInput = true;
                 }
                 // Controller-Signale abfragen und übersetzen
                 else if (controller1 != null && controller1.IsConnected)
@@ -264,7 +261,6 @@ namespace Smake.Menues
                                     Input = ConsoleKey.Escape;
 
                                 isControllerInputLocked = true;
-                                processedInput = true;
                             }
                         }
                         else
@@ -275,14 +271,8 @@ namespace Smake.Menues
                     }
                     catch
                     {
-                        // Falls die Verbindung mitten im Loop abbricht
+                        // Falls der Controller genau in diesem Moment getrennt wird
                     }
-                }
-
-                if (processedInput)
-                {
-                    // Bei registrierter Eingabe kurz warten
-                    Thread.Sleep(150);
                 }
                 else
                 {
