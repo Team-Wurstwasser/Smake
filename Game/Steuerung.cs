@@ -1,4 +1,5 @@
-﻿using Smake.Enums;
+﻿using SharpDX.XInput;
+using Smake.Enums;
 using Smake.Game.Struct;
 using Smake.Values;
 
@@ -9,8 +10,18 @@ namespace Smake.Game
         volatile bool DoReadInput = true;
         Thread? InputThread;
 
+        // Controller-Instanzen definieren
+        private readonly Controller? controller1;
+        private readonly Controller? controller2;
+
+        private const int StickDeadzone = 15000;
+
         public Steuerung()
         {
+            // Controller initialisieren
+            controller1 = new Controller(UserIndex.One);
+            controller2 = new Controller(UserIndex.Two);
+
             StartInputStream();
         }
 
@@ -26,13 +37,16 @@ namespace Smake.Game
             InputThread?.Join();
         }
 
-        // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und speichert diese
+        // Läuft in einem eigenen Thread: verarbeitet Tasteneingaben und Controller-Eingaben
         void ReadInput()
         {
             while (DoReadInput)
             {
+                bool inputDetected = false;
+
                 if (Console.KeyAvailable)
                 {
+                    inputDetected = true;
                     var key = Console.ReadKey(true).Key;
 
                     switch (key)
@@ -99,10 +113,89 @@ namespace Smake.Game
                             break;
                     }
                 }
-                else
+
+                // Controller 1
+                if (controller1 != null && controller1.IsConnected)
+                {
+                    inputDetected = true;
+                    ProcessControllerInput(controller1, Spiellogik.Player);
+                }
+
+                // Controller 2
+                if (controller2 != null && controller2.IsConnected)
+                {
+                    inputDetected = true;
+                    if (Spielvalues.Multiplayer)
+                    {
+                        ProcessControllerInput(controller2, Spiellogik.Player2);
+                    }
+                    else
+                    {
+                        ProcessControllerInput(controller2, Spiellogik.Player);
+                    }
+                }
+
+                if (!inputDetected)
                 {
                     Thread.Sleep(5); // CPU schonen
                 }
+            }
+        }
+
+        // Verarbeitet die Buttons und den linken Analog-Stick eines Controllers für einen bestimmten Spieler
+        private static void ProcessControllerInput(Controller controller, Player player)
+        {
+            try
+            {
+                State state = controller.GetState();
+                Gamepad gamepad = state.Gamepad;
+
+                if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadUp))
+                {
+                    UpdatePlayerDirection(player, new Position(0, -1), '^');
+                }
+                else if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown))
+                {
+                    UpdatePlayerDirection(player, new Position(0, 1), 'v');
+                }
+                else if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadLeft))
+                {
+                    UpdatePlayerDirection(player, new Position(-1, 0), '<');
+                }
+                else if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight))
+                {
+                    UpdatePlayerDirection(player, new Position(1, 0), '>');
+                }
+
+                short stickX = gamepad.LeftThumbX;
+                short stickY = gamepad.LeftThumbY;
+
+                // Horizontale Bewegung (X-Achse)
+                if (Math.Abs(stickX) > StickDeadzone)
+                {
+                    if (stickX > 0)
+                        UpdatePlayerDirection(player, new Position(1, 0), '>');
+                    else
+                        UpdatePlayerDirection(player, new Position(-1, 0), '<');
+                }
+                // Vertikale Bewegung (Y-Achse - Achtung: Y ist im XInput nach oben positiv, im Konsolen-Raster nach unten!)
+                else if (Math.Abs(stickY) > StickDeadzone)
+                {
+                    if (stickY > 0)
+                        UpdatePlayerDirection(player, new Position(0, -1), '^'); // Stick nach oben
+                    else
+                        UpdatePlayerDirection(player, new Position(0, 1), 'v');
+                }
+
+                //Button zum Beenden nutzen
+                if (gamepad.Buttons.HasFlag(GamepadButtonFlags.Start) || gamepad.Buttons.HasFlag(GamepadButtonFlags.Back) || (gamepad.Buttons.HasFlag(GamepadButtonFlags.B)))
+                {
+                    Spiellogik.Gameovertype = GameOverType.Exit;
+                }
+            }
+            catch
+            {
+                // Falls der Controller genau in diesem Moment getrennt wird
             }
         }
 
