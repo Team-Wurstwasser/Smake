@@ -1,4 +1,5 @@
-﻿using Smake.Game;
+﻿using SharpDX.XInput;
+using Smake.Game;
 using Smake.Speicher;
 using Smake.Values;
 
@@ -14,6 +15,11 @@ namespace Smake.Menues
         protected volatile bool DoReadInput = true;
         protected ConsoleKey Input;
         Thread? InputThread;
+
+        // Controller für die Menüsteuerung
+        private Controller? controller1;
+        private const int StickDeadzone = 18000;
+        private bool isControllerInputLocked = false;
 
         protected void InitialRender()
         {
@@ -191,7 +197,7 @@ namespace Smake.Menues
                 string shoptext = Spielstatus.Level < GameData.FarbenLevel[i - 1]
                     ? LanguageSystem.Get("shop.requiredLevel").Replace("{level}", GameData.FarbenLevel[i - 1].ToString())
                     : Menüsvalues.FreigeschaltetFarben[i] ? LanguageSystem.Get("shop.unlocked")
-                    : LanguageSystem.Get("shop.price").Replace("{price}", GameData.FarbenPreis[i - 1].ToString());
+                    : GameData.FarbenPreis[i - 1].ToString();
 
                 string zeiger = option + 1 == Selected ? ">>" : "  ";
                 Console.ForegroundColor = GameData.Farben[i];
@@ -205,6 +211,9 @@ namespace Smake.Menues
 
         public void StartInputstream()
         {
+            // Controller für Spieler 1 initialisieren
+            controller1 = new Controller(UserIndex.One);
+
             InputThread = new(ReadInput);
             InputThread.Start();
         }
@@ -215,13 +224,65 @@ namespace Smake.Menues
             InputThread?.Join();
         }
 
+        // Steuerungsschleife: Liest Tastatur aus und übersetzt Controller-Eingaben
         void ReadInput()
         {
             while (DoReadInput)
             {
+                bool processedInput = false;
+
                 if (Console.KeyAvailable)
                 {
                     Input = Console.ReadKey(true).Key;
+                    processedInput = true;
+                }
+                // Controller-Signale abfragen und übersetzen
+                else if (controller1 != null && controller1.IsConnected)
+                {
+                    try
+                    {
+                        State state = controller1.GetState();
+                        Gamepad gamepad = state.Gamepad;
+
+                        bool upPressed = gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadUp) || gamepad.LeftThumbY > StickDeadzone;
+                        bool downPressed = gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown) || gamepad.LeftThumbY < -StickDeadzone;
+                        bool enterPressed = gamepad.Buttons.HasFlag(GamepadButtonFlags.A);
+                        bool escPressed = gamepad.Buttons.HasFlag(GamepadButtonFlags.Start) || gamepad.Buttons.HasFlag(GamepadButtonFlags.Back) || (gamepad.Buttons.HasFlag(GamepadButtonFlags.B));
+
+                        if (upPressed || downPressed || enterPressed || escPressed)
+                        {
+                            // Nur reagieren, wenn die Taste nach dem letzten Druck losgelassen wurde
+                            if (!isControllerInputLocked)
+                            {
+                                if (upPressed)
+                                    Input = ConsoleKey.UpArrow;
+                                else if (downPressed)
+                                    Input = ConsoleKey.DownArrow;
+                                else if (enterPressed)
+                                    Input = ConsoleKey.Enter;
+                                else if (escPressed)
+                                    Input = ConsoleKey.Escape;
+
+                                isControllerInputLocked = true;
+                                processedInput = true;
+                            }
+                        }
+                        else
+                        {
+                            // Wieder freischalten
+                            isControllerInputLocked = false;
+                        }
+                    }
+                    catch
+                    {
+                        // Falls die Verbindung mitten im Loop abbricht
+                    }
+                }
+
+                if (processedInput)
+                {
+                    // Bei registrierter Eingabe kurz warten
+                    Thread.Sleep(150);
                 }
                 else
                 {

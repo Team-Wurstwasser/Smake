@@ -1,10 +1,11 @@
-﻿using Smake.Enums;
+﻿using SharpDX.XInput;
+using Smake.Enums;
 using Smake.Game.Gegenstaende;
+using Smake.Game.Struct;
 using Smake.Helper;
 using Smake.SFX;
 using Smake.Speicher;
 using Smake.Values;
-using Smake.Game.Struct;
 
 namespace Smake.Game
 {
@@ -268,24 +269,72 @@ namespace Smake.Game
 
         static void WaitForInput()
         {
+            // Controller initialisieren
+            Controller controller = new(UserIndex.One);
             bool check = false;
+
+            // Vorherige Tastatur-Reste im Puffer leeren
+            while (Console.KeyAvailable) Console.ReadKey(true);
+
             do
             {
-                while (Console.KeyAvailable) Console.ReadKey(true);
-                var key = Console.ReadKey(true).Key;
+                // Tastatur-Abfrage
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true).Key;
 
-                if (key == ConsoleKey.Enter)
-                {
-                    check = true;
-                    Program.CurrentView = ViewType.Game;
+                    if (key == ConsoleKey.Enter)
+                    {
+                        check = true;
+                        Program.CurrentView = ViewType.Game;
+                    }
+                    else if (key == ConsoleKey.Escape)
+                    {
+                        check = true;
+                        Program.CurrentView = ViewType.MainMenu;
+                    }
                 }
-                else if (key == ConsoleKey.Escape)
+
+                // Controller-Abfrage
+                if (!check && controller.IsConnected)
                 {
-                    check = true;
-                    Program.CurrentView = ViewType.MainMenu;
+                    try
+                    {
+                        State state = controller.GetState();
+                        Gamepad gamepad = state.Gamepad;
+
+                        // A-Taste auf dem Controller entspricht ENTER
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.A))
+                        {
+                            check = true;
+                            Program.CurrentView = ViewType.Game;
+
+                            Thread.Sleep(200);
+                        }
+                        // entspricht ESCAPE
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.Start) || gamepad.Buttons.HasFlag(GamepadButtonFlags.Back) || (gamepad.Buttons.HasFlag(GamepadButtonFlags.B)))
+                        {
+                            check = true;
+                            Program.CurrentView = ViewType.MainMenu;
+
+                            Thread.Sleep(200);
+                        }
+                    }
+                    catch
+                    {
+                        // Falls der Controller genau in diesem Moment getrennt wird
+                    }
                 }
+
+                //CPU schonen, während wir auf die Eingabe warten
+                if (!check)
+                {
+                    Thread.Sleep(10);
+                }
+
             } while (!check);
 
+            // Nach dem Verlassen nochmals den Tastatur-Puffer leeren
             while (Console.KeyAvailable) Console.ReadKey(true);
         }
 
